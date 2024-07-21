@@ -4349,7 +4349,7 @@
 		)
 	)
 	(sheet
-		(at 212.09 30.48)
+		(at 210.82 35.56)
 		(size 30.48 36.83)
 		(fields_autoplaced yes)
 		(stroke
@@ -4361,7 +4361,7 @@
 		)
 		(uuid "5c993fdd-4eb3-48b1-a43d-6f266bd8b5c6")
 		(property "Sheetname" "Audio Codec"
-			(at 212.09 29.7684 0)
+			(at 210.82 34.8484 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4370,7 +4370,7 @@
 			)
 		)
 		(property "Sheetfile" "audio_codec.kicad_sch"
-			(at 212.09 67.8946 0)
+			(at 210.82 72.9746 0)
 			(effects
 				(font
 					(size 1.27 1.27)

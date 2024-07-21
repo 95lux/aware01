@@ -1262,7 +1262,7 @@
 		)
 	)
 	(global_label "OUTR"
-		(shape input)
+		(shape output)
 		(at 208.28 85.09 0)
 		(fields_autoplaced yes)
 		(effects
@@ -1306,7 +1306,7 @@
 		)
 	)
 	(global_label "OUTL"
-		(shape input)
+		(shape output)
 		(at 208.28 81.28 0)
 		(fields_autoplaced yes)
 		(effects
