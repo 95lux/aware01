@@ -390,6 +390,10 @@
     [
       "5c993fdd-4eb3-48b1-a43d-6f266bd8b5c6",
       "Audio Codec"
+    ],
+    [
+      "9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4",
+      "Input Output Channels"
     ]
   ],
   "text_variables": {}

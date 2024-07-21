@@ -3372,7 +3372,7 @@
 			(uuid "613b672a-1b58-4484-bc8c-edc9ebaee04f")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR013")
 					(unit 1)
@@ -3629,7 +3629,7 @@
 			(uuid "863fb4ba-5a6c-4727-aed1-58d3f6782fc5")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "U1")
 					(unit 1)
@@ -3699,7 +3699,7 @@
 			(uuid "11854797-2e96-4e03-9c5e-fdebb3a70d1a")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "C1")
 					(unit 1)
@@ -3768,7 +3768,7 @@
 			(uuid "8f2522f0-fbff-4946-bdc7-d674930d0679")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "C2")
 					(unit 1)
@@ -3841,7 +3841,7 @@
 			(uuid "2bd1c093-ad42-46d2-8748-39af1e5acd25")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "Y3")
 					(unit 1)
@@ -3907,7 +3907,7 @@
 			(uuid "3c9b23b8-674c-40ce-bd1b-24087a4beb8c")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR01")
 					(unit 1)
@@ -3973,7 +3973,7 @@
 			(uuid "1ca28b86-5257-4ea5-a149-3b15ad169607")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR012")
 					(unit 1)
@@ -4208,7 +4208,7 @@
 			(uuid "a435c649-79c3-408b-9f31-ac9092dd0f0c")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "J1")
 					(unit 1)
@@ -4274,7 +4274,7 @@
 			(uuid "a0df1db8-18d1-476f-9a87-90335a9121a8")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR02")
 					(unit 1)
@@ -4340,7 +4340,7 @@
 			(uuid "3ae2a1fc-0fc4-45cf-a99b-8758867a44d6")
 		)
 		(instances
-			(project "ima"
+			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR03")
 					(unit 1)
