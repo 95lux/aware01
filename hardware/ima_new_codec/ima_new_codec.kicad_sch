@@ -2848,6 +2848,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 63.5) (xy 104.14 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "659e7e9f-b1a3-4cb2-ad3b-4b00b32ac291")
+	)
+	(wire
+		(pts
 			(xy 93.98 82.55) (xy 100.33 82.55)
 		)
 		(stroke
@@ -2888,7 +2898,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 64.77) (xy 93.98 82.55)
+			(xy 93.98 63.5) (xy 93.98 82.55)
 		)
 		(stroke
 			(width 0)
@@ -2898,7 +2908,7 @@
 	)
 	(wire
 		(pts
-			(xy 104.14 64.77) (xy 93.98 64.77)
+			(xy 104.14 63.5) (xy 93.98 63.5)
 		)
 		(stroke
 			(width 0)
@@ -3786,7 +3796,7 @@
 		(dnp no)
 		(uuid "77a532d9-3576-4de6-b569-49a04a0e1461")
 		(property "Reference" "Y3"
-			(at 104.902 63.5 0)
+			(at 105.664 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3794,7 +3804,7 @@
 			)
 		)
 		(property "Value" "Crystal_GND24"
-			(at 92.71 63.246 0)
+			(at 92.71 61.976 0)
 			(effects
 				(font
 					(size 1.27 1.27)
