@@ -393,18 +393,10 @@
   "sheets": [
     [
       "efd43d7c-3c18-45dd-8fa5-4bf32165850f",
-      "Stammblatt"
+      "Root"
     ],
     [
-      "5c993fdd-4eb3-48b1-a43d-6f266bd8b5c6",
-      "Audio Codec"
-    ],
-    [
-      "9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4",
-      "Input Output Channels"
-    ],
-    [
-      "438991ce-fa06-4872-9aa3-3c67d0a770d6",
+      "73121cc2-8d80-4112-ab10-05ea68c4fbe2",
       "Controls"
     ],
     [
@@ -412,8 +404,16 @@
       "Power"
     ],
     [
-      "aedae9b7-f87e-4173-84cb-f2af661ce4df",
-      "CG and Gate Ins"
+      "50dd69da-5058-483c-924f-252f04b072bd",
+      "Audio Codec1"
+    ],
+    [
+      "9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4",
+      "Input Output Channels"
+    ],
+    [
+      "e945e4c2-dc11-481b-8f33-3a20062a7ec6",
+      "CG and Gate Ins1"
     ]
   ],
   "text_variables": {}

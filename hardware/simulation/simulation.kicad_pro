@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "ima_new_codec.kicad_pro",
+    "filename": "simulation.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -341,7 +341,7 @@
       "group_symbols": true,
       "name": "Grouped By Value",
       "sort_asc": true,
-      "sort_field": "Reference"
+      "sort_field": "Referenz"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -377,7 +377,7 @@
         "version": 0
       },
       "model_mode": 4,
-      "workbook_filename": ""
+      "workbook_filename": "simulation.wbk"
     },
     "page_layout_descr_file": "",
     "plot_directory": "",
@@ -392,28 +392,16 @@
   },
   "sheets": [
     [
-      "efd43d7c-3c18-45dd-8fa5-4bf32165850f",
+      "e80dc9b1-658c-4466-ab44-cdfb41cf2b69",
       "Stammblatt"
     ],
     [
-      "5c993fdd-4eb3-48b1-a43d-6f266bd8b5c6",
-      "Audio Codec"
+      "270709a9-ed21-4350-9ff3-4cd2d88db2d4",
+      "CV INs"
     ],
     [
-      "9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4",
-      "Input Output Channels"
-    ],
-    [
-      "438991ce-fa06-4872-9aa3-3c67d0a770d6",
-      "Controls"
-    ],
-    [
-      "4fd75a14-10a3-454a-b853-10e2f7b21f70",
-      "Power"
-    ],
-    [
-      "aedae9b7-f87e-4173-84cb-f2af661ce4df",
-      "CG and Gate Ins"
+      "d696cc12-9c6c-4597-9e7f-ae931ce7fb20",
+      "gainstages"
     ]
   ],
   "text_variables": {}
