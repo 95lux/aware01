@@ -30,7 +30,8 @@ Core/*.hex
 
 # Libraries
 Drivers/STM32F*/Middlewares/
-Drivers/CMSIS/*_SVD/
+Drivers/CMSIS/**
+Drivers/STM32H7xx_HAL_Driver/**
 
 # OS and editor specific
 .DS_Store
