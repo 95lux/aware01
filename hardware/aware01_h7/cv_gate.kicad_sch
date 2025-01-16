@@ -5,7 +5,7 @@
 	(uuid "c18ab932-1019-43a4-b9d5-4605e6778658")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector_Audio:AudioJack2"
+		(symbol "Connector_Audio:AudioJack2_SwitchT"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -17,7 +17,7 @@
 					)
 				)
 			)
-			(property "Value" "AudioJack2"
+			(property "Value" "AudioJack2_SwitchT"
 				(at 0 6.35 0)
 				(effects
 					(font
@@ -43,7 +43,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
+			(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -52,7 +52,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "audio jack receptacle mono phone headphone TS connector"
+			(property "ki_keywords" "audio jack receptacle mono headphones phone TS connector"
 				(at 0 0 0)
 				(effects
 					(font
@@ -70,10 +70,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "AudioJack2_0_1"
+			(symbol "AudioJack2_SwitchT_0_1"
 				(rectangle
-					(start -3.81 0)
-					(end -2.54 -2.54)
+					(start -2.54 0)
+					(end -3.81 -2.54)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -82,15 +82,16 @@
 						(type outline)
 					)
 				)
-				(rectangle
-					(start -2.54 3.81)
-					(end 2.54 -2.54)
+				(polyline
+					(pts
+						(xy 1.778 -0.254) (xy 2.032 -0.762)
+					)
 					(stroke
-						(width 0.254)
+						(width 0)
 						(type default)
 					)
 					(fill
-						(type background)
+						(type none)
 					)
 				)
 				(polyline
@@ -99,6 +100,18 @@
 					)
 					(stroke
 						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 1.778 -2.54) (xy 1.778 -0.254) (xy 1.524 -0.762)
+					)
+					(stroke
+						(width 0)
 						(type default)
 					)
 					(fill
@@ -117,8 +130,19 @@
 						(type none)
 					)
 				)
+				(rectangle
+					(start 2.54 3.81)
+					(end -2.54 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
 			)
-			(symbol "AudioJack2_1_1"
+			(symbol "AudioJack2_SwitchT_1_1"
 				(pin passive line
 					(at 5.08 2.54 180)
 					(length 2.54)
@@ -148,6 +172,24 @@
 						)
 					)
 					(number "T"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "TN"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1371,6 +1413,26 @@
 		(color 0 0 0 0)
 		(uuid "f1ed431b-88f8-4df9-84fd-e18fc5fb03e2")
 	)
+	(no_connect
+		(at 72.39 53.34)
+		(uuid "73bd2203-202d-472e-8583-568d75941b73")
+	)
+	(no_connect
+		(at 185.42 121.92)
+		(uuid "9ea52e58-06ef-4d4d-8821-05c9fc18abd2")
+	)
+	(no_connect
+		(at 72.39 97.79)
+		(uuid "a53d65cb-3af3-4e78-a01a-830ef913506e")
+	)
+	(no_connect
+		(at 92.71 152.4)
+		(uuid "bc0133fb-31c0-4f3c-9988-1dfd01f483dd")
+	)
+	(no_connect
+		(at 185.42 62.23)
+		(uuid "e6891e45-fff2-4b27-8422-41a1e2bd8d67")
+	)
 	(wire
 		(pts
 			(xy 111.76 154.94) (xy 111.76 139.7)
@@ -1380,16 +1442,6 @@
 			(type default)
 		)
 		(uuid "032a3b09-e905-49ba-a73c-54aeac2b6b89")
-	)
-	(wire
-		(pts
-			(xy 179.07 64.77) (xy 189.23 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "04412c49-eed8-4883-a086-0ba067c1b550")
 	)
 	(wire
 		(pts
@@ -1533,16 +1585,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 124.46) (xy 189.23 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2222aaaf-db3c-4f43-8825-ddb64e50e09b")
-	)
-	(wire
-		(pts
 			(xy 196.85 124.46) (xy 201.93 124.46)
 		)
 		(stroke
@@ -1550,6 +1592,16 @@
 			(type default)
 		)
 		(uuid "22374087-8923-45ab-802b-0080ca392c47")
+	)
+	(wire
+		(pts
+			(xy 92.71 154.94) (xy 99.06 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23d1ab43-f670-4ad9-88fa-133b2016d9f9")
 	)
 	(wire
 		(pts
@@ -1603,6 +1655,16 @@
 	)
 	(wire
 		(pts
+			(xy 185.42 64.77) (xy 189.23 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2a90f612-de08-4702-86e7-abd670d6fc54")
+	)
+	(wire
+		(pts
 			(xy 201.93 109.22) (xy 208.28 109.22)
 		)
 		(stroke
@@ -1650,6 +1712,16 @@
 			(type default)
 		)
 		(uuid "37ed9260-200f-4a0a-9c68-6add5192f03a")
+	)
+	(wire
+		(pts
+			(xy 92.71 157.48) (xy 92.71 162.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38f97af6-1db9-43cd-b48c-84c60e72dd97")
 	)
 	(wire
 		(pts
@@ -1703,16 +1775,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 127) (xy 179.07 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4cdf2ca3-fc0c-4dda-a398-fc617b78101c")
-	)
-	(wire
-		(pts
 			(xy 48.26 129.54) (xy 48.26 130.81)
 		)
 		(stroke
@@ -1743,23 +1805,13 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 157.48) (xy 88.9 162.56)
+			(xy 185.42 67.31) (xy 185.42 72.39)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "50ae12aa-1093-4ff9-8eb4-b7a75acb94d1")
-	)
-	(wire
-		(pts
-			(xy 72.39 100.33) (xy 76.2 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5a1220b4-9785-4501-9ad0-8c34f4670871")
+		(uuid "58de4a46-ef27-496a-a1af-47d1239f46eb")
 	)
 	(wire
 		(pts
@@ -2063,6 +2115,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 102.87) (xy 72.39 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b1070a0-5fa1-40bc-bcb2-4a03ee3da6a8")
+	)
+	(wire
+		(pts
 			(xy 144.78 50.8) (xy 154.94 50.8)
 		)
 		(stroke
@@ -2100,16 +2162,6 @@
 			(type default)
 		)
 		(uuid "ade14587-589b-49e6-9ce6-a907cb4c330c")
-	)
-	(wire
-		(pts
-			(xy 72.39 102.87) (xy 72.39 107.95)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "afe20025-ac30-48bd-b656-8bf389ae0537")
 	)
 	(wire
 		(pts
@@ -2153,6 +2205,16 @@
 	)
 	(wire
 		(pts
+			(xy 185.42 124.46) (xy 189.23 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd0fa016-4493-4f98-ba28-9aae4faab72f")
+	)
+	(wire
+		(pts
 			(xy 38.1 137.16) (xy 38.1 148.59)
 		)
 		(stroke
@@ -2160,6 +2222,16 @@
 			(type default)
 		)
 		(uuid "be407ccf-9e6c-4234-8b01-78085cf29653")
+	)
+	(wire
+		(pts
+			(xy 72.39 100.33) (xy 76.2 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c135e9a7-f965-4123-a1ba-010b85a77a28")
 	)
 	(wire
 		(pts
@@ -2303,6 +2375,16 @@
 	)
 	(wire
 		(pts
+			(xy 185.42 127) (xy 185.42 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb378630-a3da-4ba3-96c8-bb918452dec6")
+	)
+	(wire
+		(pts
 			(xy 77.47 181.61) (xy 77.47 173.99)
 		)
 		(stroke
@@ -2310,26 +2392,6 @@
 			(type default)
 		)
 		(uuid "efcd1adf-a8d2-464e-ab8c-29e0c3b2206a")
-	)
-	(wire
-		(pts
-			(xy 179.07 67.31) (xy 179.07 72.39)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f17986c9-a1a7-4175-aa0f-48c81bfdbbc3")
-	)
-	(wire
-		(pts
-			(xy 88.9 154.94) (xy 99.06 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1885831-c67b-4ae9-8e98-1c787446ba61")
 	)
 	(wire
 		(pts
@@ -2373,7 +2435,7 @@
 	)
 	(text "-5V to 5V"
 		(exclude_from_sim no)
-		(at 171.45 120.65 0)
+		(at 165.354 124.46 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2383,7 +2445,7 @@
 	)
 	(text "-1.5V to 5V"
 		(exclude_from_sim no)
-		(at 170.434 60.96 0)
+		(at 165.608 64.262 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2393,7 +2455,7 @@
 	)
 	(text "-5V to 5V"
 		(exclude_from_sim no)
-		(at 81.026 151.13 0)
+		(at 73.66 153.162 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2671,6 +2733,77 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 67.31 100.33 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "17a73fda-ec8a-4dde-91d6-32687685f94c")
+		(property "Reference" "J7"
+			(at 66.675 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GATE2_IN"
+			(at 66.675 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 67.31 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 67.31 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 67.31 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "b59fc4d5-ce4d-46a0-8257-0911364aade1")
+		)
+		(pin "TN"
+			(uuid "7f6bcf69-42c2-4a3b-a3b1-713a13f9ee1a")
+		)
+		(pin "S"
+			(uuid "fdca3fb3-df01-42f3-aa1c-f9cbfc5241ed")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 154.94 52.07 0)
 		(unit 1)
@@ -2737,73 +2870,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 179.07 132.08 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "1fada04b-561d-4b96-9d21-d7f7b52ba721")
-		(property "Reference" "#PWR095"
-			(at 179.07 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 179.07 136.144 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 179.07 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2a2b8a16-d3a1-4218-912a-24c8f3870805")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "#PWR095")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 38.1 133.35 180)
 		(unit 1)
@@ -2831,7 +2897,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 37.1348 129.54 0)
 			(effects
 				(font
@@ -2868,6 +2934,77 @@
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "C59")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 67.31 55.88 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "207987ae-ee52-4491-a8e3-0cb707e71141")
+		(property "Reference" "J5"
+			(at 66.675 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GATE1_IN"
+			(at 66.675 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 67.31 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 67.31 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 67.31 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "8b22db50-8082-48a2-bb61-d3602861b1ce")
+		)
+		(pin "TN"
+			(uuid "ff3330d0-aef2-44ba-97c5-f36c098d25e5")
+		)
+		(pin "S"
+			(uuid "464bea22-c188-4a68-b85a-252011a5a3c9")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -3194,77 +3331,6 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "R30")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 173.99 124.46 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "399539f2-cb57-4b9d-b9f2-4695a6817132")
-		(property "Reference" "J12"
-			(at 168.91 123.8249 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "CV1_IN"
-			(at 168.91 126.3649 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 173.99 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 173.99 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 173.99 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "e448e723-1302-4266-bbc1-99692bde8128")
-		)
-		(pin "T"
-			(uuid "1e3ece00-77d0-47cd-b90e-769e1792fba3")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "J12")
 					(unit 1)
 				)
 			)
@@ -3670,6 +3736,73 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "R37")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 185.42 72.39 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "541109e2-593f-4307-86a7-19fa5d2bd14c")
+		(property "Reference" "#PWR094"
+			(at 185.42 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 185.42 76.454 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 185.42 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "157dcac1-761a-4634-80c8-ac1be9729af4")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR094")
 					(unit 1)
 				)
 			)
@@ -4204,6 +4337,77 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 180.34 124.46 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6c097451-a918-4681-9634-da7b593934d8")
+		(property "Reference" "J10"
+			(at 179.705 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CV1_IN"
+			(at 179.705 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 180.34 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 180.34 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 180.34 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "d54c6a15-4928-48fd-bbbe-4b9483523d9e")
+		)
+		(pin "TN"
+			(uuid "a4c8ed07-d4de-40ca-82ef-060c45113d13")
+		)
+		(pin "S"
+			(uuid "78976f9d-02d1-41bd-8363-b4ce690cd883")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "J10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 121.92 139.7 90)
 		(unit 1)
@@ -4266,6 +4470,77 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "R29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 180.34 64.77 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7605c119-5c22-48d1-aef9-e2f7356f0d51")
+		(property "Reference" "J9"
+			(at 179.705 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "V/OCT_IN"
+			(at 179.705 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 180.34 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 180.34 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 180.34 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "0a3f341e-951c-4142-a57e-96dda19ec184")
+		)
+		(pin "TN"
+			(uuid "f288c668-8e1c-4e4a-bdde-15e07fd0365f")
+		)
+		(pin "S"
+			(uuid "4e35b1e8-7b50-4d8b-ae02-cc0abb20f9cd")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "J9")
 					(unit 1)
 				)
 			)
@@ -4474,144 +4749,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 173.99 64.77 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7bf46a77-0339-49d2-a3d7-81190d9a7f4a")
-		(property "Reference" "J11"
-			(at 168.91 64.1349 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "V/OCT_IN"
-			(at 168.91 66.6749 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 173.99 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 173.99 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 173.99 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "646b15e1-775b-43a5-bf5b-debbe7cf5d80")
-		)
-		(pin "T"
-			(uuid "865056b5-1637-47d6-b75a-164bb07ed62c")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "J11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 72.39 107.95 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "8251492f-0ef0-422b-84bd-4949ae3fed9c")
-		(property "Reference" "#PWR085"
-			(at 72.39 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 72.39 112.014 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 72.39 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 72.39 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 72.39 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2e2b3b3c-f4ab-4bff-8e6d-8c54c949b4e1")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "#PWR085")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:Opamp_Dual")
 		(at 69.85 181.61 0)
 		(mirror x)
@@ -4735,17 +4872,33 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 88.9 162.56 0)
-		(mirror y)
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 87.63 154.94 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8dc18c74-a521-4a65-94d6-17b07f2b4ccb")
-		(property "Reference" "#PWR083"
-			(at 88.9 168.91 0)
+		(uuid "85526cd9-8ee9-48e1-85e6-194a023a968d")
+		(property "Reference" "J8"
+			(at 86.995 163.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CV2_IN"
+			(at 86.995 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 87.63 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4753,8 +4906,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 88.9 166.624 0)
+		(property "Datasheet" "~"
+			(at 87.63 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4762,8 +4915,8 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
-			(at 88.9 162.56 0)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 87.63 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4771,31 +4924,19 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 88.9 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "T"
+			(uuid "60d8f43c-f25e-4ec3-bba7-c7c1a444bb07")
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 88.9 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "TN"
+			(uuid "f2289343-ea10-449e-8de7-1043708c0011")
 		)
-		(pin "1"
-			(uuid "f9f802f0-208b-4495-a3c1-7f1699707b34")
+		(pin "S"
+			(uuid "ac4b10cb-09a2-44ab-b4cc-a637d49c1c9b")
 		)
 		(instances
-			(project "ima_new_codec"
+			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "#PWR083")
+					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -5006,77 +5147,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 67.31 55.88 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9eebf514-11f4-419d-a3eb-14f6897c649b")
-		(property "Reference" "J9"
-			(at 62.23 55.2449 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "GATE_IN1"
-			(at 62.23 57.7849 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 67.31 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 67.31 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 67.31 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "d32302f5-254e-411a-a417-e1c74831f3c0")
-		)
-		(pin "T"
-			(uuid "0f6d21a4-83eb-4be2-b7b1-c2469ee2718f")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "J9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:Opamp_Dual")
 		(at 157.48 40.64 0)
 		(unit 3)
@@ -5269,36 +5339,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 83.82 154.94 0)
-		(mirror x)
+		(lib_id "power:GND")
+		(at 185.42 132.08 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b14c22b4-fbcc-4230-a430-5a818ea2a683")
-		(property "Reference" "J8"
-			(at 78.74 154.3049 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "CV2_IN"
-			(at 78.74 156.8449 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 83.82 154.94 0)
+		(uuid "ae3c2a57-d571-4243-a23f-2aac97ebe79c")
+		(property "Reference" "#PWR095"
+			(at 185.42 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5306,8 +5357,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 83.82 154.94 0)
+		(property "Value" "GND"
+			(at 185.42 136.144 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5315,8 +5366,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 83.82 154.94 0)
+		(property "Footprint" ""
+			(at 185.42 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5324,16 +5375,31 @@
 				(hide yes)
 			)
 		)
-		(pin "S"
-			(uuid "d01c4027-62aa-4e30-9828-2f04b29f4a5f")
+		(property "Datasheet" ""
+			(at 185.42 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(pin "T"
-			(uuid "d1b4631b-9680-45af-81b5-ed0a75132dc6")
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 185.42 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3b8ba28e-50b1-42dd-93cb-a54b04c23890")
 		)
 		(instances
-			(project "ima_new_codec"
+			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "J8")
+					(reference "#PWR095")
 					(unit 1)
 				)
 			)
@@ -5367,7 +5433,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 143.8148 31.75 0)
 			(effects
 				(font
@@ -5404,77 +5470,6 @@
 			(project ""
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "C58")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 67.31 100.33 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b4497f93-946d-4cc1-93ca-f9f2a42ea84d")
-		(property "Reference" "J10"
-			(at 62.23 99.6949 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "GATE_IN2"
-			(at 62.23 102.2349 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 67.31 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 67.31 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 67.31 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "357c8c47-b02c-4422-b2fc-07c3c576fbb4")
-		)
-		(pin "T"
-			(uuid "29dbb98f-166d-407f-bda8-29631d9c3ba3")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -5625,73 +5620,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 179.07 72.39 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "c27f8585-fe41-4ee3-87e2-8c621996fc5f")
-		(property "Reference" "#PWR094"
-			(at 179.07 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 179.07 76.454 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "765102fe-e647-4fa7-84e3-c98f7e36f1c7")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
-					(reference "#PWR094")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 121.92 129.54 90)
 		(unit 1)
@@ -5754,6 +5682,140 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "C55")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 72.39 107.95 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d0d44e32-ca37-4beb-9938-045e80a8bcaa")
+		(property "Reference" "#PWR085"
+			(at 72.39 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 72.39 112.014 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 72.39 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 72.39 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 72.39 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0f4b2af7-7b92-46da-bc73-ec8219227f47")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR085")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 92.71 162.56 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d2f359be-74f7-4095-b96a-27b99354532d")
+		(property "Reference" "#PWR083"
+			(at 92.71 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 92.71 166.624 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 92.71 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 92.71 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 92.71 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c6f2b359-21e9-419e-829e-0d14bcec16e2")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR083")
 					(unit 1)
 				)
 			)

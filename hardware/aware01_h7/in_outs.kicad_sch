@@ -258,7 +258,7 @@
 				)
 			)
 		)
-		(symbol "Connector_Audio:AudioJack2"
+		(symbol "Connector_Audio:AudioJack2_SwitchT"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -270,7 +270,7 @@
 					)
 				)
 			)
-			(property "Value" "AudioJack2"
+			(property "Value" "AudioJack2_SwitchT"
 				(at 0 6.35 0)
 				(effects
 					(font
@@ -296,7 +296,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
+			(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -305,7 +305,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "audio jack receptacle mono phone headphone TS connector"
+			(property "ki_keywords" "audio jack receptacle mono headphones phone TS connector"
 				(at 0 0 0)
 				(effects
 					(font
@@ -323,10 +323,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "AudioJack2_0_1"
+			(symbol "AudioJack2_SwitchT_0_1"
 				(rectangle
-					(start -3.81 0)
-					(end -2.54 -2.54)
+					(start -2.54 0)
+					(end -3.81 -2.54)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -335,15 +335,16 @@
 						(type outline)
 					)
 				)
-				(rectangle
-					(start -2.54 3.81)
-					(end 2.54 -2.54)
+				(polyline
+					(pts
+						(xy 1.778 -0.254) (xy 2.032 -0.762)
+					)
 					(stroke
-						(width 0.254)
+						(width 0)
 						(type default)
 					)
 					(fill
-						(type background)
+						(type none)
 					)
 				)
 				(polyline
@@ -352,6 +353,18 @@
 					)
 					(stroke
 						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 1.778 -2.54) (xy 1.778 -0.254) (xy 1.524 -0.762)
+					)
+					(stroke
+						(width 0)
 						(type default)
 					)
 					(fill
@@ -370,8 +383,19 @@
 						(type none)
 					)
 				)
+				(rectangle
+					(start 2.54 3.81)
+					(end -2.54 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
 			)
-			(symbol "AudioJack2_1_1"
+			(symbol "AudioJack2_SwitchT_1_1"
 				(pin passive line
 					(at 5.08 2.54 180)
 					(length 2.54)
@@ -401,6 +425,24 @@
 						)
 					)
 					(number "T"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "TN"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1299,7 +1341,7 @@
 		(uuid "2e239f4e-4e4a-4328-a8dd-20abc8cdbf9b")
 	)
 	(junction
-		(at 35.56 109.22)
+		(at 24.13 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "300b4454-9f1d-4718-9086-e845262c5d7e")
@@ -1323,7 +1365,7 @@
 		(uuid "3c0e4c71-d109-49f4-9087-946fc18d186f")
 	)
 	(junction
-		(at 46.99 91.44)
+		(at 35.56 87.63)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "45f96712-8e02-45ed-b844-7ed8e33f5a36")
@@ -1335,7 +1377,7 @@
 		(uuid "4ab14323-958a-4ffb-9e8b-d725cadcc757")
 	)
 	(junction
-		(at 46.99 109.22)
+		(at 35.56 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "595c3582-106f-4fa1-89b5-e8ffe621a1c3")
@@ -1357,6 +1399,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7f3d0dfb-2ee3-4b3f-be6d-e04ff4149467")
+	)
+	(junction
+		(at 54.61 130.81)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8fb3f72a-008f-48bb-8c69-9c836e70e641")
 	)
 	(junction
 		(at 111.76 64.77)
@@ -1435,8 +1483,20 @@
 		(uuid "04e2879a-5779-4646-a039-894bc6aff6f3")
 	)
 	(no_connect
+		(at 242.57 133.35)
+		(uuid "3244fad5-0026-436c-a5d3-9663e566120d")
+	)
+	(no_connect
 		(at 91.44 165.1)
 		(uuid "7ccf47f8-686c-449d-8105-dcb7dc0fc3dd")
+	)
+	(no_connect
+		(at 46.99 128.27)
+		(uuid "a947403a-fb82-45d6-b6cd-601121e2cbbc")
+	)
+	(no_connect
+		(at 242.57 64.77)
+		(uuid "d015d41d-c573-4c49-8b90-f6d582a24d48")
 	)
 	(wire
 		(pts
@@ -1490,7 +1550,7 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 109.22) (xy 46.99 109.22)
+			(xy 33.02 105.41) (xy 35.56 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1520,7 +1580,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 109.22) (xy 35.56 109.22)
+			(xy 21.59 105.41) (xy 24.13 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1590,7 +1650,7 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 91.44) (xy 46.99 91.44)
+			(xy 33.02 87.63) (xy 35.56 87.63)
 		)
 		(stroke
 			(width 0)
@@ -1630,7 +1690,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 91.44) (xy 46.99 92.71)
+			(xy 35.56 87.63) (xy 35.56 88.9)
 		)
 		(stroke
 			(width 0)
@@ -1650,7 +1710,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 109.22) (xy 46.99 107.95)
+			(xy 35.56 105.41) (xy 35.56 104.14)
 		)
 		(stroke
 			(width 0)
@@ -1790,6 +1850,16 @@
 	)
 	(wire
 		(pts
+			(xy 54.61 59.69) (xy 54.61 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f4782b1-809e-47f8-8441-707911654c5d")
+	)
+	(wire
+		(pts
 			(xy 240.03 69.85) (xy 240.03 71.12)
 		)
 		(stroke
@@ -1807,6 +1877,16 @@
 			(type default)
 		)
 		(uuid "626f0670-5cfa-4f22-ac6c-829521dcec4d")
+	)
+	(wire
+		(pts
+			(xy 54.61 130.81) (xy 60.96 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "648507fc-03a6-41b2-bdb2-d33a42a3af84")
 	)
 	(wire
 		(pts
@@ -1850,7 +1930,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 91.44) (xy 36.83 91.44)
+			(xy 24.13 87.63) (xy 25.4 87.63)
 		)
 		(stroke
 			(width 0)
@@ -1890,7 +1970,17 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 110.49) (xy 46.99 109.22)
+			(xy 46.99 59.69) (xy 54.61 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "714dd156-b3b3-4e94-949d-e3eb2eb81526")
+	)
+	(wire
+		(pts
+			(xy 35.56 106.68) (xy 35.56 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1910,7 +2000,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 130.81) (xy 60.96 130.81)
+			(xy 46.99 130.81) (xy 54.61 130.81)
 		)
 		(stroke
 			(width 0)
@@ -2090,7 +2180,7 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 90.17) (xy 46.99 91.44)
+			(xy 35.56 86.36) (xy 35.56 87.63)
 		)
 		(stroke
 			(width 0)
@@ -2310,7 +2400,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 91.44) (xy 35.56 109.22)
+			(xy 24.13 87.63) (xy 24.13 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2400,7 +2490,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 109.22) (xy 36.83 109.22)
+			(xy 24.13 105.41) (xy 25.4 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2531,7 +2621,7 @@
 		)
 		(uuid "05cca5b9-34ee-41cf-b466-3a35f4b3d625")
 	)
-	(hierarchical_label "INR"
+	(hierarchical_label "INL"
 		(shape output)
 		(at 128.27 64.77 0)
 		(fields_autoplaced yes)
@@ -2543,7 +2633,7 @@
 		)
 		(uuid "52bb7efe-0667-488f-99be-f49a98d8595b")
 	)
-	(hierarchical_label "INL"
+	(hierarchical_label "INR"
 		(shape output)
 		(at 128.27 133.35 0)
 		(fields_autoplaced yes)
@@ -2637,7 +2727,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 40.64 91.44 270)
+		(at 29.21 87.63 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2646,7 +2736,7 @@
 		(dnp no)
 		(uuid "0b2006d7-863e-4d71-9f8d-0cd8954146f1")
 		(property "Reference" "C43"
-			(at 40.132 97.028 90)
+			(at 28.702 93.218 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2654,7 +2744,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 40.132 94.488 90)
+			(at 28.702 90.678 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2662,7 +2752,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 36.83 90.4748 0)
+			(at 25.4 86.6648 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2671,7 +2761,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 40.64 91.44 0)
+			(at 29.21 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2680,7 +2770,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 40.64 91.44 0)
+			(at 29.21 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2978,7 +3068,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 40.64 109.22 270)
+		(at 29.21 105.41 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2987,7 +3077,7 @@
 		(dnp no)
 		(uuid "34a7f937-b433-411a-801a-4ae471235ac3")
 		(property "Reference" "C44"
-			(at 39.878 105.41 90)
+			(at 28.448 101.6 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2995,7 +3085,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 39.878 102.87 90)
+			(at 28.448 99.06 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3003,7 +3093,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 36.83 108.2548 0)
+			(at 25.4 104.4448 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3012,7 +3102,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 40.64 109.22 0)
+			(at 29.21 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3021,7 +3111,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 40.64 109.22 0)
+			(at 29.21 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3277,7 +3367,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PTV1124420AB503"
+		(property "Footprint" "Eurorack:PTV1124420AB503"
 			(at 2.87 142.24 0)
 			(effects
 				(font
@@ -3517,6 +3607,76 @@
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "#PWR071")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 247.65 67.31 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5191bff0-8b00-441f-abd7-bb6ed566faa2")
+		(property "Reference" "J6"
+			(at 248.285 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "OutL"
+			(at 248.285 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 247.65 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 247.65 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 247.65 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "0f77f03f-859f-4dbe-b0c1-162f4dd76f63")
+		)
+		(pin "TN"
+			(uuid "ea2ccc3c-aeb5-4eec-bec7-7ba34cf3a370")
+		)
+		(pin "S"
+			(uuid "e185b21d-106e-405c-991f-f8338f7691f2")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "J6")
 					(unit 1)
 				)
 			)
@@ -3801,6 +3961,77 @@
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "U9")
 					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 41.91 62.23 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "589da044-233d-4b59-886d-edab273332ee")
+		(property "Reference" "J11"
+			(at 41.275 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "InL"
+			(at 41.275 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 41.91 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 41.91 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 41.91 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "ecd76f10-c4d4-46fe-89bc-b9a405d6d387")
+		)
+		(pin "TN"
+			(uuid "1f9c1f57-0dc1-4eb9-8b46-b8d8229055c1")
+		)
+		(pin "S"
+			(uuid "194cc797-2161-49d6-be1f-5777cd8da410")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "J11")
+					(unit 1)
 				)
 			)
 		)
@@ -4291,7 +4522,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 46.99 90.17 0)
+		(at 35.56 86.36 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4300,7 +4531,7 @@
 		(fields_autoplaced yes)
 		(uuid "6f0f6422-9998-4a0b-b67f-d471acff5ee2")
 		(property "Reference" "#PWR063"
-			(at 46.99 93.98 0)
+			(at 35.56 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4309,7 +4540,7 @@
 			)
 		)
 		(property "Value" "+12V"
-			(at 46.99 85.09 0)
+			(at 35.56 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4317,7 +4548,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 46.99 90.17 0)
+			(at 35.56 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4326,7 +4557,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 46.99 90.17 0)
+			(at 35.56 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4335,7 +4566,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 46.99 90.17 0)
+			(at 35.56 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4350,77 +4581,6 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "#PWR063")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 41.91 130.81 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7096a2a5-4335-468d-9e8c-c67f0ddcd3b3")
-		(property "Reference" "J5"
-			(at 36.83 130.1749 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "InR"
-			(at 36.83 132.7149 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 41.91 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 41.91 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 41.91 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "22739738-94cf-4c43-bcee-80497b97a19d")
-		)
-		(pin "T"
-			(uuid "5def67f7-c1aa-4079-84b1-27d4e23c2fdd")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -4520,7 +4680,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PTV1124420AB503"
+		(property "Footprint" "Eurorack:PTV1124420AB503"
 			(at 2.87 73.66 0)
 			(effects
 				(font
@@ -4657,7 +4817,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PTV1124420AB503"
+		(property "Footprint" "Eurorack:PTV1124420AB503"
 			(at -0.94 186.69 0)
 			(effects
 				(font
@@ -5043,77 +5203,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 41.91 62.23 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9137b19e-72ff-43ef-b20b-ab280262f8eb")
-		(property "Reference" "J4"
-			(at 36.83 61.5949 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "InR"
-			(at 36.83 64.1349 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 41.91 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 41.91 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 41.91 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "60ad2b04-65fc-44ec-90ec-ddc0ff22d0c4")
-		)
-		(pin "T"
-			(uuid "2b90e9bf-aa4b-4f7a-9668-eedd194040a6")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 64.77 62.23 90)
 		(mirror x)
@@ -5177,6 +5266,76 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 247.65 135.89 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9327f875-89ca-4685-96fd-793c530727e7")
+		(property "Reference" "J13"
+			(at 248.285 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "OutR"
+			(at 248.285 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 247.65 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 247.65 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 247.65 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "ad14b187-4e6e-412b-b741-af0138742e4f")
+		)
+		(pin "TN"
+			(uuid "db81f030-8f5a-44f4-a51e-5a56dcdbd3fd")
+		)
+		(pin "S"
+			(uuid "276ba8a1-fe31-49ea-8449-e27f2f7a193a")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "J13")
 					(unit 1)
 				)
 			)
@@ -5671,35 +5830,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 247.65 67.31 180)
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 41.91 130.81 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a71479ec-329c-4c51-872b-726f422de871")
-		(property "Reference" "J6"
-			(at 252.73 66.6749 0)
+		(uuid "a9c2e3a6-7cf8-4cbf-b556-d61c69d91f81")
+		(property "Reference" "J4"
+			(at 41.275 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
 			)
 		)
-		(property "Value" "OutL"
-			(at 252.73 69.2149 0)
+		(property "Value" "InL"
+			(at 41.275 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
 			)
 		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 247.65 67.31 0)
+		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+			(at 41.91 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5708,7 +5865,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 247.65 67.31 0)
+			(at 41.91 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5716,25 +5873,28 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 247.65 67.31 0)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 41.91 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
-		)
-		(pin "S"
-			(uuid "f40d98f0-cf8b-4d90-93a1-6cc16c8d11e3")
 		)
 		(pin "T"
-			(uuid "4c24ccf0-b16f-4759-9c7e-3cad45a6d307")
+			(uuid "e4e32786-33c3-4a99-a7f5-3c0d424ba75a")
+		)
+		(pin "TN"
+			(uuid "ca4de293-c57d-41b7-ac34-61589546b173")
+		)
+		(pin "S"
+			(uuid "b10ab8a8-7fbb-4321-b9e5-5b4dfc4e7d58")
 		)
 		(instances
-			(project "ima_new_codec"
+			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J6")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -6093,76 +6253,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Audio:AudioJack2")
-		(at 247.65 135.89 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c66e469b-3bf1-40b4-a3f8-469e33895673")
-		(property "Reference" "J7"
-			(at 252.73 135.2549 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "OutL"
-			(at 252.73 137.7949 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 247.65 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 247.65 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Audio Jack, 2 Poles (Mono / TS)"
-			(at 247.65 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "S"
-			(uuid "5fac6c31-49b5-4f0e-9a38-0feb4be7de84")
-		)
-		(pin "T"
-			(uuid "1fa30f60-ecbe-4c6d-983d-18a74ffe01d6")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 209.55 39.37 270)
 		(mirror x)
@@ -6366,7 +6456,7 @@
 	)
 	(symbol
 		(lib_id "power:-12V")
-		(at 46.99 110.49 180)
+		(at 35.56 106.68 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6375,7 +6465,7 @@
 		(fields_autoplaced yes)
 		(uuid "dee28a65-9c4d-4d0b-af17-e8a4205ffafe")
 		(property "Reference" "#PWR064"
-			(at 46.99 106.68 0)
+			(at 35.56 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6384,7 +6474,7 @@
 			)
 		)
 		(property "Value" "-12V"
-			(at 46.99 115.57 0)
+			(at 35.56 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6392,7 +6482,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 46.99 110.49 0)
+			(at 35.56 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6401,7 +6491,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 46.99 110.49 0)
+			(at 35.56 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6410,7 +6500,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"-12V\""
-			(at 46.99 110.49 0)
+			(at 35.56 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6501,7 +6591,7 @@
 	)
 	(symbol
 		(lib_id "Amplifier_Operational:NE5532")
-		(at 49.53 100.33 0)
+		(at 38.1 96.52 0)
 		(unit 3)
 		(exclude_from_sim yes)
 		(in_bom yes)
@@ -6509,7 +6599,7 @@
 		(dnp no)
 		(uuid "e52811ba-6f32-4be5-8fb1-fe7347975e0c")
 		(property "Reference" "U9"
-			(at 51.054 98.298 0)
+			(at 39.624 94.488 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6517,7 +6607,7 @@
 			)
 		)
 		(property "Value" "NE5532DRG4"
-			(at 52.07 100.584 0)
+			(at 40.64 96.774 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6525,7 +6615,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:NE5532DRG4"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6534,7 +6624,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/ne5532.pdf"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6543,7 +6633,7 @@
 			)
 		)
 		(property "Description" "Dual Low-Noise Operational Amplifiers, DIP-8/SOIC-8"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6552,7 +6642,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=in+ 2=in- 3=vcc 4=vee 5=out"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6561,7 +6651,7 @@
 			)
 		)
 		(property "Sim.Device" "SUBCKT "
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6570,7 +6660,7 @@
 			)
 		)
 		(property "Sim.Library" "${KICAD7_SYMBOL_DIR}/Simulation_SPICE.sp"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6579,7 +6669,7 @@
 			)
 		)
 		(property "Sim.name" "kicad_builtin_opamp"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6588,7 +6678,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6597,7 +6687,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "NE5532DRG4"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6606,7 +6696,7 @@
 			)
 		)
 		(property "Mouser Part Number" "595-NE5532DRG4"
-			(at 49.53 100.33 0)
+			(at 38.1 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7001,7 +7091,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 33.02 109.22 0)
+		(at 21.59 105.41 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -7010,7 +7100,7 @@
 		(fields_autoplaced yes)
 		(uuid "fe5ac81c-5508-454b-b4bc-fe92d905d52b")
 		(property "Reference" "#PWR062"
-			(at 33.02 115.57 0)
+			(at 21.59 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7019,7 +7109,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 33.02 114.3 0)
+			(at 21.59 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7028,7 +7118,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 33.02 109.22 0)
+			(at 21.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7037,7 +7127,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 109.22 0)
+			(at 21.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7046,7 +7136,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 33.02 109.22 0)
+			(at 21.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)

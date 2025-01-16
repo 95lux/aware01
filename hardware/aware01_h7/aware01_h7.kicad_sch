@@ -12508,7 +12508,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector:FanPinHeader_1x03_P2.54mm_Vertical"
 			(at 49.53 182.88 0)
 			(effects
 				(font
