@@ -1,0 +1,45 @@
+# CubeMX configuration files (keep these for reproducibility)
+!.ioc
+
+# Build and generated files
+/build/
+**/CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# IDE-specific files (adjust based on IDE)
+*.swp
+*.swo
+*.swd
+*.launch
+*.settings/
+*.cproject
+*.project
+
+# Log files
+*.log
+
+# STM32CubeMX-generated files that are regenerated
+Core/*.o
+Core/*.d
+Core/*.map
+Core/*.elf
+Core/*.bin
+Core/*.hex
+
+# Libraries
+Drivers/STM32F*/Middlewares/
+Drivers/CMSIS/*_SVD/
+
+# OS and editor specific
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.bak
+
+# Backup files
+*.old
+*.backup
+*.tmp
