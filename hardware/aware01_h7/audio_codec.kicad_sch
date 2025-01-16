@@ -1216,6 +1216,12 @@
 		(uuid "3cc2c496-feaa-44bc-af6e-811c968f48fe")
 	)
 	(junction
+		(at 130.81 44.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "409482f4-3383-41ff-af88-ce07600d70d9")
+	)
+	(junction
 		(at 124.46 128.27)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1232,12 +1238,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ab1a95c5-8c7d-422a-ba8d-be5cec2c70fc")
-	)
-	(junction
-		(at 139.7 95.25)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b8b82583-7c67-4334-9a93-ae2d88f26cfa")
 	)
 	(junction
 		(at 116.84 35.56)
@@ -1309,6 +1309,16 @@
 	)
 	(wire
 		(pts
+			(xy 128.27 44.45) (xy 130.81 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d7c9562-07f7-4492-9657-a2f534dce71c")
+	)
+	(wire
+		(pts
 			(xy 124.46 128.27) (xy 127 128.27)
 		)
 		(stroke
@@ -1359,7 +1369,7 @@
 	)
 	(wire
 		(pts
-			(xy 121.92 50.8) (xy 121.92 59.69)
+			(xy 121.92 48.26) (xy 121.92 59.69)
 		)
 		(stroke
 			(width 0)
@@ -1379,7 +1389,17 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 39.37) (xy 130.81 40.64)
+			(xy 130.81 44.45) (xy 130.81 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3473fb4f-f319-47cc-9a6f-f9f3d2298833")
+	)
+	(wire
+		(pts
+			(xy 130.81 39.37) (xy 130.81 44.45)
 		)
 		(stroke
 			(width 0)
@@ -1459,23 +1479,23 @@
 	)
 	(wire
 		(pts
-			(xy 124.46 50.8) (xy 121.92 50.8)
+			(xy 127 54.61) (xy 127 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a76809b-96d3-45ad-af02-08a9feeb030d")
+	)
+	(wire
+		(pts
+			(xy 121.92 48.26) (xy 128.27 48.26)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "713442a3-9547-4895-820e-5acf59b7c2f3")
-	)
-	(wire
-		(pts
-			(xy 138.43 95.25) (xy 139.7 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "75e5ca8f-d843-4748-829f-a9af7fbe2cc3")
 	)
 	(wire
 		(pts
@@ -1589,7 +1609,7 @@
 	)
 	(wire
 		(pts
-			(xy 127 53.34) (xy 127 59.69)
+			(xy 138.43 50.8) (xy 138.43 54.61)
 		)
 		(stroke
 			(width 0)
@@ -1616,6 +1636,16 @@
 			(type default)
 		)
 		(uuid "ba51c311-65a6-42c2-a92b-5ebbef318b3c")
+	)
+	(wire
+		(pts
+			(xy 128.27 48.26) (xy 128.27 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb6d3d16-1c4d-40e9-9908-79db8eff7150")
 	)
 	(wire
 		(pts
@@ -1716,6 +1746,16 @@
 			(type default)
 		)
 		(uuid "e8ab6e5d-355c-49fa-b371-15dd7ce2b551")
+	)
+	(wire
+		(pts
+			(xy 138.43 54.61) (xy 127 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f62e3321-9483-47ba-a234-bde3cb94ac50")
 	)
 	(text "Audio Codec"
 		(exclude_from_sim no)
@@ -1858,6 +1898,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -1989,6 +2030,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -2057,7 +2099,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 142.5448 107.95 0)
 			(effects
 				(font
@@ -2126,7 +2168,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 120.65 40.3352 0)
 			(effects
 				(font
@@ -2195,7 +2237,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 139.7 86.0552 0)
 			(effects
 				(font
@@ -2239,72 +2281,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 124.46 50.8 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4816fc47-05b6-4462-a4f8-75eae938e1a3")
-		(property "Reference" "#PWR052"
-			(at 124.46 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 124.46 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 124.46 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 124.46 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 124.46 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "04d199b7-7b08-40f3-8071-7c53cf20cde2")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "#PWR052")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 162.56 102.87 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2328,6 +2304,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -2388,7 +2365,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "0.1u"
+		(property "Value" "100n"
 			(at 166.37 100.3299 0)
 			(effects
 				(font
@@ -2397,7 +2374,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 161.5948 95.25 0)
 			(effects
 				(font
@@ -2507,7 +2484,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 130.81 40.64 0)
+		(at 130.81 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2516,7 +2493,7 @@
 		(fields_autoplaced yes)
 		(uuid "73880368-cd79-455e-8fe8-e2d29c8adf7d")
 		(property "Reference" "#PWR054"
-			(at 130.81 46.99 0)
+			(at 130.81 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2525,15 +2502,16 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 130.81 45.72 0)
+			(at 130.81 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
-			(at 130.81 40.64 0)
+			(at 130.81 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2542,7 +2520,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 130.81 40.64 0)
+			(at 130.81 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2551,7 +2529,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 130.81 40.64 0)
+			(at 130.81 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2596,6 +2574,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -2662,6 +2641,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -2721,7 +2701,7 @@
 				)
 			)
 		)
-		(property "Value" "0.1u"
+		(property "Value" "100n"
 			(at 129.54 127 90)
 			(effects
 				(font
@@ -2729,7 +2709,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 133.35 131.1148 0)
 			(effects
 				(font
@@ -3061,7 +3041,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3VA")
-		(at 127 53.34 0)
+		(at 138.43 50.8 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3070,7 +3050,7 @@
 		(fields_autoplaced yes)
 		(uuid "dc29d30f-8b81-4ba3-9c8f-d6430fe36ca2")
 		(property "Reference" "#PWR053"
-			(at 127 57.15 0)
+			(at 138.43 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3079,7 +3059,7 @@
 			)
 		)
 		(property "Value" "+3.3VA"
-			(at 127 48.26 0)
+			(at 138.43 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3087,7 +3067,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 127 53.34 0)
+			(at 138.43 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3096,7 +3076,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 127 53.34 0)
+			(at 138.43 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3105,7 +3085,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3VA\""
-			(at 127 53.34 0)
+			(at 138.43 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3150,6 +3130,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
@@ -3192,8 +3173,8 @@
 		)
 	)
 	(sheet
-		(at 191.77 78.74)
-		(size 35.56 68.58)
+		(at 191.77 83.82)
+		(size 35.56 63.5)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -3204,7 +3185,7 @@
 		)
 		(uuid "9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4")
 		(property "Sheetname" "Input Output Channels"
-			(at 191.77 78.0284 0)
+			(at 191.77 83.1084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
