@@ -1281,6 +1281,12 @@
 		(uuid "1d4c8320-a520-45cf-a8ee-620b4b9a853d")
 	)
 	(junction
+		(at 219.71 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1eb3926b-b3f8-49e4-8c24-cfb4efb75740")
+	)
+	(junction
 		(at 219.71 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1365,12 +1371,6 @@
 		(uuid "a63260a8-9029-45e6-a120-85486a7d8bff")
 	)
 	(junction
-		(at 219.71 135.89)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "aafa0869-3a0c-4cbc-9cc6-b24f725d8cea")
-	)
-	(junction
 		(at 157.48 106.68)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1429,6 +1429,14 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "fee3ef9e-7cd5-4f7e-bfa5-c55ee274cc9a")
+	)
+	(no_connect
+		(at 93.98 165.1)
+		(uuid "04e2879a-5779-4646-a039-894bc6aff6f3")
+	)
+	(no_connect
+		(at 91.44 165.1)
+		(uuid "7ccf47f8-686c-449d-8105-dcb7dc0fc3dd")
 	)
 	(wire
 		(pts
@@ -2569,7 +2577,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "02aab7ee-3225-43d8-a435-73c9fce5e8f1")
-		(property "Reference" "C40"
+		(property "Reference" "C45"
 			(at 91.186 32.512 90)
 			(effects
 				(font
@@ -2621,7 +2629,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C40")
+					(reference "C45")
 					(unit 1)
 				)
 			)
@@ -2637,7 +2645,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0b2006d7-863e-4d71-9f8d-0cd8954146f1")
-		(property "Reference" "C55"
+		(property "Reference" "C43"
 			(at 40.132 97.028 90)
 			(effects
 				(font
@@ -2689,7 +2697,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C55")
+					(reference "C43")
 					(unit 1)
 				)
 			)
@@ -2842,7 +2850,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2f9237a4-4d4f-43a9-948e-8db5ee36d48e")
-		(property "Reference" "C43"
+		(property "Reference" "C48"
 			(at 121.92 140.97 90)
 			(effects
 				(font
@@ -2894,7 +2902,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C43")
+					(reference "C48")
 					(unit 1)
 				)
 			)
@@ -2978,7 +2986,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "34a7f937-b433-411a-801a-4ae471235ac3")
-		(property "Reference" "C56"
+		(property "Reference" "C44"
 			(at 39.878 105.41 90)
 			(effects
 				(font
@@ -3030,7 +3038,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C56")
+					(reference "C44")
 					(unit 1)
 				)
 			)
@@ -3186,7 +3194,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "39e1d841-7033-4869-bb0e-feb2c9799102")
-		(property "Reference" "C41"
+		(property "Reference" "C46"
 			(at 91.186 101.092 90)
 			(effects
 				(font
@@ -3238,7 +3246,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C41")
+					(reference "C46")
 					(unit 1)
 				)
 			)
@@ -3390,7 +3398,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "505341ef-2c2a-4b50-8111-edfc17436608")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR066"
 			(at 49.53 140.97 0)
 			(effects
 				(font
@@ -3441,7 +3449,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR063")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -3457,7 +3465,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "50b82cad-a56c-4d24-bdc8-c48128556de1")
-		(property "Reference" "#PWR097"
+		(property "Reference" "#PWR071"
 			(at 154.94 113.03 0)
 			(effects
 				(font
@@ -3508,7 +3516,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR097")
+					(reference "#PWR071")
 					(unit 1)
 				)
 			)
@@ -3524,7 +3532,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "54bc3047-3807-4fd6-a19e-f9cc26da04b8")
-		(property "Reference" "C54"
+		(property "Reference" "C50"
 			(at 161.798 102.87 90)
 			(effects
 				(font
@@ -3576,7 +3584,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C54")
+					(reference "C50")
 					(unit 1)
 				)
 			)
@@ -3591,7 +3599,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "55bddaca-9804-48f2-b28e-ab4f5ddf5300")
-		(property "Reference" "#PWR067"
+		(property "Reference" "#PWR070"
 			(at 111.76 147.32 0)
 			(effects
 				(font
@@ -3642,7 +3650,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR067")
+					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -3666,7 +3674,7 @@
 				)
 			)
 		)
-		(property "Value" "NE5532"
+		(property "Value" "NE5532DRG4"
 			(at 88.9 140.97 0)
 			(effects
 				(font
@@ -3674,7 +3682,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:NE5532DRG4"
 			(at 88.9 133.35 0)
 			(effects
 				(font
@@ -3729,6 +3737,33 @@
 			)
 		)
 		(property "Sim.name" "kicad_builtin_opamp"
+			(at 88.9 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 88.9 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 88.9 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
 			(at 88.9 133.35 0)
 			(effects
 				(font
@@ -3856,7 +3891,7 @@
 				)
 			)
 		)
-		(property "Value" "NE5532"
+		(property "Value" "NE5532DRG4"
 			(at 88.9 72.39 0)
 			(effects
 				(font
@@ -3864,7 +3899,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:NE5532DRG4"
 			(at 88.9 64.77 0)
 			(effects
 				(font
@@ -3927,6 +3962,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 88.9 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 88.9 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
+			(at 88.9 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "4defddac-b83d-4036-acc4-e16b22413ea7")
 		)
@@ -3970,7 +4032,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5cf2e723-62ec-403b-a366-97f64ac1537b")
-		(property "Reference" "#PWR064"
+		(property "Reference" "#PWR067"
 			(at 77.47 73.66 0)
 			(effects
 				(font
@@ -4020,7 +4082,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR064")
+					(reference "#PWR067")
 					(unit 1)
 				)
 			)
@@ -4036,7 +4098,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "65a51041-d03c-4ff3-a0f2-4a96ddd2aedd")
-		(property "Reference" "C53"
+		(property "Reference" "C49"
 			(at 162.052 94.488 90)
 			(effects
 				(font
@@ -4088,7 +4150,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C53")
+					(reference "C49")
 					(unit 1)
 				)
 			)
@@ -4103,7 +4165,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "682a2723-5afe-4510-9908-aee273672327")
-		(property "Reference" "#PWR069"
+		(property "Reference" "#PWR073"
 			(at 168.91 104.14 0)
 			(effects
 				(font
@@ -4153,7 +4215,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR069")
+					(reference "#PWR073")
 					(unit 1)
 				)
 			)
@@ -4169,7 +4231,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6a351f34-79d0-4140-ba9d-a48276e3f1e7")
-		(property "Reference" "C47"
+		(property "Reference" "C54"
 			(at 209.296 103.632 90)
 			(effects
 				(font
@@ -4221,7 +4283,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C47")
+					(reference "C54")
 					(unit 1)
 				)
 			)
@@ -4237,7 +4299,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6f0f6422-9998-4a0b-b67f-d471acff5ee2")
-		(property "Reference" "#PWR060"
+		(property "Reference" "#PWR063"
 			(at 46.99 93.98 0)
 			(effects
 				(font
@@ -4287,7 +4349,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR060")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -4304,7 +4366,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7096a2a5-4335-468d-9e8c-c67f0ddcd3b3")
-		(property "Reference" "J4"
+		(property "Reference" "J5"
 			(at 36.83 130.1749 0)
 			(effects
 				(font
@@ -4322,7 +4384,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 41.91 130.81 0)
 			(effects
 				(font
@@ -4358,7 +4420,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J4")
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -4375,7 +4437,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7112fb54-eced-4982-a5dc-7e989d7a917b")
-		(property "Reference" "C42"
+		(property "Reference" "C47"
 			(at 121.92 72.39 90)
 			(effects
 				(font
@@ -4427,7 +4489,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C42")
+					(reference "C47")
 					(unit 1)
 				)
 			)
@@ -4717,7 +4779,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7a296713-b629-43db-ba41-a14ac11582cb")
-		(property "Reference" "#PWR070"
+		(property "Reference" "#PWR074"
 			(at 180.34 81.28 0)
 			(effects
 				(font
@@ -4768,7 +4830,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR070")
+					(reference "#PWR074")
 					(unit 1)
 				)
 			)
@@ -4855,7 +4917,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d76f03e-178e-4a00-9ec7-c6996ceb1817")
-		(property "Reference" "#PWR073"
+		(property "Reference" "#PWR077"
 			(at 200.66 144.78 0)
 			(effects
 				(font
@@ -4906,7 +4968,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR073")
+					(reference "#PWR077")
 					(unit 1)
 				)
 			)
@@ -4922,7 +4984,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8ada9d44-efa1-400a-991e-964cfe3be14a")
-		(property "Reference" "C44"
+		(property "Reference" "C51"
 			(at 173.736 60.452 90)
 			(effects
 				(font
@@ -4974,130 +5036,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C44")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Amplifier_Operational:NE5532")
-		(at 212.09 135.89 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8e6151af-5c94-40fb-a75e-bd179e86db6f")
-		(property "Reference" "U11"
-			(at 212.09 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "NE5532"
-			(at 212.09 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/ne5532.pdf"
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Dual Low-Noise Operational Amplifiers, DIP-8/SOIC-8"
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=in+ 2=in- 3=vcc 4=vee 5=out"
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "SUBCKT "
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Library" "${KICAD7_SYMBOL_DIR}/Simulation_SPICE.sp"
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.name" "kicad_builtin_opamp"
-			(at 212.09 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "b6a57c60-1d81-4e24-9ef9-cb265994bed9")
-		)
-		(pin "3"
-			(uuid "e3725cb2-66a8-4775-9fd4-bc2d3d4e202a")
-		)
-		(pin "8"
-			(uuid "9ea1ae9b-feb8-4271-b0ce-22fc72fba8e4")
-		)
-		(pin "1"
-			(uuid "921fc081-66d9-4059-b972-77da8ea3a9a1")
-		)
-		(pin "7"
-			(uuid "e01c2ec7-79e4-440b-b696-eec7be0f9c68")
-		)
-		(pin "6"
-			(uuid "2652b857-e055-4a9a-8e2d-f9498e839347")
-		)
-		(pin "4"
-			(uuid "afe522ef-19ac-49d2-ad1d-b4d154846d43")
-		)
-		(pin "5"
-			(uuid "53aadce0-4d78-4c93-9fb2-e83724073843")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "U11")
+					(reference "C51")
 					(unit 1)
 				)
 			)
@@ -5114,7 +5053,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9137b19e-72ff-43ef-b20b-ab280262f8eb")
-		(property "Reference" "J3"
+		(property "Reference" "J4"
 			(at 36.83 61.5949 0)
 			(effects
 				(font
@@ -5132,7 +5071,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 41.91 62.23 0)
 			(effects
 				(font
@@ -5168,7 +5107,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J3")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -5254,7 +5193,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "938830fe-fae7-4743-bf56-3c79094c83d5")
-		(property "Reference" "#PWR072"
+		(property "Reference" "#PWR076"
 			(at 200.66 76.2 0)
 			(effects
 				(font
@@ -5305,7 +5244,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR072")
+					(reference "#PWR076")
 					(unit 1)
 				)
 			)
@@ -5328,7 +5267,7 @@
 				)
 			)
 		)
-		(property "Value" "NE5532"
+		(property "Value" "NE5532DRG4"
 			(at 173.99 98.044 0)
 			(effects
 				(font
@@ -5336,7 +5275,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:NE5532DRG4"
 			(at 171.45 97.79 0)
 			(effects
 				(font
@@ -5399,6 +5338,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 171.45 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 171.45 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
+			(at 171.45 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "fd3570f6-5181-4e44-a59b-d54d45e5fad1")
 		)
@@ -5442,7 +5408,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "99df308f-68f3-4240-b042-5e7077aefc03")
-		(property "Reference" "#PWR068"
+		(property "Reference" "#PWR072"
 			(at 168.91 91.44 0)
 			(effects
 				(font
@@ -5492,7 +5458,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR068")
+					(reference "#PWR072")
 					(unit 1)
 				)
 			)
@@ -5576,7 +5542,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a5e6d062-f8bf-40d1-a527-0004bc56a490")
-		(property "Reference" "C45"
+		(property "Reference" "C52"
 			(at 173.736 129.032 90)
 			(effects
 				(font
@@ -5628,7 +5594,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C45")
+					(reference "C52")
 					(unit 1)
 				)
 			)
@@ -5714,7 +5680,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a71479ec-329c-4c51-872b-726f422de871")
-		(property "Reference" "J5"
+		(property "Reference" "J6"
 			(at 252.73 66.6749 0)
 			(effects
 				(font
@@ -5732,7 +5698,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 247.65 67.31 0)
 			(effects
 				(font
@@ -5768,7 +5734,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J5")
+					(reference "J6")
 					(unit 1)
 				)
 			)
@@ -5792,7 +5758,7 @@
 				)
 			)
 		)
-		(property "Value" "NE5532"
+		(property "Value" "NE5532DRG4"
 			(at 211.836 77.216 0)
 			(effects
 				(font
@@ -5800,7 +5766,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:NE5532DRG4"
 			(at 212.09 67.31 0)
 			(effects
 				(font
@@ -5855,6 +5821,33 @@
 			)
 		)
 		(property "Sim.name" "kicad_builtin_opamp"
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
 			(at 212.09 67.31 0)
 			(effects
 				(font
@@ -5974,7 +5967,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b94a9226-172c-47d3-aaf1-1945ab6d23c8")
-		(property "Reference" "#PWR062"
+		(property "Reference" "#PWR065"
 			(at 49.53 72.39 0)
 			(effects
 				(font
@@ -6025,7 +6018,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR062")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -6109,7 +6102,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c66e469b-3bf1-40b4-a3f8-469e33895673")
-		(property "Reference" "J6"
+		(property "Reference" "J7"
 			(at 252.73 135.2549 0)
 			(effects
 				(font
@@ -6127,7 +6120,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 247.65 135.89 0)
 			(effects
 				(font
@@ -6163,7 +6156,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J6")
+					(reference "J7")
 					(unit 1)
 				)
 			)
@@ -6179,7 +6172,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "cb649bda-0936-4414-9e49-3aa94b82181f")
-		(property "Reference" "C46"
+		(property "Reference" "C53"
 			(at 209.296 35.052 90)
 			(effects
 				(font
@@ -6231,7 +6224,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C46")
+					(reference "C53")
 					(unit 1)
 				)
 			)
@@ -6247,7 +6240,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ce9a44ca-319f-4eef-b4dc-03d8dde26d9f")
-		(property "Reference" "#PWR075"
+		(property "Reference" "#PWR079"
 			(at 240.03 146.05 0)
 			(effects
 				(font
@@ -6298,7 +6291,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR075")
+					(reference "#PWR079")
 					(unit 1)
 				)
 			)
@@ -6314,7 +6307,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cff9db26-43fb-4775-a8b2-86b56adfa182")
-		(property "Reference" "#PWR071"
+		(property "Reference" "#PWR075"
 			(at 180.34 149.86 0)
 			(effects
 				(font
@@ -6365,7 +6358,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR071")
+					(reference "#PWR075")
 					(unit 1)
 				)
 			)
@@ -6381,7 +6374,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dee28a65-9c4d-4d0b-af17-e8a4205ffafe")
-		(property "Reference" "#PWR061"
+		(property "Reference" "#PWR064"
 			(at 46.99 106.68 0)
 			(effects
 				(font
@@ -6431,7 +6424,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR061")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -6523,7 +6516,7 @@
 				)
 			)
 		)
-		(property "Value" "NE5532"
+		(property "Value" "NE5532DRG4"
 			(at 52.07 100.584 0)
 			(effects
 				(font
@@ -6531,7 +6524,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Eurorack:NE5532DRG4"
 			(at 49.53 100.33 0)
 			(effects
 				(font
@@ -6594,6 +6587,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "fd3570f6-5181-4e44-a59b-d54d45e5fad2")
 		)
@@ -6637,7 +6657,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e5c8c5d4-480c-4c43-8f4e-dd974c893a89")
-		(property "Reference" "#PWR074"
+		(property "Reference" "#PWR078"
 			(at 240.03 77.47 0)
 			(effects
 				(font
@@ -6688,7 +6708,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR074")
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -6704,7 +6724,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ea3defb3-c39c-4ab5-aa8a-e4cc905e24bd")
-		(property "Reference" "#PWR065"
+		(property "Reference" "#PWR068"
 			(at 77.47 142.24 0)
 			(effects
 				(font
@@ -6755,8 +6775,157 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR065")
+					(reference "#PWR068")
 					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:NE5532")
+		(at 212.09 135.89 0)
+		(mirror x)
+		(unit 2)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ecd2d2b1-be56-48ba-96ee-95242dfa1577")
+		(property "Reference" "U10"
+			(at 211.836 143.256 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NE5532DRG4"
+			(at 211.836 145.796 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Eurorack:NE5532DRG4"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/ne5532.pdf"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual Low-Noise Operational Amplifiers, DIP-8/SOIC-8"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=in+ 2=in- 3=vcc 4=vee 5=out"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "SUBCKT "
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Library" "${KICAD7_SYMBOL_DIR}/Simulation_SPICE.sp"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.name" "kicad_builtin_opamp"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "NE5532DRG4"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "595-NE5532DRG4"
+			(at 212.09 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e655ea70-e5db-42cd-a7df-b83e816c5f73")
+		)
+		(pin "3"
+			(uuid "5e6b30f6-0283-464c-9760-3903d6a2f2a9")
+		)
+		(pin "8"
+			(uuid "9ea1ae9b-feb8-4271-b0ce-22fc72fba8e5")
+		)
+		(pin "1"
+			(uuid "27507e83-b143-4f47-a63a-f57c95ec68e2")
+		)
+		(pin "7"
+			(uuid "e01c2ec7-79e4-440b-b696-eec7be0f9c69")
+		)
+		(pin "6"
+			(uuid "2652b857-e055-4a9a-8e2d-f9498e839348")
+		)
+		(pin "4"
+			(uuid "afe522ef-19ac-49d2-ad1d-b4d154846d44")
+		)
+		(pin "5"
+			(uuid "53aadce0-4d78-4c93-9fb2-e83724073844")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "U10")
+					(unit 2)
 				)
 			)
 		)
@@ -6840,7 +7009,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fe5ac81c-5508-454b-b4bc-fe92d905d52b")
-		(property "Reference" "#PWR098"
+		(property "Reference" "#PWR062"
 			(at 33.02 115.57 0)
 			(effects
 				(font
@@ -6891,7 +7060,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR098")
+					(reference "#PWR062")
 					(unit 1)
 				)
 			)
@@ -6906,7 +7075,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ff63bc4a-8bfb-4f50-9f15-548572657f5e")
-		(property "Reference" "#PWR066"
+		(property "Reference" "#PWR069"
 			(at 111.76 78.74 0)
 			(effects
 				(font
@@ -6957,7 +7126,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR066")
+					(reference "#PWR069")
 					(unit 1)
 				)
 			)

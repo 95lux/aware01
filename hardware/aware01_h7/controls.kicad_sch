@@ -62,17 +62,17 @@
 			)
 			(symbol "PTL30-15R1-103B2__1_1"
 				(rectangle
-					(start -1.27 2.54)
-					(end 1.27 -2.54)
+					(start -1.016 2.54)
+					(end 1.016 -2.54)
 					(stroke
-						(width 0)
+						(width 0.254)
 						(type default)
 					)
 					(fill
 						(type none)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 0 3.81 270)
 					(length 1.27)
 					(name "1"
@@ -90,9 +90,9 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 2.54 0 180)
-					(length 1.27)
+					(length 1.524)
 					(name "2"
 						(effects
 							(font
@@ -108,7 +108,7 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name "3"
@@ -126,9 +126,9 @@
 						)
 					)
 				)
-				(pin output line
+				(pin no_connect line
 					(at -2.54 0 0)
-					(length 1.27) hide
+					(length 1.524) hide
 					(name "B"
 						(effects
 							(font
@@ -182,7 +182,7 @@
 						(type none)
 					)
 				)
-				(pin input line
+				(pin passive line
 					(at 0 2.54 270)
 					(length 1.27)
 					(name "A"
@@ -200,7 +200,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin passive line
 					(at 0 -2.54 90)
 					(length 1.27)
 					(name "K"
@@ -544,7 +544,7 @@
 						(type none)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 0 3.81 270)
 					(length 1.27)
 					(name "1"
@@ -562,7 +562,7 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 2.54 0 180)
 					(length 1.524)
 					(name "2"
@@ -580,7 +580,7 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin passive line
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name "3"
@@ -598,7 +598,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin no_connect line
 					(at -2.54 0 0)
 					(length 1.524) hide
 					(name "B"
@@ -654,7 +654,7 @@
 						(type none)
 					)
 				)
-				(pin input line
+				(pin passive line
 					(at 0 2.54 270)
 					(length 1.27)
 					(name "A"
@@ -672,7 +672,652 @@
 						)
 					)
 				)
-				(pin output line
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 1.27)
+					(name "K"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "PTL30-15R1-103B2__3"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -2.54 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PTL30-15R1-103B2"
+				(at -14.224 10.922 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Bourns Fader:PTL30-15R1-103B2"
+				(at -20.828 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/PTL.pdf"
+				(at -33.528 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at -2.54 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__3_1_1"
+				(rectangle
+					(start -1.016 2.54)
+					(end 1.016 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.524)
+					(name "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "3"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at -2.54 0 0)
+					(length 1.524) hide
+					(name "B"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__3_2_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy -1.27 1.27) (xy 1.27 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 270)
+					(length 1.27)
+					(name "A"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 1.27)
+					(name "K"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "PTL30-15R1-103B2__4"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -2.54 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PTL30-15R1-103B2"
+				(at -14.224 10.922 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Bourns Fader:PTL30-15R1-103B2"
+				(at -20.828 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/PTL.pdf"
+				(at -33.528 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at -2.54 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__4_1_1"
+				(rectangle
+					(start -1.016 2.54)
+					(end 1.016 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.524)
+					(name "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "3"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at -2.54 0 0)
+					(length 1.524) hide
+					(name "B"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__4_2_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy -1.27 1.27) (xy 1.27 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 270)
+					(length 1.27)
+					(name "A"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 1.27)
+					(name "K"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "PTL30-15R1-103B2__5"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -2.54 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PTL30-15R1-103B2"
+				(at -14.224 10.922 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Bourns Fader:PTL30-15R1-103B2"
+				(at -20.828 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.bourns.com/docs/Product-Datasheets/PTL.pdf"
+				(at -33.528 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at -2.54 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__5_1_1"
+				(rectangle
+					(start -1.016 2.54)
+					(end 1.016 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.524)
+					(name "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "3"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at -2.54 0 0)
+					(length 1.524) hide
+					(name "B"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PTL30-15R1-103B2__5_2_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy -1.27 1.27) (xy 1.27 1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 270)
+					(length 1.27)
+					(name "A"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
 					(at 0 -2.54 90)
 					(length 1.27)
 					(name "K"
@@ -1618,7 +2263,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "172ee252-b2a8-493d-9e8c-3a0698fe06c8")
-		(property "Reference" "C57"
+		(property "Reference" "C16"
 			(at 83.82 124.4599 0)
 			(effects
 				(font
@@ -1672,14 +2317,14 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "C57")
+					(reference "C16")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_name "PTL30-15R1-103B2__1")
+		(lib_name "PTL30-15R1-103B2__4")
 		(lib_id "Bourns-Fader:PTL30-15R1-103B2_")
 		(at 168.91 77.47 0)
 		(unit 1)
@@ -1771,7 +2416,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1bbd4d7c-7fb6-441d-ab3b-b9c5f258f5ff")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR022"
 			(at 80.01 110.49 0)
 			(effects
 				(font
@@ -1780,7 +2425,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 80.01 101.6 0)
 			(effects
 				(font
@@ -1821,7 +2466,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR019")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -1854,7 +2499,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR"
 			(at 64.77 80.01 0)
 			(effects
 				(font
@@ -1873,6 +2518,33 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
+			(at 69.85 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "https://www.mouser.de/datasheet/2/15/SKQB-1370757.pdf"
+			(at 69.85 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKQBAPA010 "
+			(at 69.85 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "688-SKQBAP"
 			(at 69.85 80.01 0)
 			(effects
 				(font
@@ -1976,7 +2648,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "35e9ccc9-4f4e-4eb4-b5d7-ac5a412e3664")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR026"
 			(at 137.16 138.43 0)
 			(effects
 				(font
@@ -2026,7 +2698,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR024")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -2042,7 +2714,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "37ed005b-e62d-4c5b-9eb3-63b70cfa1945")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR033"
 			(at 232.41 74.93 0)
 			(effects
 				(font
@@ -2051,7 +2723,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 232.41 66.04 0)
 			(effects
 				(font
@@ -2092,7 +2764,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR031")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -2108,7 +2780,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3b348940-a2c0-41a9-ad14-3ea9babceeae")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR034"
 			(at 232.41 90.17 0)
 			(effects
 				(font
@@ -2158,7 +2830,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR032")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -2174,7 +2846,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "46e79480-b6de-404f-b294-c250ce7eaad9")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR024"
 			(at 137.16 74.93 0)
 			(effects
 				(font
@@ -2183,7 +2855,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 137.16 66.04 0)
 			(effects
 				(font
@@ -2224,14 +2896,14 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR022")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_name "PTL30-15R1-103B2__1")
+		(lib_name "PTL30-15R1-103B2__5")
 		(lib_id "Bourns-Fader:PTL30-15R1-103B2_")
 		(at 137.16 77.47 0)
 		(unit 1)
@@ -2323,7 +2995,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5383ceb7-f07a-42e1-ac0d-c03e01dc235e")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR020"
 			(at 80.01 64.77 0)
 			(effects
 				(font
@@ -2332,7 +3004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 80.01 55.88 0)
 			(effects
 				(font
@@ -2373,7 +3045,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR018")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -2624,7 +3296,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6d8d3237-5315-48b8-b598-526e4f32f8d8")
-		(property "Reference" "C49"
+		(property "Reference" "C15"
 			(at 83.82 78.7399 0)
 			(effects
 				(font
@@ -2678,7 +3350,7 @@
 		(instances
 			(project ""
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "C49")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -2694,7 +3366,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7b472612-e43b-4446-b26b-08ec392c3887")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR032"
 			(at 199.39 138.43 0)
 			(effects
 				(font
@@ -2744,7 +3416,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR030")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -2760,7 +3432,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "820763f5-6ba2-458a-a548-011baa686343")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR025"
 			(at 137.16 90.17 0)
 			(effects
 				(font
@@ -2810,7 +3482,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR023")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -2826,7 +3498,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "89d04ec3-33ed-44ff-b7da-1915e25fec5b")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR028"
 			(at 168.91 90.17 0)
 			(effects
 				(font
@@ -2876,7 +3548,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR026")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -2974,7 +3646,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "93c735f3-031e-4f83-aaa8-21770ad0cbab")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR035"
 			(at 232.41 138.43 0)
 			(effects
 				(font
@@ -3024,7 +3696,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR033")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -3110,7 +3782,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9a2cca63-8a5d-4e4c-ab6c-959ba103d97a")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR021"
 			(at 80.01 93.98 0)
 			(effects
 				(font
@@ -3160,7 +3832,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR020")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -3389,7 +4061,7 @@
 		)
 	)
 	(symbol
-		(lib_name "PTL30-15R1-103B2__1")
+		(lib_name "PTL30-15R1-103B2__3")
 		(lib_id "Bourns-Fader:PTL30-15R1-103B2_")
 		(at 199.39 77.47 0)
 		(unit 1)
@@ -3498,7 +4170,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR"
 			(at 64.77 125.73 0)
 			(effects
 				(font
@@ -3517,6 +4189,33 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
+			(at 69.85 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "https://www.mouser.de/datasheet/2/15/SKQB-1370757.pdf"
+			(at 69.85 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SKQBAPA010 "
+			(at 69.85 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "688-SKQBAP"
 			(at 69.85 125.73 0)
 			(effects
 				(font
@@ -3550,7 +4249,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ca2dd7ca-d505-41db-a128-e96a26fe461c")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR029"
 			(at 168.91 138.43 0)
 			(effects
 				(font
@@ -3600,7 +4299,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR027")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -3698,7 +4397,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d918c6c6-8447-4bc9-b7a5-6867c1a6db14")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR031"
 			(at 199.39 90.17 0)
 			(effects
 				(font
@@ -3748,7 +4447,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR029")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -3834,7 +4533,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e8b49fcd-fc2c-4e22-be36-7c736f2023a8")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR030"
 			(at 199.39 74.93 0)
 			(effects
 				(font
@@ -3843,7 +4542,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 199.39 66.04 0)
 			(effects
 				(font
@@ -3884,7 +4583,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR028")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -3900,7 +4599,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eac85700-9ffa-4054-ba27-d3cba93dc2fe")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR023"
 			(at 80.01 139.7 0)
 			(effects
 				(font
@@ -3950,7 +4649,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR021")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -3966,7 +4665,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fe126a6c-6761-47b9-b3f8-70999b411102")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR027"
 			(at 168.91 74.93 0)
 			(effects
 				(font
@@ -3975,7 +4674,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "+3.3V"
 			(at 168.91 66.04 0)
 			(effects
 				(font
@@ -4016,7 +4715,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
-					(reference "#PWR025")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
