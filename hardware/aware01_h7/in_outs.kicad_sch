@@ -2612,7 +2612,6 @@
 	(hierarchical_label "OUTR"
 		(shape input)
 		(at 163.83 133.35 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2624,7 +2623,6 @@
 	(hierarchical_label "INL"
 		(shape output)
 		(at 128.27 64.77 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2636,7 +2634,6 @@
 	(hierarchical_label "INR"
 		(shape output)
 		(at 128.27 133.35 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2648,7 +2645,6 @@
 	(hierarchical_label "OUTL"
 		(shape input)
 		(at 163.83 64.77 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2770,6 +2766,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 29.21 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Vishay "
+			(at 29.21 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VJ0603Y104KFAAO"
+			(at 29.21 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 77-VJ0603Y104KFAAO "
 			(at 29.21 87.63 0)
 			(effects
 				(font
@@ -3119,6 +3142,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Vishay "
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VJ0603Y104KFAAO"
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 77-VJ0603Y104KFAAO "
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "1d20eecf-c239-4f5e-a17a-8f2c738eae55")
 		)
@@ -3319,6 +3369,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 91.44 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Walsin"
+			(at 91.44 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0603N102J100CT "
+			(at 91.44 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603N102J100CT "
 			(at 91.44 105.41 0)
 			(effects
 				(font
@@ -3637,7 +3714,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 247.65 67.31 0)
 			(effects
 				(font
@@ -3727,6 +3804,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 162.56 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Vishay "
+			(at 162.56 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VJ0603Y104KFAAO"
+			(at 162.56 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 77-VJ0603Y104KFAAO "
 			(at 162.56 106.68 0)
 			(effects
 				(font
@@ -3991,7 +4095,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 41.91 62.23 0)
 			(effects
 				(font
@@ -4372,6 +4476,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Vishay "
+			(at 162.56 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VJ0603Y104KFAAO"
+			(at 162.56 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 77-VJ0603Y104KFAAO "
+			(at 162.56 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "489e9739-1263-4630-9690-8a789c1370a7")
 		)
@@ -4497,6 +4628,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 209.55 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " YAGEO "
+			(at 209.55 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0603JRNPO7BN221 "
+			(at 209.55 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-CC0603JR7BN221"
 			(at 209.55 107.95 0)
 			(effects
 				(font
@@ -5296,7 +5454,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 247.65 135.89 0)
 			(effects
 				(font
@@ -5847,7 +6005,7 @@
 				)
 			)
 		)
-		(property "Value" "InL"
+		(property "Value" "InR"
 			(at 41.275 137.16 0)
 			(effects
 				(font
@@ -5855,7 +6013,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 41.91 130.81 0)
 			(effects
 				(font
@@ -6297,6 +6455,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 209.55 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " YAGEO "
+			(at 209.55 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CC0603JRNPO7BN221 "
+			(at 209.55 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-CC0603JR7BN221"
 			(at 209.55 39.37 0)
 			(effects
 				(font
@@ -6994,22 +7179,22 @@
 			(uuid "5e6b30f6-0283-464c-9760-3903d6a2f2a9")
 		)
 		(pin "8"
-			(uuid "9ea1ae9b-feb8-4271-b0ce-22fc72fba8e5")
+			(uuid "9ea1ae9b-feb8-4271-b0ce-22fc72fba8e6")
 		)
 		(pin "1"
 			(uuid "27507e83-b143-4f47-a63a-f57c95ec68e2")
 		)
 		(pin "7"
-			(uuid "e01c2ec7-79e4-440b-b696-eec7be0f9c69")
+			(uuid "e01c2ec7-79e4-440b-b696-eec7be0f9c6a")
 		)
 		(pin "6"
-			(uuid "2652b857-e055-4a9a-8e2d-f9498e839348")
+			(uuid "2652b857-e055-4a9a-8e2d-f9498e839349")
 		)
 		(pin "4"
-			(uuid "afe522ef-19ac-49d2-ad1d-b4d154846d44")
+			(uuid "afe522ef-19ac-49d2-ad1d-b4d154846d45")
 		)
 		(pin "5"
-			(uuid "53aadce0-4d78-4c93-9fb2-e83724073844")
+			(uuid "53aadce0-4d78-4c93-9fb2-e83724073845")
 		)
 		(instances
 			(project "aware01_h7"

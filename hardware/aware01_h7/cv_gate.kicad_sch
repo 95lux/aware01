@@ -2532,7 +2532,6 @@
 	(hierarchical_label "GATE2_IN"
 		(shape output)
 		(at 101.6 93.98 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2544,7 +2543,6 @@
 	(hierarchical_label "V_OCT_IN"
 		(shape output)
 		(at 240.03 67.31 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2556,7 +2554,6 @@
 	(hierarchical_label "CV1_IN"
 		(shape output)
 		(at 240.03 127 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2568,7 +2565,6 @@
 	(hierarchical_label "CV2_IN"
 		(shape output)
 		(at 149.86 157.48 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2580,7 +2576,6 @@
 	(hierarchical_label "GATE1_IN"
 		(shape output)
 		(at 101.6 49.53 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2639,6 +2634,33 @@
 			)
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
+			(at 91.44 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Diotec Semiconductor"
+			(at 91.44 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "MMBT3904"
+			(at 91.44 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 637-MMBT3904 "
 			(at 91.44 100.33 0)
 			(effects
 				(font
@@ -2758,7 +2780,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 67.31 100.33 0)
 			(effects
 				(font
@@ -2924,6 +2946,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 38.1 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 38.1 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 38.1 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "eb1e734f-5b01-4721-b8e2-1811e3593ae4")
 		)
@@ -2965,7 +3014,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 67.31 55.88 0)
 			(effects
 				(font
@@ -3046,7 +3095,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 121.92 157.48 0)
 			(effects
 				(font
@@ -3092,6 +3141,33 @@
 			)
 		)
 		(property "Sim.Pins" "1=out1 2=in1- 3=in1+ 4=vee 5=in2+ 6=in2- 7=out2 8=vcc"
+			(at 121.92 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 121.92 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 121.92 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
 			(at 121.92 157.48 0)
 			(effects
 				(font
@@ -3929,6 +4005,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Walsin"
+			(at 212.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0603N102J100CT "
+			(at 212.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603N102J100CT "
+			(at 212.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a4580f3e-7b40-42cb-88e4-da19901ce442")
 		)
@@ -4047,7 +4150,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 50.8 138.43 0)
 			(effects
 				(font
@@ -4101,6 +4204,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 50.8 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 50.8 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
+			(at 50.8 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f5f")
 		)
@@ -4108,16 +4238,16 @@
 			(uuid "c6e0f800-cfba-4886-93ae-5c47be47a8bf")
 		)
 		(pin "6"
-			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb061")
+			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb062")
 		)
 		(pin "5"
-			(uuid "e63a7f24-e229-4fd6-8933-898d91499221")
+			(uuid "e63a7f24-e229-4fd6-8933-898d91499222")
 		)
 		(pin "8"
 			(uuid "d8d55ef8-9ba2-4558-816a-3bda55339b80")
 		)
 		(pin "7"
-			(uuid "63982357-c029-4344-b437-7c32fab7dfa4")
+			(uuid "63982357-c029-4344-b437-7c32fab7dfa5")
 		)
 		(pin "2"
 			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e3")
@@ -4362,7 +4492,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 180.34 124.46 0)
 			(effects
 				(font
@@ -4501,7 +4631,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 180.34 64.77 0)
 			(effects
 				(font
@@ -4784,7 +4914,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 69.85 181.61 0)
 			(effects
 				(font
@@ -4838,23 +4968,50 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 69.85 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 69.85 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
+			(at 69.85 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "e31f6690-4949-4b1c-a3c5-16f053329c78")
 		)
 		(pin "4"
-			(uuid "d2d227dc-09ef-46df-890d-c53a909a39dc")
+			(uuid "d2d227dc-09ef-46df-890d-c53a909a39dd")
 		)
 		(pin "6"
-			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb061")
+			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb063")
 		)
 		(pin "5"
-			(uuid "e63a7f24-e229-4fd6-8933-898d91499221")
+			(uuid "e63a7f24-e229-4fd6-8933-898d91499223")
 		)
 		(pin "8"
-			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd0")
+			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd1")
 		)
 		(pin "7"
-			(uuid "63982357-c029-4344-b437-7c32fab7dfa4")
+			(uuid "63982357-c029-4344-b437-7c32fab7dfa6")
 		)
 		(pin "2"
 			(uuid "c6e3509e-0734-4706-a117-201e034d2935")
@@ -4897,7 +5054,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
 			(at 87.63 154.94 0)
 			(effects
 				(font
@@ -5183,7 +5340,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 157.48 40.64 0)
 			(effects
 				(font
@@ -5237,29 +5394,56 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 157.48 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 157.48 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
+			(at 157.48 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
-			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f5f")
+			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f60")
 		)
 		(pin "4"
-			(uuid "d2d227dc-09ef-46df-890d-c53a909a39dc")
+			(uuid "d2d227dc-09ef-46df-890d-c53a909a39de")
 		)
 		(pin "6"
-			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb061")
+			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb064")
 		)
 		(pin "5"
-			(uuid "e63a7f24-e229-4fd6-8933-898d91499221")
+			(uuid "e63a7f24-e229-4fd6-8933-898d91499224")
 		)
 		(pin "8"
-			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd0")
+			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd2")
 		)
 		(pin "7"
-			(uuid "63982357-c029-4344-b437-7c32fab7dfa4")
+			(uuid "63982357-c029-4344-b437-7c32fab7dfa7")
 		)
 		(pin "2"
-			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e3")
+			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e4")
 		)
 		(pin "3"
-			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f24f")
+			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f250")
 		)
 		(instances
 			(project ""
@@ -5460,6 +5644,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 144.78 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 144.78 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 144.78 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "de0b0a13-67a3-4e0d-afd8-aac4875979ca")
 		)
@@ -5601,6 +5812,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Diotec Semiconductor"
+			(at 91.44 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "MMBT3904"
+			(at 91.44 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 637-MMBT3904 "
+			(at 91.44 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "8d50f029-9c5c-4190-bc10-5048fb35cea6")
 		)
@@ -5664,6 +5902,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 121.92 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Walsin"
+			(at 121.92 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0603N102J100CT "
+			(at 121.92 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603N102J100CT "
 			(at 121.92 129.54 0)
 			(effects
 				(font
@@ -5925,7 +6190,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 212.09 67.31 0)
 			(effects
 				(font
@@ -5979,29 +6244,56 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
+			(at 212.09 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
-			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f5f")
+			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f61")
 		)
 		(pin "4"
-			(uuid "d2d227dc-09ef-46df-890d-c53a909a39dc")
+			(uuid "d2d227dc-09ef-46df-890d-c53a909a39df")
 		)
 		(pin "6"
-			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb061")
+			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb065")
 		)
 		(pin "5"
-			(uuid "e63a7f24-e229-4fd6-8933-898d91499221")
+			(uuid "e63a7f24-e229-4fd6-8933-898d91499225")
 		)
 		(pin "8"
-			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd0")
+			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd3")
 		)
 		(pin "7"
-			(uuid "63982357-c029-4344-b437-7c32fab7dfa4")
+			(uuid "63982357-c029-4344-b437-7c32fab7dfa8")
 		)
 		(pin "2"
-			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e3")
+			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e5")
 		)
 		(pin "3"
-			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f24f")
+			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f251")
 		)
 		(instances
 			(project ""
@@ -6057,6 +6349,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 212.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Walsin"
+			(at 212.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0603N102J100CT "
+			(at 212.09 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603N102J100CT "
 			(at 212.09 39.37 0)
 			(effects
 				(font
@@ -6519,7 +6838,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lmv722.pdf?ts=1737024261620&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLMV722%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-eu%2526utm_content%253DLMV722%2526ds_k%253DLMV722%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gbraid%253D0AAAAAC068F3vKQiCaB_cTaydQLCKWdDbq%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9n8wO2re9eYj9LpErAHeV6c95hUaNlpHfzALg99SDYq6ZIz_apFZd0aAn91EALw_wcB"
+		(property "Datasheet" "~"
 			(at 212.09 127 0)
 			(effects
 				(font
@@ -6573,29 +6892,56 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 212.09 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMV722IDR "
+			(at 212.09 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-LMV722IDR "
+			(at 212.09 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
-			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f5f")
+			(uuid "d80de08d-24ee-4135-8b34-3a805f7e0f62")
 		)
 		(pin "4"
-			(uuid "d2d227dc-09ef-46df-890d-c53a909a39dc")
+			(uuid "d2d227dc-09ef-46df-890d-c53a909a39e0")
 		)
 		(pin "6"
-			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb061")
+			(uuid "f8feef93-fe9c-4b72-9494-91fa66ccb066")
 		)
 		(pin "5"
-			(uuid "e63a7f24-e229-4fd6-8933-898d91499221")
+			(uuid "e63a7f24-e229-4fd6-8933-898d91499226")
 		)
 		(pin "8"
-			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd0")
+			(uuid "9b43b631-13be-40b6-a953-00342a7d9bd4")
 		)
 		(pin "7"
-			(uuid "63982357-c029-4344-b437-7c32fab7dfa4")
+			(uuid "63982357-c029-4344-b437-7c32fab7dfa9")
 		)
 		(pin "2"
-			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e3")
+			(uuid "9a9b1553-508d-4aee-bd2e-96e4adb947e6")
 		)
 		(pin "3"
-			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f24f")
+			(uuid "4963f1d8-9c92-4d04-93bb-8767fdb6f252")
 		)
 		(instances
 			(project ""

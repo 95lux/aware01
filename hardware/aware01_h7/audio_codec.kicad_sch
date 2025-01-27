@@ -1237,6 +1237,12 @@
 		(color 0 0 0 0)
 		(uuid "b8afa7eb-44db-4e2e-87a1-19d5071fdad4")
 	)
+	(junction
+		(at 137.16 52.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e9c54bad-4df6-48ac-80f9-d297e7e97761")
+	)
 	(no_connect
 		(at 124.46 59.69)
 		(uuid "07a22d23-dc1a-4ceb-a3fe-fe3fc04683ae")
@@ -1469,7 +1475,7 @@
 	)
 	(wire
 		(pts
-			(xy 127 54.61) (xy 127 59.69)
+			(xy 127 52.07) (xy 127 59.69)
 		)
 		(stroke
 			(width 0)
@@ -1486,6 +1492,16 @@
 			(type default)
 		)
 		(uuid "713442a3-9547-4895-820e-5acf59b7c2f3")
+	)
+	(wire
+		(pts
+			(xy 137.16 52.07) (xy 137.16 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "750b1ea1-2af3-476c-90bb-73903950dab3")
 	)
 	(wire
 		(pts
@@ -1599,7 +1615,7 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 50.8) (xy 137.16 54.61)
+			(xy 137.16 49.53) (xy 137.16 52.07)
 		)
 		(stroke
 			(width 0)
@@ -1739,7 +1755,7 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 54.61) (xy 127 54.61)
+			(xy 137.16 52.07) (xy 127 52.07)
 		)
 		(stroke
 			(width 0)
@@ -1783,7 +1799,6 @@
 	(hierarchical_label "I2S1_SDO"
 		(shape output)
 		(at 91.44 95.25 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1795,7 +1810,6 @@
 	(hierarchical_label "I2C1_SCL"
 		(shape bidirectional)
 		(at 109.22 134.62 270)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1807,7 +1821,6 @@
 	(hierarchical_label "I2S1_MCK"
 		(shape input)
 		(at 91.44 85.09 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1819,7 +1832,6 @@
 	(hierarchical_label "I2S1_WS"
 		(shape input)
 		(at 91.44 90.17 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1831,7 +1843,6 @@
 	(hierarchical_label "I2S1_SDI"
 		(shape input)
 		(at 91.44 92.71 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1843,7 +1854,6 @@
 	(hierarchical_label "I2C1_SDA"
 		(shape bidirectional)
 		(at 111.76 134.62 270)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1855,7 +1865,6 @@
 	(hierarchical_label "I2S1_CK"
 		(shape input)
 		(at 91.44 87.63 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1925,6 +1934,73 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
 					(reference "#PWR061")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 137.16 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "13ed8b8c-1553-4b99-98c0-4b84191434d8")
+		(property "Reference" "#PWR0105"
+			(at 137.16 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 137.16 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 137.16 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 137.16 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "76b80d32-c574-46ed-8842-d21fd2a5aa95")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
+					(reference "#PWR0105")
 					(unit 1)
 				)
 			)
@@ -2116,6 +2192,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Murata Electronics "
+			(at 143.51 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 143.51 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
+			(at 143.51 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "50037c05-f2c1-483a-93cb-b52bdfab2cc9")
 		)
@@ -2185,6 +2288,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Murata Electronics "
+			(at 124.46 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 124.46 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
+			(at 124.46 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "2a9887e4-8736-4112-871b-ec9a44c9ab2a")
 		)
@@ -2246,6 +2376,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 143.51 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Murata Electronics "
+			(at 143.51 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 143.51 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
 			(at 143.51 85.09 0)
 			(effects
 				(font
@@ -2344,10 +2501,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "5dac4985-3ef8-4ea6-bddf-67fb52436fc2")
 		(property "Reference" "IC2"
-			(at 146.05 78.7714 0)
+			(at 136.398 76.454 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2355,7 +2511,7 @@
 			)
 		)
 		(property "Value" "TLV320AIC3204IRHBR"
-			(at 146.05 81.3114 0)
+			(at 144.78 74.168 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2606,6 +2762,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 162.56 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 162.56 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 162.56 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 162.56 99.06 0)
 			(effects
 				(font
@@ -3016,6 +3199,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 129.54 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 129.54 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 129.54 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bc696768-ab07-4d9d-8a4d-a5e58186c06a")
 		)
@@ -3099,7 +3309,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3VA")
-		(at 137.16 50.8 0)
+		(at 137.16 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3108,7 +3318,7 @@
 		(fields_autoplaced yes)
 		(uuid "dc29d30f-8b81-4ba3-9c8f-d6430fe36ca2")
 		(property "Reference" "#PWR057"
-			(at 137.16 54.61 0)
+			(at 137.16 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3117,7 +3327,7 @@
 			)
 		)
 		(property "Value" "+3.3VA"
-			(at 137.16 45.72 0)
+			(at 137.16 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3125,7 +3335,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 137.16 50.8 0)
+			(at 137.16 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3134,7 +3344,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 137.16 50.8 0)
+			(at 137.16 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3143,7 +3353,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3VA\""
-			(at 137.16 50.8 0)
+			(at 137.16 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3225,6 +3435,103 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
 					(reference "#PWR054")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 137.16 57.15 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fb2fe52f-8e01-4cd9-91cc-7a0cae134a16")
+		(property "Reference" "C60"
+			(at 140.97 55.8799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 140.97 58.4199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 138.1252 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 137.16 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 137.16 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 137.16 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 137.16 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 137.16 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "295382f7-2154-4e40-af84-bfb987a366c1")
+		)
+		(pin "1"
+			(uuid "a13445cd-fe7a-4153-b998-80daa04a383a")
+		)
+		(instances
+			(project ""
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
+					(reference "C60")
 					(unit 1)
 				)
 			)

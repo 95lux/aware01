@@ -2079,6 +2079,12 @@
 		(uuid "201eeb30-c470-4683-b0b8-349e0fcd523c")
 	)
 	(junction
+		(at 182.88 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "20643eb3-4cc0-474a-979b-26e64dddb4e5")
+	)
+	(junction
 		(at 148.59 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2107,6 +2113,18 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4ac7270f-5b9b-4ae1-b702-7a2ca7b5645a")
+	)
+	(junction
+		(at 194.31 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5292bf72-5051-458e-9501-59f689f73c2a")
+	)
+	(junction
+		(at 217.17 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "52fd0028-4218-47be-a2cb-31eae394cd94")
 	)
 	(junction
 		(at 125.73 129.54)
@@ -2199,6 +2217,12 @@
 		(uuid "9651379e-bed5-4447-91e5-06a7aae92b6c")
 	)
 	(junction
+		(at 205.74 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9883a1ec-ef12-48ee-8cfc-9bad7b4cf399")
+	)
+	(junction
 		(at 220.98 72.39)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2229,12 +2253,6 @@
 		(uuid "afe853ba-db9e-4f40-9648-5f9a1d9138f6")
 	)
 	(junction
-		(at 182.88 129.54)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b41ca7a5-1d21-4909-9c26-69a3c5b53187")
-	)
-	(junction
 		(at 113.03 121.92)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2257,6 +2275,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cceaa0e3-df76-4d2f-9156-60b18078639d")
+	)
+	(junction
+		(at 205.74 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cec28db8-6842-44fc-9116-1faf3b34f6bf")
 	)
 	(junction
 		(at 78.74 129.54)
@@ -2351,6 +2375,16 @@
 			(type default)
 		)
 		(uuid "0e39554d-2396-4135-ad9c-2ca5827f4f5e")
+	)
+	(wire
+		(pts
+			(xy 205.74 129.54) (xy 217.17 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ea1edf7-6ab2-42be-873c-ecf8a8d33058")
 	)
 	(wire
 		(pts
@@ -2654,7 +2688,7 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 121.92) (xy 204.47 119.38)
+			(xy 217.17 121.92) (xy 217.17 119.38)
 		)
 		(stroke
 			(width 0)
@@ -2794,6 +2828,16 @@
 	)
 	(wire
 		(pts
+			(xy 194.31 129.54) (xy 205.74 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "937ce4ce-3d0f-4355-85f2-8194bb79cd42")
+	)
+	(wire
+		(pts
 			(xy 130.81 162.56) (xy 130.81 163.83)
 		)
 		(stroke
@@ -2804,7 +2848,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 121.92) (xy 204.47 121.92)
+			(xy 194.31 121.92) (xy 205.74 121.92)
 		)
 		(stroke
 			(width 0)
@@ -3064,23 +3108,13 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 129.54) (xy 194.31 129.54)
+			(xy 182.88 129.54) (xy 171.45 129.54)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "ce021442-83cf-4b49-9c23-17de56e66c88")
-	)
-	(wire
-		(pts
-			(xy 171.45 129.54) (xy 182.88 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cfef5b55-a9c8-4e35-9e26-ed9270e4e19d")
 	)
 	(wire
 		(pts
@@ -3101,6 +3135,16 @@
 			(type default)
 		)
 		(uuid "d586a0e9-77c7-4970-aa71-950a1b2cb962")
+	)
+	(wire
+		(pts
+			(xy 205.74 121.92) (xy 217.17 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5b8d48f-264c-4c88-8e9c-18e958506344")
 	)
 	(wire
 		(pts
@@ -3151,6 +3195,16 @@
 			(type default)
 		)
 		(uuid "e4025481-0744-4ddc-a01b-68d8744b2042")
+	)
+	(wire
+		(pts
+			(xy 182.88 129.54) (xy 194.31 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ebbec754-6597-44bb-b49b-5b8cce521fa9")
 	)
 	(wire
 		(pts
@@ -3261,6 +3315,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 137.16 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 137.16 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 137.16 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 137.16 125.73 0)
 			(effects
 				(font
@@ -3403,6 +3484,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 154.94 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LM1117MP-3.3/NOPB"
+			(at 154.94 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "926-LM1117MP-3.3NOPB"
+			(at 154.94 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f5339d0f-9c69-4217-9080-3402d870fc3d")
 		)
@@ -3468,6 +3576,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 182.88 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 182.88 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 182.88 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 182.88 125.73 0)
 			(effects
 				(font
@@ -3640,6 +3775,33 @@
 			)
 		)
 		(property "Feld8" ""
+			(at 78.74 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Lelon "
+			(at 78.74 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VZL470M1VTR-0606 "
+			(at 78.74 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "140-VZL470M1VTR-0606 "
 			(at 78.74 57.15 0)
 			(effects
 				(font
@@ -3916,6 +4078,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 171.45 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 171.45 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 171.45 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c97d5ae1-1051-4cd8-922a-1fa06837d90f")
 		)
@@ -4052,6 +4241,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 227.33 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 227.33 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 227.33 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3eb0df87-656d-42df-b7cb-b7dd7d58ad24")
 		)
@@ -4158,6 +4374,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Lelon "
+			(at 78.74 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " VZL470M1VTR-0606 "
+			(at 78.74 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "140-VZL470M1VTR-0606 "
+			(at 78.74 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ef785a89-7ff9-4239-b9c6-d5f8ae437972")
 		)
@@ -4168,6 +4411,76 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
 					(reference "C20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 177.8 74.93 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "762417cb-ec78-40d1-9896-31a6d0cd29bf")
+		(property "Reference" "R39"
+			(at 180.34 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "150"
+			(at 180.34 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 176.022 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 177.8 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 177.8 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0dd8e72b-67d0-4970-870b-0f0f70558057")
+		)
+		(pin "2"
+			(uuid "0c9d3b00-f238-4e84-a9b3-46e20463204f")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
+					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -4294,6 +4607,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 125.73 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 125.73 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 125.73 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "857fbd3c-6866-4212-befc-ec6b7baa2a43")
 		)
@@ -4356,6 +4696,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 90.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 90.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 90.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 90.17 125.73 0)
 			(effects
 				(font
@@ -4434,6 +4801,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " KEMET "
+			(at 54.61 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "C0603C475M9PACTU"
+			(at 54.61 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 80-C0603C475M9P"
+			(at 54.61 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "96187e50-30de-414c-a109-30e1c22abe5e")
 		)
@@ -4504,6 +4898,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bef128ac-a5e1-445c-be0c-8c538a5c32a8")
 		)
@@ -4514,6 +4935,103 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
 					(reference "C24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 177.8 66.04 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "89a94ac8-b6c4-4268-b666-fde0bddcea53")
+		(property "Reference" "D3"
+			(at 181.61 66.3574 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "PWR_LED"
+			(at 181.61 68.8974 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Wurth Elektronik"
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "150060VS75000 "
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 710-150060VS75000 "
+			(at 177.8 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "c3a31158-4819-4bf8-85b6-3078d38471d6")
+		)
+		(pin "1"
+			(uuid "dc79f69f-85aa-4c5b-a3c4-1b3a1771ad2c")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -4580,76 +5098,6 @@
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
 					(reference "#PWR0104")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 177.8 66.04 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8b4ecf9d-fd59-427c-abc9-7372de11afb3")
-		(property "Reference" "R39"
-			(at 180.34 64.7699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "150"
-			(at 180.34 67.3099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 176.022 66.04 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 177.8 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 177.8 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3cb5e2bc-a201-4652-8178-feae98d5b327")
-		)
-		(pin "2"
-			(uuid "73e8313e-2de0-4f40-9b11-4efae675a25e")
-		)
-		(instances
-			(project ""
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
-					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -4768,6 +5216,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 113.03 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 113.03 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 113.03 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 113.03 125.73 0)
 			(effects
 				(font
@@ -4958,7 +5433,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/87/eaton_mfbw1v2012_high_impedance_multilayer_ferrite-1916871.pdf"
+		(property "Datasheet" "~"
 			(at 120.65 154.94 0)
 			(effects
 				(font
@@ -5139,6 +5614,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 148.59 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 148.59 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 148.59 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bcdf6382-4fe2-4c66-9558-b54580f9051a")
 		)
@@ -5201,6 +5703,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 194.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 194.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 194.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 194.31 125.73 0)
 			(effects
 				(font
@@ -5279,6 +5808,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 67.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 67.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 67.31 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5e28366c-c5bd-47d4-9de7-82f5d117cdaf")
 		)
@@ -5312,7 +5868,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LM4040DBZ-10"
+		(property "Value" "LM4040DIM3X-10"
 			(at 218.44 65.024 90)
 			(effects
 				(font
@@ -5342,6 +5898,33 @@
 			)
 		)
 		(property "Description" "10.00V Precision Micropower Shunt Voltage Reference, SOT-23"
+			(at 220.98 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Texas Instruments"
+			(at 220.98 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " LM4040DIM3X-10/NOPB "
+			(at 220.98 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 926-LM4040DIM3X10NPB "
 			(at 220.98 66.04 0)
 			(effects
 				(font
@@ -5415,6 +5998,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 78.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 78.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 78.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
 			(at 78.74 125.73 0)
 			(effects
 				(font
@@ -5499,6 +6109,103 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
 					(reference "#PWR041")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 217.17 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b60f5258-0539-49be-ab82-0543c01edc69")
+		(property "Reference" "C63"
+			(at 220.98 124.4599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 220.98 126.9999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 218.1352 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 217.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 217.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 217.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 217.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 217.17 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "503ec163-ec4a-45ce-ac8a-bf8b649e466e")
+		)
+		(pin "2"
+			(uuid "280c5a78-5c9f-433f-8495-4b74fc4cdcd9")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
+					(reference "C63")
 					(unit 1)
 				)
 			)
@@ -5636,6 +6343,103 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 205.74 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bd821e9e-e7a4-4b0c-9222-bf1b7ad97ae0")
+		(property "Reference" "C62"
+			(at 209.55 124.4599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 209.55 126.9999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 206.7052 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 205.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 205.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 205.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 205.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 205.74 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8e21d3cd-4aa5-4daa-84ce-a2e93906eb9a")
+		)
+		(pin "2"
+			(uuid "66b49f55-a0bc-41ff-bad4-012c6b8af5b3")
+		)
+		(instances
+			(project "aware01_h7"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
+					(reference "C62")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:D")
 		(at 66.04 68.58 0)
 		(unit 1)
@@ -5669,7 +6473,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/40/schottky-3165252.pdf"
+		(property "Datasheet" "~"
 			(at 66.04 68.58 0)
 			(effects
 				(font
@@ -5749,7 +6553,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 204.47 119.38 0)
+		(at 217.17 119.38 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5758,7 +6562,7 @@
 		(fields_autoplaced yes)
 		(uuid "c584f24d-ca99-4693-b324-39376a61d65c")
 		(property "Reference" "#PWR047"
-			(at 204.47 123.19 0)
+			(at 217.17 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5767,7 +6571,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 204.47 114.3 0)
+			(at 217.17 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5775,7 +6579,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 204.47 119.38 0)
+			(at 217.17 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5784,7 +6588,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 204.47 119.38 0)
+			(at 217.17 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5793,7 +6597,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 204.47 119.38 0)
+			(at 217.17 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5904,7 +6708,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical"
+		(property "Footprint" "Eurorack:PinHeader_2x05_P2.54mm_BHR-10-VUA"
 			(at 50.8 60.96 0)
 			(effects
 				(font
@@ -5913,7 +6717,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://eu.mouser.com/datasheet/2/4/bhr_xx_vua_data_sheet-3395636.pdf"
+		(property "Datasheet" "~"
 			(at 50.8 60.96 0)
 			(effects
 				(font
@@ -6064,76 +6868,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:LED")
-		(at 177.8 74.93 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ce700845-4f19-4446-bca8-b349edf30f32")
-		(property "Reference" "D3"
-			(at 181.61 75.2474 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "PWR_LED"
-			(at 181.61 77.7874 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "LED_SMD:LED_0201_0603Metric_Pad0.64x0.40mm_HandSolder"
-			(at 177.8 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.we-online.com/components/products/datasheet/150060VS75000.pdf"
-			(at 177.8 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode"
-			(at 177.8 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "a2791f27-6e1c-4413-9af1-5240a7dd7345")
-		)
-		(pin "1"
-			(uuid "8b342b27-21ad-495a-8efb-ae252da94c42")
-		)
-		(instances
-			(project "aware01_h7"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/4fd75a14-10a3-454a-b853-10e2f7b21f70"
-					(reference "D3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3.3V")
 		(at 168.91 55.88 0)
 		(unit 1)
@@ -6246,6 +6980,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 97.79 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " KEMET "
+			(at 97.79 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " C0603C103J5RAC7411 "
+			(at 97.79 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 80-C0603C103J5R7411 "
 			(at 97.79 158.75 0)
 			(effects
 				(font
@@ -6455,6 +7216,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Murata Electronics "
+			(at 144.78 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 144.78 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
+			(at 144.78 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f5c65e19-64af-49c2-a75d-9386f5ab105c")
 		)
@@ -6517,6 +7305,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 130.81 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Walsin "
+			(at 130.81 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " 0603B105M160CT "
+			(at 130.81 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603B105M160CT "
 			(at 130.81 158.75 0)
 			(effects
 				(font
@@ -6661,6 +7476,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 160.02 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 160.02 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 160.02 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8688cbd3-f12c-4e50-92cf-447251ecb84f")
 		)
@@ -6731,6 +7573,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " Walsin "
+			(at 109.22 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " 0603B105M160CT "
+			(at 109.22 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603B105M160CT "
+			(at 109.22 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6afc80cf-c7a2-498e-b534-ab608c8afdd8")
 		)
@@ -6792,6 +7661,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 165.1 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " Murata Electronics "
+			(at 165.1 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 165.1 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
 			(at 165.1 66.04 0)
 			(effects
 				(font
@@ -6919,7 +7815,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/40/schottky-3165252.pdf"
+		(property "Datasheet" "~"
 			(at 66.04 53.34 0)
 			(effects
 				(font
