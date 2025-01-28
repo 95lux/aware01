@@ -1263,15 +1263,18 @@
 		)
 		(uuid "fc76409e-a743-4a8b-84ef-f11f8c070734")
 	)
-	(text "10ms debounce time constant"
+	(text "Controls"
 		(exclude_from_sim no)
-		(at 97.79 84.074 0)
+		(at 16.002 17.018 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 2 2)
+				(thickness 0.4)
+				(bold yes)
 			)
+			(justify left top)
 		)
-		(uuid "941d5429-5170-4493-a058-36bc4431218f")
+		(uuid "2f227d79-274f-4359-98b2-09a4c51cc995")
 	)
 	(hierarchical_label "FADER2_IN"
 		(shape input)

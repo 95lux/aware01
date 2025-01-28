@@ -2139,7 +2139,7 @@
 		(uuid "5b8cc611-2596-467b-ac43-b36d293656bb")
 	)
 	(junction
-		(at 168.91 59.69)
+		(at 160.02 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5dcd8db8-0264-43c8-82e7-96e06a52fd11")
@@ -2169,7 +2169,7 @@
 		(uuid "6c7204d5-8053-4424-b198-5dfbbc8e418d")
 	)
 	(junction
-		(at 154.94 71.12)
+		(at 146.05 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7403490e-6543-44a7-afb7-8e5f66ebb51f")
@@ -2187,13 +2187,13 @@
 		(uuid "87c41d98-859d-4fcc-bec5-9e6b34bcef7b")
 	)
 	(junction
-		(at 144.78 59.69)
+		(at 135.89 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8aca42ae-8077-4e89-88d5-0b30b32be9ec")
 	)
 	(junction
-		(at 165.1 59.69)
+		(at 156.21 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8d3056d2-8f3b-437f-8e25-d596db544b07")
@@ -2338,7 +2338,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 59.69) (xy 165.1 62.23)
+			(xy 156.21 55.88) (xy 156.21 58.42)
 		)
 		(stroke
 			(width 0)
@@ -2368,7 +2368,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 72.39) (xy 154.94 71.12)
+			(xy 146.05 68.58) (xy 146.05 67.31)
 		)
 		(stroke
 			(width 0)
@@ -2548,7 +2548,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 71.12) (xy 154.94 71.12)
+			(xy 135.89 67.31) (xy 146.05 67.31)
 		)
 		(stroke
 			(width 0)
@@ -2568,7 +2568,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 78.74) (xy 177.8 80.01)
+			(xy 168.91 74.93) (xy 168.91 76.2)
 		)
 		(stroke
 			(width 0)
@@ -2578,7 +2578,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 59.69) (xy 177.8 62.23)
+			(xy 168.91 55.88) (xy 168.91 58.42)
 		)
 		(stroke
 			(width 0)
@@ -2608,7 +2608,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 71.12) (xy 144.78 69.85)
+			(xy 135.89 67.31) (xy 135.89 66.04)
 		)
 		(stroke
 			(width 0)
@@ -2628,7 +2628,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 59.69) (xy 177.8 59.69)
+			(xy 160.02 55.88) (xy 168.91 55.88)
 		)
 		(stroke
 			(width 0)
@@ -2648,7 +2648,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 71.12) (xy 165.1 71.12)
+			(xy 146.05 67.31) (xy 156.21 67.31)
 		)
 		(stroke
 			(width 0)
@@ -2678,7 +2678,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 59.69) (xy 168.91 59.69)
+			(xy 156.21 55.88) (xy 160.02 55.88)
 		)
 		(stroke
 			(width 0)
@@ -2888,7 +2888,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 59.69) (xy 168.91 55.88)
+			(xy 160.02 55.88) (xy 160.02 52.07)
 		)
 		(stroke
 			(width 0)
@@ -2938,7 +2938,7 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 59.69) (xy 144.78 59.69)
+			(xy 132.08 55.88) (xy 135.89 55.88)
 		)
 		(stroke
 			(width 0)
@@ -2978,7 +2978,7 @@
 	)
 	(wire
 		(pts
-			(xy 162.56 59.69) (xy 165.1 59.69)
+			(xy 153.67 55.88) (xy 156.21 55.88)
 		)
 		(stroke
 			(width 0)
@@ -3008,7 +3008,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 59.69) (xy 147.32 59.69)
+			(xy 135.89 55.88) (xy 138.43 55.88)
 		)
 		(stroke
 			(width 0)
@@ -3048,7 +3048,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 67.31) (xy 154.94 71.12)
+			(xy 146.05 63.5) (xy 146.05 67.31)
 		)
 		(stroke
 			(width 0)
@@ -3148,7 +3148,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 69.85) (xy 177.8 71.12)
+			(xy 168.91 66.04) (xy 168.91 67.31)
 		)
 		(stroke
 			(width 0)
@@ -3158,7 +3158,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 59.69) (xy 144.78 62.23)
+			(xy 135.89 55.88) (xy 135.89 58.42)
 		)
 		(stroke
 			(width 0)
@@ -3208,7 +3208,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 71.12) (xy 165.1 69.85)
+			(xy 156.21 67.31) (xy 156.21 66.04)
 		)
 		(stroke
 			(width 0)
@@ -3245,6 +3245,19 @@
 			)
 		)
 		(uuid "bbee0bfd-d6a1-40e4-9d91-eb3af4c7e091")
+	)
+	(text "Power"
+		(exclude_from_sim no)
+		(at 17.526 17.78 0)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.4)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "e4840470-9e7a-4a3c-89fb-a06f5858ed8a")
 	)
 	(global_label "AREF-10"
 		(shape input)
@@ -3433,7 +3446,7 @@
 	)
 	(symbol
 		(lib_id "Regulator_Linear:LM1117MP-3.3")
-		(at 154.94 59.69 0)
+		(at 146.05 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3442,7 +3455,7 @@
 		(fields_autoplaced yes)
 		(uuid "259c2b5a-b42e-4690-bdc8-c18217673ecf")
 		(property "Reference" "U7"
-			(at 154.94 53.34 0)
+			(at 146.05 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3450,7 +3463,7 @@
 			)
 		)
 		(property "Value" "LM1117MP-3.3"
-			(at 154.94 55.88 0)
+			(at 146.05 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3458,7 +3471,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3467,7 +3480,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm1117.pdf"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3476,7 +3489,7 @@
 			)
 		)
 		(property "Description" "800mA Low-Dropout Linear Regulator, 3.3V fixed output, SOT-223"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3485,7 +3498,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Texas Instruments"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3494,7 +3507,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "LM1117MP-3.3/NOPB"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3503,7 +3516,7 @@
 			)
 		)
 		(property "Mouser Part Number" "926-LM1117MP-3.3NOPB"
-			(at 154.94 59.69 0)
+			(at 146.05 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4418,7 +4431,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 177.8 74.93 0)
+		(at 168.91 71.12 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4427,7 +4440,7 @@
 		(fields_autoplaced yes)
 		(uuid "762417cb-ec78-40d1-9896-31a6d0cd29bf")
 		(property "Reference" "R39"
-			(at 180.34 73.6599 0)
+			(at 171.45 69.8499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4436,7 +4449,7 @@
 			)
 		)
 		(property "Value" "150"
-			(at 180.34 76.1999 0)
+			(at 171.45 72.3899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4445,7 +4458,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 176.022 74.93 90)
+			(at 167.132 71.12 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4454,7 +4467,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 177.8 74.93 0)
+			(at 168.91 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4463,7 +4476,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 177.8 74.93 0)
+			(at 168.91 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4942,7 +4955,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 177.8 66.04 90)
+		(at 168.91 62.23 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4951,7 +4964,7 @@
 		(fields_autoplaced yes)
 		(uuid "89a94ac8-b6c4-4268-b666-fde0bddcea53")
 		(property "Reference" "D3"
-			(at 181.61 66.3574 90)
+			(at 172.72 62.5474 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4960,7 +4973,7 @@
 			)
 		)
 		(property "Value" "PWR_LED"
-			(at 181.61 68.8974 90)
+			(at 172.72 65.0874 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4969,7 +4982,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4978,7 +4991,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4987,7 +5000,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4996,7 +5009,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Wurth Elektronik"
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5005,7 +5018,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "150060VS75000 "
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5014,7 +5027,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 710-150060VS75000 "
-			(at 177.8 66.04 0)
+			(at 168.91 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5105,7 +5118,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 154.94 72.39 0)
+		(at 146.05 68.58 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5114,7 +5127,7 @@
 		(fields_autoplaced yes)
 		(uuid "8ebc1197-8d30-465e-ac1a-6655c2640563")
 		(property "Reference" "#PWR045"
-			(at 154.94 78.74 0)
+			(at 146.05 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5123,7 +5136,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 154.94 77.47 0)
+			(at 146.05 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5131,7 +5144,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 154.94 72.39 0)
+			(at 146.05 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5140,7 +5153,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 154.94 72.39 0)
+			(at 146.05 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5149,7 +5162,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 154.94 72.39 0)
+			(at 146.05 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6869,7 +6882,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 168.91 55.88 0)
+		(at 160.02 52.07 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6878,7 +6891,7 @@
 		(fields_autoplaced yes)
 		(uuid "cf02fbd3-be57-4cc2-bad1-0aabf77bc1f8")
 		(property "Reference" "#PWR046"
-			(at 168.91 59.69 0)
+			(at 160.02 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6887,7 +6900,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 168.91 50.8 0)
+			(at 160.02 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6895,7 +6908,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 168.91 55.88 0)
+			(at 160.02 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6904,7 +6917,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 168.91 55.88 0)
+			(at 160.02 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6913,7 +6926,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 168.91 55.88 0)
+			(at 160.02 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7164,7 +7177,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 144.78 66.04 0)
+		(at 135.89 62.23 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7172,7 +7185,7 @@
 		(dnp no)
 		(uuid "e1728d6c-fcf5-4b62-9d7e-b4be2d49f339")
 		(property "Reference" "C30"
-			(at 138.43 64.77 0)
+			(at 129.54 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7181,7 +7194,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 138.43 67.31 0)
+			(at 129.54 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7190,7 +7203,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 145.7452 69.85 0)
+			(at 136.8552 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7199,7 +7212,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 144.78 66.04 0)
+			(at 135.89 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7208,7 +7221,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 144.78 66.04 0)
+			(at 135.89 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7217,7 +7230,7 @@
 			)
 		)
 		(property "Manufacturer_Name" " Murata Electronics "
-			(at 144.78 66.04 0)
+			(at 135.89 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7226,7 +7239,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
-			(at 144.78 66.04 0)
+			(at 135.89 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7235,7 +7248,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
-			(at 144.78 66.04 0)
+			(at 135.89 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7357,7 +7370,7 @@
 	)
 	(symbol
 		(lib_id "power:+12V")
-		(at 140.97 59.69 0)
+		(at 132.08 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7366,7 +7379,7 @@
 		(fields_autoplaced yes)
 		(uuid "e7a7d7bc-33df-4b23-be2c-2c3c100bc7e0")
 		(property "Reference" "#PWR044"
-			(at 140.97 63.5 0)
+			(at 132.08 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7375,7 +7388,7 @@
 			)
 		)
 		(property "Value" "+12V"
-			(at 140.97 54.61 0)
+			(at 132.08 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7383,7 +7396,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 140.97 59.69 0)
+			(at 132.08 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7392,7 +7405,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 140.97 59.69 0)
+			(at 132.08 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7401,7 +7414,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 140.97 59.69 0)
+			(at 132.08 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7617,7 +7630,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 165.1 66.04 0)
+		(at 156.21 62.23 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7625,7 +7638,7 @@
 		(dnp no)
 		(uuid "f504fc2b-9e3f-4fac-9ec6-f4e5ed78b05b")
 		(property "Reference" "C33"
-			(at 168.148 64.008 0)
+			(at 159.258 60.198 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7634,7 +7647,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 168.148 66.548 0)
+			(at 159.258 62.738 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7643,7 +7656,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 166.0652 69.85 0)
+			(at 157.1752 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7652,7 +7665,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 165.1 66.04 0)
+			(at 156.21 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7661,7 +7674,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 165.1 66.04 0)
+			(at 156.21 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7670,7 +7683,7 @@
 			)
 		)
 		(property "Manufacturer_Name" " Murata Electronics "
-			(at 165.1 66.04 0)
+			(at 156.21 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7679,7 +7692,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
-			(at 165.1 66.04 0)
+			(at 156.21 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7688,7 +7701,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
-			(at 165.1 66.04 0)
+			(at 156.21 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7895,7 +7908,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 177.8 80.01 0)
+		(at 168.91 76.2 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7904,7 +7917,7 @@
 		(fields_autoplaced yes)
 		(uuid "ff450702-1456-4e1f-988c-3d268b2f31f4")
 		(property "Reference" "#PWR0103"
-			(at 177.8 86.36 0)
+			(at 168.91 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7913,7 +7926,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 177.8 85.09 0)
+			(at 168.91 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7921,7 +7934,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 177.8 80.01 0)
+			(at 168.91 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7930,7 +7943,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 177.8 80.01 0)
+			(at 168.91 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7939,7 +7952,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 177.8 80.01 0)
+			(at 168.91 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)

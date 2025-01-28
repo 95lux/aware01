@@ -2588,26 +2588,18 @@
 		)
 		(uuid "ffbdabc3-0517-4c92-b093-b3461e47639b")
 	)
-	(text "ALL CAPS SHOULD BE NG0 ceramic caps evtl nicht 2.2u verfügbar"
+	(text "In/Out Stages"
 		(exclude_from_sim no)
-		(at 151.13 28.194 0)
+		(at 18.542 18.034 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 2 2)
+				(thickness 0.4)
+				(bold yes)
 			)
+			(justify left top)
 		)
-		(uuid "4016f4ab-ff28-4c2e-8694-efeb1073c063")
-	)
-	(text "Calculation of input AC-coupling Capacitor\n\nReq = Rin x (1 + 2g)/(1+g)\nbei g = 1 und Rin = 10k\n\nReq = 30k\n\nFc = 1/(2 x π x ReqCc)\nbei Cc = 1u\nFc = 5Hz\n"
-		(exclude_from_sim no)
-		(at 13.97 23.622 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "940040ac-ddc1-4d33-bf08-6ad6647ce5d1")
+		(uuid "d15a2d53-0180-4e9d-92eb-277400ef7364")
 	)
 	(hierarchical_label "OUTR"
 		(shape input)

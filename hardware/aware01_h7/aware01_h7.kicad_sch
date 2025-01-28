@@ -9189,26 +9189,6 @@
 		)
 		(uuid "ff5ae64c-2a9e-4234-ad02-e846b40c464a")
 	)
-	(text "TESTPADS EINBAUEN"
-		(exclude_from_sim no)
-		(at 202.438 24.638 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ce916b86-5353-4806-aaee-818633345d00")
-	)
-	(text "TODO: SWO in CubeMX und an MCU in schematic hinzufügen"
-		(exclude_from_sim no)
-		(at 56.896 143.51 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ee4c24c6-b76b-4a4f-83bf-58763d885be4")
-	)
 	(label "FADER1_IN"
 		(at 345.44 220.98 180)
 		(effects
