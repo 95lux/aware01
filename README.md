@@ -2,6 +2,11 @@
 
 AWARE01 is a Eurorack Modular Synthesizer Module based on the STM32 H7 platform.
 
+<p align="center">
+  <img src="hardware/aware01_h7/export/rev1/aware01_h7_rev1-0_top.png" width="45%" />
+  <img src="hardware/aware01_h7/export/rev1/aware01_h7_rev1-0_back.png" width="45%" />
+</p>
+
 ## Overview
 - **Hardware**: KiCad project with schematic and PCB design.  
 - **Firmware**: STM32CubeMX used for pin assignment and hardware peripheral configuration.  
