@@ -2698,6 +2698,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Walsin"
+			(at 91.44 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "0603N102J100CT "
+			(at 91.44 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 791-0603N102J100CT "
+			(at 91.44 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a9f038b0-a157-4355-918a-fa439dd82c38")
 		)
@@ -2766,7 +2793,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Vishay "
+		(property "Manufacturer_Name" "Vishay "
 			(at 29.21 87.63 0)
 			(effects
 				(font
@@ -3134,7 +3161,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Vishay "
+		(property "Manufacturer_Name" "Vishay "
 			(at 29.21 105.41 0)
 			(effects
 				(font
@@ -3804,7 +3831,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Vishay "
+		(property "Manufacturer_Name" "Vishay "
 			(at 162.56 106.68 0)
 			(effects
 				(font
@@ -4001,7 +4028,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 88.9 133.35 0)
 			(effects
 				(font
@@ -4289,7 +4316,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 88.9 64.77 0)
 			(effects
 				(font
@@ -4468,7 +4495,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Vishay "
+		(property "Manufacturer_Name" "Vishay "
 			(at 162.56 88.9 0)
 			(effects
 				(font
@@ -5647,7 +5674,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 171.45 97.79 0)
 			(effects
 				(font
@@ -6139,7 +6166,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 212.09 67.31 0)
 			(effects
 				(font
@@ -6854,7 +6881,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 38.1 96.52 0)
 			(effects
 				(font
@@ -7137,7 +7164,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "https://www.ti.com/lit/ds/symlink/ne5532.pdf?ts=1737022307701&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FNE5532%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-amps-null-44700045336317476_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gclid%253DCj0KCQiA-aK8BhCDARIsAL_-H9mYiaShwxHngsV995eTZ5z5kL5TUtr1-NxsW1eLHTpo7-NCtI5Cr20aApPfEALw_wcB%2526gclsrc%253Daw.ds"
+		(property "Manufacturer_Name" "Texas Instruments"
 			(at 212.09 135.89 0)
 			(effects
 				(font

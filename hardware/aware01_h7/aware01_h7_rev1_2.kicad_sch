@@ -10908,7 +10908,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 353.06 130.81 90)
 			(effects
 				(font
@@ -10916,7 +10916,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 353.06 136.398 90)
 			(effects
 				(font
@@ -10935,6 +10935,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 353.06 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 353.06 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 353.06 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 353.06 134.62 0)
 			(effects
 				(font
@@ -10977,7 +11004,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 359.41 104.14 90)
 			(effects
 				(font
@@ -10985,7 +11012,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 359.41 109.728 90)
 			(effects
 				(font
@@ -11004,6 +11031,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 359.41 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 359.41 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 359.41 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 359.41 107.95 0)
 			(effects
 				(font
@@ -11111,7 +11165,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 287.02 111.76 90)
 			(effects
 				(font
@@ -11119,7 +11173,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 287.02 117.348 90)
 			(effects
 				(font
@@ -11138,6 +11192,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 287.02 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 287.02 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 287.02 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 287.02 115.57 0)
 			(effects
 				(font
@@ -11216,7 +11297,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Samsung Electro-Mechanics "
+		(property "Manufacturer_Name" "Samsung Electro-Mechanics "
 			(at 373.38 59.69 0)
 			(effects
 				(font
@@ -11277,7 +11358,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 363.22 86.36 90)
 			(effects
 				(font
@@ -11285,7 +11366,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 363.22 91.948 90)
 			(effects
 				(font
@@ -11304,6 +11385,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 363.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 363.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 363.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 363.22 90.17 0)
 			(effects
 				(font
@@ -11345,7 +11453,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 281.94 80.01 90)
 			(effects
 				(font
@@ -11353,7 +11461,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 281.94 85.598 90)
 			(effects
 				(font
@@ -11372,6 +11480,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 281.94 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 281.94 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 281.94 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 281.94 83.82 0)
 			(effects
 				(font
@@ -11414,7 +11549,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 383.54 96.52 90)
 			(effects
 				(font
@@ -11422,7 +11557,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 383.54 102.108 90)
 			(effects
 				(font
@@ -11441,6 +11576,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 383.54 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 383.54 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 383.54 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 383.54 100.33 0)
 			(effects
 				(font
@@ -11483,7 +11645,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 349.25 99.06 90)
 			(effects
 				(font
@@ -11491,7 +11653,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 349.25 104.648 90)
 			(effects
 				(font
@@ -11510,6 +11672,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 349.25 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 349.25 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 349.25 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 349.25 102.87 0)
 			(effects
 				(font
@@ -11551,7 +11740,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 275.59 120.65 90)
 			(effects
 				(font
@@ -11559,7 +11748,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 275.59 126.238 90)
 			(effects
 				(font
@@ -11578,6 +11767,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 275.59 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 275.59 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 275.59 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 275.59 124.46 0)
 			(effects
 				(font
@@ -11671,7 +11887,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 710-830064703 "
+		(property "Mouser Part Number" " 710-830064703"
 			(at 64.77 99.06 0)
 			(effects
 				(font
@@ -11786,7 +12002,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 269.24 142.24 90)
 			(effects
 				(font
@@ -11794,7 +12010,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 269.24 147.828 90)
 			(effects
 				(font
@@ -11813,6 +12029,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 269.24 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 269.24 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 269.24 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 269.24 146.05 0)
 			(effects
 				(font
@@ -11854,7 +12097,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 280.67 134.62 90)
 			(effects
 				(font
@@ -11862,7 +12105,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 280.67 140.208 90)
 			(effects
 				(font
@@ -11881,6 +12124,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 280.67 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 280.67 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 280.67 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 280.67 138.43 0)
 			(effects
 				(font
@@ -11922,7 +12192,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 276.86 82.55 90)
 			(effects
 				(font
@@ -11930,7 +12200,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 276.86 88.138 90)
 			(effects
 				(font
@@ -11949,6 +12219,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 276.86 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 276.86 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 276.86 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 276.86 86.36 0)
 			(effects
 				(font
@@ -12124,7 +12421,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 364.49 106.68 90)
 			(effects
 				(font
@@ -12132,7 +12429,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 364.49 112.268 90)
 			(effects
 				(font
@@ -12151,6 +12448,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 364.49 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 364.49 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 364.49 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 364.49 110.49 0)
 			(effects
 				(font
@@ -12354,7 +12678,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 276.86 97.79 90)
 			(effects
 				(font
@@ -12362,7 +12686,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 276.86 103.378 90)
 			(effects
 				(font
@@ -12381,6 +12705,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 276.86 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 276.86 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 276.86 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 276.86 101.6 0)
 			(effects
 				(font
@@ -12593,7 +12944,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " KEMET "
+		(property "Manufacturer_Name" "KEMET "
 			(at 72.39 105.41 0)
 			(effects
 				(font
@@ -12654,7 +13005,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 373.38 91.44 90)
 			(effects
 				(font
@@ -12662,7 +13013,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 373.38 97.028 90)
 			(effects
 				(font
@@ -12681,6 +13032,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 373.38 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 373.38 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 373.38 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 373.38 95.25 0)
 			(effects
 				(font
@@ -12819,7 +13197,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 281.94 95.25 90)
 			(effects
 				(font
@@ -12827,7 +13205,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 281.94 100.838 90)
 			(effects
 				(font
@@ -12846,6 +13224,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 281.94 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 281.94 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 281.94 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 281.94 99.06 0)
 			(effects
 				(font
@@ -12923,7 +13328,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " KEMET "
+		(property "Manufacturer_Name" "KEMET "
 			(at 54.61 105.41 0)
 			(effects
 				(font
@@ -12983,7 +13388,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 275.59 137.16 90)
 			(effects
 				(font
@@ -12991,7 +13396,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 275.59 142.748 90)
 			(effects
 				(font
@@ -13010,6 +13415,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 275.59 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 275.59 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 275.59 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 275.59 140.97 0)
 			(effects
 				(font
@@ -13085,7 +13517,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " ISSI "
+		(property "Manufacturer_Name" "ISSI "
 			(at 317.5 111.76 0)
 			(effects
 				(font
@@ -13103,7 +13535,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 870-IS45S16800F7TLA2 "
+		(property "Mouser Part Number" " 870-IS45S16800F7TLA2"
 			(at 317.5 111.76 0)
 			(effects
 				(font
@@ -13302,7 +13734,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 369.57 109.22 90)
 			(effects
 				(font
@@ -13310,7 +13742,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 369.57 114.808 90)
 			(effects
 				(font
@@ -13329,6 +13761,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 369.57 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 369.57 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 369.57 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 369.57 113.03 0)
 			(effects
 				(font
@@ -13572,7 +14031,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 287.02 92.71 90)
 			(effects
 				(font
@@ -13580,7 +14039,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 287.02 98.298 90)
 			(effects
 				(font
@@ -13599,6 +14058,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 287.02 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 287.02 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 287.02 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 287.02 96.52 0)
 			(effects
 				(font
@@ -14064,7 +14550,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 271.78 100.33 90)
 			(effects
 				(font
@@ -14072,7 +14558,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 271.78 105.918 90)
 			(effects
 				(font
@@ -14091,6 +14577,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 271.78 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 271.78 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 271.78 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 271.78 104.14 0)
 			(effects
 				(font
@@ -14269,7 +14782,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 374.65 111.76 90)
 			(effects
 				(font
@@ -14277,7 +14790,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 374.65 117.348 90)
 			(effects
 				(font
@@ -14296,6 +14809,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 374.65 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 374.65 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 374.65 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 374.65 115.57 0)
 			(effects
 				(font
@@ -14338,7 +14878,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 347.98 78.74 90)
 			(effects
 				(font
@@ -14346,7 +14886,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 347.98 84.328 90)
 			(effects
 				(font
@@ -14365,6 +14905,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 347.98 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 347.98 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 347.98 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 347.98 82.55 0)
 			(effects
 				(font
@@ -14505,7 +15072,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 347.98 128.27 90)
 			(effects
 				(font
@@ -14513,7 +15080,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 347.98 133.858 90)
 			(effects
 				(font
@@ -14532,6 +15099,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 347.98 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 347.98 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 347.98 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 347.98 132.08 0)
 			(effects
 				(font
@@ -14573,7 +15167,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 261.62 90.17 90)
 			(effects
 				(font
@@ -14581,7 +15175,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 261.62 95.758 90)
 			(effects
 				(font
@@ -14600,6 +15194,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 261.62 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 261.62 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 261.62 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 261.62 93.98 0)
 			(effects
 				(font
@@ -14642,7 +15263,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 378.46 93.98 90)
 			(effects
 				(font
@@ -14650,7 +15271,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 378.46 99.568 90)
 			(effects
 				(font
@@ -14669,6 +15290,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 378.46 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 378.46 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 378.46 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 378.46 97.79 0)
 			(effects
 				(font
@@ -15006,7 +15654,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 266.7 87.63 90)
 			(effects
 				(font
@@ -15014,7 +15662,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 266.7 93.218 90)
 			(effects
 				(font
@@ -15033,6 +15681,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 266.7 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 266.7 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 266.7 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 266.7 91.44 0)
 			(effects
 				(font
@@ -15186,7 +15861,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " TS04-66-43-BK-100-SMT "
+		(property "Manufacturer_Part_Number" "TS04-66-43-BK-100-SMT"
 			(at 96.52 55.88 0)
 			(effects
 				(font
@@ -15238,7 +15913,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 379.73 114.3 90)
 			(effects
 				(font
@@ -15246,7 +15921,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 379.73 119.888 90)
 			(effects
 				(font
@@ -15265,6 +15940,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 379.73 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 379.73 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 379.73 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 379.73 118.11 0)
 			(effects
 				(font
@@ -15423,7 +16125,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Samsung Electro-Mechanics "
+		(property "Manufacturer_Name" "Samsung Electro-Mechanics "
 			(at 265.43 59.69 0)
 			(effects
 				(font
@@ -15483,7 +16185,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 281.94 114.3 90)
 			(effects
 				(font
@@ -15491,7 +16193,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 281.94 119.888 90)
 			(effects
 				(font
@@ -15510,6 +16212,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 281.94 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 281.94 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 281.94 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 281.94 118.11 0)
 			(effects
 				(font
@@ -15551,7 +16280,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 285.75 129.54 90)
 			(effects
 				(font
@@ -15559,7 +16288,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 285.75 135.128 90)
 			(effects
 				(font
@@ -15578,6 +16307,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 285.75 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 285.75 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 285.75 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 285.75 133.35 0)
 			(effects
 				(font
@@ -15619,7 +16375,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 271.78 85.09 90)
 			(effects
 				(font
@@ -15627,7 +16383,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 271.78 90.678 90)
 			(effects
 				(font
@@ -15646,6 +16402,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 271.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 271.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 271.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 271.78 88.9 0)
 			(effects
 				(font
@@ -15688,7 +16471,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 368.3 88.9 90)
 			(effects
 				(font
@@ -15696,7 +16479,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 368.3 94.488 90)
 			(effects
 				(font
@@ -15715,6 +16498,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 368.3 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 368.3 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 368.3 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 368.3 92.71 0)
 			(effects
 				(font
@@ -15757,7 +16567,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 384.81 116.84 90)
 			(effects
 				(font
@@ -15765,7 +16575,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 384.81 122.428 90)
 			(effects
 				(font
@@ -15784,6 +16594,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 384.81 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 384.81 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 384.81 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 384.81 120.65 0)
 			(effects
 				(font
@@ -15825,7 +16662,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 266.7 102.87 90)
 			(effects
 				(font
@@ -15833,7 +16670,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 266.7 108.458 90)
 			(effects
 				(font
@@ -15852,6 +16689,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 266.7 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 266.7 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 266.7 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 266.7 106.68 0)
 			(effects
 				(font
@@ -16057,7 +16921,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 354.33 101.6 90)
 			(effects
 				(font
@@ -16065,7 +16929,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 354.33 107.188 90)
 			(effects
 				(font
@@ -16084,6 +16948,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 354.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 354.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 354.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 354.33 105.41 0)
 			(effects
 				(font
@@ -16401,7 +17292,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "STM32H7B0ZBT6 "
+		(property "Manufacturer_Part_Number" "STM32H7B0ZBT6"
 			(at 162.56 157.48 0)
 			(effects
 				(font
@@ -16410,7 +17301,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 511-STM32H7B0ZBT6 "
+		(property "Mouser Part Number" " 511-STM32H7B0ZBT6"
 			(at 162.56 157.48 0)
 			(effects
 				(font
@@ -16975,7 +17866,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 358.14 83.82 90)
 			(effects
 				(font
@@ -16983,7 +17874,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 358.14 89.408 90)
 			(effects
 				(font
@@ -17002,6 +17893,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 358.14 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 358.14 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 358.14 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 358.14 87.63 0)
 			(effects
 				(font
@@ -17141,7 +18059,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 353.06 81.28 90)
 			(effects
 				(font
@@ -17149,7 +18067,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 353.06 86.868 90)
 			(effects
 				(font
@@ -17168,6 +18086,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 353.06 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 353.06 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 353.06 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 353.06 85.09 0)
 			(effects
 				(font
@@ -17209,7 +18154,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 261.62 105.41 90)
 			(effects
 				(font
@@ -17217,7 +18162,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 261.62 110.998 90)
 			(effects
 				(font
@@ -17236,6 +18181,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 261.62 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 261.62 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 261.62 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 261.62 109.22 0)
 			(effects
 				(font
@@ -17345,7 +18317,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 287.02 77.47 90)
 			(effects
 				(font
@@ -17353,7 +18325,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 287.02 83.058 90)
 			(effects
 				(font
@@ -17372,6 +18344,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 287.02 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 287.02 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 287.02 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 287.02 81.28 0)
 			(effects
 				(font
@@ -17413,7 +18412,7 @@
 				)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "33"
 			(at 270.51 123.19 90)
 			(effects
 				(font
@@ -17421,7 +18420,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 270.51 128.778 90)
 			(effects
 				(font
@@ -17440,6 +18439,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 270.51 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Susumu"
+			(at 270.51 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RR0510R-330-D"
+			(at 270.51 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "754-RR0510R-330D"
 			(at 270.51 127 0)
 			(effects
 				(font
@@ -17494,7 +18520,7 @@
 			)
 		)
 		(instances
-			(project "aware01_h7"
+			(project "aware01_h7_rev1_2"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(page "5")
 				)
@@ -17602,7 +18628,7 @@
 			(uuid "3b67dc47-95be-46fa-aa55-9b51cd52fbde")
 		)
 		(instances
-			(project "aware01_h7"
+			(project "aware01_h7_rev1_2"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(page "7")
 				)
@@ -17740,7 +18766,7 @@
 			(uuid "e5d0c537-d8ad-4757-b1af-204ed472684f")
 		)
 		(instances
-			(project "aware01_h7"
+			(project "aware01_h7_rev1_2"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(page "4")
 				)
@@ -17828,7 +18854,7 @@
 			(uuid "41292865-194b-4d72-b7fc-7bd3e4bfb707")
 		)
 		(instances
-			(project "aware01_h7"
+			(project "aware01_h7_rev1_2"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(page "9")
 				)

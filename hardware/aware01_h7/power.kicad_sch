@@ -3796,7 +3796,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Lelon "
+		(property "Manufacturer_Name" "Lelon "
 			(at 78.74 57.15 0)
 			(effects
 				(font
@@ -4387,7 +4387,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Lelon "
+		(property "Manufacturer_Name" "Lelon "
 			(at 78.74 64.77 0)
 			(effects
 				(font
@@ -4814,7 +4814,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " KEMET "
+		(property "Manufacturer_Name" "KEMET "
 			(at 54.61 125.73 0)
 			(effects
 				(font
@@ -5928,7 +5928,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " LM4040DIM3X-10/NOPB "
+		(property "Manufacturer_Part_Number" "LM4040DIM3X-10/NOPB"
 			(at 220.98 66.04 0)
 			(effects
 				(font
@@ -5937,7 +5937,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 926-LM4040DIM3X10NPB "
+		(property "Mouser Part Number" " 926-LM4040DIM3X10NPB"
 			(at 220.98 66.04 0)
 			(effects
 				(font
@@ -7001,7 +7001,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " KEMET "
+		(property "Manufacturer_Name" "KEMET "
 			(at 97.79 158.75 0)
 			(effects
 				(font
@@ -7229,7 +7229,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Murata Electronics "
+		(property "Manufacturer_Name" "Murata Electronics "
 			(at 135.89 62.23 0)
 			(effects
 				(font
@@ -7326,7 +7326,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Walsin "
+		(property "Manufacturer_Name" "Walsin "
 			(at 130.81 158.75 0)
 			(effects
 				(font
@@ -7586,7 +7586,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Walsin "
+		(property "Manufacturer_Name" "Walsin "
 			(at 109.22 158.75 0)
 			(effects
 				(font
@@ -7682,7 +7682,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" " Murata Electronics "
+		(property "Manufacturer_Name" "Murata Electronics "
 			(at 156.21 62.23 0)
 			(effects
 				(font
