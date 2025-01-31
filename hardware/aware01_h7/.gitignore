@@ -29,3 +29,5 @@ fp-info-cache
 *.csv
 
 ./export/**
+
+/fabrication_files
