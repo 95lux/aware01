@@ -10900,7 +10900,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "01f00d8f-2cba-4627-b772-488c5741717a")
-		(property "Reference" "R69"
+		(property "Reference" "R26"
 			(at 353.06 128.27 90)
 			(effects
 				(font
@@ -10916,7 +10916,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 353.06 136.398 90)
 			(effects
 				(font
@@ -10979,7 +10979,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R69")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -10996,7 +10996,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0791d818-77f1-4260-8e5e-de71135d588d")
-		(property "Reference" "R60"
+		(property "Reference" "R29"
 			(at 359.41 101.6 90)
 			(effects
 				(font
@@ -11012,7 +11012,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 359.41 109.728 90)
 			(effects
 				(font
@@ -11075,7 +11075,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R60")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -11091,7 +11091,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "089f5b36-473b-4f22-b112-8890de9d4423")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR018"
 			(at 308.61 57.15 0)
 			(effects
 				(font
@@ -11141,7 +11141,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR017")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -11157,7 +11157,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0ce286a8-8f29-4d57-bb56-6e3417a4e47a")
-		(property "Reference" "R71"
+		(property "Reference" "R21"
 			(at 287.02 109.22 90)
 			(effects
 				(font
@@ -11173,7 +11173,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 287.02 117.348 90)
 			(effects
 				(font
@@ -11236,7 +11236,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R71")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -11252,7 +11252,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0f5d395b-d389-48a0-9f8c-7c14adc7ba9f")
-		(property "Reference" "C14"
+		(property "Reference" "C15"
 			(at 370.586 58.928 0)
 			(effects
 				(font
@@ -11333,7 +11333,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C14")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -11350,7 +11350,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "105c6e2b-819b-4fb8-bacd-5400f7112aa5")
-		(property "Reference" "R54"
+		(property "Reference" "R30"
 			(at 363.22 83.82 90)
 			(effects
 				(font
@@ -11366,7 +11366,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 363.22 91.948 90)
 			(effects
 				(font
@@ -11429,7 +11429,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R54")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -11445,7 +11445,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "11239f48-0cc1-4e00-9331-8b435d594b6f")
-		(property "Reference" "R41"
+		(property "Reference" "R15"
 			(at 281.94 77.47 90)
 			(effects
 				(font
@@ -11461,7 +11461,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 281.94 85.598 90)
 			(effects
 				(font
@@ -11524,7 +11524,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R41")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -11541,7 +11541,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1412b5a4-2c6b-4eec-a6eb-9c5a270d6b4c")
-		(property "Reference" "R67"
+		(property "Reference" "R38"
 			(at 383.54 93.98 90)
 			(effects
 				(font
@@ -11557,7 +11557,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 383.54 102.108 90)
 			(effects
 				(font
@@ -11620,7 +11620,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R67")
+					(reference "R38")
 					(unit 1)
 				)
 			)
@@ -11637,7 +11637,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "17a5537e-70c9-4115-8d03-b5b237151df4")
-		(property "Reference" "R58"
+		(property "Reference" "R24"
 			(at 349.25 96.52 90)
 			(effects
 				(font
@@ -11653,7 +11653,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 349.25 104.648 90)
 			(effects
 				(font
@@ -11716,7 +11716,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R58")
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -11732,7 +11732,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "190557f4-2e3c-4943-acc5-e12922b31afe")
-		(property "Reference" "R73"
+		(property "Reference" "R10"
 			(at 275.59 118.11 90)
 			(effects
 				(font
@@ -11748,7 +11748,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 275.59 126.238 90)
 			(effects
 				(font
@@ -11811,7 +11811,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R73")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -11927,7 +11927,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d6b8d85-866a-4540-9284-9f0d17cdd8cf")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR016"
 			(at 265.43 72.39 0)
 			(effects
 				(font
@@ -11978,7 +11978,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR015")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -11994,7 +11994,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d94dc2d-02a7-4986-9a79-d91ffeaa20f8")
-		(property "Reference" "R77"
+		(property "Reference" "R6"
 			(at 269.24 139.7 90)
 			(effects
 				(font
@@ -12010,7 +12010,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 269.24 147.828 90)
 			(effects
 				(font
@@ -12073,7 +12073,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R77")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -12089,7 +12089,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2285fd0b-6fdc-48e0-b15e-c0cb27e8f5ae")
-		(property "Reference" "R75"
+		(property "Reference" "R14"
 			(at 280.67 132.08 90)
 			(effects
 				(font
@@ -12105,7 +12105,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 280.67 140.208 90)
 			(effects
 				(font
@@ -12168,7 +12168,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R75")
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -12184,7 +12184,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "289f85d1-c34c-48b1-93cc-ef140e8b0fd2")
-		(property "Reference" "R42"
+		(property "Reference" "R12"
 			(at 276.86 80.01 90)
 			(effects
 				(font
@@ -12200,7 +12200,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 276.86 88.138 90)
 			(effects
 				(font
@@ -12263,7 +12263,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R42")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -12413,7 +12413,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "37b38dec-c460-4816-8577-9358ccb78da2")
-		(property "Reference" "R61"
+		(property "Reference" "R31"
 			(at 364.49 104.14 90)
 			(effects
 				(font
@@ -12429,7 +12429,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 364.49 112.268 90)
 			(effects
 				(font
@@ -12492,7 +12492,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R61")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -12670,7 +12670,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "46340e4c-cac5-4f7b-a182-d6e2b9ece4cf")
-		(property "Reference" "R47"
+		(property "Reference" "R13"
 			(at 276.86 95.25 90)
 			(effects
 				(font
@@ -12686,7 +12686,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 276.86 103.378 90)
 			(effects
 				(font
@@ -12749,7 +12749,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R47")
+					(reference "R13")
 					(unit 1)
 				)
 			)
@@ -12997,7 +12997,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4bccb001-47f0-4e30-971d-209eb142588e")
-		(property "Reference" "R52"
+		(property "Reference" "R34"
 			(at 373.38 88.9 90)
 			(effects
 				(font
@@ -13013,7 +13013,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 373.38 97.028 90)
 			(effects
 				(font
@@ -13076,7 +13076,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R52")
+					(reference "R34")
 					(unit 1)
 				)
 			)
@@ -13189,7 +13189,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5510e14c-1037-45b9-b94f-aea520e7a488")
-		(property "Reference" "R48"
+		(property "Reference" "R16"
 			(at 281.94 92.71 90)
 			(effects
 				(font
@@ -13205,7 +13205,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 281.94 100.838 90)
 			(effects
 				(font
@@ -13268,7 +13268,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R48")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -13380,7 +13380,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5601c9cd-a68d-46be-9c16-731be5484fc1")
-		(property "Reference" "R74"
+		(property "Reference" "R11"
 			(at 275.59 134.62 90)
 			(effects
 				(font
@@ -13396,7 +13396,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 275.59 142.748 90)
 			(effects
 				(font
@@ -13459,7 +13459,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R74")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -13726,7 +13726,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5b64fa9e-62db-4ef0-a179-a1544a7e49d8")
-		(property "Reference" "R62"
+		(property "Reference" "R33"
 			(at 369.57 106.68 90)
 			(effects
 				(font
@@ -13742,7 +13742,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 369.57 114.808 90)
 			(effects
 				(font
@@ -13805,7 +13805,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R62")
+					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -13956,7 +13956,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "604c6b5a-7328-46d2-834c-3d80ab7f20ce")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR020"
 			(at 373.38 72.39 0)
 			(effects
 				(font
@@ -14007,7 +14007,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR019")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -14023,7 +14023,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "685629f9-7f54-4d00-971a-a901c0e276aa")
-		(property "Reference" "R49"
+		(property "Reference" "R20"
 			(at 287.02 90.17 90)
 			(effects
 				(font
@@ -14039,7 +14039,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 287.02 98.298 90)
 			(effects
 				(font
@@ -14102,7 +14102,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R49")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -14183,7 +14183,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6f1b2e91-c535-47e9-b72c-b1e360ab237b")
-		(property "Reference" "C9"
+		(property "Reference" "C10"
 			(at 290.83 58.4199 0)
 			(effects
 				(font
@@ -14264,7 +14264,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C9")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -14281,7 +14281,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "70325d70-35a8-4cbc-8241-ed82c9cc25fc")
-		(property "Reference" "C11"
+		(property "Reference" "C12"
 			(at 336.55 58.4199 0)
 			(effects
 				(font
@@ -14362,7 +14362,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C11")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -14445,7 +14445,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7bbd45c5-0d17-403e-9de0-8554712ff344")
-		(property "Reference" "C10"
+		(property "Reference" "C11"
 			(at 302.26 58.4199 0)
 			(effects
 				(font
@@ -14526,7 +14526,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C10")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -14542,7 +14542,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7c154b98-5b73-4ef6-9377-321f39788c47")
-		(property "Reference" "R46"
+		(property "Reference" "R9"
 			(at 271.78 97.79 90)
 			(effects
 				(font
@@ -14558,7 +14558,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 271.78 105.918 90)
 			(effects
 				(font
@@ -14621,7 +14621,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R46")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -14636,7 +14636,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7e004259-cb01-4574-9e0d-f205a32c92a9")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR015"
 			(at 180.34 58.42 0)
 			(effects
 				(font
@@ -14686,7 +14686,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR014")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -14774,7 +14774,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8031d34b-677c-4aa5-8e63-5a7aec13085a")
-		(property "Reference" "R63"
+		(property "Reference" "R35"
 			(at 374.65 109.22 90)
 			(effects
 				(font
@@ -14790,7 +14790,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 374.65 117.348 90)
 			(effects
 				(font
@@ -14853,7 +14853,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R63")
+					(reference "R35")
 					(unit 1)
 				)
 			)
@@ -14870,7 +14870,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "86cc7283-eac0-404f-8ab5-8ac2a2a92537")
-		(property "Reference" "R57"
+		(property "Reference" "R22"
 			(at 347.98 76.2 90)
 			(effects
 				(font
@@ -14886,7 +14886,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 347.98 84.328 90)
 			(effects
 				(font
@@ -14949,7 +14949,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R57")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -14966,7 +14966,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "86de3980-75fc-49cb-b5d7-b0fa209cbcb4")
-		(property "Reference" "C12"
+		(property "Reference" "C13"
 			(at 347.98 58.4199 0)
 			(effects
 				(font
@@ -15047,7 +15047,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C12")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -15064,7 +15064,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "88f38c24-fab4-454a-a772-a7f22448f01a")
-		(property "Reference" "R68"
+		(property "Reference" "R23"
 			(at 347.98 125.73 90)
 			(effects
 				(font
@@ -15080,7 +15080,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 347.98 133.858 90)
 			(effects
 				(font
@@ -15143,7 +15143,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R68")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -15159,7 +15159,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8a98d1b9-ba9e-4e6e-a702-d6063ff95294")
-		(property "Reference" "R50"
+		(property "Reference" "R2"
 			(at 261.62 87.63 90)
 			(effects
 				(font
@@ -15175,7 +15175,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 261.62 95.758 90)
 			(effects
 				(font
@@ -15238,7 +15238,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R50")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -15255,7 +15255,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8de0aa94-6ae8-48f6-9bef-95cdc3f464a4")
-		(property "Reference" "R66"
+		(property "Reference" "R36"
 			(at 378.46 91.44 90)
 			(effects
 				(font
@@ -15271,7 +15271,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 378.46 99.568 90)
 			(effects
 				(font
@@ -15334,7 +15334,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R66")
+					(reference "R36")
 					(unit 1)
 				)
 			)
@@ -15350,7 +15350,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "95875161-d52f-4922-a71a-c0b1aabea710")
-		(property "Reference" "#PWR0106"
+		(property "Reference" "#PWR013"
 			(at 167.64 63.5 0)
 			(effects
 				(font
@@ -15401,7 +15401,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR0106")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -15484,7 +15484,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9dbe1f55-fce7-4e8d-b875-5a77caca3bda")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR019"
 			(at 330.2 57.15 0)
 			(effects
 				(font
@@ -15534,7 +15534,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR018")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -15646,7 +15646,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b26c1b4c-fc56-4727-885c-281081b57521")
-		(property "Reference" "R44"
+		(property "Reference" "R4"
 			(at 266.7 85.09 90)
 			(effects
 				(font
@@ -15662,7 +15662,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 266.7 93.218 90)
 			(effects
 				(font
@@ -15725,7 +15725,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R44")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -15905,7 +15905,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b77d386e-1429-4f1e-880c-ced284d4d501")
-		(property "Reference" "R64"
+		(property "Reference" "R37"
 			(at 379.73 111.76 90)
 			(effects
 				(font
@@ -15921,7 +15921,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 379.73 119.888 90)
 			(effects
 				(font
@@ -15984,7 +15984,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R64")
+					(reference "R37")
 					(unit 1)
 				)
 			)
@@ -16080,7 +16080,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bf1dc6c1-b134-452e-acfe-42ff4a6421f6")
-		(property "Reference" "C7"
+		(property "Reference" "C8"
 			(at 269.24 58.4199 0)
 			(effects
 				(font
@@ -16161,7 +16161,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C7")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -16177,7 +16177,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c592ccef-e8cd-400f-b24c-10a0d5a5d89a")
-		(property "Reference" "R70"
+		(property "Reference" "R17"
 			(at 281.94 111.76 90)
 			(effects
 				(font
@@ -16193,7 +16193,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 281.94 119.888 90)
 			(effects
 				(font
@@ -16256,7 +16256,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R70")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -16272,7 +16272,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c8759c32-1964-48e3-9916-ccf69aef0784")
-		(property "Reference" "R76"
+		(property "Reference" "R18"
 			(at 285.75 127 90)
 			(effects
 				(font
@@ -16288,7 +16288,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 285.75 135.128 90)
 			(effects
 				(font
@@ -16351,7 +16351,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R76")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -16367,7 +16367,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c8fc6ad0-128a-4278-abcc-712a4c5fc1aa")
-		(property "Reference" "R43"
+		(property "Reference" "R8"
 			(at 271.78 82.55 90)
 			(effects
 				(font
@@ -16383,7 +16383,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 271.78 90.678 90)
 			(effects
 				(font
@@ -16446,7 +16446,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R43")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -16463,7 +16463,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c9a22444-7ed3-4dc0-a5aa-7e1781db661d")
-		(property "Reference" "R53"
+		(property "Reference" "R32"
 			(at 368.3 86.36 90)
 			(effects
 				(font
@@ -16479,7 +16479,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 368.3 94.488 90)
 			(effects
 				(font
@@ -16542,7 +16542,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R53")
+					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -16559,7 +16559,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cc681e9c-f646-4983-8d68-a4eceaf67adb")
-		(property "Reference" "R65"
+		(property "Reference" "R39"
 			(at 384.81 114.3 90)
 			(effects
 				(font
@@ -16575,7 +16575,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 384.81 122.428 90)
 			(effects
 				(font
@@ -16638,7 +16638,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R65")
+					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -16654,7 +16654,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cfa01dcc-511c-41f4-9deb-cf2577672de5")
-		(property "Reference" "R45"
+		(property "Reference" "R5"
 			(at 266.7 100.33 90)
 			(effects
 				(font
@@ -16670,7 +16670,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 266.7 108.458 90)
 			(effects
 				(font
@@ -16733,7 +16733,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R45")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -16913,7 +16913,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d91aeaad-5f7b-4c61-9869-2471493d00cd")
-		(property "Reference" "R59"
+		(property "Reference" "R27"
 			(at 354.33 99.06 90)
 			(effects
 				(font
@@ -16929,7 +16929,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 354.33 107.188 90)
 			(effects
 				(font
@@ -16992,7 +16992,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R59")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -17008,7 +17008,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "de09f259-b912-4b0b-9a0a-b9a3078328cb")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR017"
 			(at 306.07 165.1 0)
 			(effects
 				(font
@@ -17058,7 +17058,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR016")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -17075,7 +17075,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e49429d6-967e-41e8-a967-b987f2811aee")
-		(property "Reference" "C13"
+		(property "Reference" "C14"
 			(at 359.41 58.4199 0)
 			(effects
 				(font
@@ -17156,7 +17156,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C13")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -17171,7 +17171,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e5101637-de62-4584-a5fe-debbc4cf84a9")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR014"
 			(at 177.8 58.42 0)
 			(effects
 				(font
@@ -17221,7 +17221,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR013")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -17760,7 +17760,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e9e5b22c-6704-4cf8-822d-5fb29b5d5a18")
-		(property "Reference" "C61"
+		(property "Reference" "C7"
 			(at 173.228 48.768 90)
 			(effects
 				(font
@@ -17841,7 +17841,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C61")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -17858,7 +17858,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ee3687a2-512f-43bb-bdc3-aff894bb4918")
-		(property "Reference" "R55"
+		(property "Reference" "R28"
 			(at 358.14 81.28 90)
 			(effects
 				(font
@@ -17874,7 +17874,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 358.14 89.408 90)
 			(effects
 				(font
@@ -17937,7 +17937,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R55")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -17953,7 +17953,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eeedf568-2948-4772-9abb-772339f5d752")
-		(property "Reference" "C8"
+		(property "Reference" "C9"
 			(at 279.4 58.4199 0)
 			(effects
 				(font
@@ -18034,7 +18034,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C8")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -18051,7 +18051,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f7bd49b6-0423-4572-9654-e270b304f794")
-		(property "Reference" "R56"
+		(property "Reference" "R25"
 			(at 353.06 78.74 90)
 			(effects
 				(font
@@ -18067,7 +18067,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 353.06 86.868 90)
 			(effects
 				(font
@@ -18130,7 +18130,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R56")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -18146,7 +18146,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f96b36a1-a37b-4670-b9ac-4f3c61f58cb5")
-		(property "Reference" "R51"
+		(property "Reference" "R3"
 			(at 261.62 102.87 90)
 			(effects
 				(font
@@ -18162,7 +18162,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 261.62 110.998 90)
 			(effects
 				(font
@@ -18225,7 +18225,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R51")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -18309,7 +18309,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "feb6cf26-34fb-4f0c-a1f2-8b406b2f7af0")
-		(property "Reference" "R40"
+		(property "Reference" "R19"
 			(at 287.02 74.93 90)
 			(effects
 				(font
@@ -18325,7 +18325,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 287.02 83.058 90)
 			(effects
 				(font
@@ -18388,7 +18388,7 @@
 		(instances
 			(project ""
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R40")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -18404,7 +18404,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fef5db20-89f1-47b8-904c-67cfe5493d60")
-		(property "Reference" "R72"
+		(property "Reference" "R7"
 			(at 270.51 120.65 90)
 			(effects
 				(font
@@ -18420,7 +18420,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
 			(at 270.51 128.778 90)
 			(effects
 				(font
@@ -18483,7 +18483,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "R72")
+					(reference "R7")
 					(unit 1)
 				)
 			)

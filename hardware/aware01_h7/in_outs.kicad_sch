@@ -2655,7 +2655,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "02aab7ee-3225-43d8-a435-73c9fce5e8f1")
-		(property "Reference" "C45"
+		(property "Reference" "C50"
 			(at 91.186 32.512 90)
 			(effects
 				(font
@@ -2734,7 +2734,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C45")
+					(reference "C50")
 					(unit 1)
 				)
 			)
@@ -2750,7 +2750,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0b2006d7-863e-4d71-9f8d-0cd8954146f1")
-		(property "Reference" "C43"
+		(property "Reference" "C48"
 			(at 28.702 93.218 90)
 			(effects
 				(font
@@ -2829,7 +2829,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C43")
+					(reference "C48")
 					(unit 1)
 				)
 			)
@@ -2845,7 +2845,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0fccc46d-9dc1-408e-97db-ccdc92d9cb0a")
-		(property "Reference" "R11"
+		(property "Reference" "R50"
 			(at 83.82 44.45 90)
 			(effects
 				(font
@@ -2897,7 +2897,103 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R11")
+					(reference "R50")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 121.92 133.35 90)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "10ccd254-3486-4c94-bf82-7f4c66bdf7e7")
+		(property "Reference" "C53"
+			(at 121.92 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2.2u"
+			(at 121.92 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_4x5.4"
+			(at 125.73 134.3152 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 121.92 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 121.92 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Panasonic"
+			(at 121.92 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "EEE-1VA2R2NR"
+			(at 121.92 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 667-EEE-1VA2R2NR "
+			(at 121.92 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bee4b731-7e79-4a9d-a7ec-085568fed6d8")
+		)
+		(pin "2"
+			(uuid "b8c19dcf-e6ca-4e62-8162-2961286ec113")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "C53")
 					(unit 1)
 				)
 			)
@@ -2913,7 +3009,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "181469fb-d79a-4453-af0b-686fbea3db5b")
-		(property "Reference" "R20"
+		(property "Reference" "R59"
 			(at 209.55 115.57 90)
 			(effects
 				(font
@@ -2921,7 +3017,7 @@
 				)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "22k"
 			(at 209.55 113.03 90)
 			(effects
 				(font
@@ -2965,76 +3061,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 121.92 133.35 90)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2f9237a4-4d4f-43a9-948e-8db5ee36d48e")
-		(property "Reference" "C48"
-			(at 121.92 140.97 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1u"
-			(at 121.92 138.43 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 125.73 134.3152 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 121.92 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0dff03da-82e6-46e1-a070-fb51f324e962")
-		)
-		(pin "2"
-			(uuid "95fc00bd-82a3-488c-b4b3-8a98839500b0")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C48")
+					(reference "R59")
 					(unit 1)
 				)
 			)
@@ -3050,7 +3077,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3290668d-5c01-489d-8270-34e599f15025")
-		(property "Reference" "R12"
+		(property "Reference" "R51"
 			(at 83.82 113.03 90)
 			(effects
 				(font
@@ -3102,7 +3129,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R12")
+					(reference "R51")
 					(unit 1)
 				)
 			)
@@ -3118,7 +3145,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "34a7f937-b433-411a-801a-4ae471235ac3")
-		(property "Reference" "C44"
+		(property "Reference" "C49"
 			(at 28.448 101.6 90)
 			(effects
 				(font
@@ -3197,7 +3224,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C44")
+					(reference "C49")
 					(unit 1)
 				)
 			)
@@ -3213,7 +3240,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "34b7f0a0-c150-499e-b90b-ac589568296b")
-		(property "Reference" "R15"
+		(property "Reference" "R54"
 			(at 182.88 68.5799 0)
 			(effects
 				(font
@@ -3222,7 +3249,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "100k"
 			(at 182.88 71.1199 0)
 			(effects
 				(font
@@ -3267,7 +3294,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R15")
+					(reference "R54")
 					(unit 1)
 				)
 			)
@@ -3283,7 +3310,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "39471011-41b3-46fc-8b16-2d1165358677")
-		(property "Reference" "R13"
+		(property "Reference" "R52"
 			(at 114.3 67.3099 0)
 			(effects
 				(font
@@ -3337,7 +3364,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R13")
+					(reference "R52")
 					(unit 1)
 				)
 			)
@@ -3353,7 +3380,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "39e1d841-7033-4869-bb0e-feb2c9799102")
-		(property "Reference" "C46"
+		(property "Reference" "C51"
 			(at 91.186 101.092 90)
 			(effects
 				(font
@@ -3432,7 +3459,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C46")
+					(reference "C51")
 					(unit 1)
 				)
 			)
@@ -3584,7 +3611,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "505341ef-2c2a-4b50-8111-edfc17436608")
-		(property "Reference" "#PWR066"
+		(property "Reference" "#PWR072"
 			(at 49.53 140.97 0)
 			(effects
 				(font
@@ -3635,7 +3662,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR066")
+					(reference "#PWR072")
 					(unit 1)
 				)
 			)
@@ -3651,7 +3678,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "50b82cad-a56c-4d24-bdc8-c48128556de1")
-		(property "Reference" "#PWR071"
+		(property "Reference" "#PWR077"
 			(at 154.94 113.03 0)
 			(effects
 				(font
@@ -3702,7 +3729,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR071")
+					(reference "#PWR077")
 					(unit 1)
 				)
 			)
@@ -3788,7 +3815,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "54bc3047-3807-4fd6-a19e-f9cc26da04b8")
-		(property "Reference" "C50"
+		(property "Reference" "C55"
 			(at 161.798 102.87 90)
 			(effects
 				(font
@@ -3867,7 +3894,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C50")
+					(reference "C55")
 					(unit 1)
 				)
 			)
@@ -3882,7 +3909,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "55bddaca-9804-48f2-b28e-ab4f5ddf5300")
-		(property "Reference" "#PWR070"
+		(property "Reference" "#PWR076"
 			(at 111.76 147.32 0)
 			(effects
 				(font
@@ -3933,7 +3960,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR070")
+					(reference "#PWR076")
 					(unit 1)
 				)
 			)
@@ -4098,7 +4125,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "589da044-233d-4b59-886d-edab273332ee")
-		(property "Reference" "J11"
+		(property "Reference" "J4"
 			(at 41.275 71.12 0)
 			(effects
 				(font
@@ -4153,7 +4180,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J11")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -4169,7 +4196,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5ad1e202-d000-4c89-9306-8611e48b97c3")
-		(property "Reference" "R19"
+		(property "Reference" "R58"
 			(at 209.55 46.99 90)
 			(effects
 				(font
@@ -4177,7 +4204,7 @@
 				)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "22k"
 			(at 209.55 44.45 90)
 			(effects
 				(font
@@ -4221,7 +4248,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R19")
+					(reference "R58")
 					(unit 1)
 				)
 			)
@@ -4386,7 +4413,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5cf2e723-62ec-403b-a366-97f64ac1537b")
-		(property "Reference" "#PWR067"
+		(property "Reference" "#PWR073"
 			(at 77.47 73.66 0)
 			(effects
 				(font
@@ -4436,7 +4463,103 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR067")
+					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 121.92 64.77 90)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "62312aba-5642-4518-8ea5-8d19e40916e4")
+		(property "Reference" "C52"
+			(at 121.92 57.15 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2.2u"
+			(at 121.92 59.69 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_4x5.4"
+			(at 125.73 65.7352 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 121.92 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 121.92 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Panasonic"
+			(at 121.92 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "EEE-1VA2R2NR"
+			(at 121.92 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 667-EEE-1VA2R2NR "
+			(at 121.92 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "80b0c4da-4967-49b4-b44a-3fda5db53559")
+		)
+		(pin "2"
+			(uuid "396baf8b-771d-443e-864c-092c92acfc06")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "C52")
 					(unit 1)
 				)
 			)
@@ -4452,7 +4575,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "65a51041-d03c-4ff3-a0f2-4a96ddd2aedd")
-		(property "Reference" "C49"
+		(property "Reference" "C54"
 			(at 162.052 94.488 90)
 			(effects
 				(font
@@ -4531,7 +4654,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C49")
+					(reference "C54")
 					(unit 1)
 				)
 			)
@@ -4546,7 +4669,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "682a2723-5afe-4510-9908-aee273672327")
-		(property "Reference" "#PWR073"
+		(property "Reference" "#PWR079"
 			(at 168.91 104.14 0)
 			(effects
 				(font
@@ -4596,7 +4719,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR073")
+					(reference "#PWR079")
 					(unit 1)
 				)
 			)
@@ -4612,7 +4735,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6a351f34-79d0-4140-ba9d-a48276e3f1e7")
-		(property "Reference" "C54"
+		(property "Reference" "C59"
 			(at 209.296 103.632 90)
 			(effects
 				(font
@@ -4691,7 +4814,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C54")
+					(reference "C59")
 					(unit 1)
 				)
 			)
@@ -4707,7 +4830,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6f0f6422-9998-4a0b-b67f-d471acff5ee2")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR069"
 			(at 35.56 90.17 0)
 			(effects
 				(font
@@ -4757,76 +4880,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR063")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 121.92 64.77 90)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7112fb54-eced-4982-a5dc-7e989d7a917b")
-		(property "Reference" "C47"
-			(at 121.92 72.39 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1u"
-			(at 121.92 69.85 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 125.73 65.7352 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 121.92 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "74ce7a2c-6616-4b02-9a8b-4e24e5a9f790")
-		)
-		(pin "2"
-			(uuid "ac67f76f-8f16-4805-b569-eac0e77d43cc")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C47")
+					(reference "#PWR069")
 					(unit 1)
 				)
 			)
@@ -5116,7 +5170,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7a296713-b629-43db-ba41-a14ac11582cb")
-		(property "Reference" "#PWR074"
+		(property "Reference" "#PWR080"
 			(at 180.34 81.28 0)
 			(effects
 				(font
@@ -5167,7 +5221,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR074")
+					(reference "#PWR080")
 					(unit 1)
 				)
 			)
@@ -5183,7 +5237,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7b3085b4-9cb2-42bb-a2fd-d4f02220cff4")
-		(property "Reference" "R14"
+		(property "Reference" "R53"
 			(at 114.3 135.8899 0)
 			(effects
 				(font
@@ -5237,7 +5291,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R14")
+					(reference "R53")
 					(unit 1)
 				)
 			)
@@ -5254,7 +5308,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d76f03e-178e-4a00-9ec7-c6996ceb1817")
-		(property "Reference" "#PWR077"
+		(property "Reference" "#PWR083"
 			(at 200.66 144.78 0)
 			(effects
 				(font
@@ -5305,7 +5359,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR077")
+					(reference "#PWR083")
 					(unit 1)
 				)
 			)
@@ -5321,7 +5375,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8ada9d44-efa1-400a-991e-964cfe3be14a")
-		(property "Reference" "C51"
+		(property "Reference" "C56"
 			(at 173.736 60.452 90)
 			(effects
 				(font
@@ -5329,7 +5383,7 @@
 				)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "4.7u"
 			(at 173.736 57.912 90)
 			(effects
 				(font
@@ -5337,7 +5391,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:CP_Elec_4x5.4"
 			(at 170.18 63.8048 0)
 			(effects
 				(font
@@ -5364,6 +5418,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Nichicon"
+			(at 173.99 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "UWP1C4R7MCL1GB"
+			(at 173.99 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "647-UWP1C4R7MCL"
+			(at 173.99 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3d2192d0-c102-4e44-a7a5-14b273dc7e47")
 		)
@@ -5373,7 +5454,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C51")
+					(reference "C56")
 					(unit 1)
 				)
 			)
@@ -5390,7 +5471,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9186f222-30f4-4dc5-8133-9d1fbc830bf8")
-		(property "Reference" "R9"
+		(property "Reference" "R48"
 			(at 64.77 68.58 90)
 			(effects
 				(font
@@ -5442,7 +5523,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R9")
+					(reference "R48")
 					(unit 1)
 				)
 			)
@@ -5457,7 +5538,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9327f875-89ca-4685-96fd-793c530727e7")
-		(property "Reference" "J13"
+		(property "Reference" "J7"
 			(at 248.285 144.78 0)
 			(effects
 				(font
@@ -5512,7 +5593,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J13")
+					(reference "J7")
 					(unit 1)
 				)
 			)
@@ -5529,7 +5610,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "938830fe-fae7-4743-bf56-3c79094c83d5")
-		(property "Reference" "#PWR076"
+		(property "Reference" "#PWR082"
 			(at 200.66 76.2 0)
 			(effects
 				(font
@@ -5580,7 +5661,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR076")
+					(reference "#PWR082")
 					(unit 1)
 				)
 			)
@@ -5744,7 +5825,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "99df308f-68f3-4240-b042-5e7077aefc03")
-		(property "Reference" "#PWR072"
+		(property "Reference" "#PWR078"
 			(at 168.91 91.44 0)
 			(effects
 				(font
@@ -5794,7 +5875,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR072")
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -5810,7 +5891,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9ec5e3ec-4985-4aac-83ea-183bdbfab5ad")
-		(property "Reference" "R22"
+		(property "Reference" "R61"
 			(at 227.33 133.35 90)
 			(effects
 				(font
@@ -5862,75 +5943,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 173.99 133.35 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a5e6d062-f8bf-40d1-a527-0004bc56a490")
-		(property "Reference" "C52"
-			(at 173.736 129.032 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10u"
-			(at 173.736 126.492 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 170.18 132.3848 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 173.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 173.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "aa4c20a1-f10e-46f7-854d-aae70ecaa7ed")
-		)
-		(pin "1"
-			(uuid "f3e84aa0-175a-45fb-9df4-f090d24b3e65")
-		)
-		(instances
-			(project "ima_new_codec"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C52")
+					(reference "R61")
 					(unit 1)
 				)
 			)
@@ -5946,7 +5959,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a69e8417-b4df-4839-85ec-b9664aa00a3e")
-		(property "Reference" "R16"
+		(property "Reference" "R55"
 			(at 182.88 137.1599 0)
 			(effects
 				(font
@@ -5955,7 +5968,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "47k"
+		(property "Value" "100k"
 			(at 182.88 139.6999 0)
 			(effects
 				(font
@@ -6000,7 +6013,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R16")
+					(reference "R55")
 					(unit 1)
 				)
 			)
@@ -6016,7 +6029,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a9c2e3a6-7cf8-4cbf-b556-d61c69d91f81")
-		(property "Reference" "J4"
+		(property "Reference" "J5"
 			(at 41.275 139.7 0)
 			(effects
 				(font
@@ -6071,7 +6084,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "J4")
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -6237,7 +6250,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b8d59bbb-0e9c-4e85-b6c8-ec5e50abe7e0")
-		(property "Reference" "R10"
+		(property "Reference" "R49"
 			(at 64.77 137.16 90)
 			(effects
 				(font
@@ -6289,7 +6302,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R10")
+					(reference "R49")
 					(unit 1)
 				)
 			)
@@ -6304,7 +6317,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b94a9226-172c-47d3-aaf1-1945ab6d23c8")
-		(property "Reference" "#PWR065"
+		(property "Reference" "#PWR071"
 			(at 49.53 72.39 0)
 			(effects
 				(font
@@ -6355,7 +6368,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR065")
+					(reference "#PWR071")
 					(unit 1)
 				)
 			)
@@ -6371,7 +6384,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bddaacc9-1402-42fd-bae6-d5cbf825f216")
-		(property "Reference" "R21"
+		(property "Reference" "R60"
 			(at 227.33 64.77 90)
 			(effects
 				(font
@@ -6423,7 +6436,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R21")
+					(reference "R60")
 					(unit 1)
 				)
 			)
@@ -6439,7 +6452,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "cb649bda-0936-4414-9e49-3aa94b82181f")
-		(property "Reference" "C53"
+		(property "Reference" "C58"
 			(at 209.296 35.052 90)
 			(effects
 				(font
@@ -6518,7 +6531,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "C53")
+					(reference "C58")
 					(unit 1)
 				)
 			)
@@ -6534,7 +6547,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ce9a44ca-319f-4eef-b4dc-03d8dde26d9f")
-		(property "Reference" "#PWR079"
+		(property "Reference" "#PWR085"
 			(at 240.03 146.05 0)
 			(effects
 				(font
@@ -6585,7 +6598,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR079")
+					(reference "#PWR085")
 					(unit 1)
 				)
 			)
@@ -6601,7 +6614,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cff9db26-43fb-4775-a8b2-86b56adfa182")
-		(property "Reference" "#PWR075"
+		(property "Reference" "#PWR081"
 			(at 180.34 149.86 0)
 			(effects
 				(font
@@ -6652,7 +6665,102 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR075")
+					(reference "#PWR081")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 173.99 133.35 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d42ca6e9-92ef-4272-9396-09948662f974")
+		(property "Reference" "C57"
+			(at 173.736 129.032 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7u"
+			(at 173.736 126.492 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_4x5.4"
+			(at 170.18 132.3848 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 173.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 173.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Nichicon"
+			(at 173.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "UWP1C4R7MCL1GB"
+			(at 173.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "647-UWP1C4R7MCL"
+			(at 173.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "231c14e5-72c1-4cbc-a072-136334f5930a")
+		)
+		(pin "1"
+			(uuid "323a8c3d-4cd5-401d-ab4d-feac196550c3")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "C57")
 					(unit 1)
 				)
 			)
@@ -6668,7 +6776,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dee28a65-9c4d-4d0b-af17-e8a4205ffafe")
-		(property "Reference" "#PWR064"
+		(property "Reference" "#PWR070"
 			(at 35.56 102.87 0)
 			(effects
 				(font
@@ -6718,7 +6826,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR064")
+					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -6735,7 +6843,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "df1d9cb3-5d6e-4407-8611-c1fea7bd13e7")
-		(property "Reference" "R18"
+		(property "Reference" "R57"
 			(at 189.23 127 90)
 			(effects
 				(font
@@ -6787,7 +6895,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R18")
+					(reference "R57")
 					(unit 1)
 				)
 			)
@@ -6951,7 +7059,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e5c8c5d4-480c-4c43-8f4e-dd974c893a89")
-		(property "Reference" "#PWR078"
+		(property "Reference" "#PWR084"
 			(at 240.03 77.47 0)
 			(effects
 				(font
@@ -7002,7 +7110,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR078")
+					(reference "#PWR084")
 					(unit 1)
 				)
 			)
@@ -7018,7 +7126,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ea3defb3-c39c-4ab5-aa8a-e4cc905e24bd")
-		(property "Reference" "#PWR068"
+		(property "Reference" "#PWR074"
 			(at 77.47 142.24 0)
 			(effects
 				(font
@@ -7069,7 +7177,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR068")
+					(reference "#PWR074")
 					(unit 1)
 				)
 			)
@@ -7235,7 +7343,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f3cc23a2-6d65-43d6-94fc-0e6b52837f37")
-		(property "Reference" "R17"
+		(property "Reference" "R56"
 			(at 189.23 58.42 90)
 			(effects
 				(font
@@ -7287,7 +7395,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "R17")
+					(reference "R56")
 					(unit 1)
 				)
 			)
@@ -7303,7 +7411,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fe5ac81c-5508-454b-b4bc-fe92d905d52b")
-		(property "Reference" "#PWR062"
+		(property "Reference" "#PWR068"
 			(at 21.59 111.76 0)
 			(effects
 				(font
@@ -7354,7 +7462,7 @@
 		(instances
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR062")
+					(reference "#PWR068")
 					(unit 1)
 				)
 			)
@@ -7369,7 +7477,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ff63bc4a-8bfb-4f50-9f15-548572657f5e")
-		(property "Reference" "#PWR069"
+		(property "Reference" "#PWR075"
 			(at 111.76 78.74 0)
 			(effects
 				(font
@@ -7420,7 +7528,7 @@
 		(instances
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "#PWR069")
+					(reference "#PWR075")
 					(unit 1)
 				)
 			)
