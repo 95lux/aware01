@@ -1348,6 +1348,12 @@
 		(uuid "80ea4fa1-f960-4e43-b5cf-a800674ca894")
 	)
 	(junction
+		(at 123.19 93.98)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "930cffc7-04a5-4ef5-9c75-230ff173f9e5")
+	)
+	(junction
 		(at 154.94 50.8)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1360,7 +1366,7 @@
 		(uuid "a9467ffa-3c3a-4594-ac75-0f71122d6e4d")
 	)
 	(junction
-		(at 93.98 93.98)
+		(at 63.5 93.98)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b4f224cc-4ec5-4fdf-9459-2de93d4e5dcd")
@@ -1390,7 +1396,7 @@
 		(uuid "d3839e97-69f0-4572-848f-9a63910ba6b3")
 	)
 	(junction
-		(at 93.98 49.53)
+		(at 63.5 50.8)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "da0cc385-5750-49db-a001-5dbb8d6ae47f")
@@ -1414,15 +1420,19 @@
 		(uuid "f1ed431b-88f8-4df9-84fd-e18fc5fb03e2")
 	)
 	(no_connect
-		(at 72.39 53.34)
+		(at 41.91 54.61)
 		(uuid "73bd2203-202d-472e-8583-568d75941b73")
+	)
+	(no_connect
+		(at 101.6 97.79)
+		(uuid "9948b617-b225-4f79-a79d-ab80b3c35079")
 	)
 	(no_connect
 		(at 185.42 121.92)
 		(uuid "9ea52e58-06ef-4d4d-8821-05c9fc18abd2")
 	)
 	(no_connect
-		(at 72.39 97.79)
+		(at 41.91 97.79)
 		(uuid "a53d65cb-3af3-4e78-a01a-830ef913506e")
 	)
 	(no_connect
@@ -1475,7 +1485,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 55.88) (xy 76.2 55.88)
+			(xy 41.91 57.15) (xy 45.72 57.15)
 		)
 		(stroke
 			(width 0)
@@ -1485,7 +1495,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 91.44) (xy 93.98 93.98)
+			(xy 63.5 91.44) (xy 63.5 93.98)
 		)
 		(stroke
 			(width 0)
@@ -1535,7 +1545,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 46.99) (xy 93.98 49.53)
+			(xy 63.5 48.26) (xy 63.5 50.8)
 		)
 		(stroke
 			(width 0)
@@ -1605,7 +1615,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 38.1) (xy 93.98 39.37)
+			(xy 63.5 39.37) (xy 63.5 40.64)
 		)
 		(stroke
 			(width 0)
@@ -1755,6 +1765,16 @@
 	)
 	(wire
 		(pts
+			(xy 113.03 100.33) (xy 115.57 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42ded427-ced5-4667-86b2-705b39d8b074")
+	)
+	(wire
+		(pts
 			(xy 186.69 45.72) (xy 189.23 45.72)
 		)
 		(stroke
@@ -1805,6 +1825,26 @@
 	)
 	(wire
 		(pts
+			(xy 123.19 82.55) (xy 123.19 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50730e8f-7983-43d2-bd9d-fa0aca68ed63")
+	)
+	(wire
+		(pts
+			(xy 123.19 105.41) (xy 123.19 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5134d382-df99-4493-bf2c-03d99864a64a")
+	)
+	(wire
+		(pts
 			(xy 185.42 67.31) (xy 185.42 72.39)
 		)
 		(stroke
@@ -1835,7 +1875,17 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 100.33) (xy 86.36 100.33)
+			(xy 101.6 100.33) (xy 105.41 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "604baeb1-ee8e-4233-844f-84b9eed364f3")
+	)
+	(wire
+		(pts
+			(xy 53.34 100.33) (xy 55.88 100.33)
 		)
 		(stroke
 			(width 0)
@@ -1845,13 +1895,23 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 60.96) (xy 93.98 63.5)
+			(xy 63.5 62.23) (xy 63.5 64.77)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "643ee1c9-1c5f-4f86-b950-813fa5f24d86")
+	)
+	(wire
+		(pts
+			(xy 123.19 91.44) (xy 123.19 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6500f397-0f46-44e7-adc2-b6817c93752d")
 	)
 	(wire
 		(pts
@@ -1945,6 +2005,16 @@
 	)
 	(wire
 		(pts
+			(xy 123.19 93.98) (xy 123.19 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "75e2aa8e-0e91-435d-974e-da30a1c97da1")
+	)
+	(wire
+		(pts
 			(xy 38.1 148.59) (xy 48.26 148.59)
 		)
 		(stroke
@@ -1995,13 +2065,23 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 55.88) (xy 86.36 55.88)
+			(xy 53.34 57.15) (xy 55.88 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "80b85618-3d47-418b-b93b-615e61d5bf39")
+	)
+	(wire
+		(pts
+			(xy 101.6 102.87) (xy 101.6 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "81664e9c-8183-4a9a-af4a-cdac343652c3")
 	)
 	(wire
 		(pts
@@ -2015,7 +2095,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 105.41) (xy 93.98 107.95)
+			(xy 63.5 105.41) (xy 63.5 107.95)
 		)
 		(stroke
 			(width 0)
@@ -2065,7 +2145,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 49.53) (xy 101.6 49.53)
+			(xy 63.5 50.8) (xy 71.12 50.8)
 		)
 		(stroke
 			(width 0)
@@ -2095,7 +2175,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 82.55) (xy 93.98 83.82)
+			(xy 63.5 82.55) (xy 63.5 83.82)
 		)
 		(stroke
 			(width 0)
@@ -2105,7 +2185,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 93.98) (xy 93.98 95.25)
+			(xy 63.5 93.98) (xy 63.5 95.25)
 		)
 		(stroke
 			(width 0)
@@ -2115,7 +2195,17 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 102.87) (xy 72.39 107.95)
+			(xy 123.19 93.98) (xy 130.81 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99fdc08e-f055-4c71-afc5-dd1bc3a064c8")
+	)
+	(wire
+		(pts
+			(xy 41.91 102.87) (xy 41.91 107.95)
 		)
 		(stroke
 			(width 0)
@@ -2225,7 +2315,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 100.33) (xy 76.2 100.33)
+			(xy 41.91 100.33) (xy 45.72 100.33)
 		)
 		(stroke
 			(width 0)
@@ -2365,7 +2455,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 58.42) (xy 72.39 63.5)
+			(xy 41.91 59.69) (xy 41.91 64.77)
 		)
 		(stroke
 			(width 0)
@@ -2405,7 +2495,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 49.53) (xy 93.98 50.8)
+			(xy 63.5 50.8) (xy 63.5 52.07)
 		)
 		(stroke
 			(width 0)
@@ -2415,7 +2505,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 93.98) (xy 101.6 93.98)
+			(xy 63.5 93.98) (xy 71.12 93.98)
 		)
 		(stroke
 			(width 0)
@@ -2544,7 +2634,7 @@
 	)
 	(hierarchical_label "GATE2_IN"
 		(shape output)
-		(at 101.6 93.98 0)
+		(at 71.12 93.98 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2552,6 +2642,17 @@
 			(justify left)
 		)
 		(uuid "6c22cec0-5500-4f48-826e-ed50f9c46e01")
+	)
+	(hierarchical_label "GATE3_IN"
+		(shape output)
+		(at 130.81 93.98 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9b0311a0-66d7-4089-a7d4-8ca9327d0916")
 	)
 	(hierarchical_label "V_OCT_IN"
 		(shape output)
@@ -2588,7 +2689,7 @@
 	)
 	(hierarchical_label "GATE1_IN"
 		(shape output)
-		(at 101.6 49.53 0)
+		(at 71.12 50.8 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2599,7 +2700,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_BJT:MMBT3904")
-		(at 91.44 100.33 0)
+		(at 60.96 100.33 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2608,7 +2709,7 @@
 		(fields_autoplaced yes)
 		(uuid "06e12117-2f81-46e8-b321-52ab94a5581d")
 		(property "Reference" "Q2"
-			(at 96.52 99.0599 0)
+			(at 66.04 99.0599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2617,7 +2718,7 @@
 			)
 		)
 		(property "Value" "MMBT3904"
-			(at 96.52 101.5999 0)
+			(at 66.04 101.5999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2626,7 +2727,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 96.52 102.235 0)
+			(at 66.04 102.235 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2637,7 +2738,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
-			(at 91.44 100.33 0)
+			(at 60.96 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2647,7 +2748,7 @@
 			)
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
-			(at 91.44 100.33 0)
+			(at 60.96 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2656,7 +2757,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Diotec Semiconductor"
-			(at 91.44 100.33 0)
+			(at 60.96 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2665,7 +2766,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "MMBT3904"
-			(at 91.44 100.33 0)
+			(at 60.96 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2674,7 +2775,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 637-MMBT3904 "
-			(at 91.44 100.33 0)
+			(at 60.96 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2769,7 +2870,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Audio:AudioJack2_SwitchT")
-		(at 67.31 100.33 0)
+		(at 36.83 100.33 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2778,7 +2879,7 @@
 		(dnp no)
 		(uuid "17a73fda-ec8a-4dde-91d6-32687685f94c")
 		(property "Reference" "J9"
-			(at 66.675 109.22 0)
+			(at 36.195 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2786,7 +2887,7 @@
 			)
 		)
 		(property "Value" "GATE2_IN"
-			(at 66.675 106.68 0)
+			(at 36.195 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2794,7 +2895,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 67.31 100.33 0)
+			(at 36.83 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2803,7 +2904,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 67.31 100.33 0)
+			(at 36.83 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2812,7 +2913,7 @@
 			)
 		)
 		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
-			(at 67.31 100.33 0)
+			(at 36.83 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3003,7 +3104,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Audio:AudioJack2_SwitchT")
-		(at 67.31 55.88 0)
+		(at 36.83 57.15 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3012,7 +3113,7 @@
 		(dnp no)
 		(uuid "207987ae-ee52-4491-a8e3-0cb707e71141")
 		(property "Reference" "J8"
-			(at 66.675 64.77 0)
+			(at 36.195 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3020,7 +3121,7 @@
 			)
 		)
 		(property "Value" "GATE1_IN"
-			(at 66.675 62.23 0)
+			(at 36.195 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3028,7 +3129,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
-			(at 67.31 55.88 0)
+			(at 36.83 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3037,7 +3138,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 67.31 55.88 0)
+			(at 36.83 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3046,7 +3147,7 @@
 			)
 		)
 		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
-			(at 67.31 55.88 0)
+			(at 36.83 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3224,7 +3325,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 93.98 107.95 0)
+		(at 63.5 107.95 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3233,7 +3334,7 @@
 		(dnp no)
 		(uuid "226b2564-0ca6-425c-b159-ea66b4269dca")
 		(property "Reference" "#PWR095"
-			(at 93.98 114.3 0)
+			(at 63.5 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3242,7 +3343,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 93.98 112.014 0)
+			(at 63.5 112.014 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3251,7 +3352,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 93.98 107.95 0)
+			(at 63.5 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3260,7 +3361,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 93.98 107.95 0)
+			(at 63.5 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3269,7 +3370,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 93.98 107.95 0)
+			(at 63.5 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3334,6 +3435,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 212.09 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 212.09 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "AT0603FRE0747KL"
+			(at 212.09 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-AT0603FRE0747KL"
 			(at 212.09 49.53 0)
 			(effects
 				(font
@@ -3410,6 +3538,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 147.32 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 147.32 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 147.32 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a6b8664a-eb71-4f00-9b92-b30abf2b9e34")
 		)
@@ -3427,7 +3582,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 80.01 55.88 90)
+		(at 49.53 57.15 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3436,7 +3591,7 @@
 		(fields_autoplaced yes)
 		(uuid "3e7ae92a-248d-426e-b8fc-b2d863c3dac8")
 		(property "Reference" "R62"
-			(at 80.01 49.53 90)
+			(at 49.53 50.8 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3444,7 +3599,7 @@
 			)
 		)
 		(property "Value" "100k"
-			(at 80.01 52.07 90)
+			(at 49.53 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3452,7 +3607,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 80.01 57.658 90)
+			(at 49.53 58.928 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3461,7 +3616,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 80.01 55.88 0)
+			(at 49.53 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3470,7 +3625,34 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 80.01 55.88 0)
+			(at 49.53 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 49.53 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 49.53 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 49.53 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3494,17 +3676,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3V")
-		(at 93.98 82.55 0)
+		(lib_id "power:GND")
+		(at 123.19 107.95 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "45639ea6-8a74-48fa-9430-de80698be69e")
-		(property "Reference" "#PWR094"
-			(at 93.98 86.36 0)
+		(uuid "4276b079-14b2-4485-8e1a-75c20f83f8d6")
+		(property "Reference" "#PWR0108"
+			(at 123.19 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3512,16 +3694,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3.3V"
-			(at 93.98 77.47 0)
+		(property "Value" "GND"
+			(at 123.19 112.014 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
-			(at 93.98 82.55 0)
+			(at 123.19 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3530,7 +3713,73 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 93.98 82.55 0)
+			(at 123.19 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 123.19 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bc4fe85f-1b6e-414f-a127-bb62253111ba")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR0108")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 63.5 82.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "45639ea6-8a74-48fa-9430-de80698be69e")
+		(property "Reference" "#PWR094"
+			(at 63.5 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 63.5 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3539,7 +3788,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 93.98 82.55 0)
+			(at 63.5 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3560,17 +3809,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 72.39 63.5 0)
-		(mirror y)
+		(lib_id "power:+3.3V")
+		(at 123.19 82.55 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4bc25fac-0b8a-4e5b-bfe7-227dec996b22")
-		(property "Reference" "#PWR089"
-			(at 72.39 69.85 0)
+		(fields_autoplaced yes)
+		(uuid "4af9cdfa-7cab-481e-993a-a7bb8ff79ae5")
+		(property "Reference" "#PWR0107"
+			(at 123.19 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3578,17 +3827,16 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 72.39 67.564 0)
+		(property "Value" "+3.3V"
+			(at 123.19 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "Footprint" ""
-			(at 72.39 63.5 0)
+			(at 123.19 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3597,7 +3845,74 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 72.39 63.5 0)
+			(at 123.19 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 123.19 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9f192563-9f73-45ce-9b00-a24c39eec1ff")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR0107")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 41.91 64.77 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4bc25fac-0b8a-4e5b-bfe7-227dec996b22")
+		(property "Reference" "#PWR089"
+			(at 41.91 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 41.91 68.834 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 41.91 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 41.91 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3606,7 +3921,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 72.39 63.5 0)
+			(at 41.91 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3694,7 +4009,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 93.98 43.18 180)
+		(at 63.5 44.45 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3703,7 +4018,7 @@
 		(fields_autoplaced yes)
 		(uuid "4caf0e6e-69a5-4568-922a-e754b9fc6dea")
 		(property "Reference" "R64"
-			(at 96.52 41.9099 0)
+			(at 66.04 43.1799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3712,7 +4027,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 96.52 44.4499 0)
+			(at 66.04 45.7199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3721,7 +4036,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 95.758 43.18 90)
+			(at 65.278 44.45 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3730,7 +4045,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 93.98 43.18 0)
+			(at 63.5 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3739,7 +4054,34 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 93.98 43.18 0)
+			(at 63.5 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
+			(at 63.5 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
+			(at 63.5 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "756-WCR0603-10KFA"
+			(at 63.5 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3807,6 +4149,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 237.49 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 237.49 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 237.49 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
 			(at 237.49 72.39 0)
 			(effects
 				(font
@@ -3950,6 +4319,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07200KL"
+			(at 193.04 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07200KL"
+			(at 193.04 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "46ad1c45-35e7-4ae5-bd9e-ab0d95865b96")
 		)
@@ -4062,7 +4458,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 93.98 38.1 0)
+		(at 63.5 39.37 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4071,7 +4467,7 @@
 		(fields_autoplaced yes)
 		(uuid "5a85f09f-0f29-441c-a725-140e908e134e")
 		(property "Reference" "#PWR092"
-			(at 93.98 41.91 0)
+			(at 63.5 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4080,7 +4476,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 93.98 33.02 0)
+			(at 63.5 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4088,7 +4484,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 93.98 38.1 0)
+			(at 63.5 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4097,7 +4493,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 93.98 38.1 0)
+			(at 63.5 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4106,7 +4502,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 93.98 38.1 0)
+			(at 63.5 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4330,6 +4726,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 193.04 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 193.04 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "6ae002d1-5a6b-46fe-af7e-4aa505dc923b")
 		)
@@ -4414,7 +4837,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 93.98 63.5 0)
+		(at 63.5 64.77 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4423,7 +4846,7 @@
 		(dnp no)
 		(uuid "69583390-d3ac-4754-8659-3ad5ce188a0a")
 		(property "Reference" "#PWR093"
-			(at 93.98 69.85 0)
+			(at 63.5 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4432,7 +4855,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 93.98 67.564 0)
+			(at 63.5 68.834 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4441,7 +4864,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 93.98 63.5 0)
+			(at 63.5 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4450,7 +4873,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 93.98 63.5 0)
+			(at 63.5 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4459,7 +4882,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 93.98 63.5 0)
+			(at 63.5 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4595,6 +5018,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 121.92 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "SEI Stackpole"
+			(at 121.92 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RMCF0603FT33K0"
+			(at 121.92 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "708-RMCF0603FT33K0"
 			(at 121.92 139.7 0)
 			(effects
 				(font
@@ -4809,6 +5259,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 193.04 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 193.04 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "474b839a-0ff3-4859-a7b3-aeba6383252d")
 		)
@@ -4886,6 +5363,77 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
 					(reference "#PWR096")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack2_SwitchT")
+		(at 96.52 100.33 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "80484263-e964-4ab6-8265-84347089f2a5")
+		(property "Reference" "J13"
+			(at 95.885 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GATE3_IN"
+			(at 95.885 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Eurorack:THONK_PJ398SM-12"
+			(at 96.52 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 96.52 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 2 Poles (Mono / TS), Switched T Pole (Normalling)"
+			(at 96.52 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "T"
+			(uuid "ed911087-8f74-4daf-ba10-2f1af251eabb")
+		)
+		(pin "TN"
+			(uuid "cf28d538-80d9-4d1f-8ae0-7211d0370371")
+		)
+		(pin "S"
+			(uuid "54102b5c-34d1-42f4-a2ed-dc2311598057")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "J13")
 					(unit 1)
 				)
 			)
@@ -5180,7 +5728,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 93.98 87.63 180)
+		(at 63.5 87.63 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5189,7 +5737,7 @@
 		(fields_autoplaced yes)
 		(uuid "925b846c-2aad-42d3-8643-9ca28bddac3f")
 		(property "Reference" "R65"
-			(at 96.52 86.3599 0)
+			(at 66.04 86.3599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5198,7 +5746,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 96.52 88.8999 0)
+			(at 66.04 88.8999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5207,7 +5755,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 95.758 87.63 90)
+			(at 65.278 87.63 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5216,7 +5764,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 93.98 87.63 0)
+			(at 63.5 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5225,7 +5773,34 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 93.98 87.63 0)
+			(at 63.5 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
+			(at 63.5 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
+			(at 63.5 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "756-WCR0603-10KFA"
+			(at 63.5 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5249,8 +5824,111 @@
 		)
 	)
 	(symbol
+		(lib_id "Transistor_BJT:MMBT3904")
+		(at 120.65 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9584cb5d-a40b-4253-8191-295989bf459e")
+		(property "Reference" "Q3"
+			(at 125.73 99.0599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MMBT3904"
+			(at 125.73 101.5999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 125.73 102.235 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
+			(at 120.65 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
+			(at 120.65 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Diotec Semiconductor"
+			(at 120.65 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "MMBT3904"
+			(at 120.65 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 637-MMBT3904 "
+			(at 120.65 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "1bf7e28b-c9eb-4426-b022-6abdbe13fca3")
+		)
+		(pin "1"
+			(uuid "41103bfb-3cac-4a0b-b444-6670a480b13b")
+		)
+		(pin "2"
+			(uuid "aeaae251-1637-4a0d-a978-3b79719f9694")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "Q3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
-		(at 80.01 100.33 90)
+		(at 49.53 100.33 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5259,7 +5937,7 @@
 		(fields_autoplaced yes)
 		(uuid "97ca44c4-c863-40e5-b6b6-d193c2b7d3fb")
 		(property "Reference" "R63"
-			(at 80.01 93.98 90)
+			(at 49.53 93.98 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5267,7 +5945,7 @@
 			)
 		)
 		(property "Value" "100k"
-			(at 80.01 96.52 90)
+			(at 49.53 96.52 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5275,7 +5953,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 80.01 102.108 90)
+			(at 49.53 102.108 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5284,7 +5962,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 80.01 100.33 0)
+			(at 49.53 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5293,7 +5971,34 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 80.01 100.33 0)
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 49.53 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 49.53 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5512,6 +6217,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 102.87 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 102.87 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07200KL"
+			(at 102.87 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07200KL"
 			(at 102.87 135.89 0)
 			(effects
 				(font
@@ -5752,6 +6484,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "SEI Stackpole"
+			(at 212.09 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RMCF0603FT33K0"
+			(at 212.09 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "708-RMCF0603FT33K0"
+			(at 212.09 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f6875048-98a7-4762-91fa-63ed6ae0fbac")
 		)
@@ -5769,7 +6528,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_BJT:MMBT3904")
-		(at 91.44 55.88 0)
+		(at 60.96 57.15 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5778,7 +6537,7 @@
 		(fields_autoplaced yes)
 		(uuid "b9d17088-607d-49f2-95d2-d8ac26067ce6")
 		(property "Reference" "Q1"
-			(at 96.52 54.6099 0)
+			(at 66.04 55.8799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5787,7 +6546,7 @@
 			)
 		)
 		(property "Value" "MMBT3904"
-			(at 96.52 57.1499 0)
+			(at 66.04 58.4199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5796,7 +6555,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 96.52 57.785 0)
+			(at 66.04 59.055 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5807,7 +6566,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
-			(at 91.44 55.88 0)
+			(at 60.96 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5817,7 +6576,7 @@
 			)
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
-			(at 91.44 55.88 0)
+			(at 60.96 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5826,7 +6585,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Diotec Semiconductor"
-			(at 91.44 55.88 0)
+			(at 60.96 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5835,7 +6594,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "MMBT3904"
-			(at 91.44 55.88 0)
+			(at 60.96 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5844,7 +6603,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 637-MMBT3904 "
-			(at 91.44 55.88 0)
+			(at 60.96 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5967,7 +6726,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 72.39 107.95 0)
+		(at 41.91 107.95 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5976,7 +6735,7 @@
 		(dnp no)
 		(uuid "d0d44e32-ca37-4beb-9938-045e80a8bcaa")
 		(property "Reference" "#PWR090"
-			(at 72.39 114.3 0)
+			(at 41.91 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5985,7 +6744,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 72.39 112.014 0)
+			(at 41.91 112.014 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5994,7 +6753,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 72.39 107.95 0)
+			(at 41.91 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6003,7 +6762,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 72.39 107.95 0)
+			(at 41.91 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6012,7 +6771,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 72.39 107.95 0)
+			(at 41.91 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6144,6 +6903,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 193.04 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RE0603FRE07180KL"
+			(at 193.04 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RE0603FRE07180KL"
 			(at 193.04 45.72 0)
 			(effects
 				(font
@@ -6318,6 +7104,101 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 109.22 100.33 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "db2aa7c4-ad3f-46cb-b85d-307f73a4f50d")
+		(property "Reference" "R78"
+			(at 109.22 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100k"
+			(at 109.22 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 109.22 102.108 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 109.22 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 109.22 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 109.22 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 109.22 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
+			(at 109.22 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "658d3fb9-217c-44da-ab8f-a8dd4c122fb0")
+		)
+		(pin "2"
+			(uuid "98d1bad1-1a1a-4fa9-9786-284035cc9a23")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "R78")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 212.09 39.37 90)
 		(unit 1)
@@ -6414,6 +7295,103 @@
 	)
 	(symbol
 		(lib_id "Device:R")
+		(at 123.19 87.63 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e3b8117e-38c1-4289-8bfd-08dbf7fa0005")
+		(property "Reference" "R79"
+			(at 125.73 86.3599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 125.73 88.8999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 124.968 87.63 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "756-WCR0603-10KFA"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "37197275-8dbd-444c-89f4-787d5446eb37")
+		)
+		(pin "2"
+			(uuid "915c0e84-3867-4b30-947c-293acdb27592")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "R79")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
 		(at 102.87 154.94 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6457,6 +7435,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 102.87 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 102.87 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 102.87 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
 			(at 102.87 154.94 0)
 			(effects
 				(font
@@ -6682,6 +7687,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 101.6 107.95 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f1b68c91-2b0e-4f2f-ab2f-05f230a0d1b8")
+		(property "Reference" "#PWR0106"
+			(at 101.6 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 101.6 112.014 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 101.6 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "792a843d-1117-4f65-8c20-5f707b08586c")
+		)
+		(instances
+			(project "aware01_h7_rev1_2"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/e945e4c2-dc11-481b-8f33-3a20062a7ec6"
+					(reference "#PWR0106")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 237.49 132.08 0)
 		(mirror y)
@@ -6726,6 +7798,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 237.49 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 237.49 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE07100KL"
+			(at 237.49 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE07100KL"
 			(at 237.49 132.08 0)
 			(effects
 				(font

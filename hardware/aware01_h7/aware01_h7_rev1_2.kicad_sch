@@ -530,6 +530,108 @@
 				)
 			)
 		)
+		(symbol "Connector:TestPoint"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0.762) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:C"
 			(pin_numbers hide)
 			(pin_names
@@ -6394,6 +6496,12 @@
 		(uuid "62f70c06-4d29-49b2-a542-1aeac3f4c0ce")
 	)
 	(junction
+		(at 283.21 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "660fea7d-084f-4678-b242-4e8557811236")
+	)
+	(junction
 		(at 265.43 63.5)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6682,10 +6790,6 @@
 	(no_connect
 		(at 195.58 144.78)
 		(uuid "cb59862b-95d7-4e29-89e0-54d00bfc8060")
-	)
-	(no_connect
-		(at 129.54 190.5)
-		(uuid "d005bb72-3683-4196-bb87-a820aa480b88")
 	)
 	(no_connect
 		(at 129.54 195.58)
@@ -7371,7 +7475,7 @@
 	)
 	(wire
 		(pts
-			(xy 279.4 124.46) (xy 292.1 124.46)
+			(xy 279.4 124.46) (xy 283.21 124.46)
 		)
 		(stroke
 			(width 0)
@@ -7448,6 +7552,16 @@
 			(type default)
 		)
 		(uuid "3e936e3b-0fdf-4862-a91f-c75cd3638602")
+	)
+	(wire
+		(pts
+			(xy 66.04 233.68) (xy 73.66 233.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3f71270f-008e-48d5-9421-7aabc4396e89")
 	)
 	(wire
 		(pts
@@ -7801,7 +7915,7 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 233.68) (xy 73.66 233.68)
+			(xy 66.04 236.22) (xy 73.66 236.22)
 		)
 		(stroke
 			(width 0)
@@ -8351,7 +8465,7 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 236.22) (xy 73.66 236.22)
+			(xy 66.04 238.76) (xy 73.66 238.76)
 		)
 		(stroke
 			(width 0)
@@ -8821,6 +8935,16 @@
 	)
 	(wire
 		(pts
+			(xy 283.21 124.46) (xy 292.1 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c5eccd44-fb2b-49cc-a9e3-669eafb53368")
+	)
+	(wire
+		(pts
 			(xy 257.81 118.11) (xy 278.13 118.11)
 		)
 		(stroke
@@ -8978,6 +9102,16 @@
 			(type default)
 		)
 		(uuid "d33f1b3c-2ed7-42f0-bf55-a258c2fe9b0d")
+	)
+	(wire
+		(pts
+			(xy 123.19 190.5) (xy 129.54 190.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3a35131-f64a-44a4-9999-3a4038782f6a")
 	)
 	(wire
 		(pts
@@ -9620,7 +9754,7 @@
 		(uuid "0f200a28-c164-4a67-91f3-06111abb6c30")
 	)
 	(label "CV2_IN"
-		(at 73.66 236.22 0)
+		(at 73.66 238.76 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9898,6 +10032,16 @@
 			(justify right bottom)
 		)
 		(uuid "3882bba2-3d08-428c-b631-2744dc14c46a")
+	)
+	(label "GATE3_IN"
+		(at 123.19 190.5 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "38f18063-617b-4a6e-865b-0e523b9d55bb")
 	)
 	(label "FMC_A2"
 		(at 123.19 147.32 180)
@@ -10499,6 +10643,16 @@
 		)
 		(uuid "b20e1371-889d-469f-b5e0-0468e5700f34")
 	)
+	(label "GATE3_IN"
+		(at 73.66 233.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b2db783f-38b4-4558-a361-46d91c18dd68")
+	)
 	(label "FMC_SDNE0"
 		(at 257.81 133.35 180)
 		(effects
@@ -10670,7 +10824,7 @@
 		(uuid "d704e763-0d9f-4b13-b098-860155d4120d")
 	)
 	(label "CV1_IN"
-		(at 73.66 233.68 0)
+		(at 73.66 236.22 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -12169,6 +12323,72 @@
 			(project "aware01_h7"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 283.21 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "262e3e26-0227-4982-aa2a-85cae88fc669")
+		(property "Reference" "TP1"
+			(at 284.988 119.888 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "FMC_SDCLK"
+			(at 284.226 121.666 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 288.29 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 288.29 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 283.21 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e39ae052-9c02-44b3-bf23-b0cc93e73e64")
+		)
+		(instances
+			(project ""
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(reference "TP1")
 					(unit 1)
 				)
 			)
@@ -17246,7 +17466,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "STM32H7B0ZBTx"
+		(property "Value" "STM32H750ZBT6"
 			(at 167.2941 252.73 0)
 			(effects
 				(font
@@ -17265,7 +17485,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.st.com/resource/en/datasheet/stm32h7b0zb.pdf"
+		(property "Datasheet" "https://www.mouser.de/datasheet/2/389/stm32h750ib-1761001.pdf"
 			(at 162.56 157.48 0)
 			(effects
 				(font
@@ -17292,7 +17512,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "STM32H7B0ZBT6"
+		(property "Manufacturer_Part_Number" "STM32H750ZBT6"
 			(at 162.56 157.48 0)
 			(effects
 				(font
@@ -17301,7 +17521,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 511-STM32H7B0ZBT6"
+		(property "Mouser Part Number" "511-STM32H750ZBT6"
 			(at 162.56 157.48 0)
 			(effects
 				(font
@@ -18284,6 +18504,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
+			(at 113.03 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
+			(at 113.03 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "756-WCR0603-10KFA"
+			(at 113.03 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "bd7b4baa-1839-40c1-867d-fc6a49b833d4")
 		)
@@ -18804,7 +19051,7 @@
 			)
 		)
 		(pin "CV1_IN" output
-			(at 66.04 233.68 0)
+			(at 66.04 236.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18844,7 +19091,7 @@
 			(uuid "c6f0e911-4ae3-4ffd-9658-a6f920a3d29e")
 		)
 		(pin "CV2_IN" output
-			(at 66.04 236.22 0)
+			(at 66.04 238.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18852,6 +19099,16 @@
 				(justify right)
 			)
 			(uuid "41292865-194b-4d72-b7fc-7bd3e4bfb707")
+		)
+		(pin "GATE3_IN" output
+			(at 66.04 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "50b35e21-a67b-421a-b4c9-ede7c701a56f")
 		)
 		(instances
 			(project "aware01_h7_rev1_2"
