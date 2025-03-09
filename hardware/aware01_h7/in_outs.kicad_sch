@@ -1,7 +1,7 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "98bae35d-7a4e-4c9b-9ec0-9772c132fbc4")
 	(paper "A4")
 	(lib_symbols
@@ -96,17 +96,17 @@
 						(type background)
 					)
 				)
-				(pin output line
-					(at 7.62 0 180)
+				(pin input line
+					(at -7.62 2.54 0)
 					(length 2.54)
-					(name "~"
+					(name "+"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "1"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -132,17 +132,17 @@
 						)
 					)
 				)
-				(pin input line
-					(at -7.62 2.54 0)
+				(pin output line
+					(at 7.62 0 180)
 					(length 2.54)
-					(name "+"
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "3"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -221,24 +221,6 @@
 			)
 			(symbol "NE5532_3_1"
 				(pin power_in line
-					(at -2.54 -7.62 90)
-					(length 3.81)
-					(name "V-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
 					(at -2.54 7.62 270)
 					(length 3.81)
 					(name "V+"
@@ -256,7 +238,26 @@
 						)
 					)
 				)
+				(pin power_in line
+					(at -2.54 -7.62 90)
+					(length 3.81)
+					(name "V-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Connector_Audio:AudioJack2_SwitchT"
 			(exclude_from_sim no)
@@ -337,6 +338,18 @@
 				)
 				(polyline
 					(pts
+						(xy 0 0) (xy 0.635 -0.635) (xy 1.27 0) (xy 2.54 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
 						(xy 1.778 -0.254) (xy 2.032 -0.762)
 					)
 					(stroke
@@ -347,9 +360,20 @@
 						(type none)
 					)
 				)
+				(rectangle
+					(start 2.54 3.81)
+					(end -2.54 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
 				(polyline
 					(pts
-						(xy 0 0) (xy 0.635 -0.635) (xy 1.27 0) (xy 2.54 0)
+						(xy 2.54 2.54) (xy -0.635 2.54) (xy -0.635 0) (xy -1.27 -0.635) (xy -1.905 0)
 					)
 					(stroke
 						(width 0.254)
@@ -369,29 +393,6 @@
 					)
 					(fill
 						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 2.54) (xy -0.635 2.54) (xy -0.635 0) (xy -1.27 -0.635) (xy -1.905 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 2.54 3.81)
-					(end -2.54 -5.08)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
 					)
 				)
 			)
@@ -451,9 +452,12 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Device:C"
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0.254)
 			)
@@ -526,7 +530,7 @@
 			(symbol "C_0_1"
 				(polyline
 					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
+						(xy -2.032 0.762) (xy 2.032 0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -538,7 +542,7 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -587,9 +591,12 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Device:R"
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0)
 			)
@@ -708,6 +715,7 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Eurorack_components:PTV112-4420A-B503"
 			(exclude_from_sim no)
@@ -849,24 +857,6 @@
 					)
 				)
 				(pin passive line
-					(at 2.54 0 180)
-					(length 1.27)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name ""
@@ -877,6 +867,24 @@
 						)
 					)
 					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -916,24 +924,6 @@
 					)
 				)
 				(pin passive line
-					(at 2.54 0 180)
-					(length 1.27)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name ""
@@ -944,6 +934,24 @@
 						)
 					)
 					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -990,12 +998,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:+5V"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1067,7 +1080,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 0) (xy 0 2.54)
+						(xy 0 2.54) (xy 0.762 1.27)
 					)
 					(stroke
 						(width 0)
@@ -1079,7 +1092,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
+						(xy 0 0) (xy 0 2.54)
 					)
 					(stroke
 						(width 0)
@@ -1110,12 +1123,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:-12V"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1206,12 +1224,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:GND"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1302,7 +1325,21 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
+	)
+	(text "In/Out Stages"
+		(exclude_from_sim no)
+		(at 18.542 18.034 0)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.4)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "d15a2d53-0180-4e9d-92eb-277400ef7364")
 	)
 	(junction
 		(at 168.91 106.68)
@@ -2587,19 +2624,6 @@
 			(type default)
 		)
 		(uuid "ffbdabc3-0517-4c92-b093-b3461e47639b")
-	)
-	(text "In/Out Stages"
-		(exclude_from_sim no)
-		(at 18.542 18.034 0)
-		(effects
-			(font
-				(size 2 2)
-				(thickness 0.4)
-				(bold yes)
-			)
-			(justify left top)
-		)
-		(uuid "d15a2d53-0180-4e9d-92eb-277400ef7364")
 	)
 	(hierarchical_label "OUTR"
 		(shape input)
