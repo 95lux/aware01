@@ -497,42 +497,6 @@
         "via_diameter": 0.7,
         "via_drill": 0.3,
         "wire_width": 6
-      },
-      {
-        "bus_width": 12,
-        "clearance": 0.2,
-        "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
-        "diff_pair_width": 0.2,
-        "line_style": 0,
-        "microvia_diameter": 0.3,
-        "microvia_drill": 0.1,
-        "name": "SDRAM",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
-        "wire_width": 6
-      },
-      {
-        "bus_width": 12,
-        "clearance": 0.1,
-        "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
-        "diff_pair_width": 0.2,
-        "line_style": 0,
-        "microvia_diameter": 0.3,
-        "microvia_drill": 0.1,
-        "name": "audio codec",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
-        "wire_width": 6
       }
     ],
     "meta": {
@@ -541,84 +505,175 @@
     "net_colors": null,
     "netclass_assignments": {
       "/FMC_A0": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A1": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A10": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A11": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A2": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A3": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A4": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A5": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A6": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A7": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A8": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "/FMC_A9": [
-        "RAM_ADDR"
+        "SDRAM_addr"
+      ],
+      "/FMC_D0": [
+        "SDRAM_D"
+      ],
+      "/FMC_D1": [
+        "SDRAM_D"
+      ],
+      "/FMC_D10": [
+        "SDRAM_D"
+      ],
+      "/FMC_D11": [
+        "SDRAM_D"
+      ],
+      "/FMC_D12": [
+        "SDRAM_D"
+      ],
+      "/FMC_D13": [
+        "SDRAM_D"
+      ],
+      "/FMC_D14": [
+        "SDRAM_D"
+      ],
+      "/FMC_D15": [
+        "SDRAM_D"
+      ],
+      "/FMC_D2": [
+        "SDRAM_D"
+      ],
+      "/FMC_D3": [
+        "SDRAM_D"
+      ],
+      "/FMC_D4": [
+        "SDRAM_D"
+      ],
+      "/FMC_D5": [
+        "SDRAM_D"
+      ],
+      "/FMC_D6": [
+        "SDRAM_D"
+      ],
+      "/FMC_D7": [
+        "SDRAM_D"
+      ],
+      "/FMC_D8": [
+        "SDRAM_D"
+      ],
+      "/FMC_D9": [
+        "SDRAM_D"
       ],
       "Net-(U2-A0)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A1)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A10)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A11)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A2)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A3)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A4)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A5)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A6)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A7)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A8)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
       ],
       "Net-(U2-A9)": [
-        "RAM_ADDR"
+        "SDRAM_addr"
+      ],
+      "Net-(U2-DQ0)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ1)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ10)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ11)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ12)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ13)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ14)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ15)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ2)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ3)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ4)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ5)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ6)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ7)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ8)": [
+        "SDRAM_D"
+      ],
+      "Net-(U2-DQ9)": [
+        "SDRAM_D"
       ]
     },
-    "netclass_patterns": [
-      {
-        "netclass": "SDRAM",
-        "pattern": "/FMC_*"
-      }
-    ]
+    "netclass_patterns": []
   },
   "pcbnew": {
     "last_paths": {

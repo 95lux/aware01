@@ -10973,7 +10973,7 @@
 	(rule_area
 		(polyline
 			(pts
-				(xy 250.19 78.74) (xy 250.19 82.55) (xy 290.83 82.55) (xy 290.83 78.74)
+				(xy 343.535 79.8512) (xy 343.535 123.0312) (xy 389.89 123.1899) (xy 389.89 80.0099)
 			)
 			(stroke
 				(width 0)
@@ -10982,13 +10982,28 @@
 			(fill
 				(type none)
 			)
-			(uuid b04a5ee3-3dd8-459f-8137-dc215c97f5da)
+			(uuid a1214568-c79a-43cc-a8a0-1bba909ada4d)
+		)
+	)
+	(rule_area
+		(polyline
+			(pts
+				(xy 250.19 78.74) (xy 250.19 111.125) (xy 290.83 111.125) (xy 290.83 78.74)
+			)
+			(stroke
+				(width 0)
+				(type dash)
+			)
+			(fill
+				(type none)
+			)
+			(uuid da81432a-aa07-41fa-bfa2-5c6b77521e4c)
 		)
 	)
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at 289.56 78.74 0)
+		(at 389.89 80.01 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10996,9 +11011,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "2e7cf196-76e4-492c-9ec8-e3c6081bb20a")
-		(property "Netclass" "RAM_ADDR"
-			(at 290.2585 76.2 0)
+		(uuid "57fcb576-6c25-453c-95f7-162332d61dee")
+		(property "Netclass" "SDRAM_D"
+			(at 390.5885 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11007,7 +11022,38 @@
 			)
 		)
 		(property "Component Class" ""
-			(at -80.01 5.08 0)
+			(at 2.54 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 250.19 78.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8735f1ed-e302-4c3c-9a87-4da5985cbde0")
+		(property "Netclass" "SDRAM_addr"
+			(at 250.8885 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Component Class" ""
+			(at -137.16 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
