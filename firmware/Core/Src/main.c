@@ -115,12 +115,13 @@ int main(void)
   
   // configure codec for playback
   if(codec_i2c_is_ok() == HAL_OK){
-    codec_init_playback();
+    // codec_init();
+    config_digital_loopback();
+
   }
-
-  codec_beep_test();
-
+  receiveTest();
   // generateSineWave(440);
+
 
   /* USER CODE END 2 */
 
@@ -129,6 +130,8 @@ int main(void)
   // status = i2c_scan();
   while (1)
   {
+    // codec_beep_test();
+    // HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

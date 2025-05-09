@@ -27,17 +27,15 @@
  */
 #define HALF_BUFFER_SIZE (BUFFER_SIZE / 2)
 
-extern DMA_BUFFER int16_t dacData[BUFFER_SIZE];
-extern bool dma_dataReady;
-extern volatile int16_t *outBufPtr;
 
 // Callbacks for DMA Complete
-void HAL_I2S_TxHalfCpltCallback(I2S_HandleTypeDef *hi2s);
-void HAL_I2SS_TxCpltCallback(I2S_HandleTypeDef *hi2s);
+void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef *hi2s);
+void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef *hi2s);
 
 
 // Test Functions
-void generateSineWave(double frequency);
+void generateSineWave(uint16_t *phaseIndex, double phaseIncrement);
+void receiveTest();
 void initSineTable();
 
 #endif /* INC_AUDIO_H_ */
