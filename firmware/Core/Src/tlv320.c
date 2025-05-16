@@ -84,7 +84,6 @@ void codec_read_reg(uint8_t reg, uint8_t *buf)
 void codec_init(){
     /* ---------- switch to page 0 ---------- */
     codec_write_reg(0x00, 0x00);
-
     // software reset
     codec_write_reg(0x01, 0x01);
 
@@ -110,6 +109,9 @@ void codec_init(){
 
     // OSR of ADC = 128
     codec_write_reg(0x14, 0x80);
+
+    // set PRB_R1
+    codec_write_reg(0x3d, 0x01);
 
     // set i2s mode
     // set word length/frame size to 16bit
@@ -142,16 +144,14 @@ void codec_init(){
     // 01000011 = 0x43
     codec_write_reg(0x0a, 0x4b);
 
-    // set REF charging time to 40ms
-    // codec_write_reg(0x7b, 0x01);
-    // set REF charging time to 40ms and force power-up VREF
-    codec_write_reg(0x7b, 0x05);
-
     // Select ADC PTM_R4
     codec_write_reg(0x3D, 0x00);
 
     // Set MicPGA startup delay to 3.1ms
     codec_write_reg(0x47, 0x32);
+
+    // set REF charging time to 40ms
+    codec_write_reg(0x7b, 0x01);
     
     /* ---- Routing ----*/
 

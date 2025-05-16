@@ -13,6 +13,5 @@ void codec_check_status();
 
 int8_t codec_i2c_is_ok();
 void codec_init();
-void config_digital_loopback();
 
 #endif // TLV320_H

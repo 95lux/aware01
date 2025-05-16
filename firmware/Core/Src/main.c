@@ -115,9 +115,7 @@ int main(void)
   
   // configure codec for playback
   if(codec_i2c_is_ok() == HAL_OK){
-    // codec_init();
-    config_digital_loopback();
-
+    codec_init();
   }
   receiveTest();
   // generateSineWave(440);
