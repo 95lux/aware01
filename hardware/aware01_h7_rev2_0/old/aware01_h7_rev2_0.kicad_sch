@@ -3750,7 +3750,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 95.25) (xy 335.28 95.25)
+			(xy 317.5 135.89) (xy 328.93 135.89)
 		)
 		(stroke
 			(width 0)
@@ -3790,7 +3790,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 196.85) (xy 335.28 196.85)
+			(xy 308.61 217.17) (xy 328.93 217.17)
 		)
 		(stroke
 			(width 0)
@@ -3860,7 +3860,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 189.23) (xy 335.28 189.23)
+			(xy 308.61 209.55) (xy 328.93 209.55)
 		)
 		(stroke
 			(width 0)
@@ -3887,16 +3887,6 @@
 			(type default)
 		)
 		(uuid "45e4e837-8a61-412b-9b28-2620b4a528e8")
-	)
-	(wire
-		(pts
-			(xy 323.85 120.65) (xy 335.28 120.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4661f46f-2c08-443b-a1fd-b4629ec82acb")
 	)
 	(wire
 		(pts
@@ -3990,7 +3980,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 97.79) (xy 335.28 97.79)
+			(xy 317.5 138.43) (xy 328.93 138.43)
 		)
 		(stroke
 			(width 0)
@@ -4060,7 +4050,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 102.87) (xy 335.28 102.87)
+			(xy 317.5 143.51) (xy 328.93 143.51)
 		)
 		(stroke
 			(width 0)
@@ -4120,7 +4110,7 @@
 	)
 	(wire
 		(pts
-			(xy 322.58 83.82) (xy 335.28 83.82)
+			(xy 316.23 124.46) (xy 328.93 124.46)
 		)
 		(stroke
 			(width 0)
@@ -4160,7 +4150,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 204.47) (xy 335.28 204.47)
+			(xy 308.61 224.79) (xy 328.93 224.79)
 		)
 		(stroke
 			(width 0)
@@ -4200,7 +4190,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 201.93) (xy 335.28 201.93)
+			(xy 308.61 222.25) (xy 328.93 222.25)
 		)
 		(stroke
 			(width 0)
@@ -4210,7 +4200,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 176.53) (xy 335.28 176.53)
+			(xy 308.61 196.85) (xy 328.93 196.85)
 		)
 		(stroke
 			(width 0)
@@ -4340,7 +4330,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 116.84) (xy 335.28 116.84)
+			(xy 317.5 157.48) (xy 328.93 157.48)
 		)
 		(stroke
 			(width 0)
@@ -4450,7 +4440,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 109.22) (xy 335.28 109.22)
+			(xy 317.5 149.86) (xy 328.93 149.86)
 		)
 		(stroke
 			(width 0)
@@ -4580,7 +4570,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 100.33) (xy 335.28 100.33)
+			(xy 317.5 140.97) (xy 328.93 140.97)
 		)
 		(stroke
 			(width 0)
@@ -4680,7 +4670,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 199.39) (xy 335.28 199.39)
+			(xy 308.61 219.71) (xy 328.93 219.71)
 		)
 		(stroke
 			(width 0)
@@ -4700,7 +4690,7 @@
 	)
 	(wire
 		(pts
-			(xy 314.96 182.88) (xy 335.28 182.88)
+			(xy 308.61 203.2) (xy 328.93 203.2)
 		)
 		(stroke
 			(width 0)
@@ -4770,7 +4760,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 111.76) (xy 335.28 111.76)
+			(xy 317.5 152.4) (xy 328.93 152.4)
 		)
 		(stroke
 			(width 0)
@@ -4780,7 +4770,7 @@
 	)
 	(wire
 		(pts
-			(xy 323.85 114.3) (xy 335.28 114.3)
+			(xy 317.5 154.94) (xy 328.93 154.94)
 		)
 		(stroke
 			(width 0)
@@ -4790,7 +4780,7 @@
 	)
 	(wire
 		(pts
-			(xy 322.58 86.36) (xy 335.28 86.36)
+			(xy 316.23 127) (xy 328.93 127)
 		)
 		(stroke
 			(width 0)
@@ -4899,7 +4889,7 @@
 		(uuid "fdf27dbb-fd10-4917-8ec9-d712e2bff712")
 	)
 	(label "FADER1_IN"
-		(at 323.85 109.22 180)
+		(at 317.5 149.86 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4929,7 +4919,7 @@
 		(uuid "106153a9-6fe5-40ae-a71e-c91c800034f3")
 	)
 	(label "I2S1_WS"
-		(at 314.96 182.88 180)
+		(at 308.61 203.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4959,7 +4949,7 @@
 		(uuid "1d266884-fdcf-41f7-a1ae-304c8f1072ef")
 	)
 	(label "FAD_LED1_OUT"
-		(at 323.85 95.25 180)
+		(at 317.5 135.89 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4979,7 +4969,7 @@
 		(uuid "2cddbb78-a6fb-4cde-9b83-a346cf74d3f1")
 	)
 	(label "BUTTON2_IN"
-		(at 322.58 86.36 180)
+		(at 316.23 127 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5049,7 +5039,7 @@
 		(uuid "6723808d-ab5a-4d29-9676-85a16980f482")
 	)
 	(label "BUTTON1_IN"
-		(at 322.58 83.82 180)
+		(at 316.23 124.46 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5139,7 +5129,7 @@
 		(uuid "7a66d37e-e8b2-4033-8f03-aac3535ea520")
 	)
 	(label "FADER3_IN"
-		(at 323.85 114.3 180)
+		(at 317.5 154.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5159,7 +5149,7 @@
 		(uuid "7e3afd29-df93-45b9-8f26-8d50b50ae09e")
 	)
 	(label "I2S1_SDI"
-		(at 314.96 196.85 180)
+		(at 308.61 217.17 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5179,7 +5169,7 @@
 		(uuid "83793d1e-3f3d-40b1-ad0d-bd1c58b68a22")
 	)
 	(label "FAD_LED3_OUT"
-		(at 323.85 100.33 180)
+		(at 317.5 140.97 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5209,7 +5199,7 @@
 		(uuid "9accf762-460e-4da9-9c77-d0c2727d5e03")
 	)
 	(label "I2S1_SDO"
-		(at 314.96 199.39 180)
+		(at 308.61 219.71 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5229,7 +5219,7 @@
 		(uuid "9d5dbb14-3a49-41e3-b188-970923f76eec")
 	)
 	(label "FADER2_IN"
-		(at 323.85 111.76 180)
+		(at 317.5 152.4 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5289,7 +5279,7 @@
 		(uuid "ae24b672-b6f1-4c4f-88db-840d6c06f627")
 	)
 	(label "FADER4_IN"
-		(at 323.85 116.84 180)
+		(at 317.5 157.48 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5339,7 +5329,7 @@
 		(uuid "bba2f4f5-51c8-46b6-b2f5-172f78e0c2bd")
 	)
 	(label "I2C1_SDA"
-		(at 314.96 204.47 180)
+		(at 308.61 224.79 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5369,7 +5359,7 @@
 		(uuid "d18a410f-f55d-4d44-b410-12249bf234c7")
 	)
 	(label "I2C1_SCL"
-		(at 314.96 201.93 180)
+		(at 308.61 222.25 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5388,18 +5378,8 @@
 		)
 		(uuid "d74effe3-92f0-4a2d-9970-08e098dc4ae7")
 	)
-	(label "RGB_LED_DATA"
-		(at 323.85 120.65 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d82cd441-b476-4402-9e0d-4f7a4548fe51")
-	)
 	(label "FAD_LED4_OUT"
-		(at 323.85 102.87 180)
+		(at 317.5 143.51 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5429,7 +5409,7 @@
 		(uuid "ddd9298b-c14a-4dba-b375-f1835ebbba28")
 	)
 	(label "FAD_LED2_OUT"
-		(at 323.85 97.79 180)
+		(at 317.5 138.43 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5499,7 +5479,7 @@
 		(uuid "f62791c0-ad81-4346-90c8-e0a474271221")
 	)
 	(label "I2S1_CK"
-		(at 314.96 189.23 180)
+		(at 308.61 209.55 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5529,7 +5509,7 @@
 		(uuid "fc269c58-2348-417e-bca4-dba49a321860")
 	)
 	(label "I2S1_MCK"
-		(at 314.96 176.53 180)
+		(at 308.61 196.85 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6441,7 +6421,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2.2u"
+		(property "Value" "2u2"
 			(at 182.88 176.5299 0)
 			(effects
 				(font
@@ -6459,7 +6439,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/396/mlcc02_e-1307760.pdf"
+		(property "Datasheet" "~"
 			(at 186.69 175.26 0)
 			(effects
 				(font
@@ -6469,33 +6449,6 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 186.69 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" " TAIYO YUDEN"
-			(at 186.69 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" " TMK107ABJ225KA-T"
-			(at 186.69 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 963-TMK107ABJ225KA-T"
 			(at 186.69 175.26 0)
 			(effects
 				(font
@@ -6554,7 +6507,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/181/M50_350-1115491.pdf"
+		(property "Datasheet" "~"
 			(at 81.28 160.02 0)
 			(effects
 				(font
@@ -6564,33 +6517,6 @@
 			)
 		)
 		(property "Description" "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 81.28 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" " Harwin"
-			(at 81.28 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" " M50-3500742"
-			(at 81.28 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 855-M50-3500742"
 			(at 81.28 160.02 0)
 			(effects
 				(font
@@ -6867,7 +6793,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "2.2u"
+		(property "Value" "2u2"
 			(at 161.29 176.5299 0)
 			(effects
 				(font
@@ -6885,7 +6811,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/396/mlcc02_e-1307760.pdf"
+		(property "Datasheet" "~"
 			(at 165.1 175.26 0)
 			(effects
 				(font
@@ -6895,33 +6821,6 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 165.1 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" " TAIYO YUDEN"
-			(at 165.1 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" " TMK107ABJ225KA-T"
-			(at 165.1 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 963-TMK107ABJ225KA-T"
 			(at 165.1 175.26 0)
 			(effects
 				(font
@@ -7813,7 +7712,7 @@
 		)
 	)
 	(sheet
-		(at 335.28 171.45)
+		(at 328.93 191.77)
 		(size 20.32 36.83)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7829,7 +7728,7 @@
 		)
 		(uuid "50dd69da-5058-483c-924f-252f04b072bd")
 		(property "Sheetname" "Audio Codec"
-			(at 335.28 170.7384 0)
+			(at 328.93 191.0584 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7838,7 +7737,7 @@
 			)
 		)
 		(property "Sheetfile" "audio_codec.kicad_sch"
-			(at 335.28 208.8646 0)
+			(at 328.93 229.1846 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7847,7 +7746,7 @@
 			)
 		)
 		(pin "I2C1_SCL" bidirectional
-			(at 335.28 201.93 180)
+			(at 328.93 222.25 180)
 			(uuid "01ab8a49-8abd-455e-b41c-c330dfbebf4f")
 			(effects
 				(font
@@ -7857,7 +7756,7 @@
 			)
 		)
 		(pin "I2C1_SDA" bidirectional
-			(at 335.28 204.47 180)
+			(at 328.93 224.79 180)
 			(uuid "91f90eb5-57d7-4875-aba7-7cdbcca2da2a")
 			(effects
 				(font
@@ -7867,7 +7766,7 @@
 			)
 		)
 		(pin "I2S1_MCK" input
-			(at 335.28 176.53 180)
+			(at 328.93 196.85 180)
 			(uuid "c603be36-cfbc-4fe4-9b42-8d5a44443479")
 			(effects
 				(font
@@ -7877,7 +7776,7 @@
 			)
 		)
 		(pin "I2S1_WS" input
-			(at 335.28 182.88 180)
+			(at 328.93 203.2 180)
 			(uuid "ccef9334-ffc6-481b-9274-a6a1a3cf682f")
 			(effects
 				(font
@@ -7887,7 +7786,7 @@
 			)
 		)
 		(pin "I2S1_CK" input
-			(at 335.28 189.23 180)
+			(at 328.93 209.55 180)
 			(uuid "8399c253-3de7-427c-a075-59c9d22b9aa8")
 			(effects
 				(font
@@ -7897,7 +7796,7 @@
 			)
 		)
 		(pin "I2S1_SDO" output
-			(at 335.28 199.39 180)
+			(at 328.93 219.71 180)
 			(uuid "f6d10ce4-56cc-48cb-ab29-951eecb69223")
 			(effects
 				(font
@@ -7907,7 +7806,7 @@
 			)
 		)
 		(pin "I2S1_SDI" input
-			(at 335.28 196.85 180)
+			(at 328.93 217.17 180)
 			(uuid "3b67dc47-95be-46fa-aa55-9b51cd52fbde")
 			(effects
 				(font
@@ -7925,7 +7824,7 @@
 		)
 	)
 	(sheet
-		(at 335.28 80.01)
+		(at 328.93 120.65)
 		(size 24.13 45.72)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7940,8 +7839,8 @@
 			(color 0 0 0 0.0000)
 		)
 		(uuid "73121cc2-8d80-4112-ab10-05ea68c4fbe2")
-		(property "Sheetname" "ControlsInterface"
-			(at 335.28 79.2984 0)
+		(property "Sheetname" "Controls"
+			(at 328.93 119.9384 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7950,7 +7849,7 @@
 			)
 		)
 		(property "Sheetfile" "controls.kicad_sch"
-			(at 335.28 126.3146 0)
+			(at 328.93 166.9546 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7959,7 +7858,7 @@
 			)
 		)
 		(pin "FAD_LED3_OUT" output
-			(at 335.28 100.33 180)
+			(at 328.93 140.97 180)
 			(uuid "7cf52e93-fd5d-431a-be05-1c70df38d76a")
 			(effects
 				(font
@@ -7969,7 +7868,7 @@
 			)
 		)
 		(pin "FADER2_IN" input
-			(at 335.28 111.76 180)
+			(at 328.93 152.4 180)
 			(uuid "85781a89-fc55-43d4-bbf5-d4e5facba61b")
 			(effects
 				(font
@@ -7979,7 +7878,7 @@
 			)
 		)
 		(pin "FADER3_IN" input
-			(at 335.28 114.3 180)
+			(at 328.93 154.94 180)
 			(uuid "a26e8906-f464-4032-a66e-846161de46c5")
 			(effects
 				(font
@@ -7989,7 +7888,7 @@
 			)
 		)
 		(pin "FAD_LED4_OUT" output
-			(at 335.28 102.87 180)
+			(at 328.93 143.51 180)
 			(uuid "908845dd-c3b7-49bc-9c96-68b1489e3dd4")
 			(effects
 				(font
@@ -7999,7 +7898,7 @@
 			)
 		)
 		(pin "FADER4_IN" input
-			(at 335.28 116.84 180)
+			(at 328.93 157.48 180)
 			(uuid "355f81ac-b066-4857-ac45-b37cc3c9a562")
 			(effects
 				(font
@@ -8009,7 +7908,7 @@
 			)
 		)
 		(pin "FAD_LED2_OUT" output
-			(at 335.28 97.79 180)
+			(at 328.93 138.43 180)
 			(uuid "97874ef6-5e31-4943-a051-917fac5f6289")
 			(effects
 				(font
@@ -8019,7 +7918,7 @@
 			)
 		)
 		(pin "FADER1_IN" input
-			(at 335.28 109.22 180)
+			(at 328.93 149.86 180)
 			(uuid "7b9fc1f7-0529-4a39-9fb8-b4e58f2f393f")
 			(effects
 				(font
@@ -8029,7 +7928,7 @@
 			)
 		)
 		(pin "FAD_LED1_OUT" output
-			(at 335.28 95.25 180)
+			(at 328.93 135.89 180)
 			(uuid "cdbc97a9-3db6-46e3-b1d3-b0b449d71237")
 			(effects
 				(font
@@ -8039,7 +7938,7 @@
 			)
 		)
 		(pin "BUTTON2_IN" input
-			(at 335.28 86.36 180)
+			(at 328.93 127 180)
 			(uuid "643299c0-36eb-4120-9d7b-41efea11d5ea")
 			(effects
 				(font
@@ -8049,18 +7948,8 @@
 			)
 		)
 		(pin "BUTTON1_IN" input
-			(at 335.28 83.82 180)
+			(at 328.93 124.46 180)
 			(uuid "e5d0c537-d8ad-4757-b1af-204ed472684f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "RGB_LED_DATA" input
-			(at 335.28 120.65 180)
-			(uuid "9b7066cb-d2b7-4e34-b30f-c30b57045ebd")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8072,6 +7961,48 @@
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 321.31 55.88)
+		(size 25.4 43.18)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "b1343429-f867-4c1a-b5a0-7008559a0031")
+		(property "Sheetname" "LEDs"
+			(at 321.31 55.1684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "leds.kicad_sch"
+			(at 321.31 99.6446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(page "7")
 				)
 			)
 		)
