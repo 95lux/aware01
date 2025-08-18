@@ -12,6 +12,6 @@ Aarebot is a Eurorack Modular Synthesizer Module based on the STM32 H7 platform.
   > Note: Firmware development is not yet implemented.
 
 ## Directory Structure
-- [**/hardware/aware01_h7_rev2_0**](/hardware/aware01_h7): Contains the KiCad project files for schematic and PCB design.  
+- [**/hardware/aware01_h7_rev2_0**](/hardware/aware01_h7_rev2_0): Contains the KiCad project files for schematic and PCB design.  
 - [**/hardware/simulation**](/hardware/simulation): Contains spice simulations for analog in/out stages.  
 - [**/firmware**](/firmware): STM32CubeMX project files for hardware configuration.  
