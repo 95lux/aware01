@@ -4827,6 +4827,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" " YAGEO"
+			(at 236.22 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " RC0603FR-071MP"
+			(at 236.22 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 603-RC0603FR-071MP"
+			(at 236.22 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5f2c5f12-fc88-47c9-89aa-4dcc15d2a896")
 		)

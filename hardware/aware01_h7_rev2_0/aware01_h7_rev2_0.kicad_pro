@@ -628,7 +628,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "/home/jonas/repos/aware01/hardware/aware01_h7_rev2_0/fabrication_files/",
+      "plot": "fabrication_files/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -639,7 +639,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "export/rev1.2/aware01_h7_rev1_2.csv",
+    "bom_export_filename": "aware01_h7_rev2_0.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -856,10 +856,6 @@
     [
       "73121cc2-8d80-4112-ab10-05ea68c4fbe2",
       "ControlsInterface"
-    ],
-    [
-      "4fd75a14-10a3-454a-b853-10e2f7b21f70",
-      "Power"
     ],
     [
       "50dd69da-5058-483c-924f-252f04b072bd",
