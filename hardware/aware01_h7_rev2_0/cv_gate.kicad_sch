@@ -1677,7 +1677,7 @@
 	)
 	(wire
 		(pts
-			(xy 260.35 69.85) (xy 262.89 69.85)
+			(xy 260.35 69.85) (xy 265.43 69.85)
 		)
 		(stroke
 			(width 0)
@@ -2057,7 +2057,7 @@
 	)
 	(wire
 		(pts
-			(xy 158.75 124.46) (xy 161.29 124.46)
+			(xy 158.75 124.46) (xy 165.1 124.46)
 		)
 		(stroke
 			(width 0)
@@ -2067,7 +2067,7 @@
 	)
 	(wire
 		(pts
-			(xy 162.56 67.31) (xy 165.1 67.31)
+			(xy 162.56 67.31) (xy 167.64 67.31)
 		)
 		(stroke
 			(width 0)
@@ -2327,7 +2327,7 @@
 	)
 	(wire
 		(pts
-			(xy 260.35 127) (xy 262.89 127)
+			(xy 260.35 127) (xy 265.43 127)
 		)
 		(stroke
 			(width 0)
@@ -3098,7 +3098,7 @@
 	)
 	(hierarchical_label "V_OCT_IN"
 		(shape output)
-		(at 262.89 69.85 0)
+		(at 265.43 69.85 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3109,7 +3109,7 @@
 	)
 	(hierarchical_label "CV1_IN"
 		(shape output)
-		(at 262.89 127 0)
+		(at 265.43 127 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3120,7 +3120,7 @@
 	)
 	(hierarchical_label "CV3_IN"
 		(shape output)
-		(at 161.29 124.46 0)
+		(at 165.1 124.46 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3131,7 +3131,7 @@
 	)
 	(hierarchical_label "CV2_IN"
 		(shape output)
-		(at 165.1 67.31 0)
+		(at 167.64 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)

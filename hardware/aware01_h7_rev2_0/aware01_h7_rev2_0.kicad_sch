@@ -5626,7 +5626,7 @@
 		(uuid "46482fa7-d85f-4e74-ba68-b36374468d65")
 	)
 	(junction
-		(at 274.32 57.15)
+		(at 276.86 58.42)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4ef7726f-b808-4fbf-9603-2a606821f2e2")
@@ -5638,7 +5638,7 @@
 		(uuid "5463e310-f1ee-4635-a38b-3cac887ba51c")
 	)
 	(junction
-		(at 274.32 69.85)
+		(at 276.86 45.72)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "596cb123-7649-41d1-9316-f2211cd59fed")
@@ -5800,7 +5800,7 @@
 		(uuid "c4590d3f-8b3d-4d31-b055-d9a885e34d83")
 	)
 	(junction
-		(at 280.67 57.15)
+		(at 270.51 58.42)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c7d6fece-e15f-48a2-b636-4166b810c8bd")
@@ -6731,7 +6731,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 44.45) (xy 274.32 45.72)
+			(xy 276.86 71.12) (xy 276.86 69.85)
 		)
 		(stroke
 			(width 0)
@@ -6741,7 +6741,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 53.34) (xy 274.32 57.15)
+			(xy 276.86 62.23) (xy 276.86 58.42)
 		)
 		(stroke
 			(width 0)
@@ -6901,7 +6901,7 @@
 	)
 	(wire
 		(pts
-			(xy 280.67 57.15) (xy 285.75 57.15)
+			(xy 270.51 58.42) (xy 265.43 58.42)
 		)
 		(stroke
 			(width 0)
@@ -7021,7 +7021,7 @@
 	)
 	(wire
 		(pts
-			(xy 280.67 57.15) (xy 280.67 59.69)
+			(xy 270.51 58.42) (xy 270.51 55.88)
 		)
 		(stroke
 			(width 0)
@@ -7111,7 +7111,7 @@
 	)
 	(wire
 		(pts
-			(xy 280.67 67.31) (xy 280.67 69.85)
+			(xy 270.51 48.26) (xy 270.51 45.72)
 		)
 		(stroke
 			(width 0)
@@ -8001,7 +8001,7 @@
 	)
 	(wire
 		(pts
-			(xy 280.67 69.85) (xy 274.32 69.85)
+			(xy 270.51 45.72) (xy 276.86 45.72)
 		)
 		(stroke
 			(width 0)
@@ -8161,7 +8161,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 57.15) (xy 280.67 57.15)
+			(xy 276.86 58.42) (xy 270.51 58.42)
 		)
 		(stroke
 			(width 0)
@@ -8171,7 +8171,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 69.85) (xy 274.32 72.39)
+			(xy 276.86 45.72) (xy 276.86 43.18)
 		)
 		(stroke
 			(width 0)
@@ -8181,7 +8181,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 67.31) (xy 274.32 69.85)
+			(xy 276.86 48.26) (xy 276.86 45.72)
 		)
 		(stroke
 			(width 0)
@@ -8281,7 +8281,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 57.15) (xy 274.32 59.69)
+			(xy 276.86 58.42) (xy 276.86 55.88)
 		)
 		(stroke
 			(width 0)
@@ -8941,22 +8941,22 @@
 	)
 	(global_label "AREF-10"
 		(shape input)
-		(at 285.75 57.15 0)
+		(at 265.43 58.42 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "1bb21d8c-4730-4bc2-98e0-16a72603bf39")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 297.3228 57.15 0)
+			(at 253.8572 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -9288,7 +9288,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 274.32 72.39 0)
+		(at 276.86 43.18 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9297,7 +9297,7 @@
 		(fields_autoplaced yes)
 		(uuid "236710c7-c08f-45df-b132-0ae8f5773d08")
 		(property "Reference" "#PWR055"
-			(at 274.32 78.74 0)
+			(at 276.86 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9306,7 +9306,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 274.32 77.47 0)
+			(at 276.86 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9314,7 +9314,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 274.32 72.39 0)
+			(at 276.86 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9323,7 +9323,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 274.32 72.39 0)
+			(at 276.86 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9332,7 +9332,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 274.32 72.39 0)
+			(at 276.86 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10272,7 +10272,7 @@
 	)
 	(symbol
 		(lib_id "power:-12V")
-		(at 274.32 44.45 0)
+		(at 276.86 71.12 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10281,7 +10281,7 @@
 		(fields_autoplaced yes)
 		(uuid "56db0b78-8cda-4d29-9dcf-e135428b22c9")
 		(property "Reference" "#PWR054"
-			(at 274.32 48.26 0)
+			(at 276.86 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10290,7 +10290,7 @@
 			)
 		)
 		(property "Value" "-12V"
-			(at 274.32 39.37 0)
+			(at 276.86 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10298,7 +10298,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 274.32 44.45 0)
+			(at 276.86 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10307,7 +10307,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 274.32 44.45 0)
+			(at 276.86 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10316,7 +10316,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"-12V\""
-			(at 274.32 44.45 0)
+			(at 276.86 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10698,7 +10698,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 280.67 63.5 0)
+		(at 270.51 52.07 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10707,7 +10707,7 @@
 		(fields_autoplaced yes)
 		(uuid "670aa7ce-838e-4604-964d-c41192b61419")
 		(property "Reference" "C40"
-			(at 284.48 62.2299 0)
+			(at 266.7 53.3401 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10716,7 +10716,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 284.48 64.7699 0)
+			(at 266.7 50.8001 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10725,7 +10725,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 281.6352 67.31 0)
+			(at 269.5448 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10734,7 +10734,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 280.67 63.5 0)
+			(at 270.51 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10743,7 +10743,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 280.67 63.5 0)
+			(at 270.51 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10752,7 +10752,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "KYOCERA AVX "
-			(at 280.67 63.5 0)
+			(at 270.51 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10761,7 +10761,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
-			(at 280.67 63.5 0)
+			(at 270.51 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10770,7 +10770,7 @@
 			)
 		)
 		(property "Mouser Part Number" "581-KAF15BR72A104KT"
-			(at 280.67 63.5 0)
+			(at 270.51 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13208,7 +13208,7 @@
 	)
 	(symbol
 		(lib_id "Reference_Voltage:LM4040DBZ-10")
-		(at 274.32 63.5 270)
+		(at 276.86 52.07 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13216,7 +13216,7 @@
 		(dnp no)
 		(uuid "ac106428-8cf5-461f-a7ee-560b1e2279cc")
 		(property "Reference" "U8"
-			(at 271.78 64.77 90)
+			(at 279.4 50.8 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13225,7 +13225,7 @@
 			)
 		)
 		(property "Value" "LM4040DIM3X-10"
-			(at 271.78 62.484 90)
+			(at 279.4 53.086 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13234,7 +13234,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 269.24 63.5 0)
+			(at 281.94 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13244,7 +13244,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm4040-n.pdf"
-			(at 274.32 63.5 0)
+			(at 276.86 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13254,7 +13254,7 @@
 			)
 		)
 		(property "Description" "10.00V Precision Micropower Shunt Voltage Reference, SOT-23"
-			(at 274.32 63.5 0)
+			(at 276.86 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13263,7 +13263,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Texas Instruments"
-			(at 274.32 63.5 0)
+			(at 276.86 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13272,7 +13272,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "LM4040DIM3X-10/NOPB"
-			(at 274.32 63.5 0)
+			(at 276.86 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13281,7 +13281,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 926-LM4040DIM3X10NPB"
-			(at 274.32 63.5 0)
+			(at 276.86 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15904,7 +15904,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 274.32 49.53 0)
+		(at 276.86 66.04 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15913,7 +15913,7 @@
 		(fields_autoplaced yes)
 		(uuid "fd801671-8322-4614-a378-62d529fca6be")
 		(property "Reference" "R47"
-			(at 276.86 48.2599 0)
+			(at 274.32 67.3101 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15922,7 +15922,7 @@
 			)
 		)
 		(property "Value" "470"
-			(at 276.86 50.7999 0)
+			(at 274.32 64.7701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15931,7 +15931,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 272.542 49.53 90)
+			(at 278.638 66.04 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15940,7 +15940,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 274.32 49.53 0)
+			(at 276.86 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15949,7 +15949,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 274.32 49.53 0)
+			(at 276.86 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15958,7 +15958,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "YAGEO"
-			(at 274.32 49.53 0)
+			(at 276.86 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15967,7 +15967,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "RC0603FR-07470RP"
-			(at 274.32 49.53 0)
+			(at 276.86 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15976,7 +15976,7 @@
 			)
 		)
 		(property "Mouser Part Number" "603-RC0603FR-07470RP "
-			(at 274.32 49.53 0)
+			(at 276.86 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
