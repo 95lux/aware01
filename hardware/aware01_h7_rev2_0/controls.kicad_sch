@@ -1229,8 +1229,8 @@
 		(uuid b041edac-9b3c-4e56-8ecb-2561520e9d03)
 	)
 	(rectangle
-		(start 50.8 124.46)
-		(end 255.27 160.02)
+		(start 22.86 124.46)
+		(end 255.27 170.18)
 		(stroke
 			(width 0)
 			(type dash)
@@ -1275,7 +1275,7 @@
 	)
 	(text "RGB LEDs"
 		(exclude_from_sim no)
-		(at 56.134 126.492 0)
+		(at 28.194 126.492 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1332,16 +1332,34 @@
 		(uuid "6c4722bb-d004-4ace-83f0-b0a6b59a1bfb")
 	)
 	(junction
+		(at 144.78 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6c9ecb73-6866-4006-9fa6-e56d854199fd")
+	)
+	(junction
 		(at 78.74 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "79708350-b572-43f1-a59e-6218034c9d62")
 	)
 	(junction
+		(at 40.64 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "82848b6b-c48e-4feb-bdd2-761272600801")
+	)
+	(junction
 		(at 135.89 58.42)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a0e64a59-3f59-4b7f-b222-73e70a38f850")
+	)
+	(junction
+		(at 93.98 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b99c96a6-adde-4cc1-9278-d27e470aa997")
 	)
 	(junction
 		(at 78.74 45.72)
@@ -1355,8 +1373,14 @@
 		(color 0 0 0 0)
 		(uuid "c7ffac8c-764a-42e1-97a6-4faa805cfe93")
 	)
+	(junction
+		(at 195.58 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "dde2bcec-9453-4a92-87f6-ccb70a902c05")
+	)
 	(no_connect
-		(at 68.58 144.78)
+		(at 40.64 144.78)
 		(uuid "ceda61a1-2798-4505-9be3-3d54014216bd")
 	)
 	(wire
@@ -1371,7 +1395,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 142.24) (xy 148.59 144.78)
+			(xy 130.81 142.24) (xy 130.81 144.78)
 		)
 		(stroke
 			(width 0)
@@ -1381,7 +1405,17 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 144.78) (xy 111.76 144.78)
+			(xy 88.9 154.94) (xy 88.9 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "09499278-327b-4df4-9cf4-62ddbbdc12ca")
+	)
+	(wire
+		(pts
+			(xy 77.47 144.78) (xy 93.98 144.78)
 		)
 		(stroke
 			(width 0)
@@ -1391,7 +1425,17 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 144.78) (xy 144.78 147.32)
+			(xy 190.5 154.94) (xy 190.5 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0bfe8e58-710a-489f-bf45-d3b96e7b0f9a")
+	)
+	(wire
+		(pts
+			(xy 127 144.78) (xy 127 147.32)
 		)
 		(stroke
 			(width 0)
@@ -1418,6 +1462,16 @@
 			(type default)
 		)
 		(uuid "0e111c7e-c253-486b-9868-a511e328092f")
+	)
+	(wire
+		(pts
+			(xy 144.78 142.24) (xy 139.7 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0fd544e5-29ed-41a7-8194-c2525477f11f")
 	)
 	(wire
 		(pts
@@ -1448,6 +1502,26 @@
 			(type default)
 		)
 		(uuid "1614b000-5e60-4bcb-bf95-4fd186d9a4fb")
+	)
+	(wire
+		(pts
+			(xy 35.56 154.94) (xy 35.56 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17892088-7546-4c3e-81d3-3006f788fcc1")
+	)
+	(wire
+		(pts
+			(xy 139.7 154.94) (xy 139.7 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1af9a146-7b62-44cb-b7c9-0f4d7204109d")
 	)
 	(wire
 		(pts
@@ -1551,7 +1625,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 142.24) (xy 105.41 144.78)
+			(xy 77.47 142.24) (xy 77.47 144.78)
 		)
 		(stroke
 			(width 0)
@@ -1591,13 +1665,23 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 138.43) (xy 68.58 142.24)
+			(xy 40.64 138.43) (xy 40.64 142.24)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "47116c1f-07ce-469d-9651-360286684239")
+	)
+	(wire
+		(pts
+			(xy 195.58 142.24) (xy 190.5 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a9ae05e-d32e-4ca1-b45a-5dab77d0f69b")
 	)
 	(wire
 		(pts
@@ -1611,13 +1695,23 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 142.24) (xy 234.95 142.24)
+			(xy 228.6 142.24) (xy 232.41 142.24)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "4ff8bf07-c6ac-4479-acfa-f27d68e6bac3")
+	)
+	(wire
+		(pts
+			(xy 88.9 142.24) (xy 88.9 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "502bef3f-689a-47c6-8e3d-b14ef4a737f4")
 	)
 	(wire
 		(pts
@@ -1671,7 +1765,17 @@
 	)
 	(wire
 		(pts
-			(xy 101.6 142.24) (xy 105.41 142.24)
+			(xy 190.5 142.24) (xy 190.5 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fed79ab-8cae-42ba-9158-712946e79cc6")
+	)
+	(wire
+		(pts
+			(xy 73.66 142.24) (xy 77.47 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1681,7 +1785,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 142.24) (xy 148.59 142.24)
+			(xy 127 142.24) (xy 130.81 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1711,7 +1815,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 142.24) (xy 191.77 144.78)
+			(xy 181.61 142.24) (xy 181.61 144.78)
 		)
 		(stroke
 			(width 0)
@@ -1731,7 +1835,7 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 144.78) (xy 231.14 147.32)
+			(xy 228.6 144.78) (xy 228.6 147.32)
 		)
 		(stroke
 			(width 0)
@@ -1771,6 +1875,16 @@
 	)
 	(wire
 		(pts
+			(xy 93.98 142.24) (xy 88.9 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79ec9c91-2f2f-4456-84bc-099de7f86c03")
+	)
+	(wire
+		(pts
 			(xy 231.14 58.42) (xy 236.22 58.42)
 		)
 		(stroke
@@ -1781,7 +1895,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 138.43) (xy 198.12 142.24)
+			(xy 195.58 138.43) (xy 195.58 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1808,6 +1922,16 @@
 			(type default)
 		)
 		(uuid "80a70f62-0939-4f0f-826a-710fe3206fd5")
+	)
+	(wire
+		(pts
+			(xy 139.7 142.24) (xy 139.7 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "80d90091-9269-4d32-acb3-026e39496dc4")
 	)
 	(wire
 		(pts
@@ -1861,7 +1985,7 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 138.43) (xy 111.76 142.24)
+			(xy 93.98 138.43) (xy 93.98 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1871,7 +1995,7 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 142.24) (xy 191.77 142.24)
+			(xy 177.8 142.24) (xy 181.61 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1911,6 +2035,16 @@
 	)
 	(wire
 		(pts
+			(xy 35.56 142.24) (xy 35.56 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "adb8bd84-3bfe-498a-8a52-e19589e3e00a")
+	)
+	(wire
+		(pts
 			(xy 198.12 58.42) (xy 203.2 58.42)
 		)
 		(stroke
@@ -1941,7 +2075,7 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 144.78) (xy 187.96 147.32)
+			(xy 177.8 144.78) (xy 177.8 147.32)
 		)
 		(stroke
 			(width 0)
@@ -1961,6 +2095,16 @@
 	)
 	(wire
 		(pts
+			(xy 35.56 142.24) (xy 40.64 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c30b33dc-a75b-4e3e-8d95-85bd124bd5ed")
+	)
+	(wire
+		(pts
 			(xy 236.22 48.26) (xy 236.22 49.53)
 		)
 		(stroke
@@ -1971,7 +2115,7 @@
 	)
 	(wire
 		(pts
-			(xy 101.6 144.78) (xy 101.6 147.32)
+			(xy 73.66 144.78) (xy 73.66 147.32)
 		)
 		(stroke
 			(width 0)
@@ -1981,7 +2125,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 144.78) (xy 198.12 144.78)
+			(xy 181.61 144.78) (xy 195.58 144.78)
 		)
 		(stroke
 			(width 0)
@@ -2051,7 +2195,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 144.78) (xy 154.94 144.78)
+			(xy 130.81 144.78) (xy 144.78 144.78)
 		)
 		(stroke
 			(width 0)
@@ -2101,7 +2245,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 138.43) (xy 154.94 142.24)
+			(xy 144.78 138.43) (xy 144.78 142.24)
 		)
 		(stroke
 			(width 0)
@@ -2163,7 +2307,7 @@
 	)
 	(hierarchical_label "RGB_LED_DATA"
 		(shape input)
-		(at 234.95 142.24 0)
+		(at 232.41 142.24 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2359,7 +2503,7 @@
 	)
 	(symbol
 		(lib_id "eurorack_components:587-2054-127F")
-		(at 111.76 142.24 0)
+		(at 93.98 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2368,7 +2512,7 @@
 		(fields_autoplaced yes)
 		(uuid "09266d96-20d8-446d-bb9b-fab1ac95f154")
 		(property "Reference" "IC4"
-			(at 128.27 134.62 0)
+			(at 110.49 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2376,7 +2520,7 @@
 			)
 		)
 		(property "Value" "587-2054-127F"
-			(at 128.27 137.16 0)
+			(at 110.49 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2384,7 +2528,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:5872054127F"
-			(at 140.97 237.16 0)
+			(at 123.19 237.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2394,7 +2538,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ph/en/products/detail/dialight/587-2054-127F/25321961"
-			(at 140.97 337.16 0)
+			(at 123.19 337.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2404,7 +2548,7 @@
 			)
 		)
 		(property "Description" "587 SMD LED 5050 pkg w/4 pins, ADDRESSABLE RGB LED, Single Wire, 7\" Reel , 12mA , 3.5V ~ +5.5V , -40C ~ +85C"
-			(at 111.76 142.24 0)
+			(at 93.98 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2413,7 +2557,7 @@
 			)
 		)
 		(property "Height" "1.6"
-			(at 140.97 537.16 0)
+			(at 123.19 537.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2423,7 +2567,7 @@
 			)
 		)
 		(property "Mouser Part Number" "645-587-2054-127F"
-			(at 140.97 637.16 0)
+			(at 123.19 637.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2433,7 +2577,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Dialight/587-2054-127F?qs=iLKYxzqNS74CVWyAqozDmw%3D%3D"
-			(at 140.97 737.16 0)
+			(at 123.19 737.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2443,7 +2587,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Dialight"
-			(at 140.97 837.16 0)
+			(at 123.19 837.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2453,7 +2597,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "587-2054-127F"
-			(at 140.97 937.16 0)
+			(at 123.19 937.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2949,6 +3093,198 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 139.7 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "227de399-daf2-4c18-9012-804b7d4edcc7")
+		(property "Reference" "C34"
+			(at 132.588 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 132.588 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 140.6652 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 139.7 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 139.7 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 139.7 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 139.7 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 139.7 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "af9e1ed1-361e-40b2-9937-5800d9e24cbf")
+		)
+		(pin "1"
+			(uuid "db872be5-69d6-4f04-8ea9-0addbc0f73a6")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "C34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 35.56 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "24dc0e08-e525-43c9-9d79-f31cbb481185")
+		(property "Reference" "C32"
+			(at 28.448 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 28.448 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 36.5252 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 35.56 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 35.56 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 35.56 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 35.56 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 35.56 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d08eb08f-7fa5-43e4-8eee-73c124db390c")
+		)
+		(pin "1"
+			(uuid "78192566-8a5a-4415-a6d0-a59ae8462d86")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "C32")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 198.12 90.17 0)
 		(unit 1)
@@ -3047,7 +3383,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 198.12 138.43 0)
+		(at 195.58 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3056,7 +3392,7 @@
 		(fields_autoplaced yes)
 		(uuid "332e5914-cd75-40d9-9ab9-cb60c2f1344d")
 		(property "Reference" "#PWR09"
-			(at 198.12 142.24 0)
+			(at 195.58 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3065,7 +3401,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 198.12 133.35 0)
+			(at 195.58 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3073,7 +3409,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 198.12 138.43 0)
+			(at 195.58 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3082,7 +3418,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 138.43 0)
+			(at 195.58 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3091,7 +3427,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 198.12 138.43 0)
+			(at 195.58 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3311,7 +3647,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 144.78 147.32 0)
+		(at 127 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3320,7 +3656,7 @@
 		(fields_autoplaced yes)
 		(uuid "41252668-113c-4653-b5ed-319fcd3f2655")
 		(property "Reference" "#PWR010"
-			(at 144.78 153.67 0)
+			(at 127 153.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3329,7 +3665,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 144.78 152.4 0)
+			(at 127 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3337,7 +3673,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 144.78 147.32 0)
+			(at 127 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3346,7 +3682,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 144.78 147.32 0)
+			(at 127 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3355,7 +3691,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 144.78 147.32 0)
+			(at 127 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3370,6 +3706,72 @@
 			(project "aware01_h7_rev1_3"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
 					(reference "#PWR010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 139.7 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "45181362-14e1-466b-966d-6e8c641a1dc6")
+		(property "Reference" "#PWR015"
+			(at 139.7 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 139.7 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 139.7 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 139.7 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "97108dbd-be8d-4cce-b33a-4324aa022ce7")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -3436,6 +3838,102 @@
 			(project "ima_new_codec"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
 					(reference "#PWR025")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 88.9 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "485296d5-d1fe-4bb8-91e8-8a4706ddf002")
+		(property "Reference" "C31"
+			(at 81.788 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 81.788 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 89.8652 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 88.9 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 88.9 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 88.9 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 88.9 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 88.9 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "168a2f2c-699d-404c-b9f4-f01934feecc0")
+		)
+		(pin "1"
+			(uuid "2e597e11-61c3-4df3-882d-646fd3bce07d")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "C31")
 					(unit 1)
 				)
 			)
@@ -3824,7 +4322,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 231.14 147.32 0)
+		(at 228.6 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3833,7 +4331,7 @@
 		(fields_autoplaced yes)
 		(uuid "679bcf19-7f4b-4a49-a759-244b2bd6dfdb")
 		(property "Reference" "#PWR04"
-			(at 231.14 153.67 0)
+			(at 228.6 153.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3842,7 +4340,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 231.14 152.4 0)
+			(at 228.6 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3850,7 +4348,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 231.14 147.32 0)
+			(at 228.6 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3859,7 +4357,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 231.14 147.32 0)
+			(at 228.6 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3868,7 +4366,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 231.14 147.32 0)
+			(at 228.6 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3883,6 +4381,72 @@
 			(project "aware01_h7_rev1_3"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
 					(reference "#PWR04")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 88.9 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "69e15f66-6a8e-447c-9375-f4d8b297da4b")
+		(property "Reference" "#PWR013"
+			(at 88.9 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 88.9 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.9 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 88.9 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "23dcc728-6ee1-4c58-bb3b-6e3559bca318")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -4096,7 +4660,7 @@
 	)
 	(symbol
 		(lib_id "eurorack_components:587-2054-127F")
-		(at 68.58 142.24 0)
+		(at 40.64 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4105,7 +4669,7 @@
 		(fields_autoplaced yes)
 		(uuid "6febf077-e4f0-4780-aa16-4bb453b5fd9d")
 		(property "Reference" "IC5"
-			(at 85.09 134.62 0)
+			(at 57.15 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4113,7 +4677,7 @@
 			)
 		)
 		(property "Value" "587-2054-127F"
-			(at 85.09 137.16 0)
+			(at 57.15 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4121,7 +4685,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:5872054127F"
-			(at 97.79 237.16 0)
+			(at 69.85 237.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4130,7 +4694,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ph/en/products/detail/dialight/587-2054-127F/25321961"
-			(at 97.79 337.16 0)
+			(at 69.85 337.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4140,7 +4704,7 @@
 			)
 		)
 		(property "Description" "587 SMD LED 5050 pkg w/4 pins, ADDRESSABLE RGB LED, Single Wire, 7\" Reel , 12mA , 3.5V ~ +5.5V , -40C ~ +85C"
-			(at 68.58 142.24 0)
+			(at 40.64 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4149,7 +4713,7 @@
 			)
 		)
 		(property "Height" "1.6"
-			(at 97.79 537.16 0)
+			(at 69.85 537.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4159,7 +4723,7 @@
 			)
 		)
 		(property "Mouser Part Number" "645-587-2054-127F"
-			(at 97.79 637.16 0)
+			(at 69.85 637.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4169,7 +4733,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Dialight/587-2054-127F?qs=iLKYxzqNS74CVWyAqozDmw%3D%3D"
-			(at 97.79 737.16 0)
+			(at 69.85 737.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4179,7 +4743,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Dialight"
-			(at 97.79 837.16 0)
+			(at 69.85 837.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4189,7 +4753,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "587-2054-127F"
-			(at 97.79 937.16 0)
+			(at 69.85 937.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4384,6 +4948,72 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 35.56 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "81e7cd4b-6fe9-4f60-ad0e-70f128544c4e")
+		(property "Reference" "#PWR014"
+			(at 35.56 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 35.56 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 35.56 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 35.56 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 35.56 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3db7ca2e-f501-46d2-9929-330d2839647c")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 135.89 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4450,7 +5080,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 101.6 147.32 0)
+		(at 73.66 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4459,7 +5089,7 @@
 		(fields_autoplaced yes)
 		(uuid "8868d3a2-0fd0-452a-be16-c3581fda886e")
 		(property "Reference" "#PWR012"
-			(at 101.6 153.67 0)
+			(at 73.66 153.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4468,7 +5098,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 101.6 152.4 0)
+			(at 73.66 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4476,7 +5106,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 101.6 147.32 0)
+			(at 73.66 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4485,7 +5115,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 101.6 147.32 0)
+			(at 73.66 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4494,7 +5124,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 101.6 147.32 0)
+			(at 73.66 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4582,7 +5212,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 154.94 138.43 0)
+		(at 144.78 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4591,7 +5221,7 @@
 		(fields_autoplaced yes)
 		(uuid "8e1a67c4-c421-4e55-b72c-9a3871488e29")
 		(property "Reference" "#PWR07"
-			(at 154.94 142.24 0)
+			(at 144.78 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4600,7 +5230,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 154.94 133.35 0)
+			(at 144.78 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4608,7 +5238,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 154.94 138.43 0)
+			(at 144.78 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4617,7 +5247,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 154.94 138.43 0)
+			(at 144.78 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4626,7 +5256,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 154.94 138.43 0)
+			(at 144.78 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4757,7 +5387,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 111.76 138.43 0)
+		(at 93.98 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4766,7 +5396,7 @@
 		(fields_autoplaced yes)
 		(uuid "9014ecbe-edf0-414b-9c9b-411cb2450aea")
 		(property "Reference" "#PWR05"
-			(at 111.76 142.24 0)
+			(at 93.98 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4775,7 +5405,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 111.76 133.35 0)
+			(at 93.98 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4783,7 +5413,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 111.76 138.43 0)
+			(at 93.98 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4792,7 +5422,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 111.76 138.43 0)
+			(at 93.98 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4801,7 +5431,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 111.76 138.43 0)
+			(at 93.98 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4823,7 +5453,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 68.58 138.43 0)
+		(at 40.64 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4832,7 +5462,7 @@
 		(fields_autoplaced yes)
 		(uuid "9071ff57-620b-4c71-9683-5d440ff7c989")
 		(property "Reference" "#PWR011"
-			(at 68.58 142.24 0)
+			(at 40.64 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4841,7 +5471,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 68.58 133.35 0)
+			(at 40.64 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4849,7 +5479,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 68.58 138.43 0)
+			(at 40.64 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4858,7 +5488,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 68.58 138.43 0)
+			(at 40.64 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4867,7 +5497,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 68.58 138.43 0)
+			(at 40.64 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5118,7 +5748,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 187.96 147.32 0)
+		(at 177.8 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5127,7 +5757,7 @@
 		(fields_autoplaced yes)
 		(uuid "9d52dfd7-4429-402f-9d52-4c6b975abfe8")
 		(property "Reference" "#PWR08"
-			(at 187.96 153.67 0)
+			(at 177.8 153.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5136,7 +5766,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 187.96 152.4 0)
+			(at 177.8 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5144,7 +5774,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 187.96 147.32 0)
+			(at 177.8 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5153,7 +5783,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 187.96 147.32 0)
+			(at 177.8 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5162,7 +5792,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 187.96 147.32 0)
+			(at 177.8 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5389,6 +6019,102 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 190.5 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b6ac717c-f05f-4a57-b3fa-89e41cb450fe")
+		(property "Reference" "C35"
+			(at 183.388 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 183.388 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 191.4652 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 190.5 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 190.5 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 190.5 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 190.5 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 190.5 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "96b514b3-9c1e-4431-a1f2-d5dff3c9bd1b")
+		)
+		(pin "1"
+			(uuid "e170d313-b9dc-4855-9f2f-f0d5621c95ca")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "C35")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 78.74 82.55 0)
 		(unit 1)
@@ -5596,7 +6322,7 @@
 	)
 	(symbol
 		(lib_id "eurorack_components:587-2054-127F")
-		(at 198.12 142.24 0)
+		(at 195.58 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5605,7 +6331,7 @@
 		(fields_autoplaced yes)
 		(uuid "be344120-f010-4a5c-8fbe-d4bcc3f121b8")
 		(property "Reference" "IC2"
-			(at 214.63 134.62 0)
+			(at 212.09 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5613,7 +6339,7 @@
 			)
 		)
 		(property "Value" "587-2054-127F"
-			(at 214.63 137.16 0)
+			(at 212.09 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5621,7 +6347,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:5872054127F"
-			(at 227.33 237.16 0)
+			(at 224.79 237.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5631,7 +6357,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ph/en/products/detail/dialight/587-2054-127F/25321961"
-			(at 227.33 337.16 0)
+			(at 224.79 337.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5641,7 +6367,7 @@
 			)
 		)
 		(property "Description" "587 SMD LED 5050 pkg w/4 pins, ADDRESSABLE RGB LED, Single Wire, 7\" Reel , 12mA , 3.5V ~ +5.5V , -40C ~ +85C"
-			(at 198.12 142.24 0)
+			(at 195.58 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5650,7 +6376,7 @@
 			)
 		)
 		(property "Height" "1.6"
-			(at 227.33 537.16 0)
+			(at 224.79 537.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5660,7 +6386,7 @@
 			)
 		)
 		(property "Mouser Part Number" "645-587-2054-127F"
-			(at 227.33 637.16 0)
+			(at 224.79 637.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5670,7 +6396,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Dialight/587-2054-127F?qs=iLKYxzqNS74CVWyAqozDmw%3D%3D"
-			(at 227.33 737.16 0)
+			(at 224.79 737.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5680,7 +6406,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Dialight"
-			(at 227.33 837.16 0)
+			(at 224.79 837.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5690,7 +6416,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "587-2054-127F"
-			(at 227.33 937.16 0)
+			(at 224.79 937.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6385,7 +7111,7 @@
 	)
 	(symbol
 		(lib_id "eurorack_components:587-2054-127F")
-		(at 154.94 142.24 0)
+		(at 144.78 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6394,7 +7120,7 @@
 		(fields_autoplaced yes)
 		(uuid "efe70ce4-3410-487f-bd6a-89d85a051b6d")
 		(property "Reference" "IC3"
-			(at 171.45 134.62 0)
+			(at 161.29 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6402,7 +7128,7 @@
 			)
 		)
 		(property "Value" "587-2054-127F"
-			(at 171.45 137.16 0)
+			(at 161.29 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6410,7 +7136,7 @@
 			)
 		)
 		(property "Footprint" "Eurorack:5872054127F"
-			(at 184.15 237.16 0)
+			(at 173.99 237.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6420,7 +7146,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.ph/en/products/detail/dialight/587-2054-127F/25321961"
-			(at 184.15 337.16 0)
+			(at 173.99 337.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6430,7 +7156,7 @@
 			)
 		)
 		(property "Description" "587 SMD LED 5050 pkg w/4 pins, ADDRESSABLE RGB LED, Single Wire, 7\" Reel , 12mA , 3.5V ~ +5.5V , -40C ~ +85C"
-			(at 154.94 142.24 0)
+			(at 144.78 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6439,7 +7165,7 @@
 			)
 		)
 		(property "Height" "1.6"
-			(at 184.15 537.16 0)
+			(at 173.99 537.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6449,7 +7175,7 @@
 			)
 		)
 		(property "Mouser Part Number" "645-587-2054-127F"
-			(at 184.15 637.16 0)
+			(at 173.99 637.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6459,7 +7185,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Dialight/587-2054-127F?qs=iLKYxzqNS74CVWyAqozDmw%3D%3D"
-			(at 184.15 737.16 0)
+			(at 173.99 737.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6469,7 +7195,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Dialight"
-			(at 184.15 837.16 0)
+			(at 173.99 837.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6479,7 +7205,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "587-2054-127F"
-			(at 184.15 937.16 0)
+			(at 173.99 937.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6504,6 +7230,72 @@
 			(project "aware01_h7_rev1_3"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
 					(reference "IC3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 190.5 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f885c518-46b7-4a96-bdbf-cb4a41235542")
+		(property "Reference" "#PWR0110"
+			(at 190.5 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 190.5 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 190.5 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "85a1bcd4-545a-40eb-9766-df46b6517b26")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/73121cc2-8d80-4112-ab10-05ea68c4fbe2"
+					(reference "#PWR0110")
 					(unit 1)
 				)
 			)
