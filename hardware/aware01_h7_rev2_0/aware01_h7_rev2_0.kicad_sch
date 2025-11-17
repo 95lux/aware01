@@ -4484,156 +4484,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Switch:SW_Push"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "SW"
-				(at 1.27 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "SW_Push"
-				(at 0 -1.524 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Push button switch, generic, two pins"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "switch normally-open pushbutton push-button"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "SW_Push_0_1"
-				(circle
-					(center -2.032 0)
-					(radius 0.508)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 1.27) (xy 0 3.048)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 2.032 0)
-					(radius 0.508)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 1.27) (xy -2.54 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers
@@ -5572,12 +5422,6 @@
 		(uuid "0c5f36be-4d31-450f-b285-b66c1ad4865f")
 	)
 	(junction
-		(at 153.67 106.68)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "11981af6-8195-4e4a-80ee-d48281d465f6")
-	)
-	(junction
 		(at 105.41 245.11)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5588,12 +5432,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1fef5478-b6b8-433b-aef9-021f404894c0")
-	)
-	(junction
-		(at 166.37 93.98)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "230c1bc6-285f-45d5-a06e-f92b55e87b13")
 	)
 	(junction
 		(at 220.98 104.14)
@@ -5630,6 +5468,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4ef7726f-b808-4fbf-9603-2a606821f2e2")
+	)
+	(junction
+		(at 190.5 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5041bc05-fa0b-4802-853b-ccc79783b5ba")
 	)
 	(junction
 		(at 53.34 156.21)
@@ -5738,12 +5582,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a358d755-6a30-4baa-907b-7afa805167bd")
-	)
-	(junction
-		(at 153.67 93.98)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a3a5769f-473e-4b15-8f97-3c8689b7c5d6")
 	)
 	(junction
 		(at 163.83 187.96)
@@ -6311,16 +6149,6 @@
 	)
 	(wire
 		(pts
-			(xy 200.66 93.98) (xy 200.66 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "22539482-596b-4bbb-ae54-382407045881")
-	)
-	(wire
-		(pts
 			(xy 92.71 250.19) (xy 92.71 252.73)
 		)
 		(stroke
@@ -6581,16 +6409,6 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 93.98) (xy 153.67 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "34003a8f-eb9e-48da-bc76-8ce4566e72c9")
-	)
-	(wire
-		(pts
 			(xy 46.99 40.64) (xy 34.29 40.64)
 		)
 		(stroke
@@ -6791,16 +6609,6 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 107.95) (xy 153.67 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4db55ab8-da98-4845-a5ed-4de2cf7a204a")
-	)
-	(wire
-		(pts
 			(xy 157.48 179.07) (xy 157.48 176.53)
 		)
 		(stroke
@@ -6868,6 +6676,16 @@
 			(type default)
 		)
 		(uuid "5d248a3d-e3af-4a3f-a0f5-7c7b20b0cd1f")
+	)
+	(wire
+		(pts
+			(xy 190.5 100.33) (xy 190.5 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5db694bc-8cf1-407a-936f-d36113e26d06")
 	)
 	(wire
 		(pts
@@ -7241,26 +7059,6 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 93.98) (xy 166.37 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "881d0d57-5903-424a-9b1f-c79b5e399551")
-	)
-	(wire
-		(pts
-			(xy 146.05 93.98) (xy 153.67 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "893f4a74-9228-454a-b72d-9442fee8e0e6")
-	)
-	(wire
-		(pts
 			(xy 105.41 245.11) (xy 125.73 245.11)
 		)
 		(stroke
@@ -7301,7 +7099,7 @@
 	)
 	(wire
 		(pts
-			(xy 166.37 93.98) (xy 200.66 93.98)
+			(xy 179.07 113.03) (xy 190.5 113.03)
 		)
 		(stroke
 			(width 0)
@@ -7488,6 +7286,16 @@
 			(type default)
 		)
 		(uuid "a7199c73-f876-4c3a-a84e-994d0dd7570b")
+	)
+	(wire
+		(pts
+			(xy 190.5 110.49) (xy 190.5 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a77c1291-8efa-4b79-8476-216d646b3119")
 	)
 	(wire
 		(pts
@@ -7738,36 +7546,6 @@
 			(type default)
 		)
 		(uuid "bfe1ba7a-a35a-4e50-96ef-9f07624a2779")
-	)
-	(wire
-		(pts
-			(xy 166.37 93.98) (xy 166.37 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c0ab7872-4a5e-4bb9-85cf-7947d70acb67")
-	)
-	(wire
-		(pts
-			(xy 166.37 104.14) (xy 166.37 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c2785e0b-56d1-48eb-882d-6ab844027f9b")
-	)
-	(wire
-		(pts
-			(xy 153.67 105.41) (xy 153.67 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c3bcf6f2-a3fc-461c-986c-0d41f81ad50f")
 	)
 	(wire
 		(pts
@@ -8071,6 +7849,16 @@
 	)
 	(wire
 		(pts
+			(xy 190.5 113.03) (xy 200.66 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd4f5375-1901-484b-ad98-761fdfbf2837")
+	)
+	(wire
+		(pts
 			(xy 49.53 152.4) (xy 49.53 156.21)
 		)
 		(stroke
@@ -8208,16 +7996,6 @@
 			(type default)
 		)
 		(uuid "f19fa72e-1cec-4765-96d9-56fc6ca9698b")
-	)
-	(wire
-		(pts
-			(xy 166.37 106.68) (xy 153.67 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1a86e0d-f3be-4c5d-a627-ae24f03daf46")
 	)
 	(wire
 		(pts
@@ -8820,12 +8598,12 @@
 		(uuid "dd70f629-00a7-4bb7-9037-bc15e966a065")
 	)
 	(label "NRST"
-		(at 146.05 93.98 180)
+		(at 179.07 113.03 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "ddd9298b-c14a-4dba-b375-f1835ebbba28")
 	)
@@ -9716,17 +9494,35 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 153.67 107.95 0)
+		(lib_id "Device:R")
+		(at 190.5 106.68 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4655240e-caca-49eb-980a-4eecd3d95691")
-		(property "Reference" "#PWR06"
-			(at 153.67 114.3 0)
+		(uuid "484e2a47-eed7-47bb-bda8-2415d0c5489e")
+		(property "Reference" "R1"
+			(at 193.04 105.4099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 193.04 107.9499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 188.722 106.68 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9734,8 +9530,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 153.67 113.03 0)
+		(property "Datasheet" "~"
+			(at 190.5 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9743,8 +9539,8 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
-			(at 153.67 107.95 0)
+		(property "Description" "Resistor"
+			(at 190.5 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9752,8 +9548,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 153.67 107.95 0)
+		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
+			(at 190.5 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9761,8 +9557,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 153.67 107.95 0)
+		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
+			(at 190.5 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "756-WCR0603-10KFA"
+			(at 190.5 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9771,12 +9576,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "9f6ab8e5-1018-44b6-b34e-838bdec9da45")
+			(uuid "3cefb76a-8b3b-4458-b631-f227715a1d8a")
+		)
+		(pin "2"
+			(uuid "b0b7679b-4a53-44f7-a635-269de80542e4")
 		)
 		(instances
-			(project "aware01_h7_rev1_3"
+			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "#PWR06")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -9940,103 +9748,6 @@
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "#PWR043")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 166.37 100.33 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4be3cd72-ba90-4c70-829f-9be8bb646d6f")
-		(property "Reference" "C4"
-			(at 170.18 99.0599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100n"
-			(at 170.18 101.5999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 167.3352 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 166.37 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 166.37 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "KYOCERA AVX "
-			(at 166.37 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
-			(at 166.37 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "581-KAF15BR72A104KT"
-			(at 166.37 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "314420b0-49af-4662-8e39-2b39fb56aab4")
-		)
-		(pin "2"
-			(uuid "d2c0e96e-7554-4163-a1e3-554028222811")
-		)
-		(instances
-			(project "aware01_h7_rev1_3"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -10921,6 +10632,72 @@
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "C21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 190.5 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "69e2b06c-02c7-49e6-a08c-ec850f145f42")
+		(property "Reference" "#PWR06"
+			(at 190.5 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 190.5 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 190.5 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f87d8d39-b8cc-4608-a5a0-c18f76490f67")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -13562,103 +13339,6 @@
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "C39")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 153.67 100.33 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b62345b7-195f-4afa-a048-89c0068dace4")
-		(property "Reference" "SW1"
-			(at 154.94 99.0599 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "SW_Push"
-			(at 154.94 101.5999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Eurorack:TS046643BK100SMT"
-			(at 148.59 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://eu.mouser.com/datasheet/2/1628/ts04-3511092.pdf"
-			(at 148.59 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 153.67 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Same Sky"
-			(at 153.67 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" "TS04-66-43-BK-100-SMT"
-			(at 153.67 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "179-TS046643BK100SMT"
-			(at 153.67 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4a262333-4d75-4109-9961-6f235fbdb1b8")
-		)
-		(pin "1"
-			(uuid "80293cb9-d0b5-4e59-90ba-b59126f3e14a")
-		)
-		(instances
-			(project "aware01_h7_rev1_3"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
-					(reference "SW1")
 					(unit 1)
 				)
 			)
