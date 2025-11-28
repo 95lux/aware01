@@ -2397,7 +2397,7 @@
 			)
 		)
 		(property "Sim.Params" "dc=0 ampl=5 f=100 td=0 theta=0 phase=0 ac=1"
-			(at 71.628 168.402 0)
+			(at 43.688 159.512 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3391,7 +3391,7 @@
 			)
 		)
 		(property "Sim.Params" "dc=0 ampl=5 f=100 td=0 theta=0 phase=0 ac=1"
-			(at 196.088 120.142 0)
+			(at 170.688 150.622 0)
 			(effects
 				(font
 					(size 1.27 1.27)

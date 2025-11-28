@@ -3773,7 +3773,7 @@
 				)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 137.16 59.69 0)
 			(effects
 				(font
@@ -3781,7 +3781,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 137.16 67.31 0)
 			(effects
 				(font
@@ -3790,7 +3790,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 137.16 67.31 0)
 			(effects
 				(font
@@ -3853,7 +3853,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 137.16 67.31 0)
 			(effects
 				(font
@@ -3862,7 +3862,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 137.16 67.31 0)
 			(effects
 				(font
@@ -5379,7 +5379,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 116.84 170.1799 0)
 			(effects
 				(font
@@ -5388,7 +5388,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 118.11 168.91 0)
 			(effects
 				(font
@@ -5397,7 +5397,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 118.11 168.91 0)
 			(effects
 				(font
@@ -5460,7 +5460,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 118.11 168.91 0)
 			(effects
 				(font
@@ -5469,7 +5469,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 118.11 168.91 0)
 			(effects
 				(font
@@ -6697,7 +6697,7 @@
 				)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 137.16 116.84 0)
 			(effects
 				(font
@@ -6705,7 +6705,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 137.16 124.46 0)
 			(effects
 				(font
@@ -6714,7 +6714,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 137.16 124.46 0)
 			(effects
 				(font
@@ -6777,7 +6777,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 137.16 124.46 0)
 			(effects
 				(font
@@ -6786,7 +6786,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 137.16 124.46 0)
 			(effects
 				(font
@@ -7346,7 +7346,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 152.4 170.1799 0)
 			(effects
 				(font
@@ -7355,7 +7355,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 153.67 168.91 0)
 			(effects
 				(font
@@ -7364,7 +7364,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 153.67 168.91 0)
 			(effects
 				(font
@@ -7427,7 +7427,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 153.67 168.91 0)
 			(effects
 				(font
@@ -7436,7 +7436,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 153.67 168.91 0)
 			(effects
 				(font
@@ -8704,7 +8704,7 @@
 				)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 234.95 62.23 0)
 			(effects
 				(font
@@ -8712,7 +8712,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 234.95 69.85 0)
 			(effects
 				(font
@@ -8721,7 +8721,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 234.95 69.85 0)
 			(effects
 				(font
@@ -8784,7 +8784,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 234.95 69.85 0)
 			(effects
 				(font
@@ -8793,7 +8793,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 234.95 69.85 0)
 			(effects
 				(font
@@ -9760,7 +9760,7 @@
 				)
 			)
 		)
-		(property "Value" "LMV722IDR"
+		(property "Value" "OPA2322AIDR"
 			(at 234.95 119.38 0)
 			(effects
 				(font
@@ -9768,7 +9768,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Eurorack:LMV722IDR"
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 234.95 127 0)
 			(effects
 				(font
@@ -9777,7 +9777,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584"
 			(at 234.95 127 0)
 			(effects
 				(font
@@ -9840,7 +9840,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "LMV722IDR "
+		(property "Manufacturer_Part_Number" "OPA2322AIDR"
 			(at 234.95 127 0)
 			(effects
 				(font
@@ -9849,7 +9849,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 595-LMV722IDR"
+		(property "Mouser Part Number" " 595-OPA2322AIDR"
 			(at 234.95 127 0)
 			(effects
 				(font
