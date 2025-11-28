@@ -1,0 +1,118 @@
+\subsection{Analog Input Stage Design}
+
+\subsubsection{Input AC Coupling}
+
+The TLV320AIC series codec has a configurable input impedance of 10\,k$\Omega$, 20\,k$\Omega$, and 40\,k$\Omega$ \cite{slaa557}. To minimize loading on the source, the maximum available value of 40\,k$\Omega$ is chosen.
+
+The AC-coupling capacitor together with the input impedance of the codec ADC forms a simple RC high-pass filter, whose cutoff frequency can be calculated as
+\[
+f_c = \frac{1}{2 \pi R_\text{eq} C_c}
+\]
+
+The resulting cutoff frequency $f_c$ should be well below the audible range, typically under 20\,Hz, to preserve bass integrity and prevent phase shifts that could degrade the perceived low-frequency response \cite{audio_phase_shift}.  
+
+With a coupling capacitor of $C_c = 2.2\,\mu\text{F}$ and $R_\text{eq} = 40\,\text{k}\Omega$, the cutoff frequency is
+\[
+f_c = \frac{1}{2 \pi \cdot 40\,\text{k}\Omega \cdot 2.2\,\mu\text{F}} \approx 1.81\,\text{Hz}
+\]
+
+\subsubsection{Input Scaling}
+
+The TLV datasheet specifies a maximum input voltage on the analog pins of $0.5\,V_\text{RMS}$ with a common-mode voltage of 0.9\,V \cite{slaa557}. To map Eurorack audio levels into this range, the signal must be attenuated appropriately. Typical Eurorack signals reach $\pm 5$\,V, i.e., 10\,V$_\text{pp}$ \cite{doepfer_a110-2}.
+
+The target ADC peak-to-peak voltage is calculated from the RMS specification:
+\[
+V_\text{ADC,peak} = V_\text{ADC,RMS} \cdot \sqrt{2} \approx 0.707\,\text{V}
+\]
+\[
+V_\text{ADC,pp} = 2 \cdot V_\text{ADC,peak} \approx 1.414\,\text{V}
+\]
+
+The required attenuation factor is then
+\[
+a = \frac{V_\text{ADC,pp}}{V_\text{Eurorack}} = \frac{1.414}{5} \approx 0.283
+\]
+
+To satisfy the input impedance requirements while providing this attenuation, a \textbf{unity-gain buffer op-amp} is used before a passive resistor divider. The buffer presents an input impedance equal to the op-amp's own input impedance, which is typically greater than $200\,\text{k}\Omega$, thereby easily meeting the desired 100\,k$\Omega$ input impedance at the module. The resistor divider can then be designed to provide the necessary attenuation without significantly loading the signal source.
+
+
+\subsubsection{Design Rationale}
+
+The chosen signal-conditioning approach uses a unity-gain buffer followed by a passive resistor divider. This decision is based on the constraints of the system and the electrical design conclusions of other commonly used amplification circuits. An inverting amplifier topology is unsuitable because its input impedance is determined directly by the input resistor \(R_\text{in}\). Since the module requires an input impedance on the order of \(100\,\text{k}\Omega\), the corresponding feedback resistor \(R_\text{f}\) would also need to be of similar magnitude in order to achieve the desired gain. Such large resistor values introduce significant thermal noise, as described by the Johnson noise expression
+\[
+v_\text{n} = \sqrt{4 k T R},
+\]
+%TODO sources for formula, maybe calculate SNR
+which grows with increasing resistance and would negatively affect the signal-to-noise ratio. Furthermore, due to space and component constraints, adding a dedicated high-impedance buffer stage in front of the inverting configuration is not feasible.
+
+%TODO system specs are made earlier, reference to them regarding voltage levels
+A non-inverting amplifier configuration is also unsuitable because it cannot realize an attenuation. Its closed-loop gain is defined as
+\[
+A_\text{v,noninv} = 1 + \frac{R_\text{f}}{R_\text{g}},
+\]
+and therefore satisfies
+\[
+A_\text{v,noninv} \geq 1,
+\]
+which prohibits any gain smaller than unity. Since the ADC input range requires attenuation of the incoming signal, a non-inverting topology cannot be used.
+
+For these reasons, the most practical and robust solution is to use a unity-gain buffer to ensure high input impedance and to isolate the source from the following attenuation network, and then apply a passive resistor divider to scale the signal to the required amplitude. The divider consists of \(R_\text{top} = 10\,\text{k}\Omega\) and \(R_\text{bot} = 1.8\,\text{k}\Omega\), resulting in a total resistance of \(11.8\,\text{k}\Omega\). The associated divider current is given by
+\[
+I = \frac{V_\text{in}}{R_\text{top} + R_\text{bot}}.
+\]
+Thus, for an input voltage of \(5\,\text{V}\) the current is \(I = 0.424\,\text{mA}\), and for \(12\,\text{V}\) it increases to \(I = 1.017\,\text{mA}\). This power consumption is acceptable within the system's constraints, and the simplicity and predictability of the passive attenuation stage outweigh the modest inefficiency introduced by the resistor divider.
+
+\subsubsection{Comparison of Input Stage Circuits}
+
+I ran SPICE simulations to compare two input stage approaches:
+\begin{enumerate}
+	\item \textbf{Inverted Feedback Attenuator}
+	\item \textbf{Buffer to Voltage Divider}
+\end{enumerate}
+
+\subsection{Circuit Schematics}
+
+ADC input impedance is $40 k\Omega$ and the signal source output impedance is $100 \Omega$.  
+The attenuation factor $a$ is slightly different because of resistor values.
+
+\paragraph*{Inverted Feedback Attenuator}
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{../images/schem_input_negative_fb.png}
+\end{center}
+
+This circuit is used in most Mutable Instruments modules. It only offers $22 k\Omega$ input impedance, and probably has higher thermal noise due to the resistors in the feedback path.
+
+\paragraph*{Buffer to Voltage Divider}
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{../images/schem_input_buf_to_divider.png}
+\end{center}
+
+\paragraph{AC Analysis – Bode Plot}
+
+The Bode plot shows the frequency response of both circuits in audio range ($1Hz - 30kHz$):
+
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{../images/bode_input_inv_fb_vs_buf_to_divider.png}
+\end{center}
+
+\begin{itemize}
+	\item \textbf{Green:} Input signal at $0 dB$
+	\item \textbf{Red:} Output of buffered circuit
+	\item \textbf{Purple:} Output of inverted feedback circuit
+\end{itemize}
+
+\textbf{Observation:}  
+Both circuits perform similarly, but the inverted feedback has a strong phase shift at $700$--$800 Hz$.  
+The phase shift in the bass frequencies caused by the AC-coupling capacitor is below $10^\circ$ at $20 Hz$.
+
+\paragraph{Transient Analysis – 100 Hz Signal}
+
+\begin{center}
+	\includegraphics[width=0.7\textwidth]{../images/trans_input_inv_fb_vs_buf_to_divider.png}
+\end{center}
+
+\begin{itemize}
+	\item \textbf{Blue:} Input signal ($10 V_{pp}$, $100 Hz$)
+	\item \textbf{Red:} Output of inverted feedback circuit ($\sim 1.5 V_{pp}$)
+	\item \textbf{Orange/Red:} Output of buffered circuit ($\sim 1.47 V_{pp}$)
+\end{itemize}
