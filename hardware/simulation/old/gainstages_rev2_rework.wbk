@@ -4,7 +4,7 @@
     {
       "analysis": "TRAN",
       "commands": [
-        ".tran 1u 100m",
+        ".tran 1u 30m",
         ".kicad adjustpaths",
         ".save all",
         ".probe alli",
@@ -21,18 +21,26 @@
         {
           "expr": "PP V(IN_CODEC_BUF)",
           "format": "3~V"
+        },
+        {
+          "expr": "MAX V(IN_CODEC_BUF)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MIN V(IN_CODEC_BUF)",
+          "format": "3~V"
         }
       ],
       "showGrid": true,
       "traces": [
         {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(OUT_Codec)",
+          "color": "rgb(77, 175, 74)",
+          "signal": "V(IN_CODEC_BUF)",
           "trace_type": 257
         },
         {
-          "color": "rgb(55, 126, 184)",
-          "signal": "V(OUT_Jack)",
+          "color": "rgb(152, 78, 163)",
+          "signal": "V(IN_JACK_BUF)",
           "trace_type": 257
         }
       ]
