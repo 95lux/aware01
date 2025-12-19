@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage[a4paper,left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+\usepackage[english]{babel}  % Language support
+\usepackage[utf8]{inputenc}   %Eingabecodierung
+
+\usepackage[backend=biber,style=ieee,sorting=nyt]{biblatex}
+\addbibresource{literature.bib}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{appendix}
+
+\setminted{
+	breaklines,
+	breakanywhere=false,
+	linenos,
+	xleftmargin=20pt
+}
+
+
+
+\title{Designing aapsdkaspokd}
+
+\date{May - October 2025}
+
+\begin{document}
+
+	
+	\pagestyle{empty}  
+	\newpage
+	
+	\pagestyle{plain} 
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+	\input{lastenheft.tex}	
+	\newpage
+	
+	
+	
+	\addcontentsline{toc}{section}{References}
+	\printbibliography
+	
+\end{document}
