@@ -1368,12 +1368,6 @@
 		(uuid "2464dc02-58b5-4c4a-ad57-7ee5277d5f7e")
 	)
 	(junction
-		(at 119.38 39.37)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "26ef63df-fb35-48a8-9ef1-f8111a53b7e2")
-	)
-	(junction
 		(at 78.74 111.76)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1390,6 +1384,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3b5ee6e7-61c5-46fd-8514-5d67d1d86351")
+	)
+	(junction
+		(at 142.24 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3ee3e840-746d-4790-a644-20e8fd7c2968")
 	)
 	(junction
 		(at 130.81 44.45)
@@ -1579,6 +1579,16 @@
 	)
 	(wire
 		(pts
+			(xy 142.24 85.09) (xy 139.7 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "14ac25a7-6c6b-4a62-9678-dda63b497fba")
+	)
+	(wire
+		(pts
 			(xy 119.38 39.37) (xy 119.38 59.69)
 		)
 		(stroke
@@ -1596,6 +1606,16 @@
 			(type default)
 		)
 		(uuid "1ae04614-f14c-4e7f-a88d-fa97ae1c0354")
+	)
+	(wire
+		(pts
+			(xy 142.24 82.55) (xy 142.24 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1df530ec-1443-4237-9b66-2594fafe9f4b")
 	)
 	(wire
 		(pts
@@ -1686,6 +1706,16 @@
 			(type default)
 		)
 		(uuid "43854a9c-22d7-4bd6-8dd6-7ccc8f2234b3")
+	)
+	(wire
+		(pts
+			(xy 148.59 85.09) (xy 142.24 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "439d44d6-0aee-48c0-974b-6ef18b88a5d6")
 	)
 	(wire
 		(pts
@@ -1979,7 +2009,7 @@
 	)
 	(wire
 		(pts
-			(xy 167.64 85.09) (xy 147.32 85.09)
+			(xy 167.64 85.09) (xy 156.21 85.09)
 		)
 		(stroke
 			(width 0)
@@ -2119,16 +2149,6 @@
 	)
 	(wire
 		(pts
-			(xy 116.84 39.37) (xy 119.38 39.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ccd608a5-b2ea-45e5-9da2-ef2d17afdf1c")
-	)
-	(wire
-		(pts
 			(xy 148.59 52.07) (xy 148.59 53.34)
 		)
 		(stroke
@@ -2257,24 +2277,24 @@
 		)
 		(uuid "ff078c1c-c6f8-4ef6-a0fb-29603fdce8bf")
 	)
-	(global_label "DVDD"
+	(global_label "AVDD"
 		(shape input)
-		(at 116.84 39.37 180)
+		(at 142.24 82.55 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
-		(uuid "944503fa-54b5-41ce-8c43-c9a6fbda517f")
+		(uuid "b8495f94-fe03-48f4-8a47-393ae42f7a48")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 108.9562 39.37 0)
+			(at 142.24 74.8476 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -2911,7 +2931,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 143.51 85.09 270)
+		(at 152.4 85.09 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2919,7 +2939,7 @@
 		(dnp no)
 		(uuid "44bd5533-3e9f-4a67-bf0d-598ed52b948a")
 		(property "Reference" "C41"
-			(at 145.288 81.788 90)
+			(at 154.178 81.788 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2928,7 +2948,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 145.288 79.248 90)
+			(at 154.178 79.248 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2937,7 +2957,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 139.7 86.0552 0)
+			(at 148.59 86.0552 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2946,7 +2966,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 143.51 85.09 0)
+			(at 152.4 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2955,7 +2975,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 143.51 85.09 0)
+			(at 152.4 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2964,7 +2984,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Murata Electronics "
-			(at 143.51 85.09 0)
+			(at 152.4 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2973,7 +2993,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
-			(at 143.51 85.09 0)
+			(at 152.4 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2982,7 +3002,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
-			(at 143.51 85.09 0)
+			(at 152.4 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
