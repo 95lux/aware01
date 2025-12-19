@@ -3191,7 +3191,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" "1=1 2=2 3=3 4=4 5=5"
+		(property "Sim.Pins" "1=in+ 2=in- 3=vcc 4=vee 5=out"
 			(at 203.2 69.85 0)
 			(effects
 				(font
@@ -3210,7 +3210,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/jonas/Downloads/NE5532.lib"
+		(property "Sim.Library" "${KICAD7_SYMBOL_DIR}/Simulation_SPICE.sp"
 			(at 203.2 69.85 0)
 			(effects
 				(font
@@ -3219,7 +3219,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Name" "NE5532"
+		(property "Sim.Name" "kicad_builtin_opamp"
 			(at 203.2 69.85 0)
 			(effects
 				(font
@@ -3393,111 +3393,6 @@
 			(project "gainstages"
 				(path "/934635e5-59a1-4479-8af1-a5a6d88fcf47"
 					(reference "#PWR013")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Schottky")
-		(at 231.14 135.89 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "22e08c9a-5d0b-4f08-8636-24904c474362")
-		(property "Reference" "D2"
-			(at 225.044 137.922 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "D_Schottky"
-			(at 225.044 140.462 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Schottky diode"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Library" "/home/jonas/Downloads/BAT54.spice.txt"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Name" "BAT54"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=A 2=K"
-			(at 231.14 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "dfaa3e4a-9213-4c3b-b711-8a0954a92e0a")
-		)
-		(pin "2"
-			(uuid "cc87557b-1e98-48aa-a1da-7fae1649c63d")
-		)
-		(instances
-			(project "gainstages_rev2_rework_bufferin"
-				(path "/934635e5-59a1-4479-8af1-a5a6d88fcf47"
-					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -3749,7 +3644,7 @@
 		(at 144.78 132.08 0)
 		(mirror y)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board no)
 		(dnp no)
@@ -3808,7 +3703,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Params" "dc=0 ampl=10 f=100 td=0 theta=0 phase=0 ac=1"
+		(property "Sim.Params" "dc=0 ampl=15 f=100 td=0 theta=0 phase=0 ac=1"
 			(at 139.192 131.572 0)
 			(effects
 				(font
@@ -3861,7 +3756,7 @@
 		(lib_id "Simulation_SPICE:VPULSE")
 		(at 157.48 132.08 0)
 		(unit 1)
-		(exclude_from_sim no)
+		(exclude_from_sim yes)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
@@ -3939,7 +3834,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Params" "y1=-5 y2=5 td=2n tr=2n tf=2n tw=0.5m per=1m ac=1"
+		(property "Sim.Params" "y1=-12 y2=12 td=2n tr=2n tf=2n tw=0.5m per=1m ac=1"
 			(at 124.206 147.066 0)
 			(effects
 				(font
@@ -4866,7 +4761,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_Schottky")
-		(at 231.14 123.19 90)
+		(at 231.14 123.19 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4874,7 +4769,7 @@
 		(dnp no)
 		(uuid "705bffaa-e572-4b09-96a6-ef76664acbc3")
 		(property "Reference" "D1"
-			(at 234.188 122.936 90)
+			(at 228.092 123.444 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4883,7 +4778,7 @@
 			)
 		)
 		(property "Value" "D_Schottky"
-			(at 234.442 125.222 90)
+			(at 227.838 121.158 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4918,7 +4813,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/jonas/Downloads/BAT54.spice.txt"
+		(property "Sim.Library" "spice_models/BAT54.spice.txt"
 			(at 231.14 123.19 0)
 			(effects
 				(font
@@ -4945,7 +4840,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" "1=A 2=K"
+		(property "Sim.Pins" "1=K 2=A"
 			(at 231.14 123.19 0)
 			(effects
 				(font
@@ -5653,6 +5548,111 @@
 			(project "gainstages_rev2_rework_bufferin"
 				(path "/934635e5-59a1-4479-8af1-a5a6d88fcf47"
 					(reference "R11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 231.14 135.89 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "91f54dc2-0d94-4639-bb46-a6bd0bf06013")
+		(property "Reference" "D2"
+			(at 228.092 136.144 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "D_Schottky"
+			(at 227.838 133.858 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Library" "spice_models/BAT54.spice.txt"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Name" "BAT54"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 231.14 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "58374f11-8e4e-4b81-9a4c-3fa1cc3d354c")
+		)
+		(pin "2"
+			(uuid "010cc700-2b2a-4987-bff8-addff905997b")
+		)
+		(instances
+			(project "gainstages_rev2_rework_bufferin"
+				(path "/934635e5-59a1-4479-8af1-a5a6d88fcf47"
+					(reference "D2")
 					(unit 1)
 				)
 			)
