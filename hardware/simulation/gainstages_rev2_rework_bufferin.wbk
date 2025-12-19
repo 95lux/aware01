@@ -58,7 +58,16 @@
         "right": 70,
         "top": 30
       },
-      "measurements": [],
+      "measurements": [
+        {
+          "expr": "MIN V(IN_CODEC_BUF)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MAX V(IN_CODEC_BUF)",
+          "format": "3~V"
+        }
+      ],
       "showGrid": true,
       "traces": [
         {
