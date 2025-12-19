@@ -4,6 +4,15 @@
 	(generator_version "9.0")
 	(uuid "c18ab932-1019-43a4-b9d5-4605e6778658")
 	(paper "A4")
+	(title_block
+		(title "Aware 01 - Eurorack DSP Module")
+		(date "2025-12-19")
+		(rev "2")
+		(company "Ausschussware")
+		(comment 1 "Jonas Bengt Lux")
+		(comment 2 "TH Köln")
+		(comment 3 "Bachelor Technische Informatik")
+	)
 	(lib_symbols
 		(symbol "Connector_Audio:AudioJack2_SwitchT"
 			(exclude_from_sim no)

@@ -4,6 +4,15 @@
 	(generator_version "9.0")
 	(uuid "5ff71e5d-7f07-4549-be9e-806a11dd3d6c")
 	(paper "A4")
+	(title_block
+		(title "Aware 01 - Eurorack DSP Module")
+		(date "2025-12-19")
+		(rev "2")
+		(company "Ausschussware")
+		(comment 1 "Jonas Bengt Lux")
+		(comment 2 "TH Köln")
+		(comment 3 "Bachelor Technische Informatik")
+	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
 			(pin_numbers
@@ -1359,6 +1368,12 @@
 		(uuid "2464dc02-58b5-4c4a-ad57-7ee5277d5f7e")
 	)
 	(junction
+		(at 119.38 39.37)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "26ef63df-fb35-48a8-9ef1-f8111a53b7e2")
+	)
+	(junction
 		(at 78.74 111.76)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1561,6 +1576,16 @@
 			(type default)
 		)
 		(uuid "13cc0733-e9f5-4c2f-b635-3959e491f8f9")
+	)
+	(wire
+		(pts
+			(xy 119.38 39.37) (xy 119.38 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "154a8c73-dcd9-4211-88ac-8addb0cbfbe9")
 	)
 	(wire
 		(pts
@@ -1924,16 +1949,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 39.37) (xy 119.38 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9589501a-d1a0-4c33-8f3f-da1bc0237c8a")
-	)
-	(wire
-		(pts
 			(xy 109.22 59.69) (xy 109.22 54.61)
 		)
 		(stroke
@@ -2104,6 +2119,16 @@
 	)
 	(wire
 		(pts
+			(xy 116.84 39.37) (xy 119.38 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ccd608a5-b2ea-45e5-9da2-ef2d17afdf1c")
+	)
+	(wire
+		(pts
 			(xy 148.59 52.07) (xy 148.59 53.34)
 		)
 		(stroke
@@ -2231,6 +2256,28 @@
 			(type default)
 		)
 		(uuid "ff078c1c-c6f8-4ef6-a0fb-29603fdce8bf")
+	)
+	(global_label "DVDD"
+		(shape input)
+		(at 116.84 39.37 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "944503fa-54b5-41ce-8c43-c9a6fbda517f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 108.9562 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "I2C1_SCL"
 		(shape bidirectional)

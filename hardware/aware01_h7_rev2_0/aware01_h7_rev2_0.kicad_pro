@@ -154,6 +154,18 @@
         [
           "silk_over_copper|170996263|142031423|cccad42f-ae0f-45da-83c3-190638fe6222|00000000-0000-0000-0000-000000000000",
           ""
+        ],
+        [
+          "silk_over_copper|171138550|134905176|d588efea-aa1a-4ac6-b311-3312b0257b76|00000000-0000-0000-0000-000000000000",
+          "no other placement possible"
+        ],
+        [
+          "silk_over_copper|171140000|137648022|aa289cd5-561f-47d5-b0d8-566fd3c7b5d9|00000000-0000-0000-0000-000000000000",
+          "no other placement possible"
+        ],
+        [
+          "silk_over_copper|171229490|138360000|bbd663e0-5f0f-4edf-9f94-96db7e18077a|00000000-0000-0000-0000-000000000000",
+          "no other placement possible"
         ]
       ],
       "meta": {
@@ -856,7 +868,7 @@
     ],
     [
       "73121cc2-8d80-4112-ab10-05ea68c4fbe2",
-      "ControlsInterface"
+      "User Interface"
     ],
     [
       "50dd69da-5058-483c-924f-252f04b072bd",
@@ -868,7 +880,7 @@
     ],
     [
       "e945e4c2-dc11-481b-8f33-3a20062a7ec6",
-      "CG and Gate Ins"
+      "Control Interface"
     ]
   ],
   "text_variables": {}
