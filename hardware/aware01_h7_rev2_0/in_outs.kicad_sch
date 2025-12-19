@@ -1605,12 +1605,6 @@
 		(uuid "0357e1c1-57d2-4b01-898c-6d01e73a9b40")
 	)
 	(junction
-		(at 124.46 64.77)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0aa9bc93-1973-42cf-b807-ec78f0d0e5af")
-	)
-	(junction
 		(at 204.47 66.04)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1665,16 +1659,16 @@
 		(uuid "520d406a-d9e7-4035-a6ce-cc6a476f2a0b")
 	)
 	(junction
+		(at 115.57 133.35)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "56bfa67b-e48c-4521-85ff-24e30b6f0811")
+	)
+	(junction
 		(at 34.29 110.49)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "595c3582-106f-4fa1-89b5-e8ffe621a1c3")
-	)
-	(junction
-		(at 125.73 133.35)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "595c8eef-4d96-49b1-b0f8-541adae500e9")
 	)
 	(junction
 		(at 83.82 64.77)
@@ -1699,6 +1693,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8e1058cb-cc14-481f-b587-164d61b3202f")
+	)
+	(junction
+		(at 114.3 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a33e303b-5ce9-4df9-a3c5-10214e7d5e67")
 	)
 	(junction
 		(at 161.29 113.03)
@@ -1767,6 +1767,16 @@
 			(type default)
 		)
 		(uuid "0d2eee11-ca0d-4dd6-b4f9-b1b736516316")
+	)
+	(wire
+		(pts
+			(xy 114.3 64.77) (xy 128.27 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "111e92eb-18b4-492d-8763-fd4e78f8ce36")
 	)
 	(wire
 		(pts
@@ -1920,6 +1930,16 @@
 	)
 	(wire
 		(pts
+			(xy 115.57 133.35) (xy 129.54 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26ce7a58-e042-4218-96c7-b26851d043d5")
+	)
+	(wire
+		(pts
 			(xy 246.38 71.12) (xy 243.84 71.12)
 		)
 		(stroke
@@ -2030,7 +2050,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 64.77) (xy 124.46 64.77)
+			(xy 113.03 64.77) (xy 114.3 64.77)
 		)
 		(stroke
 			(width 0)
@@ -2127,16 +2147,6 @@
 			(type default)
 		)
 		(uuid "5f950d08-3a1c-4257-8a64-af6b96fd33a2")
-	)
-	(wire
-		(pts
-			(xy 124.46 64.77) (xy 128.27 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "60442e87-c7b1-43cc-aa2d-1014752d09a7")
 	)
 	(wire
 		(pts
@@ -2260,7 +2270,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 133.35) (xy 125.73 133.35)
+			(xy 114.3 133.35) (xy 115.57 133.35)
 		)
 		(stroke
 			(width 0)
@@ -2357,16 +2367,6 @@
 			(type default)
 		)
 		(uuid "a309ddbd-233c-4f34-b3aa-6250b3c03b17")
-	)
-	(wire
-		(pts
-			(xy 125.73 133.35) (xy 129.54 133.35)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a5b15657-859c-40bf-a763-7b67b496dd40")
 	)
 	(wire
 		(pts
@@ -2668,7 +2668,7 @@
 		)
 		(uuid "ff34b5f6-4e69-4b3f-b142-e5e333fefb9d")
 	)
-	(global_label "DVDD"
+	(global_label "AVDD"
 		(shape input)
 		(at 119.38 55.88 90)
 		(fields_autoplaced yes)
@@ -2680,7 +2680,7 @@
 		)
 		(uuid "a0b42778-1139-4ce6-a436-4b56efcf96be")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 119.38 47.9962 90)
+			(at 119.38 48.1776 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2690,7 +2690,7 @@
 			)
 		)
 	)
-	(global_label "DVDD"
+	(global_label "AVDD"
 		(shape input)
 		(at 120.65 124.46 90)
 		(fields_autoplaced yes)
@@ -2702,7 +2702,7 @@
 		)
 		(uuid "d981f3b6-79a0-4379-a55a-ba91d204483a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 120.65 116.5762 90)
+			(at 120.65 116.7576 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4079,15 +4079,16 @@
 	)
 	(symbol
 		(lib_id "Diode:BAT54S")
-		(at 119.38 64.77 90)
+		(at 119.38 64.77 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "6389ae13-dfeb-4012-a458-3e7e62c7c868")
 		(property "Reference" "D4"
-			(at 124.206 70.612 90)
+			(at 121.92 63.4999 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4096,7 +4097,7 @@
 			)
 		)
 		(property "Value" "BAT54S"
-			(at 128.524 68.834 90)
+			(at 121.92 66.0399 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4105,7 +4106,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 116.205 62.865 0)
+			(at 122.555 66.675 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4115,7 +4116,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 119.38 67.818 0)
+			(at 119.38 61.722 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6517,15 +6518,16 @@
 	)
 	(symbol
 		(lib_id "Diode:BAT54S")
-		(at 120.65 133.35 90)
+		(at 120.65 133.35 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "fcd53f5d-3842-47f8-9f63-6740a38c1435")
 		(property "Reference" "D5"
-			(at 125.73 139.954 90)
+			(at 123.19 132.0799 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6534,7 +6536,7 @@
 			)
 		)
 		(property "Value" "BAT54S"
-			(at 130.048 138.176 90)
+			(at 123.19 134.6199 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6543,7 +6545,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 117.475 131.445 0)
+			(at 123.825 135.255 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6553,7 +6555,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 120.65 136.398 0)
+			(at 120.65 130.302 0)
 			(effects
 				(font
 					(size 1.27 1.27)
