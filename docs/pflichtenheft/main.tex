@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[a4paper,left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+\usepackage[english]{babel}  % Language support
+\usepackage[utf8]{inputenc}   %Eingabecodierung
+
+\usepackage[backend=biber,style=ieee,sorting=nyt]{biblatex}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{appendix}
+
+\setminted{
+	breaklines,
+	breakanywhere=false,
+	linenos,
+	xleftmargin=20pt
+}
+
+\begin{document}
+	
+	
+\pagestyle{empty}  
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\title{Technical Specification\\Embedded DSP Eurorack Synthesizer Module}
+\author{Jonas Bengt Lux}
+\date{2025-12-15}
+
+\maketitle
+
+\section*{Basis}
+This technical specification is based on the Requirements Specification for the Embedded DSP Eurorack Synthesizer Module.
+It describes the concrete technical implementation of the defined requirements and specifies how the system shall be realized, tested, and accepted.
+
+\section*{Introduction}
+This document describes the technical design and implementation details of a Eurorack-compatible embedded DSP synthesizer module based on an STM32H7 microcontroller.
+
+\section*{Requirements}
+All functional and non-functional requirements defined in the Requirements Specification are binding.
+This document defines the technical measures and design decisions used to fulfill these requirements.
+
+\section*{Development Environment}
+\begin{itemize}
+	\item STM32CubeMX for MCU configuration and peripheral setup
+	\item CMake-based build system
+	\item ARM GCC toolchain
+	\item Visual Studio Code as the primary development environment
+	\item SWD-based flashing and debugging
+	\item FreeRTOS as the real-time operating system
+\end{itemize}
+
+\section*{Functional Description}
+The system acquires audio data via an external audio codec, processes the data in real time using DSP algorithms executed on the MCU, and outputs the processed audio signal through the same codec.
+Control inputs and user interface elements modify DSP parameters and system behavior during operation.
+
+\section*{Scope of Delivery}
+\begin{itemize}
+	\item Assembled Hardware Revision~2 PCB
+	\item Firmware source code including build configuration
+	\item Audio codec drivers and DSP framework
+	\item Project documentation
+\end{itemize}
+
+\section*{Testing}
+Testing is performed on both module and system level and includes:
+\begin{itemize}
+	\item Hardware bring-up and power integrity verification
+	\item Audio loopback tests (input routed directly to output). With calibrated signal generator and oscilloscope
+	\item Verification of control inputs and user interface elements
+	\item Long-term stability and real-time performance testing
+\end{itemize}
+
+\section*{Acceptance}
+Acceptance is performed jointly with the customer based on this specification and all documented, mutually agreed changes.
+Successful acceptance requires fulfillment of all acceptance criteria defined in the Requirements Specification.
+
+\section*{Implementation}
+
+\subsection*{Mechanical Design}
+\begin{itemize}
+	\item Eurorack-compatible PCB dimensions (Derived from \textbf{IEC 60297} / \textbf{DIN 41494}, originally designed for Eurocards in 3U/6U rack systems.)
+	\item No dedicated front panel is designed
+	\item Mechanical mounting compatible via frontpanel with Eurorack rails - frontpanel is mounted on the PCB via washers on jack sockets and mounting holes in slide-potentiometers.
+	\item Since the frontplate is not in scope of the project, the module will not be mountable yet.
+\end{itemize}
+
+\subsection*{Electrical Design}
+\begin{itemize}
+	\item STM32H7 microcontroller as the central processing unit.
+	\item External audio codec connected via I2C and digital audio interface.
+	\item Eurorack-compatible input and output signal conditioning:
+	\begin{itemize}
+		\item All inputs (Audio, CV, and Gate) are protected against maximum Eurorack signal levels \\ (~\,-10\,V to ~10\,V).
+
+		\item Gate inputs: protection implemented via transistor circuits.
+		\item CV inputs: rail-guarded op-amp circuits to prevent overvoltage to MCU ADCs.
+		\item Audio inputs: appropriate attenuation and diode-based protection. to protect audio codec's analog inputs.
+		\item Audio inputs: are AC-coupled to further protect the audio codec's ADCs from overvoltage.
+	\end{itemize}
+	\item PCB stack and power/signal routing designed to minimize noise interference on analog signals.
+	\item Power regulation:
+	\begin{itemize}
+		\item 5\,V buck converter for WS2812 LEDs.
+		\item 3.3\,V LDO and 1.8\,V LDO to ensure clean power delivery and stable analog reference.
+	\end{itemize}
+\end{itemize}
+
+
+\subsection*{Firmware Design}
+\begin{itemize}
+	\item Modular and layered firmware architecture utilizing C
+	\item FreeRTOS-based task scheduling and primitives.
+	\item Audio Engine with DMA-driven audio input and output
+	\item Dedicated real-time DSP processing tasks
+	\item Usage of CMSIS-DSP library where applicable
+	\item Dedicated interfacing tasks to handle lower-priority interfacing vs high-priority audio processing.
+	\item Custom Audio Codec drivers for TLV320AIC3204, controlled via I2C
+\end{itemize}
+
+\subsection*{Interfaces}
+\begin{itemize}
+	\item Stereo Audio input and output via 3.5mm mono Jack sockets each
+	\item 2 Control voltage inputs, 1 V/Oct input , and 4 gate inputs via ADC and GPIO via 3.5mm mono Jacks
+	\item SWD interface for programming and debugging
+	\item 4 Slide potentiometers to control the device's DSP and playback functionality, read via ADC on the MCU
+	\item 2 Push buttons to control playback modes.
+	\item 4 WS2812 RGB LEDs
+\end{itemize}
+
+\subsection*{User Interface}
+\begin{itemize}
+	\item Faders for continuous parameter control
+	\item Buttons for discrete user actions
+	\item RGB LEDs for visual feedback
+\end{itemize}
+
+\subsection*{Data Storage}
+\begin{itemize}
+	\item Internal RAM used for audio buffers
+	\item No persistent mass storage required
+	\item Optional storage of calibration data in non-volatile memory on MCUs internal flash.
+\end{itemize}
+
+\subsection*{Functional Workflows}
+\begin{itemize}
+	\item System boot and peripheral initialization
+	\item Continuous audio acquisition
+	\item Real-time DSP processing
+	\item Audio playback
+	\item Concurrent handling of control inputs and user interface updates
+\end{itemize}
+
+\subsection*{Additional Information}
+The system architecture is designed to allow reuse and extension for future MCU-based Eurorack modules.
+
+\section*{Work Packages and Milestones}
+
+\subsection*{Work Packages}
+\begin{tabular}{|c|p{10cm}|}
+	\hline
+	\textbf{ID} & \textbf{Description} \\
+	\hline
+	P1 & Hardware bring-up and validation \\
+	P2 & Audio Codec I2C driver implementation \\
+	P3 & Audio subsystem implementation \\
+	P4 & DSP framework development \\
+	P5 & Control interface: Gate inputs \\
+	P6 & Control interface: CV inputs \\
+	P7 & Control interface: V/Oct input \\
+	P8 & Integration of control interface with audio subsystem \\
+	P9 & User interface: slide potentiometers readout \\
+	P10 & User interface: button readout \\
+	P11 & User interface: WS2812 RGB LED implementation \\
+	P12 & Integration of user interface with audio subsystem \\
+	P13 & System integration and testing \\
+	\hline
+\end{tabular}
+
+\subsection*{Milestones}
+\begin{tabular}{|c|p{10cm}|}
+	\hline
+	\textbf{ID} & \textbf{Description} \\
+	\hline
+	M1 & Hardware validated and operational \\
+	M2 & Audio and DSP functional \\
+	M3 & Control and user interface fully integrated \\
+	M4 & System acceptance \\
+	\hline
+\end{tabular}
+
+
+\end{document}
