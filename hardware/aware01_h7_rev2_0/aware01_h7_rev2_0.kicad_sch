@@ -7042,16 +7042,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 163.83) (xy 200.66 163.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "83ad5f33-fd13-4d2a-84c5-7c7cb970c72d")
-	)
-	(wire
-		(pts
 			(xy 92.71 242.57) (xy 92.71 245.11)
 		)
 		(stroke
@@ -7249,6 +7239,16 @@
 			(type default)
 		)
 		(uuid "9f8224cb-f11b-4599-b45f-540085d5dbf4")
+	)
+	(wire
+		(pts
+			(xy 179.07 163.83) (xy 200.66 163.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9fcd9324-9add-4eaf-abbf-ad233ae05404")
 	)
 	(wire
 		(pts
@@ -8180,16 +8180,6 @@
 		)
 		(uuid "47c54b2b-9c75-4285-a22a-a3241826318c")
 	)
-	(label "RGB_LED_DATA"
-		(at 179.07 163.83 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4bca17dc-d796-4dd5-9228-6933860e626f")
-	)
 	(label "BUTTON2_IN"
 		(at 254 140.97 180)
 		(effects
@@ -8219,6 +8209,16 @@
 			(justify right bottom)
 		)
 		(uuid "5f736de3-97d5-4c75-89bb-555d03bee505")
+	)
+	(label "RGB_LED_DATA"
+		(at 179.07 163.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5ffee032-4216-4638-bb2d-f663a22fcbd6")
 	)
 	(label "BUTTON1_IN"
 		(at 254 138.43 180)
