@@ -5333,16 +5333,6 @@
 		)
 		(uuid db45752d-8272-415f-8c61-353df6a64b08)
 	)
-	(text "TODO: maybe pick another crystal?"
-		(exclude_from_sim no)
-		(at 150.876 117.094 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "0dcd41de-8c38-4025-97c8-d22e6275eac3")
-	)
 	(text "Power Regulators"
 		(exclude_from_sim no)
 		(at 39.878 90.424 0)
@@ -9860,8 +9850,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22p"
-			(at 143.256 138.684 0)
+		(property "Value" "14pF"
+			(at 141.986 138.684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9869,7 +9859,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
 			(at 150.8252 140.97 0)
 			(effects
 				(font
@@ -9896,7 +9886,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "KEMET "
+		(property "Manufacturer_Name" "KYOCERA AVX "
 			(at 149.86 137.16 0)
 			(effects
 				(font
@@ -9905,7 +9895,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " C0603C220J1GACTU"
+		(property "Manufacturer_Part_Number" " 04023U140GAT2A "
 			(at 149.86 137.16 0)
 			(effects
 				(font
@@ -9914,7 +9904,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 80-C0603C220J1G"
+		(property "Mouser Part Number" "581-04023U140GAT2A "
 			(at 149.86 137.16 0)
 			(effects
 				(font
@@ -10286,7 +10276,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22p"
+		(property "Value" "14pF"
 			(at 170.942 138.43 0)
 			(effects
 				(font
@@ -10295,7 +10285,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
 			(at 168.6052 140.97 0)
 			(effects
 				(font
@@ -10322,7 +10312,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "KEMET "
+		(property "Manufacturer_Name" "KYOCERA AVX "
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -10331,7 +10321,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " C0603C220J1GACTU"
+		(property "Manufacturer_Part_Number" " 04023U140GAT2A "
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -10340,7 +10330,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 80-C0603C220J1G"
+		(property "Mouser Part Number" "581-04023U140GAT2A "
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -11647,7 +11637,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm_HandSoldering"
+		(property "Footprint" "Crystal:Crystal_SMD_2520-4Pin_2.5x2.0mm"
 			(at 160.02 130.81 0)
 			(effects
 				(font
@@ -11656,7 +11646,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.we-online.com/components/products/datasheet/830064703.pdf"
+		(property "Datasheet" "https://www.mouser.com/catalog/specsheets/ndk_08142018_NX2520SA-24.000000MHz-B8.pdf"
 			(at 160.02 130.81 0)
 			(effects
 				(font
@@ -11674,7 +11664,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "Wurth Elektronik"
+		(property "Manufacturer_Name" "NDK"
 			(at 160.02 130.81 0)
 			(effects
 				(font
@@ -11683,7 +11673,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "830064703 "
+		(property "Manufacturer_Part_Number" " NX2520SA-24.000000MHZ-B8 "
 			(at 160.02 130.81 0)
 			(effects
 				(font
@@ -11692,7 +11682,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 710-830064703"
+		(property "Mouser Part Number" " 344-NX2520SA24MHZB8 "
 			(at 160.02 130.81 0)
 			(effects
 				(font

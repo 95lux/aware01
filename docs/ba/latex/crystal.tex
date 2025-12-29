@@ -1,0 +1,91 @@
+\subsection{Crystal}
+
+\subsubsection{Calculation to Validate the Crystal Compatibility with STM32}
+
+This section follows the procedure and calculations derived from \cite{HowSelectCompatible2025}.
+
+To ensure the crystal provides enough energy to excite and sustain oscillation, the following condition must be satisfied:
+
+\[
+\text{Gain Margin} = \frac{g_m}{g_{m,\mathrm{crit}}} \ge 5
+\]
+
+or equivalently:
+
+\[
+\text{Gain Margin} = \frac{g_{m,\mathrm{crit\ max}} \cdot 5}{g_{m,\mathrm{crit}}} \ge 5
+\]
+
+where $g_m$ is the oscillator transconductance of the product. Each STM32 device specifies $g_m$ in the datasheet. The critical transconductance of the crystal is:
+
+\[
+gm_{crit} = 4 \cdot ESR \cdot (2 \pi F)^2 \cdot (C_0 + C_L)^2
+\]
+
+with
+
+\[
+ESR = 100~\Omega, \quad
+F = 24~\text{MHz}, \quad
+C_0 = 7~\text{pF}, \quad
+C_L = 10~\text{pF}
+\]
+
+For the STM32H7:
+
+\[
+gm_{crit\ max} = 1.5~\mathrm{mA/V} 
+\]
+
+\cite[p.~107]{stmicroelectronicsStm32h7a3riDatasheet}
+
+Calculating the critical transconductance:
+
+\[
+gm_{crit} = 1.0254~\mathrm{mA/V}
+\]
+
+and the gain margin:
+
+\[
+\text{Gain Margin} = \frac{gm_{crit\ max} \cdot 5}{gm_{crit}} 
+= \frac{1.5 \cdot 5}{1.0254} \approx 7.31
+\]
+
+Since the gain margin is greater than 5, the crystal is compatible with the STM32H7.
+
+\subsubsection{Calculation of Capacitors $C_{L1}$ and $C_{L2}$}
+
+Since the chosen crystal is compatible with the STM32H7 MCU, appropriate external load capacitor values have to be calculated.
+
+The formula which describes the relation from the crystals load and shunt capacitance to the external load capacitors is:
+
+\[ 
+C_L - C_0 = \frac{C_{L1} \cdot C_{L2}}{C_{L1} + C_{L2}}
+\]
+
+Since the external load capacitors are generally the same $C_{L1} = C_{L2}$ results in:
+
+\[
+C_L - C_s = \frac{C_{L1} }{2} = \frac{C_{L2} }{2} 
+\]
+
+which can be transformed in:
+
+\[
+C_{L1} = C_{L2} = 2 \cdot ( C_L - C_s )
+\]
+
+The stray capacitance $C_s$ is an estimation of the sum of the MCU pins and the parasitic capacitance of the PCB. It usually varies between $2 - 3pF$. In most STM32 datasheets a stray capacitance of $5pF$ is provided, which is a very conservative estimate though. For this calculation $C_s = 3pF$ is angenommen. 
+
+NX2520SA-24.000000MHZ-B8 
+
+With the crystal's $C_L = 10pF$ and the estimated $C_s = 3pF$, the external load capacitor's value can be calculated:
+
+\[
+C_{L1} = C_{L2} = 2 \cdot (10pF-3pF) = 14pF
+\]
+
+Which yields a reasonable value, that can be purchased on the market. 
+
+\url{https://www.mouser.de/ProductDetail/KYOCERA-AVX/04023U140GAT2A?qs=ZwvTZoB9SO8Z%2FQAWMtnEbw%3D%3D}
