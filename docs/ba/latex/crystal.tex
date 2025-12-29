@@ -56,9 +56,9 @@ Since the gain margin is greater than 5, the crystal is compatible with the STM3
 
 \subsubsection{Calculation of Capacitors $C_{L1}$ and $C_{L2}$}
 
-Since the chosen crystal is compatible with the STM32H7 MCU, appropriate external load capacitor values have to be calculated.
+Since the chosen crystal is compatible with the STM32H7 MCU, the appropriate external load capacitor values need to be determined.
 
-The formula which describes the relation from the crystals load and shunt capacitance to the external load capacitors is:
+The relation between the crystal's load and shunt capacitance and the external load capacitors is given by:
 
 \[ 
 C_L - C_0 = \frac{C_{L1} \cdot C_{L2}}{C_{L1} + C_{L2}}
@@ -70,22 +70,20 @@ Since the external load capacitors are generally the same $C_{L1} = C_{L2}$ resu
 C_L - C_s = \frac{C_{L1} }{2} = \frac{C_{L2} }{2} 
 \]
 
-which can be transformed in:
+which can be rewritten as:
 
 \[
 C_{L1} = C_{L2} = 2 \cdot ( C_L - C_s )
 \]
 
-The stray capacitance $C_s$ is an estimation of the sum of the MCU pins and the parasitic capacitance of the PCB. It usually varies between $2 - 3pF$. In most STM32 datasheets a stray capacitance of $5pF$ is provided, which is a very conservative estimate though. For this calculation $C_s = 3pF$ is angenommen. 
+The stray capacitance $C_s$ accounts for the MCU pin capacitance and parasitic PCB capacitance. It typically ranges between $2 - 3$~pF. Many STM32 datasheets assume $C_s = 5$~pF for a conservative estimate. For this calculation, we take $C_s = 3$~pF.
 
-NX2520SA-24.000000MHZ-B8 
-
-With the crystal's $C_L = 10pF$ and the estimated $C_s = 3pF$, the external load capacitor's value can be calculated:
+For the NX2520SA-24.000000MHZ-B8 crystal with $C_L = 10$~pF, the external load capacitors are:
 
 \[
 C_{L1} = C_{L2} = 2 \cdot (10pF-3pF) = 14pF
 \]
 
-Which yields a reasonable value, that can be purchased on the market. 
+This results in a practical value that is readily available on the market:
 
 \url{https://www.mouser.de/ProductDetail/KYOCERA-AVX/04023U140GAT2A?qs=ZwvTZoB9SO8Z%2FQAWMtnEbw%3D%3D}
