@@ -1,16 +1,20 @@
-# LaTeX intermediate files
-*.aux
-*.bbl
-*.blg
-*.brf
-*.fls
-*.fdb_latexmk
-*.log
-*.out
-*.toc
-*.lof
-*.lot
-*.synctex.gz
-*.nav
-*.snm
-*.vrb
+# Ignore LaTeX intermediate files everywhere
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.brf
+**/*.bcf
+**/*.fls
+**/*.fdb_latexmk
+**/*.log
+**/*.out
+**/*.toc
+**/*.lof
+**/*.lot
+**/*.synctex.gz
+**/*.nav
+**/*.snm
+**/*.vrb
+**/*.run.xml
+**/*.pdf
+
