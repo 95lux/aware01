@@ -1,0 +1,108 @@
+\section{Requirements Specification}
+
+\subsection*{Introduction}
+This document specifies the requirements for the development of a Eurorack-compatible embedded DSP synthesizer module.
+The module shall process audio signals in real time and provide DSP-based sound manipulation.
+An STM32H7 microcontroller is the target platform for this project.
+
+\subsection*{Initial Situation}
+\begin{itemize}
+	\item A Hardware Revision~2 PCB design exists but has not yet been fully validated or manufactured.
+	\item No firmware stack is available at the start of the project.
+	\item The audio codec, control inputs, and user interface elements require integration and functional verification.
+	\item The exact DSP functionality has not yet been fully specified and will intentionally remain partially unspecified during the project implementation.
+\end{itemize}
+
+\subsection*{Objectives and Expected Benefits}
+\begin{itemize}
+	\item Creation of a stable and extensible DSP-based Eurorack module.
+	\item Real-time audio processing with low latency suitable for musical applications.
+	\item Development of a reusable firmware and DSP architecture to support future extensions and additional modules.
+	\item Reliable operation within Eurorack power and signal constraints.
+\end{itemize}
+
+\subsection*{Product Usage / Intended Use}
+\begin{itemize}
+	\item Intended for use as a Eurorack synthesizer module in electronic music production and sound experimentation.
+	\item Processing of incoming audio signals and/or internal audio signal generation.
+	\item Control via control voltage inputs, V/Oct input, gate signals, faders, and buttons.
+	\item RGB LEDs shall provide visual user feedback.
+	\item Target users include musicians, sound designers, and experimental audio users.
+\end{itemize}
+
+\subsection*{Functional Requirements}
+
+\subsubsection*{Hardware}
+\begin{itemize}
+	\item The system shall boot on Hardware Revision~2 and support flashing and debugging via SWD.
+	\item Audio acquisition and playback shall be performed using the external audio codec mounted on the PCB.
+	\item The system shall safely handle maximum and worst-case Eurorack signal levels without damaging the audio codec or MCU ADCs.
+	\item Control inputs such as CV, V/Oct, and gate signals shall be supported.
+	\item Potentiometers shall be read via ADC channels with adequate noise performance and resolution.
+	\item Button inputs shall be handled with proper debouncing.
+	\item Overall noise performance shall be suitable for music production.
+	\item The analog audio input and output stages shall provide sufficient bandwidth across the audible frequency range while suppressing DC offsets and high-frequency interference.
+\end{itemize}
+
+\subsubsection*{Firmware}
+\begin{itemize}
+	\item Audio playback shall be implemented using a double-buffered DMA-based audio I/O mechanism.
+	\item The system shall perform real-time DSP processing on continuous audio streams.
+	\item The maximum available memory shall be utilized for audio buffering to enable tape-like or sampler-style operation.
+	\item RGB LEDs (WS2812) shall be controllable by the firmware.
+	\item The firmware shall support multitasking using a real-time operating system.
+	\item While low-power optimization is not a primary objective, reasonable energy consumption shall be considered.
+\end{itemize}
+
+\subsection*{Non-Functional Requirements}
+\begin{itemize}
+	\item Deterministic real-time audio processing behavior.
+	\item End-to-end audio latency suitable for live performance not exceeding 20\,ms.
+	\item Stable operation during continuous use.
+	\item No audio dropouts, clicks, pops, or other audible artifacts caused by crashes, reboots, insufficient performance, or poorly optimized drivers or DSP algorithms.
+	\item Modular, maintainable, and extensible firmware architecture.
+	\item Audio signal quality sufficient for further DSP development and experimentation.
+\end{itemize}
+
+\subsection*{Scope of Delivery}
+\begin{itemize}
+	\item Assembled and verified Hardware Revision~2.
+	\item KiCad project or PDFs including:
+	\begin{itemize}
+		\item Schematics of PCB design
+		\item Layout and routing of PCB design
+		\item Complete BOM
+		\item Spice simulations of analog Input/Output stages
+	\end{itemize}
+	\item Firmware project including:
+	\begin{itemize}
+		\item Complete and buildable Codebase featuring the entirety of the projects scope
+		\item STM32CubeMX configuration
+		\item CMake-based build system
+		\item FreeRTOS integration
+
+	\end{itemize}
+	\item Basic DSP functionality such as filtering.
+	\item Implemented and tested control and user interface functionality.
+	\item Basic documentation for setup, build, and usage.
+\end{itemize}
+
+\subsection*{Open Issues / Open Questions}
+\begin{itemize}
+	\item Final DSP feature set to be defined.
+	\item Achievable calibration accuracy for V/Oct tracking.
+	\item Long-term extensibility of the DSP framework.
+	\item Noise performance and overall audio quality of the analog input and output stages, currently evaluated only through SPICE simulations.
+\end{itemize}
+
+\subsection*{Acceptance Criteria}
+\begin{itemize}
+	\item Hardware Revision~2 operates reliably within a Eurorack system.
+	\item No front panel is required; the module only needs to be patchable via 3.5\,mm mono jack cables.
+	\item Audio input can be routed directly to the output without audible artifacts (through mode).
+	\item Real-time DSP processing without buffer underruns.
+	\item All control inputs and user interface elements function as specified.
+	\item The system is flashable, debuggable, and reproducible using the documented build process.
+	\item The Codebase is well-structured and offers a fundament/framework for development of further MCU-based Eurorack modules.
+	\item CAD project is well structured and offers insight and comments on design decisions.
+\end{itemize}

@@ -1,0 +1,87 @@
+\section*{Project Plan - Hardware Rev2}
+
+\section{Hardware (Week 1, Milestone \hyperref[ms:M1]{M1})}
+\begin{itemize}
+    \item Order and assemble \textbf{Hardware Revision 2} (\hyperref[wp:P1]{P1}).
+    \item Verify correct assembly and power integrity (\hyperref[wp:P1]{P1}).
+\end{itemize}
+
+\section{Functional Testing (Week 2--3, Milestone \hyperref[ms:M1]{M1})}
+\begin{itemize}
+    \item Validate core functionality of the module (\hyperref[wp:P1]{P1}, \hyperref[wp:P13]{P13}):
+    \begin{itemize}
+        \item \textbf{STM32 CubeMX}
+        \begin{itemize}
+            \item Configure pinout and peripherals in STM32 CubeMX (\hyperref[wp:P1]{P1}).
+            \item Set up project via CMake (\hyperref[wp:P1]{P1}).
+            \item Research and include available drivers and libraries:
+            \begin{itemize}
+                \item FreeRTOS (\hyperref[wp:P3]{P3})
+                \item WS2812 (optional) (\hyperref[wp:P11]{P11})
+                \item CMSIS DSP (\hyperref[wp:P4]{P4})
+                \item Custom Audio Codec Driver (\hyperref[wp:P2]{P2})
+            \end{itemize}
+        \end{itemize}
+        \item \textbf{MCU}
+        \begin{itemize}
+            \item Ensure device is flashable and debuggable via SWD (\hyperref[wp:P1]{P1}).
+            \item Set up debugging environment and build system in Visual Studio Code (\hyperref[wp:P1]{P1}).
+        \end{itemize}
+        \item \textbf{Audio Codec}
+        \begin{itemize}
+            \item Confirm accessibility and configuration via I\textsuperscript{2}C (\hyperref[wp:P2]{P2}).
+            \item Test all audio inputs and outputs:
+            \begin{itemize}
+                \item Route input directly to output to verify circuitry and correct AD/DA conversion (\hyperref[wp:P3]{P3}).
+            \end{itemize}
+            \item Evaluate signal integrity for suitability in DSP development (\hyperref[wp:P4]{P4}).
+        \end{itemize}
+        \item \textbf{Interface}
+        \begin{itemize}
+            \item Confirm ADC readings from potentiometers (\hyperref[wp:P9]{P9}).
+            \item Test WS2812 PWM control (\hyperref[wp:P11]{P11}).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section{Audio Engine (Week 4, Milestone \hyperref[ms:M2]{M2})}
+\begin{itemize}
+    \item Implement usable I\textsuperscript{2}C drivers for the audio codec (\hyperref[wp:P2]{P2}).
+    \item Set up double-buffered audio I/O (\hyperref[wp:P3]{P3}).
+    \item Define and provide data structures for:
+    \begin{itemize}
+        \item DSP algorithm integration (\hyperref[wp:P4]{P4}).
+        \item Audio playback buffers (\hyperref[wp:P3]{P3}).
+    \end{itemize}
+    \item Implement playback engine with variable pitch and playback speed (\hyperref[wp:P3]{P3}).
+    \item Set up FreeRTOS tasks:
+    \begin{itemize}
+        \item Audio task (\hyperref[wp:P3]{P3})
+        \item Control Interface Task (\hyperref[wp:P8]{P8})
+        \item User Interface Task (\hyperref[wp:P12]{P12})
+    \end{itemize}
+\end{itemize}
+
+\section{DSP Development (Week 5--6, Milestone \hyperref[ms:M2]{M2})}
+\begin{itemize}
+    \item Implement real-time DSP algorithms (\hyperref[wp:P4]{P4}).
+    \item Implement or integrate an IIR filter from the CMSIS library (\hyperref[wp:P4]{P4}).
+    \item Implement basic granular synthesis functionality if time permits (\hyperref[wp:P4]{P4}).
+\end{itemize}
+
+\section{Control Interface (Week 7, Milestone \hyperref[ms:M3]{M3})}
+\begin{itemize}
+    \item Implement control inputs:
+    \begin{itemize}
+        \item CV inputs (\hyperref[wp:P6]{P6})
+        \item V/Oct input with calibration (\hyperref[wp:P7]{P7})
+        \item Gate inputs (\hyperref[wp:P5]{P5})
+    \end{itemize}
+\end{itemize}
+
+\section{User Interface (Week 8, Milestone \hyperref[ms:M3]{M3})}
+\begin{itemize}
+    \item Integrate and test faders (\hyperref[wp:P9]{P9}).
+    \item Implement RGB LED control (\hyperref[wp:P11]{P11}).
+    \item Handle button input with proper debouncing (\hyperref[wp:P10]{P10}).
+\end{itemize}
