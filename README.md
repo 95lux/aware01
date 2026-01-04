@@ -2,8 +2,8 @@
 Aarebot is a Eurorack Modular Synthesizer Module based on the STM32 H7 platform.
 
 <p align="center">
-  <img src="hardware/docs/images/aware01_h7_rev2_top.png" width="45%" />
-  <img src="hardware/docs/images/aware01_h7_rev2_bottom.png" width="45%" />
+  <img src="docs/images/aware01_h7_rev2_top.png" width="45%" />
+  <img src="docs/images/aware01_h7_rev2_bottom.png" width="45%" />
 </p>
 
 ## Overview
