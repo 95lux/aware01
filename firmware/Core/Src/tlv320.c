@@ -82,132 +82,44 @@ void codec_read_reg(uint8_t reg, uint8_t *buf)
 }
 
 void codec_init(){
-    /* ---------- switch to page 0 ---------- */
-    codec_write_reg(0x00, 0x00);
-    // software reset
-    codec_write_reg(0x01, 0x01);
+    codec_write_reg(0x00, 0x00); // Page 0
+    codec_write_reg(0x01, 0x01); // Reset
 
-    /*---- Clock and Interface Settings ----*/
-    // for Fs = 48KHz and MCLK = 12.288MHz
-    // Fs = MCLK/(NDAC * MDAC * OSR)
-    // 48kHz = 12.288MHz/(1 * 2 * 128)
+    // Clock & Interface
+    codec_write_reg(0x0b, 0x81); // NDAC = 1
+    codec_write_reg(0x0c, 0x82); // MDAC = 2
+    codec_write_reg(0x12, 0x81); // NADC = 1
+    codec_write_reg(0x13, 0x82); // MADC = 2
+    codec_write_reg(0x0d, 0x00); codec_write_reg(0x0e, 0x80); // DAC OSR = 128
+    codec_write_reg(0x14, 0x80); // ADC OSR = 128
+    codec_write_reg(0x3d, 0x01); // PRB_R1
+    codec_write_reg(0x1b, 0x00); // I2S 16-bit
 
-    // NDAC divider = 1
-    codec_write_reg(0x0b, 0x81);
-    // MDAC divider = 2
-    codec_write_reg(0x0c, 0x82);
+    // Power Supplies
+    codec_write_reg(0x00, 0x01); // Page 1
+    codec_write_reg(0x01, 0x08); // Disable weak AVDD-DVDD link
+    codec_write_reg(0x02, 0x01); // Power AVDD LDO
+    codec_write_reg(0x14, 0x25); // HP soft step
+    codec_write_reg(0x0a, 0x4b); // LDOIN config
+    codec_write_reg(0x3D, 0x00); // ADC PTM_R4
+    codec_write_reg(0x47, 0x32); // MicPGA delay
+    codec_write_reg(0x7b, 0x01); // REF charge 40ms
 
-    // Power up NADC divider with value 1
-    codec_write_reg(0x12, 0x81);
+    // Routing
+    codec_write_reg(0x0e, 0x08); // DAC to LOL
+    codec_write_reg(0x0f, 0x08); // DAC to LOR
+    codec_write_reg(0x34, 0x80); codec_write_reg(0x36, 0x08); // LINE_IN L
+    codec_write_reg(0x37, 0x80); codec_write_reg(0x39, 0x08); // LINE_IN R
+    codec_write_reg(0x12, 0x00); codec_write_reg(0x13, 0x00); // Unmute LOL/LOR
+    codec_write_reg(0x3b, 0x0c); codec_write_reg(0x3c, 0x0c); // Unmute PGA L/R
+    codec_write_reg(0x09, 0x3C); // Power LOL/LOR
 
-    // Power up MADC divider with value 2
-    codec_write_reg(0x13, 0x82);
-    
-    // OSR of DAC = 128
-    codec_write_reg(0x0d, 0x00);
-    codec_write_reg(0x0e, 0x80);
-
-    // OSR of ADC = 128
-    codec_write_reg(0x14, 0x80);
-
-    // set PRB_R1
-    codec_write_reg(0x3d, 0x01);
-
-    // set i2s mode
-    // set word length/frame size to 16bit
-    codec_write_reg(0x1b, 0x00);
-
-    /*---- Configure Power Supplies ----*/
-
-    /* ---------- switch to page 1 ---------- */
-    codec_write_reg(0x00, 0x01);
-
-    // Disable weak AVDD-DVDD link     
-    codec_write_reg(0x01, 0x08);
-
-    // Power AVDD LDO
-    codec_write_reg(0x02, 0x01);
-
-    // HP soft stepping settings for optimal pop performance at power up
-    // Rpop used is 6k with N = 6 and soft step = 20usec. This should work with 47uF coupling
-    // capacitor. Can try N=5,6 or 7 time constants as well. Trade-off delay vs “pop” sound
-    codec_write_reg(0x14, 0x25);
-
-    // D7   = 0     reserved
-    // D6   = 1     common mode to 0.75V
-    // D4-5 = 00    Output Common Mode for HPL and HPR is same as full-chip common mode
-    // D3   = 0     Output Common Mode for LOL and LOR is same as full-chip common mode
-    // D2   = 0     reserved
-    // D1   = 1     Power HP by LDOIN     
-    // D0   = 1     LDOIN pin range 1.8V - 3.6V
-    // 
-    // 01000011 = 0x43
-    codec_write_reg(0x0a, 0x4b);
-
-    // Select ADC PTM_R4
-    codec_write_reg(0x3D, 0x00);
-
-    // Set MicPGA startup delay to 3.1ms
-    codec_write_reg(0x47, 0x32);
-
-    // set REF charging time to 40ms
-    codec_write_reg(0x7b, 0x01);
-    
-    /* ---- Routing ----*/
-
-    // route dac to line outs
-    // left channel
-    codec_write_reg(0x0e, 0x08);
-    // right channel
-    codec_write_reg(0x0f, 0x08);
-
-    // Route LINE_IN Left to LEFT_P with 20K input impedance
-    codec_write_reg(0x34, 0x80);  
-    // Route Common Mode to LEFT_M with impedance of 20K
-    codec_write_reg(0x36, 0x80);  
-    // Route LINE_IN Right to RIGHT_P with 20K input impedance
-    codec_write_reg(0x37, 0x80);
-    // Route Common Mode to RIGHT_M with impedance of 20K
-    codec_write_reg(0x39, 0x80);
-
-    // unmute line outs
-    // LOL: unmute, 0 dB gain
-    codec_write_reg(0x12, 0x00);
-    // LOR: unmute, 0 dB gain
-    codec_write_reg(0x13, 0x00);
-
-    // unmute left PGA
-    codec_write_reg(0x3b, 0x0c);
-    // unmute right PGA
-    codec_write_reg(0x3c, 0x0c);
-
-    // Power up LOL and LOR drivers
-	codec_write_reg(0x09, 0x3C);
-
-    /* ---------- switch to page 0 ---------- */
-    codec_write_reg(0x00, 0x00);
-
-    // route codec DIN to DOUT
-    // codec_write_reg(0x1d, 0x20);
-
-    // DACL DACR -> 0dB
-    codec_write_reg(0x41, 0x00);
-    codec_write_reg(0x42, 0x00);
-
-    //  Power up the Left and Right DAC Channels with route the Left Audio digital data to
-    // Left Channel DAC and Right Audio digital data to Right Channel DAC
-    // 11010101
-    codec_write_reg(0x3f, 0xd5);
-
-    // unmute dac digital volume control
-    codec_write_reg(0x40, 0x00);
-
-    // Power up Left and Right ADC Channels
-    // Do not use digital mic
-    codec_write_reg(0x51, 0xc0);
-
-    // Unmute Left and Right ADC Digital Volume Control
-    codec_write_reg(0x52, 0x00);
+    codec_write_reg(0x00, 0x00); // Back to Page 0
+    codec_write_reg(0x41, 0x00); codec_write_reg(0x42, 0x00); // DACL/R 0dB
+    codec_write_reg(0x3f, 0xd5); // Power up DACs
+    codec_write_reg(0x40, 0x00); // Unmute DAC volume
+    codec_write_reg(0x51, 0xc0); // Power up ADCs
+    codec_write_reg(0x52, 0x00); // Unmute ADC volume
 }
 
 int8_t codec_i2c_is_ok(){
