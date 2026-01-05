@@ -39,6 +39,15 @@ void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef *hi2s)
     dma_dataReady = true;
 }
 
+void loopback_samples(){
+    for (uint8_t n = 0; n < (HALF_BUFFER_SIZE)-1; n += 2)
+    {
+        // loopback adc data to dac
+        tx_buf_ptr[n] = rx_buf_ptr[n];
+        tx_buf_ptr[n+1] = rx_buf_ptr[n + 1];
+    }
+}
+
 void receiveTest()
 {
     double freq = 1000;
@@ -54,21 +63,13 @@ void receiveTest()
     {
         if (dma_dataReady)
         {
-            // void loopback_samples();
-            generateSineWave(&phaseIndex, phaseIncrement);
+            loopback_samples();
+            // generateSineWave(&phaseIndex, phaseIncrement);
             dma_dataReady = false;
         }
     }
 }
 
-void loopback_samples(){
-    for (uint8_t n = 0; n < (HALF_BUFFER_SIZE)-1; n += 2)
-    {
-        // loopback adc data to dac
-        tx_buf_ptr[n] = rx_buf_ptr[n];
-        tx_buf_ptr[n+1] = rx_buf_ptr[n + 1];
-    }
-}
 
 void generateSineWave(uint16_t *phaseIndex, double phaseIncrement)
 {
