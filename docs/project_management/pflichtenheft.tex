@@ -45,22 +45,23 @@ Successful acceptance requires fulfillment of all acceptance criteria defined in
 
 \subsection*{Implementation}
 
-\subsubsection*{Mechanical Design}
-\begin{itemize}
-	\item Eurorack-compatible PCB dimensions (Derived from \textbf{IEC 60297} / \textbf{DIN 41494}, originally designed for Eurocards in 3U/6U rack systems.)
-	\item No dedicated front panel is designed
-	\item Mechanical mounting compatible via frontpanel with Eurorack rails - frontpanel is mounted on the PCB via washers on jack sockets and mounting holes in slide-potentiometers.
-	\item Since the frontplate is not in scope of the project, the module will not be mountable yet.
-\end{itemize}
-
 \subsubsection*{Electrical Design}
+
+\begin{figure}[ht]
+	\centering
+	\makebox[\linewidth][c]{%
+		\includegraphics[width=1.1\linewidth]{../images/componentdiagram_hardware.drawio.pdf}
+	}
+	\caption{Hardware component diagram}
+\end{figure}
+\FloatBarrier
+
 \begin{itemize}
 	\item STM32H7 microcontroller as the central processing unit.
-	\item External audio codec connected via I2C and digital audio interface.
+	\item Audio Codec configured via I2C and connected via I2S digital audio interface.
 	\item Eurorack-compatible input and output signal conditioning:
 	\begin{itemize}
 		\item All inputs (Audio, CV, and Gate) are protected against maximum Eurorack signal levels \\ (~\,-10\,V to ~10\,V).
-
 		\item Gate inputs: protection implemented via transistor circuits.
 		\item CV inputs: rail-guarded op-amp circuits to prevent overvoltage to MCU ADCs.
 		\item Audio inputs: appropriate attenuation and diode-based protection. to protect audio codec's analog inputs.
@@ -70,10 +71,21 @@ Successful acceptance requires fulfillment of all acceptance criteria defined in
 	\item Power regulation:
 	\begin{itemize}
 		\item 5\,V buck converter for WS2812 LEDs.
-		\item 3.3\,V LDO and 1.8\,V LDO to ensure clean power delivery and stable analog reference.
+		\item 3.3\,V LDO to ensure clean power delivery and stable analog reference.
 	\end{itemize}
 \end{itemize}
 
+The exact specifications of the components and the schematic can be found in the public KiCad project hosted on GitHub:
+\url{https://github.com/95lux/aware01/tree/main/hardware}. \\ 
+The project will be updated with the bill of materials (BOM) specification after the design review. Most of the components have already been chosen.
+
+\subsubsection*{Mechanical Design}
+\begin{itemize}
+	\item Eurorack-compatible PCB dimensions (Derived from \textbf{IEC 60297} / \textbf{DIN 41494}, originally designed for Eurocards in 3U/6U rack systems.)
+	\item No dedicated front panel is designed
+	\item Mechanical mounting compatible via frontpanel with Eurorack rails - frontpanel is mounted on the PCB via washers on jack sockets and mounting holes in slide-potentiometers.
+	\item Since the frontplate is not in scope of the project, the module will not be mountable yet. A 3D-printed panel may be fabricated for rack testing.
+\end{itemize}
 
 \subsubsection*{Firmware Design}
 \begin{itemize}
