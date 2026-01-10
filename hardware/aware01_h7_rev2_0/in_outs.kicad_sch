@@ -2809,6 +2809,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "KYOCERA AVX"
+			(at 213.36 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KGM15ACG1E180JT"
+			(at 213.36 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 581-KGM15ACG1E180JT"
+			(at 213.36 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "62864b1b-75c8-452c-906d-0d80efc82602")
 		)
@@ -3033,6 +3060,33 @@
 		)
 		(property "Description" "Resistor"
 			(at 231.14 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 231.14 137.16 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE071KL"
+			(at 231.14 137.16 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE071KL"
+			(at 231.14 137.16 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3817,6 +3871,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 231.14 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RT0603FRE071KL"
+			(at 231.14 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RT0603FRE071KL"
+			(at 231.14 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "67c49212-b005-496c-8d98-c0fb4b62ea2a")
 		)
@@ -4133,6 +4214,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Vishay Semiconductors "
+			(at 119.38 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " BAT54C-E3-08 "
+			(at 119.38 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 78-BAT54C-E3-08 "
+			(at 119.38 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7cbe8878-cbbb-414a-b037-3f48d202fe9a")
 		)
@@ -4197,6 +4305,33 @@
 		)
 		(property "Description" "Resistor"
 			(at 213.36 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 213.36 119.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RE0603BRE0739KL"
+			(at 213.36 119.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RE0603BRE0739KL"
+			(at 213.36 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4500,6 +4635,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 101.6 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603JR-071K8L "
+			(at 101.6 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603JR-071K8L "
+			(at 101.6 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "78fe0d9d-5ac5-4caa-9642-158e203971fd")
 		)
@@ -4568,6 +4730,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 93.98 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603JR-1012KL "
+			(at 93.98 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603JR-1012KL "
+			(at 93.98 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2cdb8be6-57fa-4c8d-b6f5-ad14ee72254f")
 		)
@@ -4629,6 +4818,33 @@
 		)
 		(property "Description" "Resistor"
 			(at 92.71 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 92.71 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603JR-1012KL "
+			(at 92.71 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603JR-1012KL "
+			(at 92.71 64.77 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5503,6 +5719,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 213.36 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RE0603BRE0739KL"
+			(at 213.36 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RE0603BRE0739KL"
+			(at 213.36 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "88455e7a-529c-4fc4-bc6e-033af6f22b50")
 		)
@@ -5732,6 +5975,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 134.62 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603FR-105K6L"
+			(at 193.04 134.62 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603FR-105K6L"
+			(at 193.04 134.62 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "77b3ca45-936b-4f31-9ec1-f30b8af41be0")
 		)
@@ -5869,6 +6139,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 100.33 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603JR-071K8L "
+			(at 100.33 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603JR-071K8L "
+			(at 100.33 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "182a2558-ec20-4e38-8202-0cbb1245abb6")
 		)
@@ -5930,6 +6227,33 @@
 		)
 		(property "Description" "Unpolarized capacitor"
 			(at 213.36 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX"
+			(at 213.36 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KGM15ACG1E180JT"
+			(at 213.36 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 581-KGM15ACG1E180JT"
+			(at 213.36 109.22 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6352,6 +6676,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 193.04 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603FR-105K6L"
+			(at 193.04 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603FR-105K6L"
+			(at 193.04 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c28f238d-bc90-444e-becc-0ca63d6643d0")
 		)
@@ -6565,6 +6916,33 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 120.65 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Vishay Semiconductors "
+			(at 120.65 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " BAT54C-E3-08 "
+			(at 120.65 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 78-BAT54C-E3-08 "
+			(at 120.65 133.35 90)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -3625,6 +3625,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Vishay Semiconductors "
+			(at 49.53 152.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " BAT54A-E3-08 "
+			(at 49.53 152.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 78-BAT54A-E3-08 "
+			(at 49.53 152.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "e6a90eed-4765-462a-9499-f5bbfb5f52cf")
 		)
@@ -4611,6 +4638,33 @@
 		)
 		(property "Description" "schottky barrier diode"
 			(at 49.53 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Vishay Semiconductors "
+			(at 49.53 72.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " BAT54A-E3-08 "
+			(at 49.53 72.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 78-BAT54A-E3-08 "
+			(at 49.53 72.39 90)
 			(effects
 				(font
 					(size 1.27 1.27)

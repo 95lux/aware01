@@ -5795,6 +5795,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments "
+			(at 57.15 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " 74AHCT1G14DBVRG4 "
+			(at 57.15 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-74AHCT1G14DBVRG4 "
+			(at 57.15 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b4d6b63f-3151-4da4-a317-9e5c4e71ba43")
 		)

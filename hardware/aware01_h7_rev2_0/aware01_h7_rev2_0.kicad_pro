@@ -642,7 +642,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "fabrication_files/",
+      "plot": "fab_output/gerber/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -653,7 +653,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "aware01_h7_rev2_0.csv",
+    "bom_export_filename": "fab_output/aware01_h7_rev2_0.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
