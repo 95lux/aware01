@@ -4493,6 +4493,156 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Switch:SW_Push"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "SW"
+				(at 1.27 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SW_Push"
+				(at 0 -1.524 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Push button switch, generic, two pins"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "switch normally-open pushbutton push-button"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SW_Push_0_1"
+				(circle
+					(center -2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.27) (xy -2.54 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers
@@ -5383,16 +5533,6 @@
 		)
 		(uuid "5dbf016d-206c-42bd-b211-87506c03ae77")
 	)
-	(text "TODO: Layout Buck aus Datasheet checken\n"
-		(exclude_from_sim no)
-		(at 67.31 100.584 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "76d808b3-cd75-4461-9d35-4de15c873518")
-	)
 	(text "Power"
 		(exclude_from_sim no)
 		(at 108.204 227.838 0)
@@ -5519,12 +5659,6 @@
 		(uuid "4ef7726f-b808-4fbf-9603-2a606821f2e2")
 	)
 	(junction
-		(at 190.5 113.03)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5041bc05-fa0b-4802-853b-ccc79783b5ba")
-	)
-	(junction
 		(at 48.26 163.83)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5585,6 +5719,12 @@
 		(uuid "7f6b5826-959d-49d1-a5b4-69a59eba46e9")
 	)
 	(junction
+		(at 181.61 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "81a01e0f-91a6-47f0-81d4-9c32ebcbc573")
+	)
+	(junction
 		(at 218.44 104.14)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5595,6 +5735,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8b1d403a-e9e1-47ea-8a40-8b240a4bbc9b")
+	)
+	(junction
+		(at 177.8 114.3)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9193b3e0-ae3e-4e51-af60-c0c5f8e4725a")
 	)
 	(junction
 		(at 185.42 179.07)
@@ -5711,6 +5857,12 @@
 		(uuid "d43b799f-7405-4f62-92a4-891c6969ac18")
 	)
 	(junction
+		(at 173.99 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "db4c56a0-965b-4839-8242-cc7aba74c831")
+	)
+	(junction
 		(at 97.79 120.65)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5733,6 +5885,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "eff59977-7f52-410e-b4a4-f91caebdd6fc")
+	)
+	(junction
+		(at 195.58 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f177eec6-beb6-473d-af12-3a038a45d109")
 	)
 	(junction
 		(at 82.55 48.26)
@@ -6132,6 +6290,16 @@
 	)
 	(wire
 		(pts
+			(xy 177.8 114.3) (xy 173.99 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1801088b-a11f-448d-8b6e-56ce06f201bb")
+	)
+	(wire
+		(pts
 			(xy 64.77 252.73) (xy 68.58 252.73)
 		)
 		(stroke
@@ -6349,6 +6517,16 @@
 			(type default)
 		)
 		(uuid "2e4ef353-ffb4-499b-afe2-081e69d0b452")
+	)
+	(wire
+		(pts
+			(xy 181.61 110.49) (xy 181.61 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e66f4ae-ccdd-470d-962d-a326aba7ace4")
 	)
 	(wire
 		(pts
@@ -6582,6 +6760,16 @@
 	)
 	(wire
 		(pts
+			(xy 167.64 101.6) (xy 173.99 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ac7b344-b7e9-4509-bb28-a6053a5c88b3")
+	)
+	(wire
+		(pts
 			(xy 276.86 71.12) (xy 276.86 69.85)
 		)
 		(stroke
@@ -6682,6 +6870,16 @@
 	)
 	(wire
 		(pts
+			(xy 181.61 114.3) (xy 177.8 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "561018f1-7c99-4c8e-ae52-57bce1835c64")
+	)
+	(wire
+		(pts
 			(xy 209.55 251.46) (xy 209.55 254)
 		)
 		(stroke
@@ -6699,6 +6897,16 @@
 			(type default)
 		)
 		(uuid "5956cad9-27c9-477a-82a3-97b5df847427")
+	)
+	(wire
+		(pts
+			(xy 181.61 101.6) (xy 181.61 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c733582-958d-43ee-921b-5722f8be40b4")
 	)
 	(wire
 		(pts
@@ -6722,7 +6930,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 100.33) (xy 190.5 102.87)
+			(xy 195.58 100.33) (xy 195.58 102.87)
 		)
 		(stroke
 			(width 0)
@@ -6782,6 +6990,16 @@
 	)
 	(wire
 		(pts
+			(xy 181.61 101.6) (xy 191.77 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62f0e75e-788a-4442-8fd8-404c68e1ac0e")
+	)
+	(wire
+		(pts
 			(xy 46.99 40.64) (xy 58.42 40.64)
 		)
 		(stroke
@@ -6819,6 +7037,16 @@
 			(type default)
 		)
 		(uuid "65437829-8ab8-4cf9-824c-191dbe35d508")
+	)
+	(wire
+		(pts
+			(xy 173.99 102.87) (xy 173.99 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6584af65-c5ec-4b49-8c39-c95fb3d9d4e7")
 	)
 	(wire
 		(pts
@@ -6892,6 +7120,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 113.03) (xy 191.77 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "75908e83-7baf-4fd8-bb87-2ca095bd1146")
+	)
+	(wire
+		(pts
 			(xy 236.22 135.89) (xy 254 135.89)
 		)
 		(stroke
@@ -6959,6 +7197,16 @@
 			(type default)
 		)
 		(uuid "7ba1664f-621c-41ff-a7df-5158710bba02")
+	)
+	(wire
+		(pts
+			(xy 173.99 114.3) (xy 173.99 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7bee9814-7d10-4b97-a3fd-517fac3bd58b")
 	)
 	(wire
 		(pts
@@ -7119,16 +7367,6 @@
 			(type default)
 		)
 		(uuid "939b0977-4a4e-4eda-a86a-d17463b95535")
-	)
-	(wire
-		(pts
-			(xy 179.07 113.03) (xy 190.5 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "943368fc-d710-4013-ba5f-a7ea566afb60")
 	)
 	(wire
 		(pts
@@ -7322,7 +7560,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 110.49) (xy 190.5 113.03)
+			(xy 195.58 110.49) (xy 195.58 113.03)
 		)
 		(stroke
 			(width 0)
@@ -7592,6 +7830,16 @@
 	)
 	(wire
 		(pts
+			(xy 195.58 113.03) (xy 200.66 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c474a93f-56a4-4b96-88fc-16569e4a7289")
+	)
+	(wire
+		(pts
 			(xy 71.12 175.26) (xy 71.12 173.99)
 		)
 		(stroke
@@ -7609,6 +7857,16 @@
 			(type default)
 		)
 		(uuid "c52cd840-e80a-48e0-b0c2-4b2d6723849f")
+	)
+	(wire
+		(pts
+			(xy 173.99 101.6) (xy 181.61 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c5cb782d-253d-477b-9e1e-c9ca1ba52bc5")
 	)
 	(wire
 		(pts
@@ -7782,6 +8040,16 @@
 	)
 	(wire
 		(pts
+			(xy 177.8 114.3) (xy 177.8 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5c2787b-51a4-4892-ba78-08bf68652117")
+	)
+	(wire
+		(pts
 			(xy 175.26 41.91) (xy 160.02 41.91)
 		)
 		(stroke
@@ -7862,16 +8130,6 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 113.03) (xy 200.66 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dd4f5375-1901-484b-ad98-761fdfbf2837")
-	)
-	(wire
-		(pts
 			(xy 48.26 160.02) (xy 48.26 163.83)
 		)
 		(stroke
@@ -7929,6 +8187,16 @@
 			(type default)
 		)
 		(uuid "e69e757d-2036-488c-8305-f44dac869d91")
+	)
+	(wire
+		(pts
+			(xy 195.58 113.03) (xy 191.77 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6d9b933-1555-48ec-abae-a241a6d66294")
 	)
 	(wire
 		(pts
@@ -8390,6 +8658,16 @@
 		)
 		(uuid "83793d1e-3f3d-40b1-ad0d-bd1c58b68a22")
 	)
+	(label "NRST"
+		(at 167.64 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8395389d-df7c-4f6d-933e-50fa11d42d7c")
+	)
 	(label "FAD_LED3_OUT"
 		(at 336.55 125.73 0)
 		(effects
@@ -8629,16 +8907,6 @@
 			(justify left bottom)
 		)
 		(uuid "dd70f629-00a7-4bb7-9037-bc15e966a065")
-	)
-	(label "NRST"
-		(at 179.07 113.03 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ddd9298b-c14a-4dba-b375-f1835ebbba28")
 	)
 	(label "FAD_LED2_OUT"
 		(at 336.55 123.19 0)
@@ -9073,7 +9341,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 603-RC0603FR-134K7L"
+		(property "Mouser Part Number" "603-RC0603FR-134K7L"
 			(at 261.62 166.37 0)
 			(effects
 				(font
@@ -9092,6 +9360,102 @@
 			(project "aware01_h7_rev1_3"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 173.99 107.95 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1efc8787-1707-49b7-8d9a-7686679a31c2")
+		(property "Reference" "SW3"
+			(at 172.72 109.2201 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "PTS815"
+			(at 172.72 106.6801 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS810"
+			(at 179.07 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ckswitches.com/media/2728/pts815.pdf"
+			(at 179.07 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 173.99 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "C&K"
+			(at 173.99 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " PTS815SJK250SMTR LFS"
+			(at 173.99 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 611-PTS815SJK250SMTR"
+			(at 173.99 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "625fa1b6-5bb0-4cc6-821d-d149fc9797dd")
+		)
+		(pin "1"
+			(uuid "b88f34c3-779f-48e7-9dc8-cfa348d79b1b")
+		)
+		(instances
+			(project ""
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(reference "SW3")
 					(unit 1)
 				)
 			)
@@ -9527,35 +9891,34 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 190.5 106.68 0)
+		(lib_id "Device:C")
+		(at 181.61 106.68 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "484e2a47-eed7-47bb-bda8-2415d0c5489e")
-		(property "Reference" "R4"
-			(at 193.04 105.4099 0)
+		(uuid "3b8af73a-3cb3-4294-9f18-57406be4b3b9")
+		(property "Reference" "C5"
+			(at 188.468 108.966 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Value" "10k"
-			(at 193.04 107.9499 0)
+		(property "Value" "100n"
+			(at 185.928 108.966 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 188.722 106.68 90)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 180.6448 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9564,7 +9927,104 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 190.5 106.68 0)
+			(at 181.61 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 181.61 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 181.61 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 181.61 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 181.61 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cda1bc4b-7e88-42f7-8f2a-63e439a4815d")
+		)
+		(pin "2"
+			(uuid "7dadbb4e-f825-41e7-8507-ca71bb12249b")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 195.58 106.68 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "484e2a47-eed7-47bb-bda8-2415d0c5489e")
+		(property "Reference" "R4"
+			(at 198.12 105.4099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 198.12 107.9499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 193.802 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 195.58 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9573,7 +10033,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 190.5 106.68 0)
+			(at 195.58 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9582,7 +10042,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Welwyn Components / TT Electronics"
-			(at 190.5 106.68 0)
+			(at 195.58 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9591,7 +10051,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "WCR0603-10KFA"
-			(at 190.5 106.68 0)
+			(at 195.58 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9600,7 +10060,7 @@
 			)
 		)
 		(property "Mouser Part Number" "756-WCR0603-10KFA"
-			(at 190.5 106.68 0)
+			(at 195.58 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10332,7 +10792,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "KYOCERA AVX "
+		(property "Manufacturer_Name" "KYOCERA AVX"
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -10341,7 +10801,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " 04023U140GAT2A "
+		(property "Manufacturer_Part_Number" "04023U140GAT2A"
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -10350,7 +10810,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "581-04023U140GAT2A "
+		(property "Mouser Part Number" "581-04023U140GAT2A"
 			(at 167.64 137.16 0)
 			(effects
 				(font
@@ -10671,7 +11131,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 190.5 100.33 0)
+		(at 195.58 100.33 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10680,7 +11140,7 @@
 		(fields_autoplaced yes)
 		(uuid "69e2b06c-02c7-49e6-a08c-ec850f145f42")
 		(property "Reference" "#PWR027"
-			(at 190.5 104.14 0)
+			(at 195.58 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10689,7 +11149,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 190.5 95.25 0)
+			(at 195.58 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10697,7 +11157,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 190.5 100.33 0)
+			(at 195.58 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10706,7 +11166,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 100.33 0)
+			(at 195.58 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10715,7 +11175,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 190.5 100.33 0)
+			(at 195.58 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11095,7 +11555,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.mouser.com/catalog/specsheets/Bourns_01-27-2024_SRR5228A_Datasheet.pdf"
 			(at 86.36 120.65 0)
 			(effects
 				(font
@@ -11106,6 +11566,33 @@
 		)
 		(property "Description" "Inductor"
 			(at 86.36 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Bourns "
+			(at 86.36 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " SRR5228A-470M "
+			(at 86.36 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 6521-SRR5228A-470M "
+			(at 86.36 120.65 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11605,6 +12092,33 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer_Name" "Texas Instruments "
+			(at 60.96 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "LMR50410Y5FQDBVRQ1 "
+			(at 60.96 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 595-R50410Y5FQDBVRQ1 "
+			(at 60.96 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "fa67e58c-66d2-416e-aee7-a1e6e348b2a2")
 		)
@@ -11778,6 +12292,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 97.79 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Murata Electronics "
+			(at 97.79 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+			(at 97.79 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
 			(at 97.79 127 0)
 			(effects
 				(font
@@ -12616,7 +13157,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " MFBW1V2012-121-R "
+		(property "Manufacturer_Part_Number" "MFBW1V2012-121-R"
 			(at 137.16 41.91 0)
 			(effects
 				(font
@@ -12625,7 +13166,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 704-MFBW1V2012-121-R "
+		(property "Mouser Part Number" "704-MFBW1V2012-121-R"
 			(at 137.16 41.91 0)
 			(effects
 				(font
@@ -12992,6 +13533,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603FR-0788K7L"
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603FR-0788K7L"
 			(at 91.44 125.73 0)
 			(effects
 				(font
@@ -15063,7 +15631,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 603-RC0603FR-134K7L"
+		(property "Mouser Part Number" "603-RC0603FR-134K7L"
 			(at 270.51 166.37 0)
 			(effects
 				(font
@@ -15082,6 +15650,72 @@
 			(project "aware01_h7_rev1_3"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
 					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 177.8 115.57 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e2d7f377-42c6-440a-ad4f-6dd9e19973bb")
+		(property "Reference" "#PWR07"
+			(at 177.8 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 177.8 114.554 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 177.8 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 177.8 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c35bcad1-47a2-4630-9e6d-7f974ea4e4b1")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f"
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -15133,6 +15767,33 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 91.44 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "YAGEO"
+			(at 91.44 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "RC0603FR-1322K1L"
+			(at 91.44 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-RC0603FR-1322K1L "
 			(at 91.44 135.89 0)
 			(effects
 				(font
@@ -15357,7 +16018,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.mouser.de/datasheet/2/396/mlcc02_e-1307760.pdf"
 			(at 39.37 121.92 0)
 			(effects
 				(font
@@ -15367,6 +16028,33 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 39.37 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" " TAIYO YUDEN"
+			(at 39.37 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" " TMK107ABJ225KA-T"
+			(at 39.37 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 963-TMK107ABJ225KA-T"
 			(at 39.37 121.92 0)
 			(effects
 				(font
@@ -15598,6 +16286,33 @@
 		)
 		(property "Description" "Unpolarized capacitor"
 			(at 76.2 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KYOCERA AVX "
+			(at 76.2 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+			(at 76.2 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+			(at 76.2 115.57 90)
 			(effects
 				(font
 					(size 1.27 1.27)
