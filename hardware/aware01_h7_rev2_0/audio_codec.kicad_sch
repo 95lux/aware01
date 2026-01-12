@@ -2589,7 +2589,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "KYOCERA AVX "
+		(property "Manufacturer_Name" "Murata Electronics "
 			(at 160.02 57.15 0)
 			(effects
 				(font
@@ -2598,7 +2598,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+		(property "Manufacturer_Part_Number" "GRM188R61E106KA73D"
 			(at 160.02 57.15 0)
 			(effects
 				(font
@@ -2607,7 +2607,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+		(property "Mouser Part Number" " 81-GRM188R61E106KA3D "
 			(at 160.02 57.15 0)
 			(effects
 				(font
@@ -2826,7 +2826,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+		(property "Manufacturer_Part_Number" "GRM188R61E106KA73D"
 			(at 147.32 105.41 0)
 			(effects
 				(font
@@ -3018,7 +3018,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" " GRM188R61E106KA73D "
+		(property "Manufacturer_Part_Number" "GRM188R61E106KA73D"
 			(at 152.4 85.09 0)
 			(effects
 				(font
@@ -4225,7 +4225,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "KAF15BR72A104KT"
+		(property "Manufacturer_Part_Number" "KGM15AV51A105ZM "
 			(at 148.59 57.15 0)
 			(effects
 				(font
@@ -4234,7 +4234,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "581-KAF15BR72A104KT"
+		(property "Mouser Part Number" "581-KGM15AV51A105ZM"
 			(at 148.59 57.15 0)
 			(effects
 				(font
