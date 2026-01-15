@@ -70,6 +70,12 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 /* Define output sections */
 SECTIONS
 {
+  /* Define a section for DMA buffers */
+  .dma_buffer :
+  {
+    *(.dma_buffer)
+  } >RAM
+
   /* The startup code goes first into FLASH */
   .isr_vector :
   {
