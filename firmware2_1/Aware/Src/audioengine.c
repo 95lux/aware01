@@ -23,6 +23,7 @@ void initSineTable()
     }
 }
 
+// overloadd HAL I2S DMA Complete and HalfComplete callbacks to handle double buffering
 void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef *hi2s)
 {
     // First half of TX and RX buffers completed

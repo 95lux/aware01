@@ -9,6 +9,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+// define a section for DMA buffers. This gets assigned in the linker script.
 #if defined( __ICCARM__ )
   #define DMA_BUFFER \
       _Pragma("location=\".dma_buffer\"")
