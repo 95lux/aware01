@@ -1,13 +1,117 @@
 #include "audioengine.h"
 #include "dma.h"
 
-bool dma_out_dataReady = false;
-DMA_BUFFER int16_t tx_buf[BUFFER_SIZE];
-volatile int16_t *tx_buf_ptr = &tx_buf[0];
+// define a section for DMA buffers. This gets assigned in the linker script.
+#if defined(__ICCARM__)
+#define DMA_BUFFER _Pragma("location=\".dma_buffer\"")
+#else
+#define DMA_BUFFER __attribute__((section(".dma_buffer")))
+#endif
 
-bool dma_dataReady = false;
-DMA_BUFFER int16_t rx_buf[BUFFER_SIZE];
-volatile int16_t *rx_buf_ptr = &rx_buf[0];
+// local DMA buffers for audio I/O - will be allocated in DMA-capable memory, not in FREERTOS task stack!
+DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE];
+DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE];
+
+// file-local pointer to the active config (not exported)
+static struct audioengine_config* active_cfg = NULL;
+
+int init_audioengine(struct audioengine_config* config) {
+    if (config == NULL)
+        return AUDIOENGINE_ERROR;
+    active_cfg = config;
+
+    active_cfg->tx_buf_ptr = &tx_buf[0];
+    active_cfg->rx_buf_ptr = &rx_buf[0];
+
+    return AUDIOENGINE_OK;
+}
+
+int start_audio_engine(void) {
+    if (active_cfg == NULL || active_cfg->i2s_handle == NULL)
+        return AUDIOENGINE_NOT_INITIALIZED;
+
+    HAL_StatusTypeDef hal_status = HAL_I2SEx_TransmitReceive_DMA(active_cfg->i2s_handle,
+                                                                 (void*) active_cfg->tx_buf_ptr,
+                                                                 (void*) active_cfg->rx_buf_ptr,
+                                                                 active_cfg->buffer_size);
+
+    if (hal_status != HAL_OK)
+        return AUDIOENGINE_ERROR;
+
+    return AUDIOENGINE_OK;
+}
+
+// overload HAL I2S DMA Complete and HalfComplete callbacks to handle double buffering
+void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef* i2s_handle) {
+    // First half of TX and RX buffers completed
+    active_cfg->tx_buf_ptr = &tx_buf[0];
+    active_cfg->rx_buf_ptr = &rx_buf[0];
+
+    // signal task from ISR
+    // Unblock processing task from ISR; request immediate context switch if a
+    // higher-priority task was woken (minimize latency after DMA interrupt)
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xSemaphoreGiveFromISR(active_cfg->dma_ready_sem, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
+
+void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef* i2s_handle) {
+    // Second half of TX and RX buffers completed
+    active_cfg->tx_buf_ptr = &tx_buf[active_cfg->buffer_size / 2];
+    active_cfg->rx_buf_ptr = &rx_buf[active_cfg->buffer_size / 2];
+
+    // signal task from ISR
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xSemaphoreGiveFromISR(active_cfg->dma_ready_sem, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
+
+/* TESTFUNCTIONALITIES FROM HERE ON */
+void loopback_samples() {
+    for (uint8_t n = 0; n < (active_cfg->buffer_size / 2) - 1; n += 2) {
+        // loopback adc data to dac
+        active_cfg->tx_buf_ptr[n] = active_cfg->rx_buf_ptr[n];
+        active_cfg->tx_buf_ptr[n + 1] = active_cfg->rx_buf_ptr[n + 1];
+    }
+}
+
+//     if (HAL_I2SEx_TransmitReceive_DMA(&hi2s1, (void *)tx_buf, (void *)rx_buf, BUFFER_SIZE) != HAL_OK)
+//     {
+//         Error_Handler();
+//     }
+
+//     while (1)
+//     {
+//         if (dma_data_ready)
+//         {
+//             loopback_samples();
+//             // generateSineWave(&phaseIndex, phaseIncrement);
+//             dma_data_ready = false;
+//         }
+//     }
+
+// TODO: rewrite to use semaphores and be called from audio task
+// void receiveTest()
+// {
+//     double freq = 1000;
+//     static uint16_t phaseIndex = 0; /**< Retains the index between function calls */
+//     double phaseIncrement = freq * SINE_TABLE_SIZE / I2S_AUDIOFREQ_48K;
+
+//     if (HAL_I2SEx_TransmitReceive_DMA(&hi2s1, (void *)tx_buf, (void *)rx_buf, BUFFER_SIZE) != HAL_OK)
+//     {
+//         Error_Handler();
+//     }
+
+//     while (1)
+//     {
+//         if (dma_data_ready)
+//         {
+//             loopback_samples();
+//             // generateSineWave(&phaseIndex, phaseIncrement);
+//             dma_data_ready = false;
+//         }
+//     }
+// }
 
 #define SINE_TABLE_SIZE 256 // Adjust the table size as needed for accuracy/performance tradeoff
 
@@ -15,78 +119,24 @@ volatile int16_t *rx_buf_ptr = &rx_buf[0];
 int16_t sineTable[SINE_TABLE_SIZE];
 
 // Populate the sine wave table during initialization
-void initSineTable()
-{
-    for (int i = 0; i < SINE_TABLE_SIZE; ++i)
-    {
-        sineTable[i] = (int16_t)(32767 * sin(2.0 * M_PI * i / SINE_TABLE_SIZE));
+void initSineTable() {
+    for (int i = 0; i < SINE_TABLE_SIZE; ++i) {
+        sineTable[i] = (int16_t) (32767 * sin(2.0 * M_PI * i / SINE_TABLE_SIZE));
     }
 }
 
-// overloadd HAL I2S DMA Complete and HalfComplete callbacks to handle double buffering
-void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef *hi2s)
-{
-    // First half of TX and RX buffers completed
-    tx_buf_ptr = &tx_buf[0];
-    rx_buf_ptr = &rx_buf[0];
-    dma_dataReady = true;
-}
-
-void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef *hi2s)
-{
-    // Second half of TX and RX buffers completed
-    tx_buf_ptr = &tx_buf[HALF_BUFFER_SIZE];
-    rx_buf_ptr = &rx_buf[HALF_BUFFER_SIZE];
-    dma_dataReady = true;
-}
-
-void loopback_samples(){
-    for (uint8_t n = 0; n < (HALF_BUFFER_SIZE)-1; n += 2)
-    {
-        // loopback adc data to dac
-        tx_buf_ptr[n] = rx_buf_ptr[n];
-        tx_buf_ptr[n+1] = rx_buf_ptr[n + 1];
-    }
-}
-
-void receiveTest()
-{
-    double freq = 1000;
-    static uint16_t phaseIndex = 0; /**< Retains the index between function calls */
-    double phaseIncrement = freq * SINE_TABLE_SIZE / I2S_AUDIOFREQ_48K;
-
-    if (HAL_I2SEx_TransmitReceive_DMA(&hi2s1, (void *)tx_buf, (void *)rx_buf, BUFFER_SIZE) != HAL_OK)
-    {
-        Error_Handler();
-    }
-
-    while (1)
-    {
-        if (dma_dataReady)
-        {
-            loopback_samples();
-            // generateSineWave(&phaseIndex, phaseIncrement);
-            dma_dataReady = false;
-        }
-    }
-}
-
-
-void generateSineWave(uint16_t *phaseIndex, double phaseIncrement)
-{
-    for (uint8_t n = 0; n < (HALF_BUFFER_SIZE)-1; n += 2)
-    {
+void generateSineWave(uint16_t* phaseIndex, double phaseIncrement) {
+    for (uint8_t n = 0; n < (active_cfg->buffer_size / 2) - 1; n += 2) {
         // Lookup sine value from table
         // left+right
-        tx_buf_ptr[n] = sineTable[*phaseIndex];
-        tx_buf_ptr[n + 1] = sineTable[*phaseIndex];
+        active_cfg->tx_buf_ptr[n] = sineTable[*phaseIndex];
+        active_cfg->tx_buf_ptr[n + 1] = sineTable[*phaseIndex];
 
         // Increment phase index
         *phaseIndex += phaseIncrement;
 
         // Wrap phase index if it exceeds table size
-        if (*phaseIndex >= SINE_TABLE_SIZE)
-        {
+        if (*phaseIndex >= SINE_TABLE_SIZE) {
             *phaseIndex -= SINE_TABLE_SIZE;
         }
     }

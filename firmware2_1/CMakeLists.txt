@@ -48,6 +48,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/tlv320.c
     Aware/Src/audioengine.c
+    Aware/Src/tape_player.c
 )
 
 # Add include paths
