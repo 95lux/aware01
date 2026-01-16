@@ -76,6 +76,12 @@ SECTIONS
     *(.dma_buffer)
   } >RAM
 
+  /* Big buffers in RAM */
+  .sram1 (NOLOAD) :
+  {
+      *(.sram1*)
+  } > RAM
+
   /* The startup code goes first into FLASH */
   .isr_vector :
   {
