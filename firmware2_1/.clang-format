@@ -1,0 +1,52 @@
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+
+# Line length
+ColumnLimit: 140
+
+# Braces & control
+BreakBeforeBraces: Attach
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+
+# Functions
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakAfterDefinitionReturnType: None
+
+# Pointer / reference style
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# Spacing
+SpaceAfterCStyleCast: true
+SpacesInParentheses: false
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 1
+
+# Switch / case
+IndentCaseLabels: false
+
+# Structs / enums
+BreakBeforeBinaryOperators: None
+BinPackParameters: false
+BinPackArguments: false
+
+
+# Includes
+SortIncludes: false   # important for embedded / HAL
+IncludeBlocks: Preserve
+
+# Comments
+ReflowComments: false
+AlignTrailingComments: true
+
+# Misc
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
