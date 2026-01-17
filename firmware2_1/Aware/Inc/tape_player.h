@@ -16,7 +16,7 @@ struct audioengine_tape {
     size_t dma_buf_size;           // buffer size RX/TX
     tape_buffer_t tape_buf;        // holds tape audio - play source and recording
                                    // target of the tape
-    float tape_playhead;
+    uint32_t tape_playphase;       // Q16.16 (int16_t integer part, uint16_t frac part)
     uint32_t tape_recordhead;
     bool is_playing;
     bool is_recording;

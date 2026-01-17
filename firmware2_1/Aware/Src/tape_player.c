@@ -22,6 +22,7 @@ int init_tape_player(struct audioengine_tape* tape_player,
     tape_player->tape_buf.ch[0] = tape_buffer_l;
     tape_player->tape_buf.ch[1] = tape_buffer_r;
     tape_player->tape_buf.size = TAPE_SIZE_ALIGNED;
+    tape_player->tape_playphase = 1 << 16; // start at sample 1 for interpolation
     tape_player->tape_playhead = 0;
     tape_player->tape_recordhead = 0;
     tape_player->is_playing = false;
@@ -29,6 +30,29 @@ int init_tape_player(struct audioengine_tape* tape_player,
     tape_player->pitch_factor = 1.0f; // TODO: read out pitch fader on init?
 
     return 0;
+}
+
+// from https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html?utm_source=chatgpt.com
+// explained here https://ldesoras.fr/doc/articles/resampler-en.pdf
+// uses phase accumulator
+float hermite_interpolate(uint32_t phase, int16_t* buffer) {
+    uint32_t idx = phase >> 16; // integer part
+    float frac = (phase & 0xFFFF) * (1.0f / 65536.0f);
+
+    int n = (int) idx - 1;
+
+    float xm1 = buffer[n];
+    float x0 = buffer[n + 1];
+    float x1 = buffer[n + 2];
+    float x2 = buffer[n + 3];
+
+    float c = 0.5f * (x1 - xm1);
+    float v = x0 - x1;
+    float w = c + v;
+    float a = w + v + 0.5f * (x2 - x0);
+    float b = w + a;
+
+    return (((a * frac - b) * frac + c) * frac + x0);
 }
 
 // worker function to process tape player state
@@ -40,19 +64,20 @@ void tape_player_process(struct audioengine_tape* tape) {
     // process half of the block
     for (uint32_t n = 0; n < (tape->dma_buf_size / 2) - 1; n += 2) {
         if (tape->is_playing) {
-            // copy 2 samples at once (left and right)
-            // interpolation may give even better results
-            // round samples without interpolation
             // if tape has played all the way, stop playback for now.
-            if ((uint32_t) tape->tape_playhead >= tape->tape_buf.size) {
+            uint32_t idx = tape->tape_playphase >> 16;
+            if (idx < 1 || idx + 2 >= tape->tape_buf.size) {
+                // stop playback or clamp
                 tape->is_playing = false;
-                tape->tape_playhead = 0;
+                tape->tape_playphase = 1 << 16; // safe start
+                continue;
             }
 
-            tape->dma_out_buf[n] = tape->tape_buf.ch[0][(uint32_t) tape->tape_playhead];
-            tape->dma_out_buf[n + 1] = tape->tape_buf.ch[1][(uint32_t) tape->tape_playhead];
+            tape->dma_out_buf[n] = hermite_interpolate(tape->tape_playphase, tape->tape_buf.ch[0]);
+            tape->dma_out_buf[n + 1] = hermite_interpolate(tape->tape_playphase, tape->tape_buf.ch[1]);
 
-            tape->tape_playhead += tape->pitch_factor;
+            uint32_t phase_inc = tape->pitch_factor * 65536.0f;
+            tape->tape_playphase += phase_inc;
         } else {
             // idle -> output silence
             tape->dma_out_buf[n] = 0;
