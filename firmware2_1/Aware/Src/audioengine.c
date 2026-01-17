@@ -30,10 +30,8 @@ int start_audio_engine(void) {
     if (active_cfg == NULL || active_cfg->i2s_handle == NULL)
         return AUDIOENGINE_NOT_INITIALIZED;
 
-    HAL_StatusTypeDef hal_status = HAL_I2SEx_TransmitReceive_DMA(active_cfg->i2s_handle,
-                                                                 (void*) active_cfg->tx_buf_ptr,
-                                                                 (void*) active_cfg->rx_buf_ptr,
-                                                                 active_cfg->buffer_size);
+    HAL_StatusTypeDef hal_status = HAL_I2SEx_TransmitReceive_DMA(
+        active_cfg->i2s_handle, (void*) active_cfg->tx_buf_ptr, (void*) active_cfg->rx_buf_ptr, active_cfg->buffer_size);
 
     if (hal_status != HAL_OK)
         return AUDIOENGINE_ERROR;
@@ -74,44 +72,6 @@ void loopback_samples() {
         active_cfg->tx_buf_ptr[n + 1] = active_cfg->rx_buf_ptr[n + 1];
     }
 }
-
-//     if (HAL_I2SEx_TransmitReceive_DMA(&hi2s1, (void *)tx_buf, (void *)rx_buf, BUFFER_SIZE) != HAL_OK)
-//     {
-//         Error_Handler();
-//     }
-
-//     while (1)
-//     {
-//         if (dma_data_ready)
-//         {
-//             loopback_samples();
-//             // generateSineWave(&phaseIndex, phaseIncrement);
-//             dma_data_ready = false;
-//         }
-//     }
-
-// TODO: rewrite to use semaphores and be called from audio task
-// void receiveTest()
-// {
-//     double freq = 1000;
-//     static uint16_t phaseIndex = 0; /**< Retains the index between function calls */
-//     double phaseIncrement = freq * SINE_TABLE_SIZE / I2S_AUDIOFREQ_48K;
-
-//     if (HAL_I2SEx_TransmitReceive_DMA(&hi2s1, (void *)tx_buf, (void *)rx_buf, BUFFER_SIZE) != HAL_OK)
-//     {
-//         Error_Handler();
-//     }
-
-//     while (1)
-//     {
-//         if (dma_data_ready)
-//         {
-//             loopback_samples();
-//             // generateSineWave(&phaseIndex, phaseIncrement);
-//             dma_data_ready = false;
-//         }
-//     }
-// }
 
 #define SINE_TABLE_SIZE 256 // Adjust the table size as needed for accuracy/performance tradeoff
 

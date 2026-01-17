@@ -5,14 +5,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
+typedef struct {
+    int16_t* ch[2]; // ch[0]=L, ch[1]=R
+    uint32_t size;  // samples per channel
+} tape_buffer_t;
+
 struct audioengine_tape {
     volatile int16_t* dma_in_buf;  // input buffer from ADC / I2S RX
     volatile int16_t* dma_out_buf; // output buffer to ADC / I2S TX
     size_t dma_buf_size;           // buffer size RX/TX
-    int16_t* tape_buf;             // holds tape audio - play source and recording
+    tape_buffer_t tape_buf;        // holds tape audio - play source and recording
                                    // target of the tape
-    uint32_t tape_buf_size;        // size of tape buffer in samples
-    uint32_t tape_playhead;
+    float tape_playhead;
     uint32_t tape_recordhead;
     bool is_playing;
     bool is_recording;
