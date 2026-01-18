@@ -46,11 +46,9 @@ void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef* i2s_handle) {
     active_cfg->rx_buf_ptr = &rx_buf[0];
 
     // signal task from ISR
-    // Unblock processing task from ISR; request immediate context switch if a
-    // higher-priority task was woken (minimize latency after DMA interrupt)
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xSemaphoreGiveFromISR(active_cfg->dma_ready_sem, &xHigherPriorityTaskWoken);
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    BaseType_t hpw = pdFALSE;
+    xTaskNotifyFromISR(active_cfg->audioTaskHandle, 1, eSetValueWithOverwrite, &hpw);
+    portYIELD_FROM_ISR(hpw);
 }
 
 void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef* i2s_handle) {
@@ -59,9 +57,9 @@ void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef* i2s_handle) {
     active_cfg->rx_buf_ptr = &rx_buf[active_cfg->buffer_size / 2];
 
     // signal task from ISR
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xSemaphoreGiveFromISR(active_cfg->dma_ready_sem, &xHigherPriorityTaskWoken);
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    BaseType_t hpw = pdFALSE;
+    xTaskNotifyFromISR(active_cfg->audioTaskHandle, 1, eSetValueWithOverwrite, &hpw);
+    portYIELD_FROM_ISR(hpw);
 }
 
 /* TESTFUNCTIONALITIES FROM HERE ON */

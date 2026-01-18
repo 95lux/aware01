@@ -6,13 +6,16 @@
 #include <stdint.h>
 #include "project_config.h"
 
-static int16_t tape_buffer_l[TAPE_SIZE_ALIGNED] __attribute__((section(".sram1")));
-static int16_t tape_buffer_r[TAPE_SIZE_ALIGNED] __attribute__((section(".sram1")));
+static int16_t tape_buffer_l[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1")));
+static int16_t tape_buffer_r[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1")));
+
+static struct audioengine_tape* active_tape_player;
 
 int init_tape_player(struct audioengine_tape* tape_player,
                      volatile int16_t* dma_in_buf,
                      volatile int16_t* dma_out_buf,
-                     size_t dma_buf_size) {
+                     size_t dma_buf_size,
+                     QueueHandle_t cmd_queue) {
     if (tape_player == NULL || dma_in_buf == NULL || dma_out_buf == NULL || dma_buf_size <= 0)
         return -1;
 
@@ -21,13 +24,17 @@ int init_tape_player(struct audioengine_tape* tape_player,
     tape_player->dma_buf_size = dma_buf_size;
     tape_player->tape_buf.ch[0] = tape_buffer_l;
     tape_player->tape_buf.ch[1] = tape_buffer_r;
-    tape_player->tape_buf.size = TAPE_SIZE_ALIGNED;
+    tape_player->tape_buf.size = TAPE_SIZE_CHANNEL;
     tape_player->tape_playphase = 1 << 16; // start at sample 1 for interpolation
-    tape_player->tape_playhead = 0;
     tape_player->tape_recordhead = 0;
     tape_player->is_playing = false;
     tape_player->is_recording = false;
     tape_player->pitch_factor = 1.0f; // TODO: read out pitch fader on init?
+
+    // init cmd
+    tape_player->tape_cmd_q = cmd_queue;
+
+    active_tape_player = tape_player;
 
     return 0;
 }
@@ -99,6 +106,12 @@ void tape_player_process(struct audioengine_tape* tape) {
             tape->tape_recordhead++;
         }
     }
+}
+
+BaseType_t tape_player_send_cmd_from_isr(const tape_cmd_msg_t* msg, BaseType_t* pxHigherPriorityTaskWoken) {
+    if (active_tape_player->tape_cmd_q == NULL)
+        return pdFALSE;
+    return xQueueSendFromISR(active_tape_player->tape_cmd_q, msg, pxHigherPriorityTaskWoken);
 }
 
 void tape_player_play(struct audioengine_tape* tape_player) {
