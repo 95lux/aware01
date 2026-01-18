@@ -60,6 +60,7 @@ void PeriphCommonClock_Config(void);
 static void MPU_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
+void FREERTOS_Init(void);
 
 /* USER CODE END PFP */
 
@@ -113,6 +114,7 @@ int main(void) {
     // initSineTable();
 
     // generateSineWave(440);
+    FREERTOS_Init();
 
     /* USER CODE END 2 */
 
@@ -178,9 +180,8 @@ void SystemClock_Config(void) {
 
     /** Initializes the CPU, AHB and APB buses clocks
   */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 |
-                                  RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_D3PCLK1 |
-                                  RCC_CLOCKTYPE_D1PCLK1;
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 |
+                                  RCC_CLOCKTYPE_D3PCLK1 | RCC_CLOCKTYPE_D1PCLK1;
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;

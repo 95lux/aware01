@@ -1,6 +1,7 @@
 #ifndef INC_TAPE_PLAYER_H_
 #define INC_TAPE_PLAYER_H_
 
+#include "audioengine.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -21,16 +22,32 @@ struct audioengine_tape {
     bool is_playing;
     bool is_recording;
     float pitch_factor;
+
+    QueueHandle_t tape_cmd_q; // command queue handle
 };
+
+// FREERTOS queue message structure
+typedef enum { TAPE_CMD_PLAY, TAPE_CMD_STOP, TAPE_CMD_RECORD, TAPE_CMD_SET_PITCH } tape_cmd_t;
+typedef struct {
+    tape_cmd_t cmd;
+    float pitch;
+} tape_cmd_msg_t;
+
+/* ISR-safe send wrapper */
+BaseType_t tape_player_send_cmd_from_isr(const tape_cmd_msg_t* msg, BaseType_t* pxHigherPriorityTaskWoken);
 
 int init_tape_player(struct audioengine_tape* tape_player,
                      volatile int16_t* dma_in_buf,
                      volatile int16_t* dma_out_buf,
-                     size_t dma_buf_size);
-void tape_player_play(struct audioengine_tape* tape_player);
-void tape_player_record(struct audioengine_tape* tape_player);
-void tape_player_stop(struct audioengine_tape* tape_player);
-void tape_player_change_pitch(struct audioengine_tape* tape_player, float pitch_factor);
+                     size_t dma_buf_size,
+                     QueueHandle_t cmd_queue);
+
 void tape_player_process(struct audioengine_tape* tape);
+
+// FREERTOS queue commands
+void tape_send_play_cmd(QueueHandle_t q);
+void tape_send_record_cmd(QueueHandle_t q);
+void tape_send_stop_cmd(QueueHandle_t q);
+void tape_send_set_pitch_cmd(QueueHandle_t q, float pitch);
 
 #endif /* INC_TAPE_PLAYER_H_ */

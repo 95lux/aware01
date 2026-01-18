@@ -20,7 +20,7 @@ struct audioengine_config {
     uint32_t sample_rate;
     uint16_t buffer_size;
 
-    SemaphoreHandle_t dma_ready_sem;
+    TaskHandle_t audioTaskHandle;
     volatile int16_t* tx_buf_ptr;
     volatile int16_t* rx_buf_ptr;
 };
