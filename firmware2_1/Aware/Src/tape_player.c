@@ -39,27 +39,39 @@ int init_tape_player(struct audioengine_tape* tape_player,
     return 0;
 }
 
-// from https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html?utm_source=chatgpt.com
+// from https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html
 // explained here https://ldesoras.fr/doc/articles/resampler-en.pdf
 // uses phase accumulator
 float hermite_interpolate(uint32_t phase, int16_t* buffer) {
     uint32_t idx = phase >> 16; // integer part
-    float frac = (phase & 0xFFFF) * (1.0f / 65536.0f);
+    float t = (phase & 0xFFFF) * (1.0f / 65536.0f);
 
     int n = (int) idx - 1;
 
+    // xm1 and x2 are only used for derivative estimation
+    // we interpolate between x0 and x1
     float xm1 = buffer[n];
     float x0 = buffer[n + 1];
     float x1 = buffer[n + 2];
     float x2 = buffer[n + 3];
 
-    float c = 0.5f * (x1 - xm1);
+    // estimate derivatives by finite differences
+    // Catmull-Rom splines with Tension = 0
+    float m0 = 0.5f * (x1 - xm1); // derivative at x0
+    float m1 = 0.5f * (x2 - x0);  // derivative at x1
+
+    // calculate coefficients
+    // Cubic Hermite interpolation (Catmull–Rom spline)
+    float c = m0;
     float v = x0 - x1;
     float w = c + v;
-    float a = w + v + 0.5f * (x2 - x0);
+    float a = w + v + m1;
     float b = w + a;
+    float d = x0;
 
-    return (((a * frac - b) * frac + c) * frac + x0);
+    // cubic polynomial in horner form.
+    // actually a*t^3 + b*t^2 + c*t + d
+    return (((a * t - b) * t + c) * t + d);
 }
 
 // worker function to process tape player state
