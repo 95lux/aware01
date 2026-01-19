@@ -1,0 +1,154 @@
+\subsection{Interpolation during pitched Playback}
+
+An obvious problem arises when dealing with variable speed playback of buffered audio pieces:
+
+the playback speed may not be an integer multiple of the original sample rate. 
+This technique is generally known as \textbf{sample-rate conversion}. 
+Its goal is essentially to obtain a new discrete representation \(y[n]\) of the underlying continuous signal \(x(t)\).
+
+\bigskip
+When playing back faster, the effective sample rate is reduced and the time resolution of the discrete samples decreases. 
+Some samples of the original signal are skipped. This process is called \textbf{decimation}. 
+If the decimation factor is \(L\), the downsampled signal can be written as:
+
+\[
+y[n] = x[nL], \quad n = 0,1,2,\dots
+\]
+
+\bigskip
+Conversely, slowing down the playback speed creates the need for additional sample points between the original discrete-time samples. 
+The interpolation of the sample rate is described by a factor \(M\). 
+The upsampled signal is:
+
+%TODO: are these functions correct? Source
+
+\[
+y[n] =
+\begin{cases}
+	x[n/M], & n \text{ multiple of } M \\
+	0, & \text{otherwise}
+\end{cases}
+\]
+
+%TODO add in block diagrams of filter -> interpolator , and decimator -> filter
+% sinc interpolator briefly explained?.
+
+\subsubsection{Choosing the algorithm}
+
+The resampling algorithm aims to maximise passband flatness and optimise the SNR (signal-to-noise ratio), i.e. not to alter the frequency content of the resulting signal.
+However, interpolation always introduces some degree of aliasing, resulting in degradation of the interpolated signal.
+
+On an embedded platform, it is important to choose an algorithm that is mostly aliasing-free and computationally fast.
+
+%TODO describe polynomial interpolators - control points?
+
+
+Interpolators can generally be classified as either polynomial or FIR. 
+While FIR-based interpolation provides optimal band-limited reconstruction, its computational cost makes it impractical for real-time embedded audio systems.
+Polynomial Interpolators generally give decent results at low computational cost, which make them a solid choice for embedded realtime resampling.
+Polynomial interpolators calculate an underlying polynomial that passes through all the given control points in order to interpolate points.
+The greater the number of control points, the higher the degree of the polynomial. 
+
+A classic example of a polynomial interpolator is the \textit{Lagrangian interpolation}, which finds an $N$ order polynomial through $N+1$ given control points. \cite{smithjuliuso.DigitalAudioResampling}
+When increasing the number of matching points with the Lagrangian polynomial, the interpolation converges with the sinc ideal interpolation. This is computational expensive though. %TODO source?
+
+Another polynomial interpolation technique \textit{cubic splines}, involves fitting a cubic (third-order) polynomial through two known points. It achieves smoothness by also adjusting the polynomials' slope, by changing its coefficients. \cite{smithjuliuso.DigitalAudioResampling}
+Hermite interpolation is part of the family of cubic \textit{osculating interpolation}, in which in addition to matching the function value at the control points, the points also match a number of derivatives at the control points. \cite{olliniemitaloPolynomialInterpolatorsHighQuality2001}
+
+A good performance vs computation tradeoff is a 2-point Hermite interpolation.
+
+\newpage
+\subsubsection{Implementation}
+
+A more performance-optimized implementation of this algorithm was employed in this project:
+
+\begin{listing}
+\begin{minted}{c}
+	float hermite_interpolate(uint32_t phase, int16_t* buffer) {
+		uint32_t idx = phase >> 16; // integer part
+		float t = (phase & 0xFFFF) * (1.0f / 65536.0f);
+		
+		int n = (int) idx - 1;
+		
+		// xm1 and x2 are only used for derivative estimation
+		// we interpolate between x0 and x1
+		float xm1 = buffer[n];
+		float x0 = buffer[n + 1];
+		float x1 = buffer[n + 2];
+		float x2 = buffer[n + 3];
+		
+		// estimate derivatives by finite differences
+		float m0 = 0.5f * (x1 - xm1); // derivative at x0
+		float m1 = 0.5f * (x2 - x0);  // derivative at x1
+		
+		// calculate coefficients
+		// Cubic Hermite interpolation (Catmull-Rom spline with Tension = 0)
+		float c = m0;
+		float v = x0 - x1;
+		float w = c + v;
+		float a = w + v + m1;
+		float b = w + a;
+		float d = x0;
+		
+		// cubic polynomial in Horner form.
+		// actually a*t^3 + b*t^2 + c*t + d
+		return (((a * t - b) * t + c) * t + d);
+	}
+\end{minted}
+
+\caption{Based on Laurent de Soras' implementation from \\
+		\url{https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html}}
+\label{lst:hermite-interpolate}
+\end{listing}
+
+\vspace{5mm}	
+
+Although the function reads four samples \(y[n-1], y[n], y[n+1], y[n+2]\), 
+the actual Hermite interpolation is performed only between the two central points, 
+\(y[n] = \texttt{x0}\) and \(y[n+1] = \texttt{x1}\). 
+The two outer points, \(y[n-1] = \texttt{xm1}\) and \(y[n+2] = \texttt{x2}\), 
+are used exclusively to estimate the derivatives at the interpolation points. 
+
+Since the derivatives of a discrete-time audio signal are not directly available, 
+they are approximated using finite differences:
+
+\[
+m_0 = \frac{x_1 - x_{-1}}{2}, \quad
+m_1 = \frac{x_2 - x_0}{2}
+\]
+
+This ensures a smooth cubic curve between \(x_0\) and \(x_1\) while only requiring the immediate neighbours of the interpolated points.
+
+So the actual interpolation is done between points \texttt{x0} and \texttt{x1} of the function. It is required to input also the $n-1$ sample.
+
+This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly reffered to as \textit{Catmull-Rom spline interpolation}. (source)
+
+The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points.
+
+The algorithm returns the result by computing a cubic polynomial using the nested Horner form \cite{burrusHornersMethodEvaluating}:
+
+\[
+H(t) = (a * t - b) * t + c) * t + d), \quad t \in [0,1]
+\]
+
+which is algebraically equivalent to the standard form
+
+\[
+H(t) = at^3 + bt^2 +ct +d, \quad t \in [0,1]
+\]
+
+but requires fewer arithmetic operations and is therefore preferred in DSP and CPU implementations.
+
+\paragraph{Phase Accumulator}
+
+Instead of using a \texttt{float} variable to track the playhead position within the tape buffer, this project uses a phase accumulator.
+This technique originates from \textit{Direct Digital Synthesis} (DDS), where it was used in  digital hardware systems without FPUs, required to generate a high precision frequency stable signal. \cite{baikadyAreaPowerEfficient2021}
+
+In this project, a $Q16.16$ phase accumulator is used to track the playhead position. 
+This phase is passed into the \texttt{hermite\_interpolate} function \ref{lst:hermite-interpolate} as \mintinline{c}|uint32_t phase|. The position is stored in a single \texttt{uint32\_t} variable, allowing it to be read and written in a single CPU operation. The 16 most significant bits encode the integer part of the position, while the 16 least significant bits represent the fractional part. 
+
+The phase accumulator is still well suited for usage in software DSP, since the sub-sample increments are accumulated in fixed-point arithmetic and are therefore bit-exact. 
+FPUs are only used when converting the fractional part to a \texttt{float} value for interpolation. 
+This ensures precise fractional tracking, since the conversion is stateless and is not altering the phase accumulation. 
+
+Conveniently the fractional part (16 least significant bits) represent a $t \in [0,1)$, which is exactly what the Hermite/Camull-Rom interpolation requires as boundaries.

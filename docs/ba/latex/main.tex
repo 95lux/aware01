@@ -8,7 +8,7 @@
 
 \usepackage{graphicx} % Required for inserting images
 \usepackage{tikz}
-\usepackage{minted}
+\usepackage{minted2}
 \usepackage{caption}
 \usepackage{wrapfig}
 \usepackage{hyperref} 
@@ -52,9 +52,13 @@
 \pagestyle{plain} 
 \setcounter{page}{1}
 \pagenumbering{arabic}
+\section{Hardware}
 \input{gainstages.tex}	
 \newpage
 \input{crystal.tex}	
+\newpage
+\section{Firmware}
+\input{interpolation.tex}
 
 \newpage
 \addcontentsline{toc}{section}{References}
