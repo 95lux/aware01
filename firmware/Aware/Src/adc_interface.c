@@ -11,11 +11,19 @@
 
 static struct adc_config* active_cfg = NULL;
 
+// local DMA buffers for adc cv channels and potentiometer channels - will be allocated in DMA-capable memory, not in FREERTOS task stack!
+DMA_BUFFER static uint16_t adc_dma_cv_buf[NUM_CV_CHANNELS];
+DMA_BUFFER static uint16_t adc_dma_pot_buf[NUM_POT_CHANNELS];
+
 int init_adc_interface(struct adc_config* config) {
     if (config == NULL || config->hadc_cvs == NULL || config->hadc_pots == NULL)
         return -1;
 
     active_cfg = config;
+
+    // assign DMA buffers
+    active_cfg->adc_cv_buf_ptr = adc_dma_cv_buf;
+    active_cfg->adc_pot_buf_ptr = adc_dma_pot_buf;
     return 0;
 }
 
@@ -30,6 +38,30 @@ int start_adc_interface(void) {
         HAL_ADC_Start_DMA(active_cfg->hadc_pots, (uint32_t*) active_cfg->adc_pot_buf_ptr, NUM_POT_CHANNELS);
     }
     return 0;
+}
+
+int adc_copy_dma_to_working_buf(uint16_t* dma_buf, uint16_t* working_buf, size_t len) {
+    if (dma_buf == NULL || working_buf == NULL || len == 0) {
+        return -1;
+    }
+
+    taskENTER_CRITICAL();
+    memcpy(working_buf, dma_buf, len * sizeof(uint16_t));
+    taskEXIT_CRITICAL();
+
+    return 0;
+}
+
+int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len) {
+    if (active_cfg == NULL || active_cfg->adc_cv_buf_ptr == NULL)
+        return -1;
+    return adc_copy_dma_to_working_buf(active_cfg->adc_cv_buf_ptr, working_buf, len);
+}
+
+int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len) {
+    if (active_cfg == NULL || active_cfg->adc_pot_buf_ptr == NULL)
+        return -1;
+    return adc_copy_dma_to_working_buf(active_cfg->adc_pot_buf_ptr, working_buf, len);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {

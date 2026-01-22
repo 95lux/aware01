@@ -1,7 +1,7 @@
 #include "project_config.h"
 #include <stdint.h>
 
-struct CalibrationData {
+struct calibration_data {
     float pitch_offset;            // 4 bytes
     float pitch_scale;             // 4 bytes
     float offset[NUM_CV_CHANNELS]; // 4 * 4 = 16 bytes
@@ -15,10 +15,10 @@ struct State {
 }; // total: 4 bytes
 
 struct SettingsData {
-    struct CalibrationData calibration_data; // 24 bytes
-    struct State state;                      // 4 bytes
-    uint8_t padding[0];                      // pad to 32 bytes
+    struct calibration_data calibration_data; // 24 bytes
+    struct State state;                       // 4 bytes
+    uint8_t padding[0];                       // pad to 32 bytes
 }; // total: 32 bytes
 
-int write_calibration_data(struct CalibrationData* calib_data);
-int read_calibration_data(struct CalibrationData* calib_data);
+int write_calibration_data(struct calibration_data* calib_data);
+int read_calibration_data(struct calibration_data* calib_data);

@@ -6,9 +6,7 @@
 #include "project_config.h"
 
 struct user_interface_config {
-    int16_t* adc_pot_buf_ptr;
-
-    int16_t adc_pot_working_buf[NUM_POT_CHANNELS];
+    uint16_t adc_pot_working_buf[NUM_POT_CHANNELS];
 
     TaskHandle_t userIfTaskHandle;
 
