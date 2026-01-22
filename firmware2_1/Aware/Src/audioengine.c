@@ -1,13 +1,6 @@
 #include "audioengine.h"
 #include "dma.h"
 
-// define a section for DMA buffers. This gets assigned in the linker script.
-#if defined(__ICCARM__)
-#define DMA_BUFFER _Pragma("location=\".dma_buffer\"")
-#else
-#define DMA_BUFFER __attribute__((section(".dma_buffer")))
-#endif
-
 // local DMA buffers for audio I/O - will be allocated in DMA-capable memory, not in FREERTOS task stack!
 DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE];
 DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE];
@@ -16,7 +9,7 @@ DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE];
 static struct audioengine_config* active_cfg = NULL;
 
 int init_audioengine(struct audioengine_config* config) {
-    if (config == NULL)
+    if (config == NULL || config->i2s_handle == NULL)
         return AUDIOENGINE_ERROR;
     active_cfg = config;
 

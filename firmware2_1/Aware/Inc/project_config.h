@@ -14,3 +14,13 @@
 #define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)
 
 #define NUM_CV_CHANNELS 4
+#define NUM_POT_CHANNELS 4
+
+/* ======= MEMORY SECTIONS ======= */
+
+// define section for DMA buffers. This gets assigned in the linker script.
+#if defined(__ICCARM__)
+#define DMA_BUFFER _Pragma("location=\".dma_buffer\"")
+#else
+#define DMA_BUFFER __attribute__((section(".dma_buffer")))
+#endif
