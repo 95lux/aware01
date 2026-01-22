@@ -12,6 +12,8 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
+add_compile_options(-fdiagnostics-color=always)
+
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -19,20 +21,17 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME aware01_firmware)
-
-# Include toolchain file
-include("cmake/gcc-arm-none-eabi.cmake")
+set(CMAKE_PROJECT_NAME firmware)
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-# Enable CMake support for ASM and C languages
-enable_language(C ASM)
-
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
+
+# Enable CMake support for ASM and C languages
+enable_language(C ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
@@ -45,24 +44,31 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
 )
 
-message(STATUS "Project Name: ${CMAKE_PROJECT_NAME}")
-
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    Core/Src/tlv320.c
-    Core/Src/audioengine.c
+    Aware/Src/rtos.c
+    Aware/Src/tlv320.c
+    Aware/Src/audioengine.c
+    Aware/Src/tape_player.c
+    Aware/Src/user_interface.c
+    Aware/Src/settings.c
+    Aware/Src/control_interface.c
+    Aware/Src/adc_interface.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-    /usr/lib/gcc/arm-none-eabi/14.2.0/include/
+    Aware/Inc
 )
 
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
 )
+
+# Remove wrong libob.a library dependency when using cpp files
+list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
