@@ -107,12 +107,34 @@ static void ControlInterfaceTask(void* argument) {
     (void) argument;
 
     struct control_interface_config control_interface_cfg = {
-        .adc_pot_buf_ptr = NULL,
         .userIfTaskHandle = userIfTaskHandle,
         .hadc_cvs = &hadc1,
     };
 
-    init_control_interface(&control_interface_cfg);
+    struct calibration_data calib_data;
+
+    int b_read = read_calibration_data(&calib_data);
+    if (b_read != sizeof(struct calibration_data)) {
+        // set default/fallback calibration data
+        calib_data.pitch_offset = 0.0f;
+        calib_data.pitch_scale = 12.0f;
+        for (size_t i = 0; i < NUM_CV_CHANNELS; ++i) {
+            calib_data.offset[i] = 0.0f;
+        }
+    }
+
+    // Init calibration if both buttons are held on startup
+    if (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
+        HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
+        /* simple debounce / require 500 ms hold */
+        vTaskDelay(pdMS_TO_TICKS(500));
+        if (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
+            HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
+            control_interface_start_calibration(&calib_data);
+        }
+    }
+
+    init_control_interface(&control_interface_cfg, &calib_data);
     start_control_interface();
 
     uint32_t notified;
@@ -120,7 +142,7 @@ static void ControlInterfaceTask(void* argument) {
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_CV) {
-                /* quick atomic copy from DMA buffer */
+                int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
                 // process_cv_samples(control_interface_cfg->adc_cv_buf_ptr);
             }
         }
@@ -130,7 +152,6 @@ static void ControlInterfaceTask(void* argument) {
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
     struct user_interface_config user_interface_cfg = {
-        .adc_pot_buf_ptr = NULL,
         .userIfTaskHandle = userIfTaskHandle,
         .hadc_pots = &hadc2,
     };
@@ -143,6 +164,7 @@ static void UserInterfaceTask(void* argument) {
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_POTS) {
+                int res = adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
                 // process_pot_samples(user_interface_cfg->adc_pot_buf_ptr);
             }
         }

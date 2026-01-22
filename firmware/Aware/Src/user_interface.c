@@ -9,9 +9,6 @@
 
 #include "tape_player.h"
 
-// local DMA buffers for adc potentiometer channels - will be allocated in DMA-capable memory, not in FREERTOS task stack!
-DMA_BUFFER static int16_t adc_pot_buf[NUM_POT_CHANNELS];
-
 static struct user_interface_config* active_cfg = NULL;
 
 int init_user_interface(struct user_interface_config* config) {
@@ -19,8 +16,6 @@ int init_user_interface(struct user_interface_config* config) {
         return -1;
 
     active_cfg = config;
-
-    active_cfg->adc_pot_buf_ptr = &adc_pot_buf[0];
 
     return 0;
 }

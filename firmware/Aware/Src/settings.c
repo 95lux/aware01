@@ -65,9 +65,9 @@ uint32_t flash_write(uint32_t* data, uint16_t words) {
 }
 
 // returns 1 on success, 0 on failure
-int write_calibration_data(struct CalibrationData* calib_data) {
+int write_calibration_data(struct calibration_data* calib_data) {
     uint32_t* data_ptr = (uint32_t*) calib_data;
-    uint16_t words = sizeof(struct CalibrationData) / 4; // number of 32-bit words
+    uint16_t words = sizeof(struct calibration_data) / 4; // number of 32-bit words
 
     // write calibration data to flash
     uint32_t result = flash_write(data_ptr, words);
@@ -75,9 +75,9 @@ int write_calibration_data(struct CalibrationData* calib_data) {
 }
 
 // returns the number of bytes read
-int read_calibration_data(struct CalibrationData* calib_data) {
+int read_calibration_data(struct calibration_data* calib_data) {
     uint32_t* data_ptr = (uint32_t*) calib_data;
-    uint16_t words = sizeof(struct CalibrationData) / 4;
+    uint16_t words = sizeof(struct calibration_data) / 4;
 
     uint32_t* flash_ptr = (uint32_t*) FLASH_USER_START_ADDR;
     for (uint16_t i = 0; i < words; i++) {

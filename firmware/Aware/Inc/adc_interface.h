@@ -5,10 +5,11 @@
 #include "task.h"
 
 #include "project_config.h"
+#include <stdint.h>
 
 struct adc_config {
-    int16_t* adc_cv_buf_ptr;
-    int16_t* adc_pot_buf_ptr;
+    uint16_t* adc_cv_buf_ptr;
+    uint16_t* adc_pot_buf_ptr;
 
     TaskHandle_t userIfTaskHandle;
     TaskHandle_t controlIfTaskHandle;
@@ -23,3 +24,10 @@ struct adc_config {
 
 int init_adc_interface(struct adc_config* config);
 int start_adc_interface(void);
+
+int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len);
+int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len);
+
+static inline float float_value(uint16_t val) {
+    return (float) val / 65536.0f;
+}

@@ -3,19 +3,21 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include "settings.h"
 #include "project_config.h"
 
 struct control_interface_config {
-    int16_t* adc_cv_buf_ptr;
-    int16_t* adc_pot_buf_ptr;
-
-    int16_t adc_cv_working_buf[NUM_CV_CHANNELS];
-    int16_t adc_pot_working_buf[NUM_POT_CHANNELS];
+    uint16_t adc_cv_working_buf[NUM_CV_CHANNELS];
 
     TaskHandle_t userIfTaskHandle;
 
     ADC_HandleTypeDef* hadc_cvs;
+
+    struct calibration_data* calib_data;
+    float cv_c1;
 };
 
-int init_control_interface(struct control_interface_config* config);
+int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
 int start_control_interface();
+int process_cv_samples();
+int control_interface_start_calibration(struct calibration_data* calib_data);

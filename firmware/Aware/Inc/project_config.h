@@ -13,8 +13,10 @@
 #define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)
 #define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)
 
+// CV Channel configuration
 #define NUM_CV_CHANNELS 4
 #define NUM_POT_CHANNELS 4
+#define ADC_V_OCT_CV 0 // ADC channel index for 1V/oct CV input
 
 /* ======= MEMORY SECTIONS ======= */
 
