@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -45,36 +45,42 @@ void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, FAD_LED1_OUT_Pin|FAD_LED4_OUT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FAD_LED4_OUT_Pin|FAD_LED3_OUT_Pin|FAD_LED2_OUT_Pin|FAD_LED1_OUT_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : GATE1_IN_Pin GATE2_IN_Pin BUTTON1_IN_Pin BUTTON2_IN_Pin */
-  GPIO_InitStruct.Pin = GATE1_IN_Pin|GATE2_IN_Pin|BUTTON1_IN_Pin|BUTTON2_IN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(RGB_LED_DATA_GPIO_Port, RGB_LED_DATA_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : FAD_LED1_OUT_Pin FAD_LED4_OUT_Pin */
-  GPIO_InitStruct.Pin = FAD_LED1_OUT_Pin|FAD_LED4_OUT_Pin;
+  /*Configure GPIO pins : FAD_LED4_OUT_Pin FAD_LED3_OUT_Pin FAD_LED2_OUT_Pin FAD_LED1_OUT_Pin */
+  GPIO_InitStruct.Pin = FAD_LED4_OUT_Pin|FAD_LED3_OUT_Pin|FAD_LED2_OUT_Pin|FAD_LED1_OUT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : FAD_LED2_OUT_Pin FAD_LED3_OUT_Pin */
-  GPIO_InitStruct.Pin = FAD_LED2_OUT_Pin|FAD_LED3_OUT_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  /*Configure GPIO pins : GATE4_IN_Pin GATE3_IN_Pin */
+  GPIO_InitStruct.Pin = GATE4_IN_Pin|GATE3_IN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : GATE2_IN_Pin GATE1_IN_Pin BUTTON1_IN_Pin BUTTON2_IN_Pin */
+  GPIO_InitStruct.Pin = GATE2_IN_Pin|GATE1_IN_Pin|BUTTON1_IN_Pin|BUTTON2_IN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : RGB_LED_DATA_Pin */
+  GPIO_InitStruct.Pin = RGB_LED_DATA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(RGB_LED_DATA_GPIO_Port, &GPIO_InitStruct);
 
 }
 

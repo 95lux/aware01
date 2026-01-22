@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -25,8 +25,8 @@
 /* USER CODE END 0 */
 
 I2S_HandleTypeDef hi2s1;
-DMA_HandleTypeDef hdma_spi1_tx;
 DMA_HandleTypeDef hdma_spi1_rx;
+DMA_HandleTypeDef hdma_spi1_tx;
 
 /* I2S1 init function */
 void MX_I2S1_Init(void)
@@ -44,7 +44,7 @@ void MX_I2S1_Init(void)
   hi2s1.Init.Standard = I2S_STANDARD_PHILIPS;
   hi2s1.Init.DataFormat = I2S_DATAFORMAT_16B;
   hi2s1.Init.MCLKOutput = I2S_MCLKOUTPUT_ENABLE;
-  hi2s1.Init.AudioFreq = I2S_AUDIOFREQ_48K;
+  hi2s1.Init.AudioFreq = I2S_AUDIOFREQ_8K;
   hi2s1.Init.CPOL = I2S_CPOL_LOW;
   hi2s1.Init.FirstBit = I2S_FIRSTBIT_MSB;
   hi2s1.Init.WSInversion = I2S_WS_INVERSION_DISABLE;
@@ -74,15 +74,7 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
   /** Initializes the peripherals clock
   */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SPI1;
-    PeriphClkInitStruct.PLL3.PLL3M = 24;
-    PeriphClkInitStruct.PLL3.PLL3N = 344;
-    PeriphClkInitStruct.PLL3.PLL3P = 28;
-    PeriphClkInitStruct.PLL3.PLL3Q = 2;
-    PeriphClkInitStruct.PLL3.PLL3R = 6;
-    PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_0;
-    PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
-    PeriphClkInitStruct.PLL3.PLL3FRACN = 524;
-    PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL3;
+    PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
       Error_Handler();
@@ -93,13 +85,12 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    __HAL_RCC_GPIOG_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**I2S1 GPIO Configuration
     PA4     ------> I2S1_WS
     PA5     ------> I2S1_CK
     PC4     ------> I2S1_MCK
-    PG9     ------> I2S1_SDI
+    PB4     ------> I2S1_SDI
     PB5     ------> I2S1_SDO
     */
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
@@ -116,14 +107,7 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
-    HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_5;
+    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -131,24 +115,6 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
     /* I2S1 DMA Init */
-    /* SPI1_TX Init */
-    hdma_spi1_tx.Instance = DMA1_Stream1;
-    hdma_spi1_tx.Init.Request = DMA_REQUEST_SPI1_TX;
-    hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_spi1_tx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_spi1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_spi1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_spi1_tx.Init.Mode = DMA_CIRCULAR;
-    hdma_spi1_tx.Init.Priority = DMA_PRIORITY_HIGH;
-    hdma_spi1_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_spi1_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(i2sHandle,hdmatx,hdma_spi1_tx);
-
     /* SPI1_RX Init */
     hdma_spi1_rx.Instance = DMA1_Stream0;
     hdma_spi1_rx.Init.Request = DMA_REQUEST_SPI1_RX;
@@ -157,8 +123,8 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
     hdma_spi1_rx.Init.MemInc = DMA_MINC_ENABLE;
     hdma_spi1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_spi1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_spi1_rx.Init.Mode = DMA_CIRCULAR;
-    hdma_spi1_rx.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_spi1_rx.Init.Mode = DMA_NORMAL;
+    hdma_spi1_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     hdma_spi1_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_spi1_rx) != HAL_OK)
     {
@@ -167,9 +133,24 @@ void HAL_I2S_MspInit(I2S_HandleTypeDef* i2sHandle)
 
     __HAL_LINKDMA(i2sHandle,hdmarx,hdma_spi1_rx);
 
-    /* I2S1 interrupt Init */
-    HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(SPI1_IRQn);
+    /* SPI1_TX Init */
+    hdma_spi1_tx.Instance = DMA1_Stream1;
+    hdma_spi1_tx.Init.Request = DMA_REQUEST_SPI1_TX;
+    hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_spi1_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_spi1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_spi1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_spi1_tx.Init.Mode = DMA_NORMAL;
+    hdma_spi1_tx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+    hdma_spi1_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    if (HAL_DMA_Init(&hdma_spi1_tx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(i2sHandle,hdmatx,hdma_spi1_tx);
+
   /* USER CODE BEGIN SPI1_MspInit 1 */
 
   /* USER CODE END SPI1_MspInit 1 */
@@ -191,23 +172,18 @@ void HAL_I2S_MspDeInit(I2S_HandleTypeDef* i2sHandle)
     PA4     ------> I2S1_WS
     PA5     ------> I2S1_CK
     PC4     ------> I2S1_MCK
-    PG9     ------> I2S1_SDI
+    PB4     ------> I2S1_SDI
     PB5     ------> I2S1_SDO
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_4|GPIO_PIN_5);
 
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_4);
 
-    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_9);
-
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_5);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_4|GPIO_PIN_5);
 
     /* I2S1 DMA DeInit */
-    HAL_DMA_DeInit(i2sHandle->hdmatx);
     HAL_DMA_DeInit(i2sHandle->hdmarx);
-
-    /* I2S1 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(SPI1_IRQn);
+    HAL_DMA_DeInit(i2sHandle->hdmatx);
   /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
   /* USER CODE END SPI1_MspDeInit 1 */
