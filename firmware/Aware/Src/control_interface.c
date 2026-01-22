@@ -1,13 +1,13 @@
 #include "control_interface.h"
 #include "adc_interface.h"
 
+#include "main.h"
+#include "project_config.h"
+#include "stm32h7xx_hal.h"
+#include "string.h"
 #include <FreeRTOS.h>
 #include <queue.h>
 #include <stdint.h>
-#include "project_config.h"
-#include "stm32h7xx_hal.h"
-#include "main.h"
-#include "string.h"
 
 #include "tape_player.h"
 

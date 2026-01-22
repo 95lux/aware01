@@ -1,17 +1,17 @@
 #include "tape_player.h"
 
-#include <stddef.h>
-#include <stdbool.h>
-#include <arm_math.h>
-#include <stdint.h>
 #include "project_config.h"
+#include <arm_math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 static int16_t tape_buffer_l[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1")));
 static int16_t tape_buffer_r[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1")));
 
-static struct audioengine_tape* active_tape_player;
+static struct tape_player* active_tape_player;
 
-int init_tape_player(struct audioengine_tape* tape_player,
+int init_tape_player(struct tape_player* tape_player,
                      volatile int16_t* dma_in_buf,
                      volatile int16_t* dma_out_buf,
                      size_t dma_buf_size,
@@ -27,6 +27,8 @@ int init_tape_player(struct audioengine_tape* tape_player,
     tape_player->tape_buf.size = TAPE_SIZE_CHANNEL;
     tape_player->tape_playphase = 1 << 16; // start at sample 1 for interpolation
     tape_player->tape_recordhead = 0;
+
+    // parameters
     tape_player->is_playing = false;
     tape_player->is_recording = false;
     tape_player->pitch_factor = 1.0f; // TODO: read out pitch fader on init?
@@ -75,7 +77,7 @@ float hermite_interpolate(uint32_t phase, int16_t* buffer) {
 }
 
 // worker function to process tape player state
-void tape_player_process(struct audioengine_tape* tape) {
+void tape_player_process(struct tape_player* tape) {
     // TODO: implement circular tape buffer (?) - for now, just stop at the end of the buffer
     if (!tape || !tape->tape_buf.ch[0] || !tape->tape_buf.ch[1])
         return;
@@ -126,18 +128,18 @@ BaseType_t tape_player_send_cmd_from_isr(const tape_cmd_msg_t* msg, BaseType_t* 
     return xQueueSendFromISR(active_tape_player->tape_cmd_q, msg, pxHigherPriorityTaskWoken);
 }
 
-void tape_player_play(struct audioengine_tape* tape_player) {
+void tape_player_play(struct tape_player* tape_player) {
     if (tape_player) {
         tape_player->is_playing = true;
     }
 }
-void tape_player_record(struct audioengine_tape* tape_player) {
+void tape_player_record(struct tape_player* tape_player) {
     if (tape_player) {
         tape_player->is_recording = true;
     }
 }
 
-void tape_player_change_pitch(struct audioengine_tape* tape_player, float pitch_factor) {
+void tape_player_change_pitch(struct tape_player* tape_player, float pitch_factor) {
     if (tape_player) {
         tape_player->pitch_factor = pitch_factor;
     }

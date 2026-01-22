@@ -1,16 +1,16 @@
 #include "FreeRTOS.h"
-#include "task.h"
 #include "queue.h"
+#include "task.h"
 #include <string.h>
 
-#include "main.h"
-#include <stdbool.h>
-#include "tlv320.h"
-#include "audioengine.h"
-#include "tape_player.h"
-#include "user_interface.h"
-#include "control_interface.h"
 #include "adc_interface.h"
+#include "audioengine.h"
+#include "control_interface.h"
+#include "main.h"
+#include "tape_player.h"
+#include "tlv320.h"
+#include "user_interface.h"
+#include <stdbool.h>
 
 /* ===== Global FreeRTOS objects ===== */
 TaskHandle_t audioTaskHandle;
@@ -18,6 +18,7 @@ TaskHandle_t controlIfTaskHandle;
 TaskHandle_t userIfTaskHandle;
 
 QueueHandle_t tape_cmd_q;
+QueueHandle_t params_queue;
 
 /* ===== Task prototypes ===== */
 static void AudioTask(void* argument);
@@ -29,6 +30,9 @@ void FREERTOS_Init(void) {
     /* create command queue */
     tape_cmd_q = xQueueCreate(8, sizeof(tape_cmd_msg_t));
     configASSERT(tape_cmd_q);
+
+    params_queue = xQueueCreate(1, sizeof(struct parameters));
+    configASSERT(params_queue);
 
     /* create audio task (highest priority) */
     xTaskCreate(AudioTask, "Audio", 512, NULL, configMAX_PRIORITIES - 1, &audioTaskHandle);
@@ -65,7 +69,7 @@ static void AudioTask(void* argument) {
     struct audioengine_config audioengine_cfg = {
         .i2s_handle = &hi2s1, .sample_rate = SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
 
-    struct audioengine_tape tape_player;
+    struct tape_player tape_player;
 
     /* initialize audio engine */
     init_audioengine(&audioengine_cfg);
@@ -94,10 +98,12 @@ static void AudioTask(void* argument) {
             case TAPE_CMD_RECORD:
                 tape_player.is_recording = true;
                 break;
-            case TAPE_CMD_SET_PITCH:
-                tape_player.pitch_factor = msg.pitch;
-                break;
             }
+        }
+        struct parameters params;
+        /* consume all pending parameter updates and apply latest pitch */
+        while (xQueueReceive(params_queue, &params, 0) == pdTRUE) {
+            tape_player.pitch_factor = params.v_oct;
         }
     }
 }
@@ -139,15 +145,19 @@ static void ControlInterfaceTask(void* argument) {
 
     uint32_t notified;
 
+    struct parameters params;
+
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_CV) {
                 int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
                 if (res != 0) {
                     // skip processing if error
-                    break;
+                    continue;
                 };
-                process_cv_samples();
+                process_cv_samples(&params);
+
+                xQueueOverwrite(params_queue, &params);
             }
         }
     }
