@@ -143,7 +143,11 @@ static void ControlInterfaceTask(void* argument) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_CV) {
                 int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
-                // process_cv_samples(control_interface_cfg->adc_cv_buf_ptr);
+                if (res != 0) {
+                    // skip processing if error
+                    break;
+                };
+                process_cv_samples();
             }
         }
     }

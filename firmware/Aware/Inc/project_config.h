@@ -17,6 +17,9 @@
 #define NUM_CV_CHANNELS 4
 #define NUM_POT_CHANNELS 4
 #define ADC_V_OCT_CV 0 // ADC channel index for 1V/oct CV input
+#define ADC_CV1 1      // ADC channel index for CV1 input
+#define ADC_CV2 2      // ADC channel index for CV2 input
+#define ADC_CV3 3      // ADC channel index for CV3 input
 
 /* ======= MEMORY SECTIONS ======= */
 
