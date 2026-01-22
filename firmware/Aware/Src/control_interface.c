@@ -29,8 +29,13 @@ int start_control_interface() {
 }
 
 // TODO: implement processing of CV samples
-int process_cv_samples() {
+int process_cv_samples(struct parameters* params) {
     // control parameters based on CV inputs
+    // do we need software filtering to smooth the CV inputs?
+    params->v_oct = float_value(active_cfg->adc_cv_working_buf[ADC_V_OCT_CV]);
+    params->cv1 = float_value(active_cfg->adc_cv_working_buf[ADC_CV1]);
+    params->cv2 = float_value(active_cfg->adc_cv_working_buf[ADC_CV2]);
+    params->cv3 = float_value(active_cfg->adc_cv_working_buf[ADC_CV3]);
     return 0;
 }
 

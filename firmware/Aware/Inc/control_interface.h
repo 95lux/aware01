@@ -17,6 +17,17 @@ struct control_interface_config {
     float cv_c1;
 };
 
+struct parameters {
+    float v_oct;
+    float cv1;
+    float cv2;
+    float cv3;
+    bool gate1;
+    bool gate2;
+    bool gate3;
+    bool gate4;
+};
+
 int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
 int start_control_interface();
 int process_cv_samples();
