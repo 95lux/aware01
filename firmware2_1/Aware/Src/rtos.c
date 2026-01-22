@@ -1,12 +1,16 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include <string.h>
 
 #include "main.h"
 #include <stdbool.h>
 #include "tlv320.h"
 #include "audioengine.h"
 #include "tape_player.h"
+#include "user_interface.h"
+#include "control_interface.h"
+#include "adc_interface.h"
 
 /* ===== Global FreeRTOS objects ===== */
 TaskHandle_t audioTaskHandle;
@@ -14,7 +18,6 @@ TaskHandle_t controlIfTaskHandle;
 TaskHandle_t userIfTaskHandle;
 
 QueueHandle_t tape_cmd_q;
-SemaphoreHandle_t dma_ready_sem;
 
 /* ===== Task prototypes ===== */
 static void AudioTask(void* argument);
@@ -35,6 +38,19 @@ void FREERTOS_Init(void) {
 
     /* create user interface task */
     xTaskCreate(UserInterfaceTask, "UserIF", 256, NULL, configMAX_PRIORITIES - 4, &userIfTaskHandle);
+
+    {
+        struct adc_config adc_interface_cfg = {
+            .adc_cv_buf_ptr = NULL,
+            .adc_pot_buf_ptr = NULL,
+            .controlIfTaskHandle = controlIfTaskHandle,
+            .userIfTaskHandle = userIfTaskHandle,
+            .hadc_pots = &hadc1,
+        };
+
+        init_adc_interface(&adc_interface_cfg);
+        start_adc_interface();
+    }
 }
 
 /* ===== Audio task ===== */
@@ -90,16 +106,45 @@ static void AudioTask(void* argument) {
 static void ControlInterfaceTask(void* argument) {
     (void) argument;
 
+    struct control_interface_config control_interface_cfg = {
+        .adc_pot_buf_ptr = NULL,
+        .userIfTaskHandle = userIfTaskHandle,
+        .hadc_cvs = &hadc1,
+    };
+
+    init_control_interface(&control_interface_cfg);
+    start_control_interface();
+
+    uint32_t notified;
+
     for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(1));
+        if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
+            if (notified & ADC_NOTIFY_CV) {
+                /* quick atomic copy from DMA buffer */
+                // process_cv_samples(control_interface_cfg->adc_cv_buf_ptr);
+            }
+        }
     }
 }
 
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
-    (void) argument;
+    struct user_interface_config user_interface_cfg = {
+        .adc_pot_buf_ptr = NULL,
+        .userIfTaskHandle = userIfTaskHandle,
+        .hadc_pots = &hadc2,
+    };
+
+    init_user_interface(&user_interface_cfg);
+    start_user_interface();
+
+    uint32_t notified;
 
     for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(1));
+        if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
+            if (notified & ADC_NOTIFY_POTS) {
+                // process_pot_samples(user_interface_cfg->adc_pot_buf_ptr);
+            }
+        }
     }
 }
