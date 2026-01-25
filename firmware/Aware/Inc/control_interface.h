@@ -1,3 +1,5 @@
+#pragma once
+
 #include "FreeRTOS.h"
 #include "adc.h"
 #include "stm32h7xx_hal.h"

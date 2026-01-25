@@ -1,5 +1,5 @@
 #include "control_interface.h"
-#include "adc_interface.h"
+#include "drivers/adc_driver.h"
 
 #include "main.h"
 #include "project_config.h"

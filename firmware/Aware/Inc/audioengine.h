@@ -1,14 +1,13 @@
-#ifndef INC_AUDIO_H_
-#define INC_AUDIO_H_
+#pragma once
 
-#include <stdbool.h>
+#include "FreeRTOS.h"
+#include "i2s.h"
+#include "project_config.h"
+#include "semphr.h"
 #include <math.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <sys/_intsup.h>
-#include "i2s.h"
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "project_config.h"
 
 // return types
 #define AUDIOENGINE_OK 0
@@ -33,4 +32,4 @@ void generateSineWave(uint16_t* phaseIndex, double phaseIncrement);
 void receiveTest();
 void initSineTable();
 
-#endif /* INC_AUDIO_H_ */
+void loopback_samples();

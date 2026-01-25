@@ -1,11 +1,11 @@
-#include "adc_interface.h"
+#include "drivers/adc_driver.h"
 
-#include <FreeRTOS.h>
-#include <queue.h>
+#include "main.h"
 #include "project_config.h"
 #include "stm32h7xx_hal.h"
-#include "main.h"
 #include "string.h"
+#include <FreeRTOS.h>
+#include <queue.h>
 
 #include "tape_player.h"
 

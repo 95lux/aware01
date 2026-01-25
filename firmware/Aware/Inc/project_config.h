@@ -1,17 +1,17 @@
 #pragma once
 
+/* ===== Config Options ===== */
+#define CONFIG_AUDIO_LOOPBACK 1
+
+/* ===== Engine Parameters ===== */
+
 /* audio engine config */
 #define AUDIO_BLOCK_SIZE 256
-// #define SAMPLE_RATE I2S_AUDIOFREQ_48K
-#define SAMPLE_RATE 48000
+#define AUDIO_SAMPLE_RATE I2S_AUDIOFREQ_48K
 
 /* tape engine configs*/
 #define TAPE_SECONDS 5
 #define NUM_CHANNELS 2 // stereo
-
-#define TAPE_SIZE (SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS) // number of samples
-#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)
-#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)
 
 // CV Channel configuration
 #define NUM_CV_CHANNELS 4
@@ -29,3 +29,8 @@
 #else
 #define DMA_BUFFER __attribute__((section(".dma_buffer")))
 #endif
+
+/* ===== Derived values (do not edit) ===== */
+#define TAPE_SIZE (AUDIO_SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS) // number of samples
+#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)
+#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)

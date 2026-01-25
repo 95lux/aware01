@@ -1,5 +1,4 @@
-#ifndef TLV320_H
-#define TLV320_H
+#pragma once
 
 #include "stdint.h"
 
@@ -11,5 +10,3 @@ int codec_check_status();
 
 int8_t codec_i2c_is_ok();
 void codec_init();
-
-#endif // TLV320_H

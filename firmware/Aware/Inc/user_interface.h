@@ -1,6 +1,6 @@
-#include "stm32h7xx_hal.h"
-#include "adc.h"
 #include "FreeRTOS.h"
+#include "adc.h"
+#include "stm32h7xx_hal.h"
 #include "task.h"
 
 #include "project_config.h"

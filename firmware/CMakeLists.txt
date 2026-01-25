@@ -47,13 +47,14 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/rtos.c
-    Aware/Src/tlv320.c
     Aware/Src/audioengine.c
     Aware/Src/tape_player.c
     Aware/Src/user_interface.c
     Aware/Src/settings.c
     Aware/Src/control_interface.c
-    Aware/Src/adc_interface.c
+    Aware/Src/drivers/tlv320_driver.c
+    Aware/Src/drivers/adc_driver.c
+    Aware/Src/drivers/gpio_driver.c
 )
 
 # Add include paths
