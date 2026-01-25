@@ -1,3 +1,5 @@
+#pragma once
+
 #include "project_config.h"
 #include <stdint.h>
 

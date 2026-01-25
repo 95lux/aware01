@@ -40,7 +40,7 @@ BinPackArguments: false
 
 
 # Includes
-SortIncludes: false   # important for embedded / HAL
+SortIncludes: true   # important for embedded / HAL
 IncludeBlocks: Preserve
 
 # Comments

@@ -1,5 +1,4 @@
-#ifndef INC_TAPE_PLAYER_H_
-#define INC_TAPE_PLAYER_H_
+#pragma once
 
 #include "audioengine.h"
 #include <stdbool.h>
@@ -50,5 +49,3 @@ void tape_send_play_cmd(QueueHandle_t q);
 void tape_send_record_cmd(QueueHandle_t q);
 void tape_send_stop_cmd(QueueHandle_t q);
 void tape_send_set_pitch_cmd(QueueHandle_t q, float pitch);
-
-#endif /* INC_TAPE_PLAYER_H_ */

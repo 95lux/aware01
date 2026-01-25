@@ -2,7 +2,7 @@
 #include "i2c.h"
 #include "stdio.h"
 
-#include "tlv320.h"
+#include "drivers/tlv320_driver.h"
 
 #define I2C_ADDR (0x18 << 1)
 

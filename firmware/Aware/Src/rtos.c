@@ -1,14 +1,15 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
+#include <stdio.h>
 #include <string.h>
 
-#include "adc_interface.h"
 #include "audioengine.h"
 #include "control_interface.h"
+#include "drivers/adc_driver.h"
+#include "drivers/tlv320_driver.h"
 #include "main.h"
 #include "tape_player.h"
-#include "tlv320.h"
 #include "user_interface.h"
 #include <stdbool.h>
 
@@ -59,6 +60,7 @@ void FREERTOS_Init(void) {
 
 /* ===== Audio task ===== */
 static void AudioTask(void* argument) {
+    printf("Hello i am the audio task\n");
     (void) argument;
 
     /* configure codec */
@@ -67,7 +69,7 @@ static void AudioTask(void* argument) {
     }
 
     struct audioengine_config audioengine_cfg = {
-        .i2s_handle = &hi2s1, .sample_rate = SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
+        .i2s_handle = &hi2s1, .sample_rate = AUDIO_SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
 
     struct tape_player tape_player;
 
@@ -80,6 +82,9 @@ static void AudioTask(void* argument) {
     for (;;) {
         /* wait for DMA signal */
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+#ifdef CONFIG_AUDIO_LOOPBACK
+        loopback_samples();
+#else
 
         /* process audio block */
         tape_player_process(&tape_player);
@@ -105,6 +110,7 @@ static void AudioTask(void* argument) {
         while (xQueueReceive(params_queue, &params, 0) == pdTRUE) {
             tape_player.pitch_factor = params.v_oct;
         }
+#endif
     }
 }
 
