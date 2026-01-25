@@ -16856,7 +16856,7 @@
 				(justify left)
 			)
 		)
-		(pin "I2S1_SDO" output
+		(pin "I2S1_SDO" input
 			(at 355.6 217.17 180)
 			(uuid "f6d10ce4-56cc-48cb-ab29-951eecb69223")
 			(effects
@@ -16866,7 +16866,7 @@
 				(justify left)
 			)
 		)
-		(pin "I2S1_SDI" input
+		(pin "I2S1_SDI" output
 			(at 355.6 214.63 180)
 			(uuid "3b67dc47-95be-46fa-aa55-9b51cd52fbde")
 			(effects

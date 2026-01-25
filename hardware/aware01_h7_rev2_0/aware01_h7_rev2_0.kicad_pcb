@@ -36870,7 +36870,7 @@
 			(net 1 "GND")
 			(pinfunction "EP")
 			(pintype "passive")
-			(uuid "80fd66e4-b4e4-4377-ab2e-6e641143f554")
+			(uuid "4bf43bff-ba6f-42bc-a128-ada3ecd3b6ad")
 		)
 		(pad "33" thru_hole circle
 			(at 0 0 270)
@@ -36881,7 +36881,7 @@
 			(net 1 "GND")
 			(pinfunction "EP")
 			(pintype "passive")
-			(uuid "80fd66e4-b4e4-4377-ab2e-6e641143f554")
+			(uuid "b8bf64ef-1c33-4059-9bf1-669f142ae89b")
 		)
 		(pad "33" smd roundrect
 			(at 0 0 270)
@@ -36891,7 +36891,7 @@
 			(net 1 "GND")
 			(pinfunction "EP")
 			(pintype "passive")
-			(uuid "80fd66e4-b4e4-4377-ab2e-6e641143f554")
+			(uuid "840602c5-6944-4fb1-b1f4-0163c4eb180b")
 		)
 		(pad "33" thru_hole circle
 			(at 0 1.2 270)
@@ -36902,7 +36902,7 @@
 			(net 1 "GND")
 			(pinfunction "EP")
 			(pintype "passive")
-			(uuid "80fd66e4-b4e4-4377-ab2e-6e641143f554")
+			(uuid "ca835de3-d63e-4804-9999-9ce53a2b99d0")
 		)
 		(pad "33" thru_hole circle
 			(at 1.2 0 270)
@@ -36913,7 +36913,7 @@
 			(net 1 "GND")
 			(pinfunction "EP")
 			(pintype "passive")
-			(uuid "80fd66e4-b4e4-4377-ab2e-6e641143f554")
+			(uuid "ec01a69c-22b5-4d82-98c7-bd17878881b5")
 		)
 		(embedded_fonts no)
 		(model "${KICAD_USER_3DMODEL_DIR}/TLV320AIC3204IRHBR.step"
@@ -48477,14 +48477,6 @@
 		(uuid "7a469a6f-da68-4b4c-9536-cb26a20a79d7")
 	)
 	(segment
-		(start 158.4 94.86875)
-		(end 157.15 96.11875)
-		(width 0.3)
-		(layer "B.Cu")
-		(net 1)
-		(uuid "7ad670d3-b672-4d93-9f9b-f3607dae0133")
-	)
-	(segment
 		(start 145.76 110.55875)
 		(end 146.35 109.96875)
 		(width 0.3)
@@ -55322,20 +55314,12 @@
 		(uuid "cfdf153b-149c-4981-8bca-129c2be3146f")
 	)
 	(segment
-		(start 141.573766 79.571716)
-		(end 141.573766 79.406234)
+		(start 142.259516 80.257466)
+		(end 141.7 79.69795)
 		(width 0.3)
 		(layer "B.Cu")
 		(net 64)
-		(uuid "473d80b8-bc16-4f92-90d7-3eb06685b776")
-	)
-	(segment
-		(start 141.7 79.28)
-		(end 141.7 78.19375)
-		(width 0.3)
-		(layer "B.Cu")
-		(net 64)
-		(uuid "4bc844e1-46cb-4939-8fcf-9b283462c7b1")
+		(uuid "38c951a6-6cf5-4033-beb9-4d6ad4473569")
 	)
 	(segment
 		(start 155.6 90.8)
@@ -55344,22 +55328,6 @@
 		(layer "B.Cu")
 		(net 64)
 		(uuid "5f8e6688-9bf7-4d04-ba8a-fd2b704286af")
-	)
-	(segment
-		(start 142.259516 80.257466)
-		(end 141.573766 79.571716)
-		(width 0.3)
-		(layer "B.Cu")
-		(net 64)
-		(uuid "5fc0a911-f85d-4738-abdf-19f3a92ddbb9")
-	)
-	(segment
-		(start 141.573766 79.406234)
-		(end 141.7 79.28)
-		(width 0.3)
-		(layer "B.Cu")
-		(net 64)
-		(uuid "6f401c42-383f-42d3-8867-078ef539cef8")
 	)
 	(segment
 		(start 154.4 90.8)
@@ -55392,6 +55360,14 @@
 		(layer "B.Cu")
 		(net 64)
 		(uuid "db90cc05-6fb6-4608-9c60-ce0beb84ad66")
+	)
+	(segment
+		(start 141.7 79.69795)
+		(end 141.7 78.19375)
+		(width 0.3)
+		(layer "B.Cu")
+		(net 64)
+		(uuid "dc9579a6-55c7-4f3f-a785-7332faa82b36")
 	)
 	(segment
 		(start 146.6 97.4)
