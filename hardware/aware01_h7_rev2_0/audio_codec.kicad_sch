@@ -2359,7 +2359,7 @@
 		(uuid "6dc409d7-a58f-4ab8-9dba-401cc9c10dea")
 	)
 	(hierarchical_label "I2S1_SDI"
-		(shape input)
+		(shape output)
 		(at 77.47 99.06 180)
 		(effects
 			(font
@@ -2392,7 +2392,7 @@
 		(uuid "bf4ab520-4731-4b4c-8968-b798a7b60a98")
 	)
 	(hierarchical_label "I2S1_SDO"
-		(shape output)
+		(shape input)
 		(at 77.47 92.71 180)
 		(effects
 			(font
