@@ -122,12 +122,6 @@ void tape_player_process(struct tape_player* tape) {
     }
 }
 
-BaseType_t tape_player_send_cmd_from_isr(const tape_cmd_msg_t* msg, BaseType_t* pxHigherPriorityTaskWoken) {
-    if (active_tape_player->tape_cmd_q == NULL)
-        return pdFALSE;
-    return xQueueSendFromISR(active_tape_player->tape_cmd_q, msg, pxHigherPriorityTaskWoken);
-}
-
 void tape_player_play(struct tape_player* tape_player) {
     if (tape_player) {
         tape_player->is_playing = true;

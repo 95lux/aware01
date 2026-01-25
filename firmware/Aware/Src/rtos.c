@@ -7,6 +7,7 @@
 #include "audioengine.h"
 #include "control_interface.h"
 #include "drivers/adc_driver.h"
+#include "drivers/gpio_driver.h"
 #include "drivers/tlv320_driver.h"
 #include "main.h"
 #include "tape_player.h"
@@ -55,6 +56,12 @@ void FREERTOS_Init(void) {
 
         init_adc_interface(&adc_interface_cfg);
         start_adc_interface();
+
+        struct gpio_config gpio_cfg = {
+            .controlIfTaskHandle = controlIfTaskHandle,
+            .userIfTaskHandle = userIfTaskHandle,
+        };
+        init_gpio_interface(&gpio_cfg);
     }
 }
 
