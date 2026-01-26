@@ -52,6 +52,7 @@ void FREERTOS_Init(void) {
             .controlIfTaskHandle = controlIfTaskHandle,
             .userIfTaskHandle = userIfTaskHandle,
             .hadc_pots = &hadc1,
+            .hadc_cvs = &hadc2
         };
 
         init_adc_interface(&adc_interface_cfg);
