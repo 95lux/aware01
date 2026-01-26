@@ -478,10 +478,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Switch:SW_Push"
-			(pin_numbers
-				(hide yes)
-			)
+		(symbol "Switch:SW_MEC_5E"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -490,7 +487,7 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "SW"
-				(at 1.27 2.54 0)
+				(at 0.635 5.715 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -498,8 +495,8 @@
 					(justify left)
 				)
 			)
-			(property "Value" "SW_Push"
-				(at 0 -1.524 0)
+			(property "Value" "SW_MEC_5E"
+				(at 0 -3.175 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -507,7 +504,7 @@
 				)
 			)
 			(property "Footprint" ""
-				(at 0 5.08 0)
+				(at 0 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -515,8 +512,8 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "~"
-				(at 0 5.08 0)
+			(property "Datasheet" "http://www.apem.com/int/index.php?controller=attachment&id_attachment=1371"
+				(at 0 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -524,7 +521,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Push button switch, generic, two pins"
+			(property "Description" "MEC 5E single pole normally-open tactile switch"
 				(at 0 0 0)
 				(effects
 					(font
@@ -542,9 +539,42 @@
 					(hide yes)
 				)
 			)
-			(symbol "SW_Push_0_1"
+			(property "ki_fp_filters" "SW*MEC*5G*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SW_MEC_5E_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -2.54 2.54) (xy -2.286 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.286 3.81) (xy 2.286 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
 				(circle
-					(center -2.032 0)
+					(center -1.778 2.54)
 					(radius 0.508)
 					(stroke
 						(width 0)
@@ -556,7 +586,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 1.27) (xy 0 3.048)
+						(xy 0 3.81) (xy 0 5.588)
 					)
 					(stroke
 						(width 0)
@@ -567,7 +597,7 @@
 					)
 				)
 				(circle
-					(center 2.032 0)
+					(center 1.778 2.54)
 					(radius 0.508)
 					(stroke
 						(width 0)
@@ -579,7 +609,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.54 1.27) (xy -2.54 1.27)
+						(xy 2.54 0) (xy 2.54 2.54) (xy 2.286 2.54)
 					)
 					(stroke
 						(width 0)
@@ -590,7 +620,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 0 0)
+					(at -5.08 2.54 0)
 					(length 2.54)
 					(name "1"
 						(effects
@@ -608,7 +638,7 @@
 					)
 				)
 				(pin passive line
-					(at 5.08 0 180)
+					(at -5.08 0 0)
 					(length 2.54)
 					(name "2"
 						(effects
@@ -618,6 +648,42 @@
 						)
 					)
 					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1530,6 +1596,12 @@
 		(uuid "57ab60cc-8fda-4e76-b76b-3079d9552501")
 	)
 	(junction
+		(at 74.93 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6280f565-3f3c-457a-ad0a-66186c6e9173")
+	)
+	(junction
 		(at 204.47 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1546,6 +1618,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "6c9ecb73-6866-4006-9fa6-e56d854199fd")
+	)
+	(junction
+		(at 74.93 53.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "70985d6b-9cf9-4572-b30c-ac5138fef437")
 	)
 	(junction
 		(at 85.09 99.06)
@@ -1566,6 +1644,12 @@
 		(uuid "a0e64a59-3f59-4b7f-b222-73e70a38f850")
 	)
 	(junction
+		(at 74.93 99.06)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b2c059c3-4f0e-4beb-b70f-47b961fe8f45")
+	)
+	(junction
 		(at 204.47 138.43)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1582,6 +1666,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c7ffac8c-764a-42e1-97a6-4faa805cfe93")
+	)
+	(junction
+		(at 74.93 43.18)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d1a772f5-93eb-45e9-b291-dbc4c2b96db4")
 	)
 	(junction
 		(at 102.87 138.43)
@@ -1885,6 +1975,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 99.06) (xy 74.93 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49e9cdd6-6791-418d-a277-9d1fefd99d38")
+	)
+	(wire
+		(pts
 			(xy 102.87 138.43) (xy 107.95 138.43)
 		)
 		(stroke
@@ -2012,6 +2112,16 @@
 			(type default)
 		)
 		(uuid "663526ad-517a-4c31-b9fc-b855fb61aa65")
+	)
+	(wire
+		(pts
+			(xy 72.39 53.34) (xy 74.93 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ce07ed4-cd0e-4592-afe0-f33d87ea5469")
 	)
 	(wire
 		(pts
@@ -2205,6 +2315,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 43.18) (xy 74.93 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f8f5d4a-cb40-464f-a385-fbdc740913da")
+	)
+	(wire
+		(pts
 			(xy 147.32 45.72) (xy 149.86 45.72)
 		)
 		(stroke
@@ -2282,6 +2402,16 @@
 			(type default)
 		)
 		(uuid "b78ed072-c401-4286-b676-a694761cf038")
+	)
+	(wire
+		(pts
+			(xy 72.39 88.9) (xy 74.93 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b86f7933-aea7-431b-b3ee-6038a8f85a61")
 	)
 	(wire
 		(pts
@@ -3208,7 +3338,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
+		(lib_id "Switch:SW_MEC_5E")
 		(at 74.93 48.26 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3217,7 +3347,7 @@
 		(dnp no)
 		(uuid "1feb851f-7d39-462f-a2f9-65a7fc6cc98e")
 		(property "Reference" "SW1"
-			(at 68.834 46.99 90)
+			(at 63.246 46.482 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3226,7 +3356,7 @@
 			)
 		)
 		(property "Value" "SW_Push"
-			(at 64.516 49.784 90)
+			(at 58.928 49.276 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3234,8 +3364,8 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm_H13mm"
-			(at 69.85 48.26 0)
+		(property "Footprint" "Eurorack:TS0266130BK160LCRD"
+			(at 67.31 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3243,8 +3373,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/15/SKQB-1370757.pdf"
-			(at 69.85 48.26 0)
+		(property "Datasheet" "https://www.mouser.de/datasheet/3/6118/1/ts02.pdf"
+			(at 67.31 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3252,7 +3382,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Push button switch, generic, two pins"
+		(property "Description" "MEC 5E single pole normally-open tactile switch"
 			(at 74.93 48.26 0)
 			(effects
 				(font
@@ -3261,7 +3391,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "Alps Alpine "
+		(property "Manufacturer_Name" "Same Sky"
 			(at 74.93 48.26 0)
 			(effects
 				(font
@@ -3270,7 +3400,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKQBAPA010"
+		(property "Manufacturer_Part_Number" " TS02-66-130-BK-160-LCR-D"
 			(at 74.93 48.26 0)
 			(effects
 				(font
@@ -3279,7 +3409,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "688-SKQBAP"
+		(property "Mouser Part Number" " 179-TS0266130BK160LC"
 			(at 74.93 48.26 0)
 			(effects
 				(font
@@ -3293,6 +3423,12 @@
 		)
 		(pin "2"
 			(uuid "a10bfc45-c800-4061-822a-9a4618c9bf29")
+		)
+		(pin "4"
+			(uuid "07638b96-77a4-4301-8ee0-24c1a8b1011c")
+		)
+		(pin "3"
+			(uuid "70621614-1612-463f-934f-1d31bb96ed77")
 		)
 		(instances
 			(project "ima_new_codec"
@@ -6846,7 +6982,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
+		(lib_id "Switch:SW_MEC_5E")
 		(at 74.93 93.98 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6855,7 +6991,7 @@
 		(dnp no)
 		(uuid "c03e0ab2-4eb4-4efd-bced-968570bf0fad")
 		(property "Reference" "SW2"
-			(at 68.834 92.71 90)
+			(at 64.77 92.456 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6864,7 +7000,7 @@
 			)
 		)
 		(property "Value" "SW_Push"
-			(at 64.516 95.504 90)
+			(at 60.452 95.25 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6872,8 +7008,8 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm_H13mm"
-			(at 69.85 93.98 0)
+		(property "Footprint" "Eurorack:TS0266130BK160LCRD"
+			(at 67.31 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6881,8 +7017,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.de/datasheet/2/15/SKQB-1370757.pdf"
-			(at 69.85 93.98 0)
+		(property "Datasheet" "https://www.mouser.de/datasheet/3/6118/1/ts02.pdf"
+			(at 67.31 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6890,7 +7026,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Push button switch, generic, two pins"
+		(property "Description" "MEC 5E single pole normally-open tactile switch"
 			(at 74.93 93.98 0)
 			(effects
 				(font
@@ -6899,7 +7035,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "Alps Alpine "
+		(property "Manufacturer_Name" "Same Sky"
 			(at 74.93 93.98 0)
 			(effects
 				(font
@@ -6908,7 +7044,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SKQBAPA010"
+		(property "Manufacturer_Part_Number" " TS02-66-130-BK-160-LCR-D"
 			(at 74.93 93.98 0)
 			(effects
 				(font
@@ -6917,7 +7053,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "688-SKQBAP"
+		(property "Mouser Part Number" " 179-TS0266130BK160LC"
 			(at 74.93 93.98 0)
 			(effects
 				(font
@@ -6931,6 +7067,12 @@
 		)
 		(pin "2"
 			(uuid "99a59eb6-b422-4bd4-843c-13c9cd6c9f50")
+		)
+		(pin "3"
+			(uuid "b55a0d00-524c-44e6-9cfb-573ec4bbfd52")
+		)
+		(pin "4"
+			(uuid "8a371841-be27-4315-be56-21b0f17491b9")
 		)
 		(instances
 			(project "aware01_h7"
