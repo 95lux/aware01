@@ -1,0 +1,51 @@
+Vorhanden,Reference,Value,Mouser Part Number,Footprint,Datasheet,Qty,DNP,Manufacturer_Name,Manufacturer_Part_Number
+y,Y1,WE-XTAL 24.0MHz 50ppm, 344-NX2520SA24MHZB8 ,Crystal:Crystal_SMD_2520-4Pin_2.5x2.0mm,https://www.mouser.com/catalog/specsheets/ndk_08142018_NX2520SA-24.000000MHz-B8.pdf,1,,NDK, NX2520SA-24.000000MHZ-B8 
+y,IC5,TLV320AIC3204IRHBR,595-V320AIC3204IRHBR,Eurorack:TLV320AIC3204IRHBR,http://www.ti.com/lit/gpn/tlv320aic3204,1,,Texas Instruments,TLV320AIC3204IRHBR
+y,"SW1,SW2",SW_Push,688-SKQBAP,Button_Switch_THT:SW_PUSH_6mm_H13mm,https://www.mouser.de/datasheet/2/15/SKQB-1370757.pdf,2,,Alps Alpine ,SKQBAPA010
+y,U4,STM32H7A3RITx, 511-STM32H7A3RIT6TR ,Package_QFP:LQFP-64_10x10mm_P0.5mm,https://www.st.com/resource/en/datasheet/stm32h7a3ri.pdf,1,, STMicroelectronics ,STM32H7A3RIT6TR 
+y,D1,PWR_LED, 710-150060VS75000 ,LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder,~,1,,Wurth Elektronik,150060VS75000 
+y,SW3,PTS815, 611-PTS815SJK250SMTR,Button_Switch_SMD:SW_SPST_PTS810,https://www.ckswitches.com/media/2728/pts815.pdf,1,,C&K, PTS815SJK250SMTR LFS
+y,"U12,U13",OPA2322AIDR, 595-OPA2322AIDR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584,2,,Texas Instruments,OPA2322AIDR
+y,"U10,U11",NE5532DRG4,595-NE5532DRG4,Eurorack:NE5532DRG4,http://www.ti.com/lit/ds/symlink/ne5532.pdf,2,,Texas Instruments,NE5532DRG4
+y,"Q1,Q2,Q3,Q4",MMBT3904, 637-MMBT3904 ,Package_TO_SOT_SMD:SOT-23,https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf,4,,Diotec Semiconductor,MMBT3904
+y,U1,LMR50410Y5FQDBVRQ1, 595-R50410Y5FQDBVRQ1 ,Package_TO_SOT_SMD:SOT-23-6,https://www.ti.com/lit/ds/symlink/lmr50410-q1.pdf?ts=1762395938401&ref_url=https%253A%252F%252Fwww.mouser.com%252F,1,,Texas Instruments ,LMR50410Y5FQDBVRQ1 
+y,U5,LM4040DIM3X-10, 926-LM4040DIM3X10NPB,Package_TO_SOT_SMD:SOT-23,http://www.ti.com/lit/ds/symlink/lm4040-n.pdf,1,,Texas Instruments,LM4040DIM3X-10/NOPB
+y,U2,LM1117MP-3.3,926-LM1117MP-3.3NOPB,Package_TO_SOT_SMD:SOT-223-3_TabPin2,http://www.ti.com/lit/ds/symlink/lm1117.pdf,1,,Texas Instruments,LM1117MP-3.3/NOPB
+y,"D2,D3",D, 581-SD0805S020S1R0 ,Diode_SMD:D_0805_2012Metric,~,2,,Kyocera, SD0805S020S1R0
+y,J1,Conn_02x07_Odd_Even, 855-M50-3500742,Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical,https://www.mouser.de/datasheet/2/181/M50_350-1115491.pdf,1,, Harwin, M50-3500742
+y,J2,Conn_02x05_Odd_Even, 737-BHR-10-VUA ,Eurorack:PinHeader_2x05_P2.54mm_BHR-10-VUA,~,1,, Adam Tech, BHR-10-VUA 
+y,"D6,D7",BAT54A, 78-BAT54A-E3-08 ,Package_TO_SOT_SMD:SOT-23,http://www.diodes.com/_files/datasheets/ds11005.pdf,2,,Vishay Semiconductors , BAT54A-E3-08 
+y BAT54C statt S? Neues Bauteil: https://www.mouser.de/ProductDetail/Diotec-Semiconductor/BAT54S?qs=OlC7AqGiEDl5%2FwzZD7rGmQ%3D%3D,"D4,D5",BAT54S, 78-BAT54C-E3-08 ,Package_TO_SOT_SMD:SOT-23,https://www.diodes.com/assets/Datasheets/ds11005.pdf,2,,Vishay Semiconductors , BAT54C-E3-08 
+y,U3,74AHCT1G14DBVRG4, 595-74AHCT1G14DBVRG4 ,Package_TO_SOT_SMD:SOT-23-5,https://www.ti.com/lit/ds/symlink/sn74ahct1g14.pdf?ts=1766254262190&ref_url=https%253A%252F%252Fwww.mouser.de%252F,1,,Texas Instruments , 74AHCT1G14DBVRG4 
+y,"IC1,IC2,IC3,IC4",587-2054-127F,645-587-2054-127F,Eurorack:5872054127F,https://www.digikey.ph/en/products/detail/dialight/587-2054-127F/25321961,4,,Dialight,587-2054-127F
+y,"R32,R34,R40",200k,603-RT0603FRE07200KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,3,,YAGEO,RT0603FRE07200KL
+y,R38,180k,603-RE0603FRE07180KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,1,,YAGEO,RE0603FRE07180KL
+y,"R24,R25,R26,R27,R33,R35,R39,R41",100k,603-RT0603FRE07100KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,8,,YAGEO,RT0603FRE07100KL
+y,R2,88.7k,603-RC0603FR-0788K7L,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,1,,YAGEO,RC0603FR-0788K7L
+y,R42,47k,603-AT0603FRE0747KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,1,,YAGEO,AT0603FRE0747KL
+y,"R20,R21",39k,603-RE0603BRE0739KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,2,,YAGEO,RE0603BRE0739KL
+y,"R36,R37,R43",33k,708-RMCF0603FT33K0,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,3,,SEI Stackpole,RMCF0603FT33K0
+y,R3,22.1k,603-RC0603FR-1322K1L ,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,1,,YAGEO,RC0603FR-1322K1L
+y,"R14,R15",12k,603-RC0603JR-1012KL ,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,2,,YAGEO,RC0603JR-1012KL 
+y,"U6,U7,U8,U9",10k, 652-PTL30-15R1-103B2,Eurorack:PTL30-15R1-103B2,https://www.bourns.com/docs/Product-Datasheets/PTL.pdf,4,,Bourns,PTL30-15R1-103B2
+y,"R4,R8,R9,R28,R29,R30,R31",10k,756-WCR0603-10KFA,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,7,,Welwyn Components / TT Electronics,WCR0603-10KFA
+y,"R18,R19",5.6k,603-RC0603FR-105K6L,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,2,,YAGEO,RC0603FR-105K6L
+y,"R5,R6",4.7k,603-RC0603FR-134K7L,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,2,,YAGEO, RC0603FR-134K7L
+y,"R16,R17",1.8k,603-RC0603JR-071K8L ,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,2,,YAGEO,RC0603JR-071K8L 
+y,"R1,R22,R23",1k,603-RT0603FRE071KL,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,3,,YAGEO,RT0603FRE071KL
+y,R7,470,603-RC0603FR-07470RP ,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,1,,YAGEO,RC0603FR-07470RP
+y,FB1,120R,704-MFBW1V2012-121-R,Inductor_SMD:L_0805_2012Metric_Pad1.05x1.20mm_HandSolder,~,1,,Eaton Electronics,MFBW1V2012-121-R
+y,"R10,R11,R12,R13",75,71-CRCW0603-75-E3 ,Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,~,4,,Vishay / Dale,CRCW060375R0FKEA
+y,"C14,C15",47u,140-VZL470M1VTR-0606 ,Capacitor_SMD:CP_Elec_6.3x5.9,~,2,,Lelon , VZL470M1VTR-0606 
+y,"C52,C53",10u, 80-EXV106M025A9BAA,Capacitor_SMD:CP_Elec_4x5.4,~,2,,KEMET, EXV106M025A9BAA
+y,"C4,C8,C9,C13,C41,C42,C44",10u, 81-GRM188R61E106KA3D ,Capacitor_SMD:C_0603_1608Metric,~,7,,Murata Electronics ,GRM188R61E106KA73D
+y,L1,4.7u,6521-SRR5228A-4R7Y,Eurorack:SRR5228A,https://www.mouser.com/catalog/specsheets/Bourns_01-27-2024_SRR5228A_Datasheet.pdf,1,,Bourns ,SRR5228A-4R7Y
+y,C1,4.7u, 80-C0603C475M9P,Capacitor_SMD:C_0603_1608Metric,~,1,,KEMET ,C0603C475M9PACTU
+y,"C48,C49",2.2u, 667-EEE-1VA2R2NR ,Capacitor_SMD:CP_Elec_4x5.4,~,2,,Panasonic,EEE-1VA2R2NR
+y,"C2,C19,C23",2.2u, 963-TMK107ABJ225KA-T,Capacitor_SMD:C_0603_1608Metric,https://www.mouser.de/datasheet/2/396/mlcc02_e-1307760.pdf,3,, TAIYO YUDEN, TMK107ABJ225KA-T
+y,"C18,C22,C43",1u,581-KGM15AV51A105ZM,Capacitor_SMD:C_0603_1608Metric,~,3,,KYOCERA AVX ,KGM15AV51A105ZM 
+y,"C3,C5,C6,C7,C10,C11,C12,C20,C24,C25,C26,C27,C28,C29,C30,C31,C32,C33,C34,C35,C36,C37,C38,C39,C40,C45,C46,C47,C50,C51,C56,C59",100n,581-KAF15BR72A104KT,Capacitor_SMD:C_0603_1608Metric,~,32,,KYOCERA AVX ,KAF15BR72A104KT
+y,C16,10n, 80-C0603C103J5R7411 ,Capacitor_SMD:C_0603_1608Metric,~,1,,KEMET , C0603C103J5RAC7411 
+y,"C57,C58,C60,C61",1n, 791-0603N102J100CT ,Capacitor_SMD:C_0603_1608Metric,~,4,,Walsin,0603N102J100CT 
+y,"C54,C55",18p, 581-KGM15ACG1E180JT,Capacitor_SMD:C_0603_1608Metric,~,2,,KYOCERA AVX,KGM15ACG1E180JT
+y,"C17,C21",14pF,581-04023U140GAT2A,Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder,~,2,,KYOCERA AVX,04023U140GAT2A
