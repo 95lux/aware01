@@ -5,10 +5,19 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define TAPE_PLAYER_PITCH_RANGE 2.0f // pitch factor range from 0.0 (stop) to 2.0 (double speed)
+
 typedef struct {
     int16_t* ch[2]; // ch[0]=L, ch[1]=R
     uint32_t size;  // samples per channel
 } tape_buffer_t;
+
+struct parameters {
+    float pitch_factor;
+    bool pitch_factor_dirty;
+    float starting_position; // currently not used
+    // more params will be added according to DSP/feature requirements
+};
 
 struct tape_player {
     size_t dma_buf_size;     // buffer size RX/TX
@@ -19,9 +28,10 @@ struct tape_player {
 
     bool is_playing;
     bool is_recording;
-    float pitch_factor;
 
     QueueHandle_t tape_cmd_q; // command queue handle
+
+    struct parameters params;
 };
 
 // FREERTOS queue message structure
@@ -39,3 +49,5 @@ void tape_player_play();
 void tape_player_stop();
 void tape_player_record();
 void tape_player_change_pitch(float pitch_factor);
+
+int tape_player_copy_params(struct parameters* params_out);

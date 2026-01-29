@@ -52,12 +52,14 @@ int adc_copy_dma_to_working_buf(uint16_t* dma_buf, uint16_t* working_buf, size_t
     return 0;
 }
 
+// gets latest CV samples from DMA buffer to working buffer
 int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len) {
     if (active_cfg == NULL || active_cfg->adc_cv_buf_ptr == NULL)
         return -1;
     return adc_copy_dma_to_working_buf(active_cfg->adc_cv_buf_ptr, working_buf, len);
 }
 
+// gets latest potentiometer samples from DMA buffer to working buffer
 int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len) {
     if (active_cfg == NULL || active_cfg->adc_pot_buf_ptr == NULL)
         return -1;
@@ -71,13 +73,30 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
         return;
     }
 
+    // Notify control or user interface task about new data
+    // Can be retrieved by adc_copy_*_to_working_buf functions
     if (hadc == active_cfg->hadc_cvs && active_cfg->controlIfTaskHandle != NULL) {
-        xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, ADC_NOTIFY_CV, eSetBits, &hpw);
+        xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, ADC_NOTIFY_CV_RDY, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     } else if (hadc == active_cfg->hadc_pots && active_cfg->userIfTaskHandle != NULL) {
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, ADC_NOTIFY_POTS, eSetBits, &hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, ADC_NOTIFY_POTS_RDY, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
-
-    portYIELD_FROM_ISR(hpw);
 }
+
+// Not used currently, but could be implemented for half-complete DMA handling
+// void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
+//     BaseType_t hpw = pdFALSE;
+
+//     if (active_cfg == NULL) {
+//         return;
+//     }
+
+//     if (hadc == active_cfg->hadc_cvs && active_cfg->controlIfTaskHandle != NULL) {
+//         xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, ADC_NOTIFY_CV, eSetBits, &hpw);
+//         portYIELD_FROM_ISR(hpw);
+//     } else if (hadc == active_cfg->hadc_pots && active_cfg->userIfTaskHandle != NULL) {
+//         xTaskNotifyFromISR(active_cfg->userIfTaskHandle, ADC_NOTIFY_POTS, eSetBits, &hpw);
+//         portYIELD_FROM_ISR(hpw);
+//     }
+// }

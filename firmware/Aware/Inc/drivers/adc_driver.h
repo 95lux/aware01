@@ -20,8 +20,10 @@ struct adc_config {
 };
 
 /* notification bits for ADC sources */
-#define ADC_NOTIFY_CV (1U << 0)
-#define ADC_NOTIFY_POTS (1U << 1)
+#define ADC_NOTIFY_CV_RDY (1U << 0)
+#define ADC_NOTIFY_POTS_RDY (1U << 1)
+
+#define ADC_MAX_VALUE 65535.0f
 
 int init_adc_interface(struct adc_config* config);
 int start_adc_interface(void);
@@ -30,5 +32,11 @@ int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len);
 int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len);
 
 static inline float float_value(uint16_t val) {
-    return (float) val / 65536.0f;
+    float v = (float) val / 65536.0f;
+    // clamp to [0.0, 1.0]
+    if (v < 0.0f)
+        v = 0.0f;
+    if (v > 1.0f)
+        v = 1.0f;
+    return v;
 }
