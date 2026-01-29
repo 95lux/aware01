@@ -20,7 +20,7 @@ struct control_interface_config {
     float cv_c1;
 };
 
-struct parameters {
+struct cv_ins {
     float v_oct;
     float cv1;
     float cv2;
@@ -29,5 +29,5 @@ struct parameters {
 
 int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
 int start_control_interface();
-int process_cv_samples(struct parameters* params);
+int process_cv_samples(struct cv_ins* cv_ins);
 int control_interface_start_calibration(struct calibration_data* calib_data);

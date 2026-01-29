@@ -117,7 +117,11 @@ static void AudioTask(void* argument) {
         struct parameters params;
         /* consume all pending parameter updates and apply latest pitch */
         while (xQueueReceive(params_queue, &params, 0) == pdTRUE) {
-            tape_player.pitch_factor = params.v_oct;
+            if (params.pitch_factor_dirty)
+                tape_player_change_pitch(params.pitch_factor);
+            // TODO: This will come later
+            // if(params.starting_position_dirty)
+            // tape_player_set_position(params.starting_position);
         }
 #endif
     }
@@ -159,21 +163,23 @@ static void ControlInterfaceTask(void* argument) {
     start_control_interface();
 
     uint32_t notified;
-
     struct parameters params;
 
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            if (notified & ADC_NOTIFY_CV) {
-                int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
-                if (res != 0) {
-                    // skip processing if error
-                    continue;
-                };
-                process_cv_samples(&params);
+            // TODO: How to handle simultaneous parameter updates from user interface and CVs?
+            // can i check if jack is plugged in (probably not)?
+            // Maybe calculate offset, then add CV and pot values together?
+            // if (notified & ADC_NOTIFY_CV_RDY) {
+            //     int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
+            //     if (res != 0) {
+            //         // skip processing if error
+            //         continue;
+            //     };
+            //     // process_cv_samples(&params);
+            //     xQueueOverwrite(params_queue, &params);
 
-                xQueueOverwrite(params_queue, &params);
-            }
+            // }
         }
     }
 }
@@ -189,12 +195,15 @@ static void UserInterfaceTask(void* argument) {
     start_user_interface();
 
     uint32_t notified;
+    struct parameters params;
 
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            if (notified & ADC_NOTIFY_POTS) {
-                int res = adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
-                // process_pot_samples(user_interface_cfg->adc_pot_buf_ptr);
+            if (notified & ADC_NOTIFY_POTS_RDY) {
+                adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
+                tape_player_copy_params(&params);
+                user_interface_process(&params);
+                xQueueOverwrite(params_queue, &params);
             }
         }
     }

@@ -6,7 +6,7 @@
 /* ===== Engine Parameters ===== */
 
 /* audio engine config */
-#define AUDIO_BLOCK_SIZE 64
+#define AUDIO_BLOCK_SIZE 32
 #define AUDIO_SAMPLE_RATE I2S_AUDIOFREQ_48K
 
 /* tape engine configs*/
@@ -20,6 +20,11 @@
 #define ADC_CV1 1      // ADC channel index for CV1 input
 #define ADC_CV2 2      // ADC channel index for CV2 input
 #define ADC_CV3 3      // ADC channel index for CV3 input
+
+// Potentiometer configuration
+#define POT_PITCH 0 // potentiometer index for pitch control
+#define POT_PARAM2 1
+// TODO: add more potentiometer mappings as needed
 
 /* ======= MEMORY SECTIONS ======= */
 

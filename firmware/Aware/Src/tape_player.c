@@ -37,7 +37,7 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     // parameters
     tape_player->is_playing = false;
     tape_player->is_recording = false;
-    tape_player->pitch_factor = 1.0f; // TODO: read out pitch fader on init?
+    tape_player->params.pitch_factor = 1.0f; // TODO: read out pitch fader on init?
 
     // init cmd
     tape_player->tape_cmd_q = cmd_queue;
@@ -82,6 +82,12 @@ float hermite_interpolate(uint32_t phase, int16_t* buffer) {
     return (((a * t - b) * t + c) * t + d);
 }
 
+// TODO: prevent clicks on retrigger / loop end by crossfading playback.
+// Approach: on retrigger or near loop end, briefly run two playheads
+// (old + new) and overlap them using complementary fade-out / fade-in
+// envelopes (equal-power). After fade completes, discard old playhead.
+// This avoids waveform discontinuities without copying tape data.
+
 // worker function to process tape player state
 void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t* dma_out_buf) {
     // TODO: implement circular tape buffer (?) - for now, just stop at the end of the buffer
@@ -112,7 +118,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                 dma_out_buf[n + 1] = (int16_t) (dma_out_buf[n + 1] * env);
             }
 
-            uint32_t phase_inc = tape->pitch_factor * 65536.0f;
+            uint32_t phase_inc = tape->params.pitch_factor * 65536.0f;
             tape->tape_playphase += phase_inc;
         } else {
             // idle -> output silence
@@ -161,8 +167,21 @@ void tape_player_record() {
     }
 }
 
+// change pitch factor (playback speed)
+// TODO: evaluate where musical pitch is calculated. Probably in control interface task, and converted to simple pitch factor here.
 void tape_player_change_pitch(float pitch_factor) {
     if (active_tape_player) {
-        active_tape_player->pitch_factor = pitch_factor;
+        active_tape_player->params.pitch_factor = pitch_factor;
     }
+}
+
+int tape_player_copy_params(struct parameters* params_out) {
+    if (active_tape_player == NULL || params_out == NULL)
+        return -1;
+
+    params_out->pitch_factor = active_tape_player->params.pitch_factor;
+    params_out->pitch_factor_dirty = false;
+    params_out->starting_position = active_tape_player->params.starting_position; // currently not used
+
+    return 0;
 }
