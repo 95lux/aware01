@@ -27,6 +27,10 @@ static void AudioTask(void* argument);
 static void ControlInterfaceTask(void* argument);
 static void UserInterfaceTask(void* argument);
 
+/* ===== Global config structs =====*/
+struct gpio_config gpio_cfg;
+struct adc_config adc_interface_cfg;
+
 /* ===== FreeRTOS init ===== */
 void FREERTOS_Init(void) {
     /* create command queue */
@@ -46,22 +50,20 @@ void FREERTOS_Init(void) {
     xTaskCreate(UserInterfaceTask, "UserIF", 256, NULL, configMAX_PRIORITIES - 4, &userIfTaskHandle);
 
     {
-        struct adc_config adc_interface_cfg = {
-            .adc_cv_buf_ptr = NULL,
-            .adc_pot_buf_ptr = NULL,
-            .controlIfTaskHandle = controlIfTaskHandle,
-            .userIfTaskHandle = userIfTaskHandle,
-            .hadc_pots = &hadc1,
-            .hadc_cvs = &hadc2
-        };
+        adc_interface_cfg.adc_cv_buf_ptr = NULL;
+        adc_interface_cfg.adc_pot_buf_ptr = NULL;
+        adc_interface_cfg.controlIfTaskHandle = controlIfTaskHandle;
+        adc_interface_cfg.userIfTaskHandle = userIfTaskHandle;
+        adc_interface_cfg.hadc_pots = &hadc1;
+        adc_interface_cfg.hadc_cvs = &hadc2;
 
         init_adc_interface(&adc_interface_cfg);
         start_adc_interface();
 
-        struct gpio_config gpio_cfg = {
-            .controlIfTaskHandle = controlIfTaskHandle,
-            .userIfTaskHandle = userIfTaskHandle,
-        };
+        gpio_cfg.controlIfTaskHandle = controlIfTaskHandle;
+        gpio_cfg.userIfTaskHandle = userIfTaskHandle;
+        gpio_cfg.tape_cmd_q = tape_cmd_q;
+
         init_gpio_interface(&gpio_cfg);
     }
 }
@@ -83,7 +85,7 @@ static void AudioTask(void* argument) {
 
     /* initialize audio engine */
     init_audioengine(&audioengine_cfg);
-    init_tape_player(&tape_player, audioengine_cfg.rx_buf_ptr, audioengine_cfg.tx_buf_ptr, audioengine_cfg.buffer_size, tape_cmd_q);
+    init_tape_player(&tape_player, audioengine_cfg.buffer_size, tape_cmd_q);
 
     start_audio_engine();
 
@@ -95,21 +97,20 @@ static void AudioTask(void* argument) {
 #else
 
         /* process audio block */
-        tape_player_process(&tape_player);
+        tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) audioengine_cfg.tx_buf_ptr);
 
         /* handle pending commands (non-blocking) */
         tape_cmd_msg_t msg;
         while (xQueueReceive(tape_cmd_q, &msg, 0) == pdTRUE) {
             switch (msg.cmd) {
             case TAPE_CMD_PLAY:
-                tape_player.is_playing = true;
+                tape_player_play();
                 break;
             case TAPE_CMD_STOP:
-                tape_player.is_playing = false;
-                tape_player.is_recording = false;
+                tape_player_stop();
                 break;
             case TAPE_CMD_RECORD:
-                tape_player.is_recording = true;
+                tape_player_record();
                 break;
             }
         }

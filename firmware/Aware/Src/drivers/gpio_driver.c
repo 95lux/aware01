@@ -6,11 +6,12 @@
 
 #include "tape_player.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 static struct gpio_config* active_cfg = NULL;
 
 int init_gpio_interface(struct gpio_config* config) {
-    if (config == NULL || config->controlIfTaskHandle == NULL || config->userIfTaskHandle == NULL)
+    if (config == NULL || config->controlIfTaskHandle == NULL || config->userIfTaskHandle == NULL || config->tape_cmd_q == NULL)
         return -1;
 
     active_cfg = config;
@@ -32,6 +33,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     BaseType_t hpw = pdFALSE;
     tape_cmd_msg_t msg;
     bool valid_cmd = false;
+    msg.pitch = 1.0f;
 
     if (GPIO_Pin == BUTTON1_IN_Pin) {
         msg.cmd = TAPE_CMD_PLAY;
@@ -51,10 +53,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         msg.cmd = TAPE_CMD_RECORD;
         valid_cmd = true;
     }
-    if (GPIO_Pin == GATE3_IN_Pin) {
-        msg.cmd = TAPE_CMD_STOP;
-        valid_cmd = true;
-    }
+    // if (GPIO_Pin == GATE3_IN_Pin) {
+    //     msg.cmd = TAPE_CMD_STOP;
+    //     valid_cmd = true;
+    // }
     if (GPIO_Pin == GATE4_IN_Pin) {
     }
 
