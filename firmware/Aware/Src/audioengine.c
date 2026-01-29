@@ -2,8 +2,8 @@
 #include "dma.h"
 
 // local DMA buffers for audio I/O - will be allocated in DMA-capable memory, not in FREERTOS task stack!
-DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE];
-DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE];
+DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE] = {0};
+DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE] = {0};
 
 // file-local pointer to the active config (not exported)
 static struct audioengine_config* active_cfg = NULL;
