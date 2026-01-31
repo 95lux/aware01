@@ -32,6 +32,9 @@ int start_user_interface() {
 int user_interface_process(struct parameters* params) {
     for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
         float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
+        if (active_user_interface_cfg->pots[i].inverted)
+            v = 1.0f - v;
+
         active_user_interface_cfg->pots[i].val = v;
     }
 

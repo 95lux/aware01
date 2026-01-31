@@ -3,6 +3,9 @@
 #include "project_config.h"
 #include <stdint.h>
 
+// TODO: evaluate proper usage: pitch_offset: offset to be added to pitch CV input, caused by DC voltage offsets from opamps etc.
+// pitch_scale: scaling factor for 1V/octave CV input. Float change per semitone.
+// offset[]: per-channel offsets to be subtracted from CV inputs before further processing.
 struct calibration_data {
     float pitch_offset;            // 4 bytes
     float pitch_scale;             // 4 bytes

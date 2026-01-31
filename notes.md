@@ -11,3 +11,41 @@
     Pin 2 -> AVDD, Pin 1 -> GND
 
 - Wrong button footprint was chosen for Push buttons SW1, SW2. To accomondate for that, buttons with the correct footprint need to be ordered
+
+
+
+Pitch Tracking algorithm:
+
+0. Calibrate pitch scaling:
+a. read ADC value at C1/1V signal:
+    $c1_{adc}$
+
+b. read ADC value at C3/3V signal:
+    $c3_{adc}$
+
+c. normalize both
+    $c1_{norm}$
+    $c3_{norm}$
+
+d. calculate pitch scaling:
+    pitch_scaling = \frac{24}{c3_{norm} - c1_{norm}}
+
+
+1. read ADC value.
+    - ADC values range from [0..65536]
+    - low CV causes high ADC value, because of inverted opamps!
+    - 1V CV corresponds to a pitch of C1
+    - Opamp circuit inputs are designed to work with voltages from [-1.5V...5V]
+        this effectively maps this voltage across the ADC range of [0...65536]
+
+2. normalize CV value
+    $cv_{norm} = \frac{cv_{adc}}{65536}$
+
+    this maps ADC values to a float from [0..1]
+    values close to 1 mean low CV voltages, close to 0 mean high voltage
+    
+3. scale pitch by applying pitch_scale offset in semitones from reference
+    $cv_{semitones} = cv_{normalized} / pitch_scale$
+
+4. convert pitch in semitones into playback speed. This has to be exponential, since semitones correspond logarithmicly to frequency, ergo playback speed:
+    $pb_speed = 2^{\frac{cv_semitones}{12}}$

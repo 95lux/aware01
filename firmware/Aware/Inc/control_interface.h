@@ -8,6 +8,12 @@
 
 #include "project_config.h"
 #include "settings.h"
+#include "tape_player.h"
+
+struct cv_in {
+    float val;
+    bool is_v_oct;
+};
 
 struct control_interface_config {
     uint16_t adc_cv_working_buf[NUM_CV_CHANNELS];
@@ -16,18 +22,13 @@ struct control_interface_config {
 
     ADC_HandleTypeDef* hadc_cvs;
 
-    struct calibration_data* calib_data;
-    float cv_c1;
-};
+    struct calibration_data* calib_data; // only calibration data for v/oct CV
 
-struct cv_ins {
-    float v_oct;
-    float cv1;
-    float cv2;
-    float cv3;
+    struct cv_in cv_ins[NUM_CV_CHANNELS];
 };
 
 int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
 int start_control_interface();
-int process_cv_samples(struct cv_ins* cv_ins);
+int control_interface_process(struct parameters* params);
+
 int control_interface_start_calibration(struct calibration_data* calib_data);

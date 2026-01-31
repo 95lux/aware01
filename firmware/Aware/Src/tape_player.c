@@ -157,6 +157,8 @@ void tape_player_stop() {
 }
 
 void tape_player_record() {
+    // TODO: there is a high pitched noise when starting recording.
+    // check why. maybe add in recording fade-in
     if (active_tape_player) {
         active_tape_player->tape_recordhead = 0;
         // clear tape buffers on init

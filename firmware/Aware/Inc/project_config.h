@@ -2,6 +2,7 @@
 
 /* ===== Config Options ===== */
 // #define CONFIG_AUDIO_LOOPBACK
+// #define CONFIG_USE_CALIB_STORAGE
 
 /* ===== Engine Parameters ===== */
 
@@ -24,6 +25,11 @@
 // Potentiometer configuration
 #define POT_PITCH 0 // potentiometer index for pitch control
 #define POT_PARAM2 1
+
+#define CV_V_OCT 0
+#define CV_1 1
+#define CV_2 2
+#define CV_3 3
 // TODO: add more potentiometer mappings as needed
 
 /* ======= MEMORY SECTIONS ======= */
