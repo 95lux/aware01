@@ -1,6 +1,6 @@
-\subsection{Analog Input Stage Design}
+\subsubsection{Analog Input Stage Design}
 
-\subsubsection{Input AC Coupling}
+\paragraph{Input AC Coupling}
 
 The TLV320AIC series codec has a configurable input impedance of 10\,k$\Omega$, 20\,k$\Omega$, and 40\,k$\Omega$ \cite{slaa557}. To minimize loading on the source, the maximum available value of 40\,k$\Omega$ is chosen.
 
@@ -16,7 +16,7 @@ With a coupling capacitor of $C_c = 2.2\,\mu\text{F}$ and $R_\text{eq} = 40\,\te
 f_c = \frac{1}{2 \pi \cdot 40\,\text{k}\Omega \cdot 2.2\,\mu\text{F}} \approx 1.81\,\text{Hz}
 \]
 
-\subsubsection{Input Scaling}
+\paragraph{Input Scaling}
 
 The TLV datasheet specifies a maximum input voltage on the analog pins of $0.5\,V_\text{RMS}$ with a common-mode voltage of 0.9\,V \cite{slaa557}. To map Eurorack audio levels into this range, the signal must be attenuated appropriately. Typical Eurorack signals reach $\pm 5$\,V, i.e., 10\,V$_\text{pp}$ \cite{doepfer_a110-2}.
 
@@ -36,7 +36,7 @@ a = \frac{V_\text{ADC,pp}}{V_\text{Eurorack}} = \frac{1.414}{5} \approx 0.283
 To satisfy the input impedance requirements while providing this attenuation, a \textbf{unity-gain buffer op-amp} is used before a passive resistor divider. The buffer presents an input impedance equal to the op-amp's own input impedance, which is typically greater than $200\,\text{k}\Omega$, thereby easily meeting the desired 100\,k$\Omega$ input impedance at the module. The resistor divider can then be designed to provide the necessary attenuation without significantly loading the signal source.
 
 
-\subsubsection{Design Rationale}
+\paragraph{Design Rationale}
 
 The chosen signal-conditioning approach uses a unity-gain buffer followed by a passive resistor divider. This decision is based on the constraints of the system and the electrical design conclusions of other commonly used amplification circuits. An inverting amplifier topology is unsuitable because its input impedance is determined directly by the input resistor \(R_\text{in}\). Since the module requires an input impedance on the order of \(100\,\text{k}\Omega\), the corresponding feedback resistor \(R_\text{f}\) would also need to be of similar magnitude in order to achieve the desired gain. Such large resistor values introduce significant thermal noise, as described by the Johnson noise expression
 \[
@@ -62,7 +62,7 @@ I = \frac{V_\text{in}}{R_\text{top} + R_\text{bot}}.
 \]
 Thus, for an input voltage of \(5\,\text{V}\) the current is \(I = 0.424\,\text{mA}\), and for \(12\,\text{V}\) it increases to \(I = 1.017\,\text{mA}\). This power consumption is acceptable within the system's constraints, and the simplicity and predictability of the passive attenuation stage outweigh the modest inefficiency introduced by the resistor divider.
 
-\subsubsection{Comparison of Input Stage Circuits}
+\paragraph{Comparison of Input Stage Circuits}
 
 I ran SPICE simulations to compare two input stage approaches:
 \begin{enumerate}
@@ -70,7 +70,7 @@ I ran SPICE simulations to compare two input stage approaches:
 	\item \textbf{Buffer to Voltage Divider}
 \end{enumerate}
 
-\subsection{Circuit Schematics}
+\subsubsection{Circuit Schematics}
 
 ADC input impedance is $40 k\Omega$ and the signal source output impedance is $100 \Omega$.  
 The attenuation factor $a$ is slightly different because of resistor values.

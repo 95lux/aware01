@@ -1,0 +1,79 @@
+\subsubsection{Calibration of V\_Oct ADCs}
+
+The chosen calibration routine implemented in this project is a simple 2-point calibration, where 2 known input values are converted by the ADC. 
+From these values an equation of a straight line can be extracted, which will compensate external factors, like Opamp and electrical Ungenauigkeiten, as well as internal ADC offset and gain errors. 
+
+The implemented procedure is described in TI's "General ADC Calibration" article \cite{texasinstrumentsGeneralADCCalibration}.
+
+Two known input voltages \( X_0 \) and \( X_1 \) are applied to the ADC, producing digital codes
+\( S_0 \) and \( S_1 \).
+
+Assuming a linear ADC model, the transfer function is
+\[
+S = a X + b
+\]
+where \( a \) is the gain (slope) and \( b \) is the offset (intercept at \( X = 0 \)).
+
+The calibration constants are computed as
+\[
+a_c = \frac{S_1 - S_0}{X_1 - X_0}
+\]
+\[
+b_c = S_0 - a_c X_0
+\]
+
+During operation, the calibrated input value is obtained by
+\[
+X = \frac{S - b_c}{a_c}
+\]
+
+\paragraph{Translating the calibration to Pitch Tracking}
+
+The general two-point ADC calibration can be directly mapped to the pitch tracking
+(V/Oct) system by interpreting the ADC conversion codes as normalized control voltages
+and the calibrated output value as pitch measured in semitones.
+
+Two known reference voltages are applied to the V/Oct input:
+\begin{itemize}
+	\item \( X_0 = 1\,\mathrm{V} \), corresponding to musical note C1
+	\item \( X_1 = 3\,\mathrm{V} \), corresponding to musical note C3
+\end{itemize}
+
+The corresponding ADC conversion results are denoted as
+\( c_{1,\mathrm{adc}} \) and \( c_{3,\mathrm{adc}} \).
+These values are normalized to the range \([0,1]\) using the ADC's max value of $2^16$:
+\[
+c_1 = \frac{c_{1,\mathrm{adc}}}{2^{16}}, \quad
+c_3 = \frac{c_{3,\mathrm{adc}}}{2^{16}}
+\]
+
+Pitch is represented internally in semitones, with
+C1 defined as 12 semitones and C3 as 36 semitones.
+Assuming a linear relationship between normalized ADC value and pitch, the model becomes:
+\[
+p = m \cdot c + b
+\]
+where \( p \) is the pitch in semitones, \( c \) is the normalized ADC value,
+\( m \) is the pitch scaling factor, and \( b \) is the pitch offset.
+
+The calibration constants are computed as:
+\[
+m = \frac{36 - 12}{c_3 - c_1} = \frac{24}{c_3 - c_1}
+\]
+\[
+b = 12 - m \cdot c_1
+\]
+
+\subsection{Pitch Tracking}
+
+
+During operation, the pitch in semitones is calculated from a measured ADC value \( c \) as:
+\[
+p = m \cdot c + b
+\]
+
+Finally, the pitch is converted to a playback speed factor using the exponential
+relationship between pitch and frequency:
+\[
+\text{playback\_speed} = 2^{\frac{p}{12}}
+\]

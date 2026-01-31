@@ -52,13 +52,81 @@
 \pagestyle{plain} 
 \setcounter{page}{1}
 \pagenumbering{arabic}
-\section{Hardware}
-\input{gainstages.tex}	
+\section{Introduction}
+\subsection{Motivation}
+Problem statement and Motivation
+\subsection{Objectives}
+Final Eurorack DSP capable hardware
+
+\section{Background and Fundamentals}
+\subsection{Modular Synthesizers and Eurorack}
+\subsection{Audio and CV fundamentals}
+
+\section{System Requirements and Specification}
+\subsection{Functional Requirements}
+\subsection{Electrical Constraints}
+\subsection{Firmware Constraints}
+
+\section{System Architecture}
+\subsection{High Level system overview}
+Block diagram of hardware? This probably belongs into hardware section
+\subsection{Signal Flow}
+Audio and CV signal flow (Analog signals)
+
+\section{Hardware Design}
+\subsection{Digital Hardware Design}
+\subsubsection{MCU selection}
+\subsubsection{Clocking and reset circuitry}
 \newpage
 \input{crystal.tex}	
+\subsubsection{Audio Codec Selection}
+
+\subsection{Analog Frontend Design}
+\input{gainstages.tex}	
+
+\subsubsection{PCB-Design}
+\subsubsection{Layer Stackup}
+\subsubsection{Power distribution}
+\subsubsection{signal integrity considerations}
+
+
 \newpage
 \section{Firmware}
 \input{interpolation.tex}
+\newpage
+\input{pitch_tracking.tex}
+
+
+
+\section{Verification and Testing}
+\subsection{Hardware Testing}
+\subsubsection{Power and safety tests}
+
+\subsubsection{Signal integrity measurements}
+
+\subsubsection{Noise and distortion measurements}
+
+\subsection{Firmware Testing}
+\subsubsection{Driver verification}
+
+\subsubsection{Timing and latency analysis}
+
+\subsubsection{Calibration accuracy}
+
+\subsection{System-Level Validation}
+
+End-to-end signal tests/loopback?
+
+Eurorack compatibility tests
+
+\section{Results and Evaluation}
+\subsection{Measured performance vs requirements}
+
+\subsection{Audio quality evaluation}
+
+\subsection{Calibration accuracy and stability}
+
+\subsubsection{Discussion of limitations}
 
 \newpage
 \addcontentsline{toc}{section}{References}
