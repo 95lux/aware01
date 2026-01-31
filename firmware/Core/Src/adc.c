@@ -281,7 +281,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     PC0     ------> ADC2_INP10
     PC1     ------> ADC2_INP11
     PC2     ------> ADC2_INP12
-    PC3     ------> ADC2_INN12
     PC3     ------> ADC2_INP13
     */
     GPIO_InitStruct.Pin = V_OCT_IN_Pin|CV1_IN_Pin|CV2_IN_Pin|CV3_IN_Pin;
@@ -361,7 +360,6 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     PC0     ------> ADC2_INP10
     PC1     ------> ADC2_INP11
     PC2     ------> ADC2_INP12
-    PC3     ------> ADC2_INN12
     PC3     ------> ADC2_INP13
     */
     HAL_GPIO_DeInit(GPIOC, V_OCT_IN_Pin|CV1_IN_Pin|CV2_IN_Pin|CV3_IN_Pin);

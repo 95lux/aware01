@@ -138,15 +138,29 @@ static void ControlInterfaceTask(void* argument) {
 
     struct calibration_data calib_data;
 
+#if CONFIG_USE_CALIB_STORAGE
     int b_read = read_calibration_data(&calib_data);
     if (b_read != sizeof(struct calibration_data)) {
+#endif
         // set default/fallback calibration data
-        calib_data.pitch_offset = 0.0f;
-        calib_data.pitch_scale = 12.0f;
-        for (size_t i = 0; i < NUM_CV_CHANNELS; ++i) {
+        // C1/1V -> 44000 ADC value, C3/3V -> 25150 ADC value
+        // C1 = 12. semitones, C3 = 36. semitones
+        float c3 = float_value(25150);
+        float c1 = float_value(44000);
+        float delta_semitones = 36.0f - 12.0f;
+        float delta = c3 - c1; // normaled CV difference between C1 and C3
+
+        if (delta > -0.5f && delta < -0.0f) {
+            calib_data.pitch_scale = delta_semitones / (c3 - c1);
+            calib_data.pitch_offset = 12.0f - calib_data.pitch_scale * c1; // to calculate offset, either C1 or C3 can be used
+        }
+
+        for (size_t i = 1; i < NUM_CV_CHANNELS; ++i) {
             calib_data.offset[i] = 0.0f;
         }
+#if CONFIG_USE_CALIB_STORAGE
     }
+#endif
 
     // Init calibration if both buttons are held on startup
     if (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
@@ -168,18 +182,16 @@ static void ControlInterfaceTask(void* argument) {
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             // TODO: How to handle simultaneous parameter updates from user interface and CVs?
-            // can i check if jack is plugged in (probably not)?
-            // Maybe calculate offset, then add CV and pot values together?
-            // if (notified & ADC_NOTIFY_CV_RDY) {
-            //     int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
-            //     if (res != 0) {
-            //         // skip processing if error
-            //         continue;
-            //     };
-            //     // process_cv_samples(&params);
-            //     xQueueOverwrite(params_queue, &params);
-
-            // }
+            // can i check if jack is plugged in(probably not) ? Maybe calculate offset,
+            // then add CV and pot values together ? if (notified & ADC_NOTIFY_CV_RDY) {
+            int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
+            if (res != 0) {
+                // skip processing if error
+                continue;
+            };
+            tape_player_copy_params(&params);
+            control_interface_process(&params);
+            xQueueOverwrite(params_queue, &params);
         }
     }
 }
@@ -200,10 +212,10 @@ static void UserInterfaceTask(void* argument) {
     for (;;) {
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_POTS_RDY) {
-                adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
-                tape_player_copy_params(&params);
-                user_interface_process(&params);
-                xQueueOverwrite(params_queue, &params);
+                // adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
+                // tape_player_copy_params(&params);
+                // user_interface_process(&params);
+                // xQueueOverwrite(params_queue, &params);
             }
         }
     }
