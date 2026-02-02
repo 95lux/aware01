@@ -26,10 +26,10 @@
 #include "i2s.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "audioengine.h"
+#include "drivers/swo_log.h"
 
 /* USER CODE END Includes */
 
@@ -79,6 +79,7 @@ int main(void) {
     /* USER CODE END 1 */
 
     /* MPU Configuration--------------------------------------------------------*/
+
     MPU_Config();
 
     /* MCU Configuration--------------------------------------------------------*/
@@ -114,8 +115,10 @@ int main(void) {
     MX_I2C1_Init();
     MX_UART4_Init();
     MX_I2S1_Init();
-    /* USER CODE BEGIN 2 */
-
+/* USER CODE BEGIN 2 */
+#ifdef CONFIG_DEBUG_LOGS
+    ITM_Init();
+#endif
     // // fill sinetable
     // initSineTable();
 

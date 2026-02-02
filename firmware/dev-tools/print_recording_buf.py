@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser(description="Dump STM32 tape buffers")
 parser.add_argument("--wav", action="store_true", help="Dump WAV file")
 parser.add_argument("--csv", action="store_true", help="Dump CSV file")
 parser.add_argument("--plot", action="store_true", help="Plot both channels")
+parser.add_argument("--name", type=str, default="tape_dump", help="Base filename for dump files")
 args = parser.parse_args()
 
 if not (args.wav or args.csv or args.plot):
@@ -38,18 +39,20 @@ stereo = np.stack((left, right), axis=1)
 
 # === Dump WAV ===
 if args.wav:
-    write("tape_dump.wav", FS, stereo)
-    print("Saved tape_dump.wav with shape:", stereo.shape)
+    wav_file = f"{args.name}.wav"
+    write(wav_file, FS, stereo)
+    print(f"Saved {wav_file} with shape:", stereo.shape)
 
 # === Dump CSV ===
 if args.csv:
-    with open("tape_dump.csv", "w", newline="") as f:
+    csv_file = f"{args.name}.csv"
+    with open(csv_file, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Left", "Right"])
         for l, r in zip(left, right):
             writer.writerow([l, r])
-    print("Saved tape_dump.csv with", len(left), "samples per channel")
-
+    print(f"Saved {csv_file} with {len(left)} samples per channel")
+    
 # === Plot ===
 if args.plot:
     t = np.arange(left.size) / FS
