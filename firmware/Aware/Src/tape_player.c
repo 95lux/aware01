@@ -39,13 +39,23 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     }
 
     tape_player->dma_buf_size = dma_buf_size;
-    tape_player->tape_buf.ch[0] = tape_play_buf_l;
-    tape_player->tape_buf.ch[1] = tape_play_buf_r;
-    tape_player->tape_buf.size = TAPE_SIZE_CHANNEL;
+    tape_player->playback_buf.ch[0] = tape_play_buf_l;
+    tape_player->playback_buf.ch[1] = tape_play_buf_r;
+    tape_player->playback_buf.size = TAPE_SIZE_CHANNEL;
+    tape_player->record_buf.ch[0] = tape_rec_buf_l;
+    tape_player->record_buf.ch[1] = tape_rec_buf_r;
+    tape_player->record_buf.size = TAPE_SIZE_CHANNEL;
     tape_player->ph_a.phase = 1 << 16; // start at sample 1 for interpolation
+    tape_player->ph_b.phase = 1 << 16; // start at sample 1 for interpolation
     tape_player->fade_len = 128;       // crossfade length in samples TODO: make configurable via MACRO
 
     tape_player->tape_recordhead = 0;
+
+    tape_player->env.state = ENV_IDLE;
+    tape_player->env.value = 0.0f;
+    tape_player->env.attack_inc = 1 / (0.01f * AUDIO_SAMPLE_RATE);
+    tape_player->env.decay_inc = 1 / (0.2f * AUDIO_SAMPLE_RATE);
+    tape_player->env.sustain = 0.0f;
 
     // parameters
     tape_player->is_playing = false;
@@ -97,8 +107,17 @@ float hermite_interpolate(uint32_t phase, int16_t* buffer) {
 }
 
 static inline void advance_playhead(playhead_t* ph, uint32_t phase_inc) {
-    if (ph->active)
-        ph->phase += phase_inc;
+    if (!ph->active)
+        return;
+
+    ph->phase += phase_inc;
+
+    // Wraparound the integer part if it exceeds buffer size
+    uint32_t idx = ph->phase >> 16; // integer part
+    if (idx >= active_tape_player->playback_buf.size) {
+        idx %= active_tape_player->playback_buf.size;   // wrap
+        ph->phase = (idx << 16) | (ph->phase & 0xFFFF); // keep fractional
+    }
 }
 
 // TODO: prevent clicks on retrigger / loop end by crossfading playback.
@@ -110,7 +129,7 @@ static inline void advance_playhead(playhead_t* ph, uint32_t phase_inc) {
 // worker function to process tape player state
 void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t* dma_out_buf) {
     // TODO: implement circular tape buffer (?) - for now, just stop at the end of the buffer
-    if (!tape || !tape->tape_buf.ch[0] || !tape->tape_buf.ch[1])
+    if (!tape || !tape->playback_buf.ch[0] || !tape->playback_buf.ch[1])
         return;
 
     // process half of the block
@@ -121,22 +140,16 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
         uint32_t phase_inc = tape->params.pitch_factor * 65536.0f;
 
         if (tape->is_playing && tape->ph_a.active) {
-            if ((tape->ph_a.phase >> 16) < 1 || (tape->ph_a.phase >> 16) + 2 >= tape->tape_buf.size) {
-                // stop playback or clamp
-                tape->is_playing = false;
-                tape->ph_a.phase = 1 << 16; // safe start
-                continue;
-            }
             if (!tape->crossfading) {
-                out_l += hermite_interpolate(tape->ph_a.phase, tape->tape_buf.ch[0]);
-                out_r += hermite_interpolate(tape->ph_a.phase, tape->tape_buf.ch[1]);
+                out_l += hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[0]);
+                out_r += hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[1]);
             } else {
                 // --- dual playhead crossfade ---
-                int16_t a_l = hermite_interpolate(tape->ph_a.phase, tape->tape_buf.ch[0]);
-                int16_t a_r = hermite_interpolate(tape->ph_a.phase, tape->tape_buf.ch[1]);
+                int16_t a_l = hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[0]);
+                int16_t a_r = hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[1]);
 
-                int16_t b_l = hermite_interpolate(tape->ph_b.phase, tape->tape_buf.ch[0]);
-                int16_t b_r = hermite_interpolate(tape->ph_b.phase, tape->tape_buf.ch[1]);
+                int16_t b_l = hermite_interpolate(tape->ph_b.phase, tape->playback_buf.ch[0]);
+                int16_t b_r = hermite_interpolate(tape->ph_b.phase, tape->playback_buf.ch[1]);
 
                 uint32_t i = tape->fade_pos;
                 int16_t fa = fade_in_lut[tape->fade_len - 1 - i];
@@ -163,22 +176,23 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                 advance_playhead(&tape->ph_b, phase_inc);
         }
 
-        dma_out_buf[n] = (int16_t) out_l;
-        dma_out_buf[n + 1] = (int16_t) out_r;
+        float env_val = envelope_process(&tape->env);
+        dma_out_buf[n] = (int16_t) out_l * env_val;
+        dma_out_buf[n + 1] = (int16_t) out_r * env_val;
 
         // while recording, pitch factor does not matter at all.
         // EVAL: maybe allow recording at pitch factor? could lead to interesting artifacts.
         if (tape->is_recording) {
             // record tape at current recordhead position
             // if tape has recorded all the way, stop recording for now.
-            if (tape->tape_recordhead >= tape->tape_buf.size) {
+            if (tape->tape_recordhead >= tape->playback_buf.size) {
                 tape->is_recording = false;
                 tape->copy_pending = true;
                 tape->tape_recordhead = 0;
             }
             // deinterleaves input buffer into tape buffer
-            tape_rec_buf_l[tape->tape_recordhead] = dma_in_buf[n];
-            tape_rec_buf_r[tape->tape_recordhead] = dma_in_buf[n + 1];
+            tape->record_buf.ch[0][tape->tape_recordhead] = dma_in_buf[n];
+            tape->record_buf.ch[1][tape->tape_recordhead] = dma_in_buf[n + 1];
             tape->tape_recordhead++;
         }
     }
@@ -187,13 +201,19 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
 void tape_player_play() {
     if (active_tape_player) {
         if (active_tape_player->copy_pending) {
-            memcpy(tape_play_buf_l, tape_rec_buf_l, TAPE_SIZE_CHANNEL * sizeof(int16_t));
-            memcpy(tape_play_buf_r, tape_rec_buf_r, TAPE_SIZE_CHANNEL * sizeof(int16_t));
-            // clear rec buffers after copying
-            memset(tape_rec_buf_l, 0, sizeof(tape_rec_buf_l));
-            memset(tape_rec_buf_r, 0, sizeof(tape_rec_buf_r));
+            // switch recorded buffer to playback buffer
+            tape_buffer_t temp = active_tape_player->playback_buf;
+            active_tape_player->playback_buf = active_tape_player->record_buf;
+            active_tape_player->record_buf = temp;
+
+            // avoid clearing by now. Could be expensive for large tape buffers
+            // // clear rec buffers after switching pointers
+            // memset(active_tape_player->record_buf.ch[0], 0, sizeof(int16_t) * active_tape_player->record_buf.size);
+            // memset(active_tape_player->record_buf.ch[1], 0, sizeof(int16_t) * active_tape_player->record_buf.size);
             active_tape_player->copy_pending = false;
         }
+
+        envelope_note_on(&active_tape_player->env);
 
         // reset 2nd playhead for crossfading
         active_tape_player->ph_b.active = false;

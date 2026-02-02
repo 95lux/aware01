@@ -1,6 +1,7 @@
 #pragma once
 
 #include "audioengine.h"
+#include "envelope.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -25,10 +26,12 @@ typedef struct {
 } playhead_t;
 
 struct tape_player {
-    size_t dma_buf_size;     // buffer size RX/TX
-    tape_buffer_t tape_buf;  // holds tape audio - play source and recording
-                             // target of the tape
-    uint32_t tape_playphase; // Q16.16 (int16_t integer part, uint16_t frac part)
+    size_t dma_buf_size;        // buffer size RX/TX
+    tape_buffer_t playback_buf; // holds tape audio - play source and recording
+                                // target of the tape
+    tape_buffer_t record_buf;   // holds tape audio - play source and recording
+                                // target of the tape
+    uint32_t tape_playphase;    // Q16.16 (int16_t integer part, uint16_t frac part)
     uint32_t tape_recordhead;
 
     // corssfading logic
@@ -41,6 +44,8 @@ struct tape_player {
     bool is_playing;
     bool is_recording;
     bool copy_pending;
+
+    envelope_t env;
 
     QueueHandle_t tape_cmd_q; // command queue handle
 
