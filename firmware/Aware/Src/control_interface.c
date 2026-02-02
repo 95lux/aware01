@@ -37,9 +37,9 @@ int control_interface_process(struct parameters* params) {
 
     float v_oct_normalized = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val; // 0..1
     float pitch_scale = active_ctrl_interface_cfg->calib_data->pitch_scale;   // pitch_scale = semitones per normalized CV unit
-    float pitch_c0_ref = active_ctrl_interface_cfg->calib_data->pitch_offset;
+    float pitch_offset = active_ctrl_interface_cfg->calib_data->pitch_offset;
 
-    float semitones = v_oct_normalized * pitch_scale + pitch_c0_ref; // pitch offset from reference (C0) in semitones
+    float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
 
     // TODO: evaluate minimum pitch factor change and outsource as MACRO (instead of 0.001f)

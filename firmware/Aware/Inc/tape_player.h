@@ -19,6 +19,11 @@ struct parameters {
     // more params will be added according to DSP/feature requirements
 };
 
+typedef struct {
+    uint32_t phase;
+    bool active;
+} playhead_t;
+
 struct tape_player {
     size_t dma_buf_size;     // buffer size RX/TX
     tape_buffer_t tape_buf;  // holds tape audio - play source and recording
@@ -26,8 +31,16 @@ struct tape_player {
     uint32_t tape_playphase; // Q16.16 (int16_t integer part, uint16_t frac part)
     uint32_t tape_recordhead;
 
+    // corssfading logic
+    playhead_t ph_a;
+    playhead_t ph_b;
+    bool crossfading;
+    uint32_t fade_pos; // samples into crossfade
+    uint32_t fade_len; // total fade length
+
     bool is_playing;
     bool is_recording;
+    bool copy_pending;
 
     QueueHandle_t tape_cmd_q; // command queue handle
 

@@ -1,17 +1,21 @@
 #pragma once
 
+#include <math.h>
+
 /* ===== Config Options ===== */
 // #define CONFIG_AUDIO_LOOPBACK
 // #define CONFIG_USE_CALIB_STORAGE
+// #define CONFIG_DEBUG_LOGS
 
 /* ===== Engine Parameters ===== */
 
 /* audio engine config */
-#define AUDIO_BLOCK_SIZE 32
-#define AUDIO_SAMPLE_RATE I2S_AUDIOFREQ_48K
+#define AUDIO_BLOCK_SIZE 256
+// #define AUDIO_SAMPLE_RATE I2S_AUDIOFREQ_48K
+#define AUDIO_SAMPLE_RATE 48000
 
 /* tape engine configs*/
-#define TAPE_SECONDS 5
+#define TAPE_SECONDS 2
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration
@@ -42,6 +46,19 @@
 #endif
 
 /* ===== Derived values (do not edit) ===== */
-#define TAPE_SIZE (AUDIO_SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS) // number of samples
-#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)
-#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS) // number of samples per channel
+// playback tape size calculations
+#define TAPE_SIZE (AUDIO_SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS)           // number of samples
+#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE) // make sure tape size is multiple of audio block size
+#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)                  // number of samples per channel
+
+// we have to dimension the recording buffer to handle the playhead advancement at maximum pitch shift
+#define MAX_PITCH_SHIFT_SEMITONES 48.0f // maximum pitch shift in semitones (upwards)
+// compute number of blocks needed for max pitch shift + 10% safety margin
+// approximate 2^(n/12) using fixed values or a table
+// for 48 semitones: 2^(48/12) = 16
+#define PITCH_FACTOR_BLOCKS 16
+// add 10% safety margin using integer math: 16 + 10% ≈ 17.6 -> round up to 18
+#define TAPE_REC_BUF_NUM_BLOCKS ((PITCH_FACTOR_BLOCKS * 110 + 99) / 100) // ceil integer division
+
+// recording buffer size per channel, aligned to block size
+#define TAPE_REC_BUF_SIZE_CHANNEL (AUDIO_BLOCK_SIZE * TAPE_REC_BUF_NUM_BLOCKS)

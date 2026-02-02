@@ -1,6 +1,7 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -8,11 +9,11 @@
 #include "control_interface.h"
 #include "drivers/adc_driver.h"
 #include "drivers/gpio_driver.h"
+#include "drivers/swo_log.h"
 #include "drivers/tlv320_driver.h"
 #include "main.h"
 #include "tape_player.h"
 #include "user_interface.h"
-#include <stdbool.h>
 
 /* ===== Global FreeRTOS objects ===== */
 TaskHandle_t audioTaskHandle;
