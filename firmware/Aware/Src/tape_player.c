@@ -47,9 +47,11 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     tape_player->playback_buf.ch[0] = tape_play_buf_l;
     tape_player->playback_buf.ch[1] = tape_play_buf_r;
     tape_player->playback_buf.size = TAPE_SIZE_CHANNEL;
+    tape_player->playback_buf.filled_samples = 0;
     tape_player->record_buf.ch[0] = tape_rec_buf_l;
     tape_player->record_buf.ch[1] = tape_rec_buf_r;
     tape_player->record_buf.size = TAPE_SIZE_CHANNEL;
+    tape_player->record_buf.filled_samples = 0;
 
     // playhead and reacordhead init
     tape_player->ph_a.phase = 1 << 16; // start at sample 1 for interpolation
@@ -70,6 +72,7 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
 
     // parameters
     // TODO: switch to state events
+    tape_player->cyclic_mode = false; // default to oneshot mode
 
     tape_player->switch_bufs_pending = false;
     tape_player->params.pitch_factor = 1.0f; // TODO: read out pitch fader on init?
@@ -124,6 +127,7 @@ static inline void advance_playhead(playhead_t* ph, uint32_t phase_inc) {
     ph->phase += phase_inc;
 
     // Wraparound the integer part if it exceeds buffer size
+    // TODO: where to implement this wrapping logic?
     uint32_t idx = ph->phase >> 16; // integer part
     if (idx >= active_tape_player->playback_buf.size) {
         idx %= active_tape_player->playback_buf.size;   // wrap
@@ -131,15 +135,15 @@ static inline void advance_playhead(playhead_t* ph, uint32_t phase_inc) {
     }
 }
 
+// checks if playhead is near the end of the buffer and has to start fading into next buffer/silence
 static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len) {
-    uint32_t idx = ph->phase >> 16; // integer part
-    uint32_t buf_size = active_tape_player->playback_buf.size;
+    uint32_t buf_size = active_tape_player->playback_buf.filled_samples;
 
-    // hermite reads idx-1 .. idx+2 → max index needed = idx+2
-    uint32_t safe_idx = buf_size - 3; // -3 because idx+2 must be < buf_size
+    // samples → phase
+    uint32_t end_phase = ((buf_size - 2) << 16); // hermite safety (idx+2)
+    uint32_t fade_phase = fade_len << 16;
 
-    // start fade if within fade_len samples of buffer end
-    return idx >= safe_idx - fade_len;
+    return ph->phase + fade_phase >= end_phase;
 }
 
 // worker function to process tape player state
@@ -155,17 +159,14 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
 
         uint32_t phase_inc = tape->params.pitch_factor * 65536.0f;
 
-        if (tape->play_state == PLAY_PLAYING) {
+        switch (tape->play_state) {
+        case PLAY_STOPPED:
+            // output silence
+            break;
+        case PLAY_PLAYING:
             if (!tape->xfade.active) {
                 out_l += hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[0]);
                 out_r += hermite_interpolate(tape->ph_a.phase, tape->playback_buf.ch[1]);
-
-                if (playhead_near_end(&tape->ph_a, tape->xfade.len) && envelope_is_open(&tape->env)) {
-                    tape->xfade.reason = XFADE_BUFFER_END;
-                    tape->xfade.pos = 0;
-                    tape->xfade.len = FADE_IN_LENGTH;
-                    tape->xfade.active = true;
-                }
 
             } else if (tape->xfade.reason == XFADE_RETRIGGER) {
                 // --- dual playhead crossfade ---
@@ -225,9 +226,30 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                     tape_player_stop_play();
                 }
             }
-            advance_playhead(&tape->ph_a, phase_inc);
-            if (tape->xfade.active)
-                advance_playhead(&tape->ph_b, phase_inc);
+
+            // check if end of playback buffer is approaching and trigger fade out if envelope is open (note still held)
+            // if (playhead_near_end(&tape->ph_a, tape->xfade.len) && envelope_is_open(&tape->env)) {
+            // for now dont check envelope activity.
+            if (playhead_near_end(&tape->ph_a, tape->xfade.len)) {
+                tape->xfade.reason = XFADE_BUFFER_END;
+                tape->xfade.pos = 0;
+                tape->xfade.len = FADE_IN_LENGTH;
+                tape->xfade.active = true;
+            }
+            // advance ph_a
+            uint32_t idx_a = tape->ph_a.phase >> 16;
+            if (tape->ph_a.active) {
+                if (tape->cyclic_mode || (!tape->cyclic_mode && idx_a + 2 < tape->playback_buf.filled_samples)) {
+                    tape->ph_a.phase += phase_inc;
+                }
+            }
+            // advance ph_b (xfade buffer)
+            if (tape->xfade.active && tape->ph_b.active) {
+                if (tape->cyclic_mode || (!tape->cyclic_mode && idx_a + 2 < tape->xfade.len + 3)) {
+                    tape->ph_b.phase += phase_inc;
+                }
+            }
+            break;
         }
 
         float env_val = envelope_process(&tape->env);
@@ -244,7 +266,6 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             if (tape->tape_recordhead >= tape->playback_buf.size) {
                 tape->rec_state = REC_IDLE;
                 tape->switch_bufs_pending = true;
-                tape->tape_recordhead = 0;
                 tape_player_stop_record();
             }
             // deinterleaves input buffer into tape buffer
@@ -307,6 +328,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
 
             envelope_note_on(&t->env);
             if (t->switch_bufs_pending) {
+                t->playback_buf.filled_samples = t->record_buf.filled_samples;
                 swap_tape_buffers(t);
                 t->switch_bufs_pending = false;
             }
@@ -333,8 +355,14 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
     case REC_RECORDING:
         if (evt == TAPE_EVT_RECORD) {
             // new recording while already recording -> just switch buffers and start recording on the other one
+            t->record_buf.filled_samples = t->tape_recordhead;
+            t->tape_recordhead = 0;
             t->switch_bufs_pending = true;
+
+            // stay in recording state
         } else if (evt == TAPE_EVT_RECORD_DONE || evt == TAPE_EVT_STOP) {
+            t->record_buf.filled_samples = t->tape_recordhead;
+            t->tape_recordhead = 0;
             t->switch_bufs_pending = true;
 
             t->rec_state = REC_IDLE;
