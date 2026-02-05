@@ -49,6 +49,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/rtos.c
     Aware/Src/audioengine.c
     Aware/Src/tape_player.c
+    Aware/Src/envelope.c
     Aware/Src/user_interface.c
     Aware/Src/settings.c
     Aware/Src/control_interface.c

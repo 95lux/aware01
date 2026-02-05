@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 typedef enum { ENV_IDLE = 0, ENV_ATTACK, ENV_DECAY, ENV_SUSTAIN, ENV_RELEASE } env_state_t;
 
 typedef struct {
@@ -13,3 +15,4 @@ typedef struct {
 float envelope_process(envelope_t* env);
 void envelope_note_on(envelope_t* env);
 void envelope_note_off(envelope_t* env);
+bool envelope_is_open(envelope_t* env);

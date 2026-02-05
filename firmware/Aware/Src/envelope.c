@@ -1,5 +1,6 @@
 #include "envelope.h"
 
+
 float envelope_process(envelope_t* env) {
     switch (env->state) {
     case ENV_IDLE:
@@ -43,4 +44,8 @@ void envelope_note_on(envelope_t* env) {
 
 void envelope_note_off(envelope_t* env) {
     env->state = ENV_RELEASE;
+}
+
+bool envelope_is_open(envelope_t* env) {
+    return env->state != ENV_IDLE;
 }
