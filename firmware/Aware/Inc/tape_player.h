@@ -9,8 +9,9 @@
 #define TAPE_PLAYER_PITCH_RANGE 2.0f // pitch factor range from 0.0 (stop) to 2.0 (double speed)
 
 typedef struct {
-    int16_t* ch[2]; // ch[0]=L, ch[1]=R
-    uint32_t size;  // samples per channel
+    int16_t* ch[2];          // ch[0]=L, ch[1]=R
+    uint32_t size;           // samples per channel
+    uint32_t filled_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
 } tape_buffer_t;
 
 struct parameters {
