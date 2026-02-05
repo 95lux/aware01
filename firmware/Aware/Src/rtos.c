@@ -108,7 +108,7 @@ static void AudioTask(void* argument) {
                 tape_player_play();
                 break;
             case TAPE_CMD_STOP:
-                tape_player_stop();
+                tape_player_stop_play();
                 break;
             case TAPE_CMD_RECORD:
                 tape_player_record();
