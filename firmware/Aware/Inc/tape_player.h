@@ -2,6 +2,7 @@
 
 #include "audioengine.h"
 #include "envelope.h"
+#include "project_config.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -9,9 +10,9 @@
 #define TAPE_PLAYER_PITCH_RANGE 2.0f // pitch factor range from 0.0 (stop) to 2.0 (double speed)
 
 typedef struct {
-    int16_t* ch[2];          // ch[0]=L, ch[1]=R
-    uint32_t size;           // samples per channel
-    uint32_t filled_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
+    int16_t* ch[2];         // ch[0]=L, ch[1]=R
+    uint32_t size;          // samples per channel
+    uint32_t valid_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
 } tape_buffer_t;
 
 struct parameters {
@@ -45,21 +46,15 @@ typedef enum {
     REC_RECORDING,
 } rec_state_t;
 
-typedef enum {
-    XFADE_NONE = 0,
-    XFADE_RETRIGGER,
-    XFADE_CYCLIC_WRAP,
-    XFADE_BUFFER_END,
-} xfade_reason_t;
-
 typedef struct {
     bool active;
-    xfade_reason_t reason;
     uint32_t pos;
     uint32_t len; // TODO make xfade length configurable. Need to implement fade lookup interpolation then (or use bigger LUT?).
     // TODO: this has to be max xfade length. Cant be super long unfortunately, since we dont have much SRAM available anymore :(
-    int16_t temp_buf_l[128 + 3]; // +3 for hermite interpolation safety TODO: make sure this is long enough once configurable!
-    int16_t temp_buf_r[128 + 3]; // +3 for hermite interpolation safety
+    int16_t temp_buf_l[FADE_LUT_LEN + 3]; // +3 for hermite interpolation safety TODO: make sure this is long enough once configurable!
+    int16_t temp_buf_r[FADE_LUT_LEN + 3]; // +3 for hermite interpolation safety
+    uint32_t
+        temp_buf_valid_samples; // number of valid samples in the xfade temp buffer (for retrigger xfade at end of recording, when there might be less than xfade.len samples available)
 } crossfade_t;
 
 // main tape player structure
@@ -77,7 +72,9 @@ struct tape_player {
     // TODO: make wrap mode configurable: cyclic or oneshot
     bool cyclic_mode;
 
-    crossfade_t xfade;
+    crossfade_t xfade_retrig; // retrigger crossfade
+    bool buffer_end_fade_active;
+    uint32_t buffer_end_fade_pos; // position in fade LUT for fading out at end of buffer
 
     uint32_t tape_recordhead;
 
