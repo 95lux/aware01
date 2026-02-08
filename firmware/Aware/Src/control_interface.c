@@ -1,5 +1,6 @@
 #include "control_interface.h"
 #include "drivers/adc_driver.h"
+#include "drivers/gpio_driver.h"
 #include "param_cache.h"
 #include "project_config.h"
 
@@ -14,6 +15,7 @@
 
 static struct control_interface_config* active_ctrl_interface_cfg = NULL;
 
+// TODO: create substructs for control_calib_data and ui_calib_data
 int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data) {
     if (config == NULL || config->hadc_cvs == NULL)
         return -1;
@@ -36,9 +38,9 @@ void control_interface_process() {
         active_ctrl_interface_cfg->cv_ins[i].val = v;
     }
 
-    float v_oct_normalized = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val; // 0..1
-    float pitch_scale = active_ctrl_interface_cfg->calib_data->pitch_scale;   // pitch_scale = semitones per normalized CV unit
-    float pitch_offset = active_ctrl_interface_cfg->calib_data->pitch_offset;
+    float v_oct_normalized = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val;    // 0..1
+    float pitch_scale = active_ctrl_interface_cfg->calib_data->voct_pitch_scale; // pitch_scale = semitones per normalized CV unit
+    float pitch_offset = active_ctrl_interface_cfg->calib_data->voct_pitch_offset;
 
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
@@ -57,7 +59,7 @@ void calibrate_C1() {
 void calibrate_offsets() {
     for (size_t i = 0; i < NUM_CV_CHANNELS; ++i) {
         uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[i];
-        active_ctrl_interface_cfg->calib_data->offset[i] = float_value(adc_val);
+        active_ctrl_interface_cfg->calib_data->cv_offset[i] = float_value(adc_val);
     }
 }
 
@@ -68,28 +70,25 @@ int calibrate_C3() {
     float c1 = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val;
     float delta = c3 - c1;
     if (delta > -0.5f && delta < -0.0f) {
-        active_ctrl_interface_cfg->calib_data->pitch_scale = 24.0f / (c3 - c1);
-        active_ctrl_interface_cfg->calib_data->pitch_offset =
-            12.0f - active_ctrl_interface_cfg->calib_data->pitch_scale * c1; // reference point for C0 (because c1 - 12st = c0)
+        active_ctrl_interface_cfg->calib_data->voct_pitch_scale = 24.0f / (c3 - c1);
+        active_ctrl_interface_cfg->calib_data->voct_pitch_offset =
+            12.0f - active_ctrl_interface_cfg->calib_data->voct_pitch_scale * c1; // reference point for C0 (because c1 - 12st = c0)
         return 0;
     } else {
         return -1;
     }
 }
 
+// TODO: LED Mode for calibration routine
 int control_interface_start_calibration(struct calibration_data* calib_data) {
     // procedure:
     // 1. input C1 voltage, then wait for button press to store C1
-    while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET)) {
-        vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
-    }
+    if (!wait_for_both_buttons())
+        return -1;
     calibrate_C1();
     // 2. input C3 voltage, then wait for button press to store C3 and compute scale/offset
-    while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET)) {
-        vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
-    }
+    if (!wait_for_both_buttons())
+        return -1;
     int res = calibrate_C3();
     calibrate_offsets();
     return res;

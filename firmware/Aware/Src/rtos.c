@@ -1,5 +1,6 @@
 #include "FreeRTOS.h"
 #include "queue.h"
+#include "settings.h"
 #include "stm32h7xx_hal.h"
 #include "task.h"
 #include <stdbool.h>
@@ -35,6 +36,7 @@ static void UserInterfaceTask(void* argument);
 /* ===== Global config structs =====*/
 struct gpio_config gpio_cfg;
 struct adc_config adc_interface_cfg;
+struct SettingsData settings_data_ram;
 
 /* ===== FreeRTOS init ===== */
 void FREERTOS_Init(void) {
@@ -70,6 +72,32 @@ void FREERTOS_Init(void) {
         gpio_cfg.tape_cmd_q = tape_cmd_q;
 
         init_gpio_interface(&gpio_cfg);
+
+#if CONFIG_USE_CALIB_STORAGE
+        int b_read = read_settings_data(&settings_data);
+        if (b_read != sizeof(struct settings_data)) {
+#endif
+            struct calibration_data calibration = settings_data_ram.calibration_data;
+            // set default/fallback calibration data
+            // C1/1V -> 44000 ADC value, C3/3V -> 25150 ADC value
+            // C1 = 12. semitones, C3 = 36. semitones
+            float c3 = float_value(25150);
+            float c1 = float_value(44000);
+            float delta_semitones = 36.0f - 12.0f;
+            float delta = c3 - c1; // normaled CV difference between C1 and C3
+
+            if (delta > -0.5f && delta < -0.0f) {
+                calibration.voct_pitch_scale = delta_semitones / (c3 - c1);
+                calibration.voct_pitch_offset =
+                    12.0f - calibration.voct_pitch_scale * c1; // to calculate offset, either C1 or C3 can be used
+            }
+
+            for (size_t i = 1; i < NUM_CV_CHANNELS; ++i) {
+                calibration.cv_offset[i] = 0.0f;
+            }
+#if CONFIG_USE_CALIB_STORAGE
+        }
+#endif
     }
 }
 
@@ -147,44 +175,7 @@ static void ControlInterfaceTask(void* argument) {
         .hadc_cvs = &hadc1,
     };
 
-    struct calibration_data calib_data;
-
-#if CONFIG_USE_CALIB_STORAGE
-    int b_read = read_calibration_data(&calib_data);
-    if (b_read != sizeof(struct calibration_data)) {
-#endif
-        // set default/fallback calibration data
-        // C1/1V -> 44000 ADC value, C3/3V -> 25150 ADC value
-        // C1 = 12. semitones, C3 = 36. semitones
-        float c3 = float_value(25150);
-        float c1 = float_value(44000);
-        float delta_semitones = 36.0f - 12.0f;
-        float delta = c3 - c1; // normaled CV difference between C1 and C3
-
-        if (delta > -0.5f && delta < -0.0f) {
-            calib_data.pitch_scale = delta_semitones / (c3 - c1);
-            calib_data.pitch_offset = 12.0f - calib_data.pitch_scale * c1; // to calculate offset, either C1 or C3 can be used
-        }
-
-        for (size_t i = 1; i < NUM_CV_CHANNELS; ++i) {
-            calib_data.offset[i] = 0.0f;
-        }
-#if CONFIG_USE_CALIB_STORAGE
-    }
-#endif
-
-    // Init calibration if both buttons are held on startup
-    if (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-        HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
-        /* simple debounce / require 500 ms hold */
-        vTaskDelay(pdMS_TO_TICKS(500));
-        if (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-            HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
-            control_interface_start_calibration(&calib_data);
-        }
-    }
-
-    init_control_interface(&control_interface_cfg, &calib_data);
+    init_control_interface(&control_interface_cfg, &settings_data_ram.calibration_data);
     start_control_interface();
 
     uint32_t notified;
@@ -225,7 +216,33 @@ static void UserInterfaceTask(void* argument) {
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
 
-    user_iface_init(&user_interface_cfg);
+    struct calibration_data calibration = settings_data_ram.calibration_data;
+
+    uint32_t hold_time = 0;
+
+    // Check both buttons pressed
+    while (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
+           HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
+        vTaskDelay(pdMS_TO_TICKS(10));
+        hold_time += 10;
+
+        if (hold_time >= POT_CALIB_HOLD_MS) {
+            // Long hold -> POT calibration
+            // led_feedback_pot_calib(); // TODO: calibraiton schemes for WS2812 LEDs
+            struct calibration_data calibration = settings_data_ram.calibration_data;
+            user_iface_calibrate_pitch_pot(&calibration);
+            return; // exit after calibration
+        }
+    }
+
+    if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
+        // Short hold -> CV calibration
+        // led_feedback_cv_calib();
+        struct calibration_data calibration = settings_data_ram.calibration_data;
+        control_interface_start_calibration(&calibration);
+    }
+
+    user_iface_init(&user_interface_cfg, &calibration);
     user_iface_start();
 
     uint32_t notified;

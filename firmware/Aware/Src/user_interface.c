@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "project_config.h"
+#include "settings.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
 #include "string.h"
@@ -9,11 +10,18 @@
 #include <queue.h>
 
 #include "drivers/adc_driver.h"
+#include "drivers/gpio_driver.h"
 #include "param_cache.h"
 
 static struct user_interface_config* active_user_interface_cfg = NULL;
 
-int user_iface_init(struct user_interface_config* config) {
+struct pot_pitch_calibration {
+    float min;    // pot value at full CCW
+    float center; // pot value at detent
+    float max;    // pot value at full CW
+};
+
+int user_iface_init(struct user_interface_config* config, struct calibration_data* calibration) {
     if (config == NULL)
         return -1;
 
@@ -28,12 +36,15 @@ int user_iface_init(struct user_interface_config* config) {
         config->pot_leds[i].brightness_percent = 0;
     }
 
+    config->calibration_data = calibration;
+
     active_user_interface_cfg = config;
 
     return 0;
 }
 
 int user_iface_start() {
+    // TODO: apply peacewise linear calibration in user_iface_process.
     // start pwm timers
     for (int i = 0; i < NUM_POT_LEDS; i++) {
         struct led led = active_user_interface_cfg->pot_leds[i];
@@ -60,13 +71,23 @@ void user_iface_process() {
         active_user_interface_cfg->pots[i].val = v;
     }
 
-    float pot = active_user_interface_cfg->pots[POT_PITCH].val;
-    // 0..1 -> -1..+1
-    float bipolar = (pot * 2.0f) - 1.0f;
-    // +-semitone range
-    float semitones = bipolar * UI_PITCH_MAX_SEMITONE_RANGE;
-    // semitones -> playback speed
-    float pitch_factor_new = powf(2.0f, semitones / 12.0f);
+    float raw = active_user_interface_cfg->pots[POT_PITCH].val;
+    struct calibration_data* cal = active_user_interface_cfg->calibration_data;
+
+    float pitch_factor_new = 1.0f; // default
+
+    if (raw <= cal->pitchpot_mid) {
+        // CCW → center segment
+        float t = (raw - cal->pitchpot_min) / (cal->pitchpot_mid - cal->pitchpot_min);
+        t = fmaxf(0.0f, fminf(t, 1.0f));
+        pitch_factor_new = 1.0f + t * (1.0f - 1.0f); // can map min detent speed if needed
+    } else {
+        // Center → CW segment
+        float t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+        t = fmaxf(0.0f, fminf(t, 1.0f));
+        pitch_factor_new = 1.0f + t * (UI_PITCH_MAX_SEMITONE_RANGE / 12.0f); // convert semitones to speed factor
+        pitch_factor_new = powf(2.0f, pitch_factor_new);                     // playback speed
+    }
 
     param_cache_set_pitch_ui(pitch_factor_new);
 }
@@ -83,4 +104,28 @@ void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent) {
         pulse = led.htim_led->Init.Period - pulse;
 
     __HAL_TIM_SET_COMPARE(led.htim_led, led.timer_channel, pulse);
+}
+
+// TODO: LED Mode for calibration routine
+int user_iface_calibrate_pitch_pot(struct calibration_data* cal) {
+    // CCW (min)
+    if (!wait_for_both_buttons())
+        return -1;
+    cal->pitchpot_min = active_user_interface_cfg->pots[POT_PITCH].val;
+
+    // Center detent
+    if (!wait_for_both_buttons())
+        return -1;
+    cal->pitchpot_mid = active_user_interface_cfg->pots[POT_PITCH].val;
+
+    // CW (max)
+    if (!wait_for_both_buttons())
+        return -1;
+    cal->pitchpot_max = active_user_interface_cfg->pots[POT_PITCH].val;
+
+    // sanity check
+    if (!(cal->pitchpot_min < cal->pitchpot_mid && cal->pitchpot_mid < cal->pitchpot_max))
+        return -1;
+
+    return 0;
 }

@@ -70,3 +70,6 @@
 
 #define FADE_LUT_LEN 128
 #define FADE_OUT_LENGTH 64 // fade out length when approaching end of buffer, to prevent clicks
+
+#define CV_CALIB_HOLD_MS 1000
+#define POT_CALIB_HOLD_MS 3000

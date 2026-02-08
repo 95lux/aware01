@@ -3,14 +3,20 @@
 #include "project_config.h"
 #include <stdint.h>
 
+// aligned settings partition size needed
+#define SETTINGS_SIZE 64
+
 // TODO: evaluate proper usage: pitch_offset: offset to be added to pitch CV input, caused by DC voltage offsets from opamps etc.
 // pitch_scale: scaling factor for 1V/octave CV input. Float change per semitone.
 // offset[]: per-channel offsets to be subtracted from CV inputs before further processing.
 struct calibration_data {
-    float pitch_offset;            // 4 bytes
-    float pitch_scale;             // 4 bytes
-    float offset[NUM_CV_CHANNELS]; // 4 * 4 = 16 bytes
-}; // total: 24 bytes
+    float voct_pitch_offset;          // 4 bytes
+    float voct_pitch_scale;           // 4 bytes
+    float cv_offset[NUM_CV_CHANNELS]; // 4 * 4 = 16 bytes
+    float pitchpot_min;               // 4 bytes
+    float pitchpot_mid;               // 4 bytes
+    float pitchpot_max;               // 4 bytes
+}; // total: 36 bytes
 
 struct State {
     uint8_t tobe_reserved0; // 1 byte
@@ -20,10 +26,10 @@ struct State {
 }; // total: 4 bytes
 
 struct SettingsData {
-    struct calibration_data calibration_data; // 24 bytes
+    struct calibration_data calibration_data; // 36 bytes
     struct State state;                       // 4 bytes
-    uint8_t padding[0];                       // pad to 32 bytes
-}; // total: 32 bytes
+    uint8_t padding[SETTINGS_SIZE - sizeof(struct calibration_data) - sizeof(struct State)];
+}; // total: 64 bytes
 
-int write_calibration_data(struct calibration_data* calib_data);
-int read_calibration_data(struct calibration_data* calib_data);
+int write_settings_data(const struct SettingsData* settings_data);
+int read_settings_data(struct SettingsData* settings_data);

@@ -2,6 +2,7 @@
 #include "FreeRTOS.h"
 #include "gpio.h"
 #include "queue.h"
+#include "stdbool.h"
 #include "stm32h7xx_hal.h"
 #include "task.h"
 
@@ -21,3 +22,4 @@ struct gpio_config {
 };
 
 int init_gpio_interface(struct gpio_config* config);
+bool wait_for_both_buttons();

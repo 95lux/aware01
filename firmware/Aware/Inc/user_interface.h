@@ -1,5 +1,6 @@
 #include "FreeRTOS.h"
 #include "adc.h"
+#include "settings.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
 #include "task.h"
@@ -30,12 +31,14 @@ struct user_interface_config {
 
     struct pot pots[NUM_POT_CHANNELS];
     struct led pot_leds[NUM_POT_LEDS];
+
+    struct calibration_data* calibration_data;
 };
 
-int user_iface_init(struct user_interface_config* config);
+int user_iface_init(struct user_interface_config* config, struct calibration_data* calibration);
 int user_iface_start();
 
 // convert working pot buffer samples to float values in range [0.0, 1.0]
 void user_iface_process();
-
+int user_iface_calibrate_pitch_pot(struct calibration_data* cal);
 void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent);
