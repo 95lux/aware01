@@ -1,5 +1,6 @@
 #include "FreeRTOS.h"
 #include "queue.h"
+#include "stm32h7xx_hal.h"
 #include "task.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -13,6 +14,7 @@
 #include "drivers/tlv320_driver.h"
 #include "main.h"
 #include "tape_player.h"
+#include "tim.h"
 #include "user_interface.h"
 
 /* ===== Global FreeRTOS objects ===== */
@@ -201,11 +203,26 @@ static void ControlInterfaceTask(void* argument) {
 static void UserInterfaceTask(void* argument) {
     struct user_interface_config user_interface_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
-        .hadc_pots = &hadc2,
     };
+    user_interface_cfg.pots[0].hadc_pot = &hadc2;
+    user_interface_cfg.pots[1].hadc_pot = &hadc2;
+    user_interface_cfg.pots[2].hadc_pot = &hadc2;
+    user_interface_cfg.pots[3].hadc_pot = &hadc2;
 
-    init_user_interface(&user_interface_cfg);
-    start_user_interface();
+    user_interface_cfg.pot_leds[0].htim_led = &htim12;
+    user_interface_cfg.pot_leds[0].timer_channel = TIM_CHANNEL_2;
+
+    user_interface_cfg.pot_leds[1].htim_led = &htim12;
+    user_interface_cfg.pot_leds[1].timer_channel = TIM_CHANNEL_1;
+
+    user_interface_cfg.pot_leds[2].htim_led = &htim1;
+    user_interface_cfg.pot_leds[2].timer_channel = TIM_CHANNEL_1;
+
+    // TODO: rewire to different pin which supports pwm output.
+    // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
+
+    user_iface_init(&user_interface_cfg);
+    user_iface_start();
 
     uint32_t notified;
     struct parameters params;

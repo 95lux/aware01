@@ -34,6 +34,8 @@
 #define CV_1 1
 #define CV_2 2
 #define CV_3 3
+
+#define NUM_POT_LEDS 3 // TODO: currently only 3, since last LED gpio does not support PWM output :(
 // TODO: add more potentiometer mappings as needed
 
 /* ======= MEMORY SECTIONS ======= */
