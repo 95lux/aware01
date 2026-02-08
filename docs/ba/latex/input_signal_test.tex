@@ -1,0 +1,26 @@
+\subsection{ADC Input Range and Signal Levels}
+
+The TLV320AIC audio codec used in this project is powered with \SI{1.8}{\volt} (\(AVDD\)), resulting in a common-mode voltage of
+\[
+V_\mathrm{CM} = \frac{AVDD}{2} = \SI{0.9}{\volt}.
+\]
+
+According to the ADC electrical characteristics in the TLV320AIC datasheet \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC is configured for a full-scale input of \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\). This corresponds to a maximum peak-to-peak voltage of
+\[
+V_\mathrm{pp,max} = (V_\mathrm{CM} + \SI{0.53}{\volt}) - (V_\mathrm{CM} - \SI{0.53}{\volt}) = \SI{1.06}{\volt_{pp}}.
+\]
+
+Any input signal exceeding this range results in saturation of the ADC, producing clipped samples. In our measurements, the input sine wave reached a maximum of \SI{1.4}{\volt} and a minimum of \SI{0.08}{\volt}, which is outside the ADC's safe range. Consequently, the recorded sample buffers contain values at the int16 limits (\(-32768\) to \(32767\)).
+
+The input stage includes a voltage divider, originally designed with resistor values of \(\SI{1.8}{\kilo\ohm}/\SI{12}{\kilo\ohm}\), resulting in an attenuation of 0.15. With a typical Eurorack input signal of \SI{10}{\volt_{pp}}, this configuration drives the TLV320AIC ADC beyond its maximum input range. 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../images/signal_tests/10Vpp_sine_in_amps_old_instage.png}
+	\caption{Attenuation of a \SI{10}{\volt_{pp}} Eurorack-level signal to a biased \SI{1.32}{\volt_{pp}} ADC input.}
+	\label{fig:attenuated_signal}
+\end{figure}
+
+To provide additional headroom and prevent clipping, the voltage divider was adjusted to \(\SI{1}{\kilo\ohm}/\SI{12}{\kilo\ohm}\), yielding an attenuation of approximately 0.084. This reduces the \SI{10}{\volt_{pp}} input signal amplitude to about \SI{0.77}{\volt_{pp}}, which is safely within the ADC's input range. 
+
+This configuration also allows more headroom for larger signals. For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) can be used to boost the signal, thereby utilizing the full resolution of the ADC.
