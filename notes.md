@@ -49,3 +49,17 @@ d. calculate pitch scaling:
 
 4. convert pitch in semitones into playback speed. This has to be exponential, since semitones correspond logarithmicly to frequency, ergo playback speed:
     $pb_speed = 2^{\frac{cv_semitones}{12}}$
+
+
+
+
+# Possible mapping of Controls:
+
+Fader1  -> Base Pitch
+Fader2  -> Base Decay Release
+Fader3  -> DSP functionality
+
+V/Oct   -> Calibrated Pitch
+CV1     -> Env Decay/Release
+CV2     -> DSP functionality like Reverb or Filter
+CV3     -> undefined
