@@ -1,4 +1,5 @@
 #include "stm32h7xx_hal.h"
+#include "string.h"
 #include <stdint.h>
 
 #include "settings.h"
@@ -64,24 +65,26 @@ uint32_t flash_write(uint32_t* data, uint16_t words) {
     return 0;
 }
 
-// returns 1 on success, 0 on failure
-int write_calibration_data(struct calibration_data* calib_data) {
-    uint32_t* data_ptr = (uint32_t*) calib_data;
-    uint16_t words = sizeof(struct calibration_data) / 4; // number of 32-bit words
+int write_settings_data(const struct SettingsData* settings_data) {
+    // ensure alignment
+    static struct SettingsData s __attribute__((aligned(16)));
+    s = *settings_data; // shallow copy entire struct
 
-    // write calibration data to flash
+    uint32_t* data_ptr = (uint32_t*) &s;
+    uint16_t words = sizeof(struct SettingsData) / sizeof(uint32_t);
+
     uint32_t result = flash_write(data_ptr, words);
     return (result == 0);
 }
 
 // returns the number of bytes read
-int read_calibration_data(struct calibration_data* calib_data) {
-    uint32_t* data_ptr = (uint32_t*) calib_data;
-    uint16_t words = sizeof(struct calibration_data) / 4;
+int read_settings_data(struct SettingsData* settings_data) {
+    uint32_t* data_ptr = (uint32_t*) settings_data;
+    uint16_t words = sizeof(struct SettingsData) / sizeof(uint32_t);
 
     uint32_t* flash_ptr = (uint32_t*) FLASH_USER_START_ADDR;
     for (uint16_t i = 0; i < words; i++) {
         data_ptr[i] = flash_ptr[i];
     }
-    return words * 4; // number of bytes read
+    return words * sizeof(uint32_t); // number of bytes read
 }
