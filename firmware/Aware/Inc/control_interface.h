@@ -29,6 +29,6 @@ struct control_interface_config {
 
 int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
 int start_control_interface();
-int control_interface_process(struct parameters* params);
+void control_interface_process();
 
 int control_interface_start_calibration(struct calibration_data* calib_data);

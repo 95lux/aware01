@@ -58,6 +58,9 @@
 // compute number of blocks needed for max pitch shift + 10% safety margin
 // approximate 2^(n/12) using fixed values or a table
 // for 48 semitones: 2^(48/12) = 16
+
+#define UI_PITCH_MAX_SEMITONE_RANGE 24.0f
+
 #define PITCH_FACTOR_BLOCKS 16
 // add 10% safety margin using integer math: 16 + 10% ≈ 17.6 -> round up to 18
 #define TAPE_REC_BUF_NUM_BLOCKS ((PITCH_FACTOR_BLOCKS * 110 + 99) / 100) // ceil integer division

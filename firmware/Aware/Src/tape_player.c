@@ -418,19 +418,15 @@ void tape_player_stop_record(void) {
 
 // change pitch factor (playback speed)
 // TODO: evaluate where musical pitch is calculated. Probably in control interface task, and converted to simple pitch factor here.
-void tape_player_change_pitch(float pitch_factor) {
+void tape_player_set_pitch(float pitch_factor) {
     if (active_tape_player) {
         active_tape_player->params.pitch_factor = pitch_factor;
     }
 }
 
-int tape_player_copy_params(struct parameters* params_out) {
-    if (active_tape_player == NULL || params_out == NULL)
-        return -1;
-
-    params_out->pitch_factor = active_tape_player->params.pitch_factor;
-    params_out->pitch_factor_dirty = false;
-    params_out->starting_position = active_tape_player->params.starting_position; // currently not used
-
+float tape_player_get_pitch() {
+    if (active_tape_player) {
+        return active_tape_player->params.pitch_factor;
+    }
     return 0;
 }

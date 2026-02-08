@@ -53,6 +53,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/user_interface.c
     Aware/Src/settings.c
     Aware/Src/control_interface.c
+    Aware/Src/param_cache.c
     Aware/Src/drivers/tlv320_driver.c
     Aware/Src/drivers/adc_driver.c
     Aware/Src/drivers/gpio_driver.c

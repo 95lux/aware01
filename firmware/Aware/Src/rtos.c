@@ -3,6 +3,7 @@
 #include "stm32h7xx_hal.h"
 #include "task.h"
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -13,6 +14,7 @@
 #include "drivers/swo_log.h"
 #include "drivers/tlv320_driver.h"
 #include "main.h"
+#include "param_cache.h"
 #include "tape_player.h"
 #include "tim.h"
 #include "user_interface.h"
@@ -117,15 +119,21 @@ static void AudioTask(void* argument) {
                 break;
             }
         }
-        struct parameters params;
-        /* consume all pending parameter updates and apply latest pitch */
-        while (xQueueReceive(params_queue, &params, 0) == pdTRUE) {
-            if (params.pitch_factor_dirty)
-                tape_player_change_pitch(params.pitch_factor);
-            // TODO: This will come later
-            // if(params.starting_position_dirty)
-            // tape_player_set_position(params.starting_position);
-        }
+
+        // check for param changes
+        struct param_cache param_cache;
+        uint32_t dirty_flags;
+
+        float next_pitch = tape_player_get_pitch();
+
+        dirty_flags = param_cache_fetch(&param_cache);
+        if (dirty_flags & PARAM_DIRTY_PITCH_CV)
+            next_pitch = param_cache.pitch_cv;
+
+        if (dirty_flags & PARAM_DIRTY_PITCH_UI)
+            next_pitch = next_pitch * param_cache.pitch_ui;
+
+        tape_player_set_pitch(next_pitch);
 #endif
     }
 }
@@ -183,18 +191,14 @@ static void ControlInterfaceTask(void* argument) {
     struct parameters params;
 
     for (;;) {
+        // wait for next adc conversion
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            // TODO: How to handle simultaneous parameter updates from user interface and CVs?
-            // can i check if jack is plugged in(probably not) ? Maybe calculate offset,
-            // then add CV and pot values together ? if (notified & ADC_NOTIFY_CV_RDY) {
             int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
             if (res != 0) {
-                // skip processing if error
+                // skip processing if samples cant be fetched.
                 continue;
             };
-            tape_player_copy_params(&params);
-            control_interface_process(&params);
-            xQueueOverwrite(params_queue, &params);
+            control_interface_process();
         }
     }
 }
@@ -203,20 +207,20 @@ static void ControlInterfaceTask(void* argument) {
 static void UserInterfaceTask(void* argument) {
     struct user_interface_config user_interface_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
+        .pots =
+            {
+                [0] = {.inverted = true},
+                [1] = {.inverted = false},
+                [2] = {.inverted = false},
+                [3] = {.inverted = true},
+            },
+        .pot_leds =
+            {
+                [0] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_2},
+                [1] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_1},
+                [2] = {.htim_led = &htim1, .timer_channel = TIM_CHANNEL_1},
+            },
     };
-    user_interface_cfg.pots[0].hadc_pot = &hadc2;
-    user_interface_cfg.pots[1].hadc_pot = &hadc2;
-    user_interface_cfg.pots[2].hadc_pot = &hadc2;
-    user_interface_cfg.pots[3].hadc_pot = &hadc2;
-
-    user_interface_cfg.pot_leds[0].htim_led = &htim12;
-    user_interface_cfg.pot_leds[0].timer_channel = TIM_CHANNEL_2;
-
-    user_interface_cfg.pot_leds[1].htim_led = &htim12;
-    user_interface_cfg.pot_leds[1].timer_channel = TIM_CHANNEL_1;
-
-    user_interface_cfg.pot_leds[2].htim_led = &htim1;
-    user_interface_cfg.pot_leds[2].timer_channel = TIM_CHANNEL_1;
 
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
@@ -225,15 +229,17 @@ static void UserInterfaceTask(void* argument) {
     user_iface_start();
 
     uint32_t notified;
-    struct parameters params;
 
     for (;;) {
+        // wait for adc conversion
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_POTS_RDY) {
-                // adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
-                // tape_player_copy_params(&params);
-                // user_interface_process(&params);
-                // xQueueOverwrite(params_queue, &params);
+                int res = adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
+                if (res != 0) {
+                    // skip processing if adc fetch failed
+                    continue;
+                }
+                user_iface_process();
             }
         }
     }

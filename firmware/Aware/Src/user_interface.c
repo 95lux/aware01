@@ -9,6 +9,7 @@
 #include <queue.h>
 
 #include "drivers/adc_driver.h"
+#include "param_cache.h"
 
 static struct user_interface_config* active_user_interface_cfg = NULL;
 
@@ -16,10 +17,6 @@ int user_iface_init(struct user_interface_config* config) {
     if (config == NULL)
         return -1;
 
-    for (int i = 0; i < NUM_POT_CHANNELS; i++) {
-        if (config->pots[i].hadc_pot == NULL)
-            return -1;
-    }
     for (int i = 0; i < NUM_POT_LEDS; i++) {
         // TODO: || config->pot_leds[i].timer_channel == faulty? check if channel was actually populated.
         if (config->pot_leds[i].htim_led == NULL)
@@ -54,7 +51,7 @@ int user_iface_start() {
 // will also do software debouncing of buttons if needed in the future
 // TODO: implement processing of user interface data
 // and maps them to parameters
-int user_iface_process(struct parameters* params) {
+void user_iface_process() {
     for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
         float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
         if (active_user_interface_cfg->pots[i].inverted)
@@ -63,18 +60,15 @@ int user_iface_process(struct parameters* params) {
         active_user_interface_cfg->pots[i].val = v;
     }
 
-    // TODO: dirty marking maybe in tape player?
-    // map pots to tape player params
-    float pitch_factor_new = active_user_interface_cfg->pots[POT_PITCH].val * TAPE_PLAYER_PITCH_RANGE; // map [0.0, 1.0] to [0.0, 2.0]
-    // e.g., pitch factor 0.0 = stop, 1.0 = normal speed, 2.0 = double speed TODO: evaluate max/min pitch factor and map accordingly.
+    float pot = active_user_interface_cfg->pots[POT_PITCH].val;
+    // 0..1 -> -1..+1
+    float bipolar = (pot * 2.0f) - 1.0f;
+    // +-semitone range
+    float semitones = bipolar * UI_PITCH_MAX_SEMITONE_RANGE;
+    // semitones -> playback speed
+    float pitch_factor_new = powf(2.0f, semitones / 12.0f);
 
-    // TODO: add smoothing/filtering to avoid zipper noise when turning pots quickly?
-    // for now, just check if value changed significantly
-    if (fabsf(params->pitch_factor - pitch_factor_new) > 0.001f) {
-        params->pitch_factor = pitch_factor_new;
-        params->pitch_factor_dirty = true;
-    }
-    return 0;
+    param_cache_set_pitch_ui(pitch_factor_new);
 }
 
 // Example: set LED brightness 0..100%

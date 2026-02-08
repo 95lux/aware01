@@ -1,8 +1,9 @@
 #include "control_interface.h"
 #include "drivers/adc_driver.h"
+#include "param_cache.h"
+#include "project_config.h"
 
 #include "main.h"
-#include "project_config.h"
 #include "stm32h7xx_hal.h"
 #include "string.h"
 #include <FreeRTOS.h>
@@ -29,7 +30,7 @@ int start_control_interface() {
 }
 
 // TODO: use offsets from calibration data to adjust CV values
-int control_interface_process(struct parameters* params) {
+void control_interface_process() {
     for (size_t i = 0; i < NUM_CV_CHANNELS; i++) {
         float v = float_value(active_ctrl_interface_cfg->adc_cv_working_buf[i]);
         active_ctrl_interface_cfg->cv_ins[i].val = v;
@@ -42,12 +43,7 @@ int control_interface_process(struct parameters* params) {
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
 
-    // TODO: evaluate minimum pitch factor change and outsource as MACRO (instead of 0.001f)
-    if (fabsf(params->pitch_factor - pitch_factor_new) > 0.001f) {
-        params->pitch_factor = pitch_factor_new;
-        params->pitch_factor_dirty = true;
-    }
-    return 0;
+    param_cache_set_pitch_cv(pitch_factor_new);
 }
 
 // calibration procedure

@@ -7,17 +7,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define TAPE_PLAYER_PITCH_RANGE 2.0f // pitch factor range from 0.0 (stop) to 2.0 (double speed)
-
 typedef struct {
     int16_t* ch[2];         // ch[0]=L, ch[1]=R
     uint32_t size;          // samples per channel
     uint32_t valid_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
 } tape_buffer_t;
 
+// holds changeable parameters in the tape player engine. should actually not be accessed from outside
 struct parameters {
     float pitch_factor;
-    bool pitch_factor_dirty;
     float starting_position; // currently not used
     // more params will be added according to DSP/feature requirements
 };
@@ -106,6 +104,6 @@ void tape_player_play();
 void tape_player_stop_play();
 void tape_player_record();
 void tape_player_stop_record(void);
-void tape_player_change_pitch(float pitch_factor);
+void tape_player_set_pitch(float pitch_factor);
 
-int tape_player_copy_params(struct parameters* params_out);
+float tape_player_get_pitch();
