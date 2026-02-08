@@ -1,9 +1,9 @@
 #include "FreeRTOS.h"
 #include "adc.h"
-#include "timers.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
 #include "task.h"
+#include "timers.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -14,13 +14,12 @@
 struct pot {
     float_t val;
     bool inverted;
-    ADC_HandleTypeDef* hadc_pot;
 };
 
 struct led {
     uint8_t brightness_percent;
-    bool inverted;  // uses inverted pwm output
-    TIM_HandleTypeDef *htim_led;
+    bool inverted; // uses inverted pwm output
+    TIM_HandleTypeDef* htim_led;
     uint32_t timer_channel;
 };
 
@@ -37,6 +36,6 @@ int user_iface_init(struct user_interface_config* config);
 int user_iface_start();
 
 // convert working pot buffer samples to float values in range [0.0, 1.0]
-int user_iface_process(struct parameters* params);
+void user_iface_process();
 
 void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent);
