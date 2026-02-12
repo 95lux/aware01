@@ -229,17 +229,16 @@ static void UserInterfaceTask(void* argument) {
         if (hold_time >= POT_CALIB_HOLD_MS) {
             // Long hold -> POT calibration
             // led_feedback_pot_calib(); // TODO: calibraiton schemes for WS2812 LEDs
-            struct calibration_data calibration = settings_data_ram.calibration_data;
-            user_iface_calibrate_pitch_pot(&calibration);
-            return; // exit after calibration
+            user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data);
+            write_settings_data(&settings_data_ram);
         }
     }
 
     if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
         // Short hold -> CV calibration
         // led_feedback_cv_calib();
-        struct calibration_data calibration = settings_data_ram.calibration_data;
-        control_interface_start_calibration(&calibration);
+        control_interface_start_calibration(&settings_data_ram.calibration_data);
+        write_settings_data(&settings_data_ram);
     }
 
     user_iface_init(&user_interface_cfg, &calibration);
