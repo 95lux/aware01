@@ -7,11 +7,15 @@
 #include "tim.h"
 #include <stdint.h>
 
-struct led_animation_stage {
-    uint32_t duration;
+struct ws2812_led {
     uint8_t r;
     uint8_t g;
     uint8_t b;
+};
+
+struct led_animation_stage {
+    uint32_t duration;
+    struct ws2812_led leds[4]; // support up to 4 LEDs, can be extended if needed
 };
 
 struct led_animation {
@@ -22,28 +26,26 @@ struct led_animation {
 };
 
 struct ws2812_config {
-    TIM_HandleTypeDef htim_anim;
-    TIM_HandleTypeDef htim_pwm;
+    TIM_HandleTypeDef* htim_anim;
+    TIM_HandleTypeDef* htim_pwm;
+    uint32_t tim_channel_pwm;
+
     struct led_animation animation;
     uint32_t anim_tick;
     uint32_t anim_stage;
 };
 
-extern struct led_animation breathe_anim;
-extern struct led_animation chase_anim;
+extern struct led_animation anim_off;
+extern struct led_animation anim_breathe;
+extern struct led_animation anim_chase;
 
 /* ===== API ===== */
-
-void ws2812_init(TIM_HandleTypeDef* htim, uint32_t channel);
-void ws2812_start(TIM_HandleTypeDef* htim, uint32_t channel);
-void ws2812_show(TIM_HandleTypeDef* htim, uint32_t channel);
-
-void ws2812_clear_inverted(void);
-void ws2812_set_led_inverted(uint32_t idx, uint8_t r, uint8_t g, uint8_t b);
+void ws2812_init(struct ws2812_config* config);
+void ws2812_start();
 
 /* ===== Animation control ===== */
 
-void ws2812_start_animation(struct led_animation* anim);
+void ws2812_change_animation(struct led_animation* anim);
 void ws2812_stop_animation(void);
 void ws2812_run_animation_step(void);
 

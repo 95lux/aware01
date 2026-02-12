@@ -1,4 +1,5 @@
 #include "FreeRTOS.h"
+#include "drivers/ws2812_driver.h"
 #include "queue.h"
 #include "settings.h"
 #include "stm32h7xx_hal.h"
@@ -196,6 +197,18 @@ static void ControlInterfaceTask(void* argument) {
 
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
+    // init ws2812 driver
+    struct ws2812_config ws2812_cfg = {
+        .htim_anim = &htim17,
+        .htim_pwm = &htim15,
+        .tim_channel_pwm = TIM_CHANNEL_1,
+        .animation = anim_off,
+    };
+
+    ws2812_init(&ws2812_cfg);
+    ws2812_start();
+    ws2812_change_animation(&anim_breathe);
+
     struct user_interface_config user_interface_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
         .pots =

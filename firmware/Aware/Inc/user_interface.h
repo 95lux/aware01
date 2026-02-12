@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "drivers/ws2812_driver.h"
 #include "project_config.h"
 #include "tape_player.h"
 
@@ -17,7 +18,7 @@ struct pot {
     bool inverted;
 };
 
-struct led {
+struct fader_led {
     uint8_t brightness_percent;
     bool inverted; // uses inverted pwm output
     TIM_HandleTypeDef* htim_led;
@@ -30,9 +31,10 @@ struct user_interface_config {
     TaskHandle_t userIfTaskHandle;
 
     struct pot pots[NUM_POT_CHANNELS];
-    struct led pot_leds[NUM_POT_LEDS];
+    struct fader_led pot_leds[NUM_POT_LEDS];
 
     struct calibration_data* calibration_data;
+    struct ws2812_config* ws2812_config;
 };
 
 int user_iface_init(struct user_interface_config* config, struct calibration_data* calibration);
