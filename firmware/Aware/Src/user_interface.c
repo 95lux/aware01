@@ -1,5 +1,6 @@
 #include "user_interface.h"
 
+#include "drivers/ws2812_driver.h"
 #include "main.h"
 #include "project_config.h"
 #include "settings.h"
@@ -47,7 +48,7 @@ int user_iface_start() {
     // TODO: apply peacewise linear calibration in user_iface_process.
     // start pwm timers
     for (int i = 0; i < NUM_POT_LEDS; i++) {
-        struct led led = active_user_interface_cfg->pot_leds[i];
+        struct fader_led led = active_user_interface_cfg->pot_leds[i];
         // TODO: || config->pot_leds[i].timer_channel == faulty? check if channel was actually populated.
         HAL_TIM_PWM_Start(led.htim_led, led.timer_channel);
     }
@@ -97,7 +98,7 @@ void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent) {
     if (led_index >= NUM_POT_LEDS && led_index < 0)
         return;
 
-    struct led led = active_user_interface_cfg->pot_leds[led_index];
+    struct fader_led led = active_user_interface_cfg->pot_leds[led_index];
 
     uint32_t pulse = (led.htim_led->Init.Period + 1) * percent / 100;
     if (led.inverted)

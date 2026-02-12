@@ -279,11 +279,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
         HAL_IncTick();
     }
     /* USER CODE BEGIN Callback 1 */
+    // WS2812 LEDs
     if (htim->Instance == TIM17) {
         ws2812_timer_callback(htim);
     }
+    // ws2812 PWM
+    if (htim->Instance == TIM15) {
+        volatile uint32_t breakpoint = 0;
+    }
+    // Fader LEDs
     if (htim->Instance == TIM12 || htim->Instance == TIM1) {
-        volatile uint32_t breakpoint;
+        volatile uint32_t breakpoint = 0;
     }
     /* USER CODE END Callback 1 */
 }

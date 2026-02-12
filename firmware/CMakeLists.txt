@@ -58,6 +58,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/drivers/adc_driver.c
     Aware/Src/drivers/gpio_driver.c
     Aware/Src/drivers/ws2812_driver.c
+    Aware/Src/ws2812_animations.c
 )
 
 # Add include paths
