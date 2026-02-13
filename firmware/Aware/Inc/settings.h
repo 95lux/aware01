@@ -28,8 +28,11 @@ struct State {
 struct SettingsData {
     struct calibration_data calibration_data; // 36 bytes
     struct State state;                       // 4 bytes
-    uint8_t padding[SETTINGS_SIZE - sizeof(struct calibration_data) - sizeof(struct State)];
-}; // total: 64 bytes
+    uint8_t padding[SETTINGS_SIZE - sizeof(struct calibration_data) - sizeof(struct State) -
+                    sizeof(uint32_t)]; // 20 bytes to make total size 64 bytes
+    uint32_t magic;                    // 4 bytes magic number to verify valid data
+} __attribute__((aligned(16)));        // total: 64 bytes
 
 int write_settings_data(const struct SettingsData* settings_data);
 int read_settings_data(struct SettingsData* settings_data);
+int flash_roundtrip();

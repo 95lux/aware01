@@ -31,4 +31,4 @@ int init_control_interface(struct control_interface_config* config, struct calib
 int start_control_interface();
 void control_interface_process();
 
-int control_interface_start_calibration(struct calibration_data* calib_data);
+int control_interface_calibrate_voct(struct calibration_data* calib_data);

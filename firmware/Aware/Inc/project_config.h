@@ -4,7 +4,7 @@
 
 /* ===== Config Options ===== */
 // #define CONFIG_AUDIO_LOOPBACK
-// #define CONFIG_USE_CALIB_STORAGE
+#define CONFIG_USE_CALIB_STORAGE
 // #define CONFIG_DEBUG_LOGS
 
 /* ===== Engine Parameters ===== */
@@ -47,6 +47,8 @@
 #define DMA_BUFFER __attribute__((section(".dma_buffer")))
 #endif
 
+#define MAGIC_NUMBER 0xDEADBEEF
+
 /* ===== Derived values (do not edit) ===== */
 // playback tape size calculations
 #define TAPE_SIZE (AUDIO_SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS)           // number of samples
@@ -72,4 +74,4 @@
 #define FADE_OUT_LENGTH 64 // fade out length when approaching end of buffer, to prevent clicks
 
 #define CV_CALIB_HOLD_MS 1000
-#define POT_CALIB_HOLD_MS 3000
+#define POT_CALIB_HOLD_MS 5000

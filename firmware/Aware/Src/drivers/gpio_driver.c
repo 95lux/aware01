@@ -2,6 +2,7 @@
 #include "main.h"
 #include "queue.h"
 #include "stdbool.h"
+#include "stm32h7xx_hal_gpio.h"
 #include "task.h"
 
 #include "tape_player.h"
@@ -19,11 +20,29 @@ int init_gpio_interface(struct gpio_config* config) {
     return 0;
 }
 
-bool wait_for_both_buttons() {
+bool are_both_buttons_pushed() {
+    return (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
+            HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET);
+}
+
+bool wait_for_both_buttons_pushed() {
     uint32_t cycles = 0;
     // TODO: does polling create problems? since its only calibration, maybe just go for polling
     while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
              HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET)) {
+        vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
+        cycles++;
+        if (cycles >= 2000)
+            return false;
+    }
+    return true;
+}
+
+bool wait_for_both_buttons_released() {
+    uint32_t cycles = 0;
+    // TODO: does polling create problems? since its only calibration, maybe just go for polling
+    while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_SET &&
+             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_SET)) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
         if (cycles >= 2000)

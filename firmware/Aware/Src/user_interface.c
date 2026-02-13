@@ -50,11 +50,14 @@ int user_iface_start() {
     for (int i = 0; i < NUM_POT_LEDS; i++) {
         struct fader_led led = active_user_interface_cfg->pot_leds[i];
         // TODO: || config->pot_leds[i].timer_channel == faulty? check if channel was actually populated.
-        HAL_TIM_PWM_Start(led.htim_led, led.timer_channel);
+        HAL_StatusTypeDef result = HAL_TIM_PWM_Start(led.htim_led, led.timer_channel);
+        if (result != HAL_OK) {
+            return -1;
+        }
     }
 
-    // for testing set some led shit.
     user_iface_set_led_brightness(0, 30);
+    user_iface_set_led_brightness(1, 30);
     return 0;
 }
 
@@ -75,20 +78,17 @@ void user_iface_process() {
     float raw = active_user_interface_cfg->pots[POT_PITCH].val;
     struct calibration_data* cal = active_user_interface_cfg->calibration_data;
 
-    float pitch_factor_new = 1.0f; // default
-
+    float t;
     if (raw <= cal->pitchpot_mid) {
-        // CCW → center segment
-        float t = (raw - cal->pitchpot_min) / (cal->pitchpot_mid - cal->pitchpot_min);
-        t = fmaxf(0.0f, fminf(t, 1.0f));
-        pitch_factor_new = 1.0f + t * (1.0f - 1.0f); // can map min detent speed if needed
+        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min); // -1 … 0
     } else {
-        // Center → CW segment
-        float t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
-        t = fmaxf(0.0f, fminf(t, 1.0f));
-        pitch_factor_new = 1.0f + t * (UI_PITCH_MAX_SEMITONE_RANGE / 12.0f); // convert semitones to speed factor
-        pitch_factor_new = powf(2.0f, pitch_factor_new);                     // playback speed
+        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid); // 0 … +1
     }
+
+    t = fmaxf(-1.0f, fminf(t, 1.0f));
+
+    float semitones = t * UI_PITCH_MAX_SEMITONE_RANGE;
+    float pitch_factor_new = powf(2.0f, semitones / 12.0f);
 
     param_cache_set_pitch_ui(pitch_factor_new);
 }
@@ -107,26 +107,43 @@ void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent) {
     __HAL_TIM_SET_COMPARE(led.htim_led, led.timer_channel, pulse);
 }
 
-// TODO: LED Mode for calibration routine
+static int calibrate_pitch_point(float* dst, bool inverted, uint16_t* adc_buf) {
+    if (!wait_for_both_buttons_pushed())
+        return -1;
+
+    adc_copy_pots_to_working_buf(adc_buf, NUM_POT_CHANNELS);
+
+    float fval = float_value(adc_buf[POT_PITCH]);
+    if (inverted)
+        fval = 1.0f - fval;
+
+    *dst = fval;
+
+    ws2812_change_animation(&anim_setting_step_confirmed);
+    ws2812_change_animation(&anim_breathe_blue);
+
+    wait_for_both_buttons_released();
+
+    return 0;
+}
+
 int user_iface_calibrate_pitch_pot(struct calibration_data* cal) {
-    // CCW (min)
-    if (!wait_for_both_buttons())
-        return -1;
-    cal->pitchpot_min = active_user_interface_cfg->pots[POT_PITCH].val;
+    uint16_t adc_buf[NUM_POT_CHANNELS];
+    bool inverted = active_user_interface_cfg->pots[POT_PITCH].inverted;
 
-    // Center detent
-    if (!wait_for_both_buttons())
+    if (calibrate_pitch_point(&cal->pitchpot_min, inverted, adc_buf) < 0)
         return -1;
-    cal->pitchpot_mid = active_user_interface_cfg->pots[POT_PITCH].val;
 
-    // CW (max)
-    if (!wait_for_both_buttons())
+    if (calibrate_pitch_point(&cal->pitchpot_mid, inverted, adc_buf) < 0)
         return -1;
-    cal->pitchpot_max = active_user_interface_cfg->pots[POT_PITCH].val;
+
+    if (calibrate_pitch_point(&cal->pitchpot_max, inverted, adc_buf) < 0)
+        return -1;
 
     // sanity check
     if (!(cal->pitchpot_min < cal->pitchpot_mid && cal->pitchpot_mid < cal->pitchpot_max))
         return -1;
 
+    ws2812_change_animation(&anim_setting_confirmed);
     return 0;
 }

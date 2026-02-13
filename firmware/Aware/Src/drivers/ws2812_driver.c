@@ -1,5 +1,7 @@
 #include "drivers/ws2812_driver.h"
+#include "main.h"
 #include "project_config.h"
+#include "stm32h7xx_hal_gpio.h"
 
 // PWM = 153.6 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
 // with PSC of 0 -> ARR + 1 = ( 153.6 MHz / 800 kHz ) - 1 = 192
@@ -58,6 +60,13 @@ void ws2812_clear(void) {
     }
 }
 
+static void ws2812_force_animation(struct led_animation* anim) {
+    active_config->animation = *anim;
+    active_config->anim_stage = 0;
+    active_config->anim_tick = 0;
+    active_config->next_animation = NULL;
+}
+
 // worker function to step through animation
 void ws2812_run_animation_step(void) {
     struct led_animation* anim = &active_config->animation;
@@ -76,22 +85,47 @@ void ws2812_run_animation_step(void) {
         active_config->anim_tick = 0;
         active_config->anim_stage++;
         if (active_config->anim_stage >= anim->total_stages) {
-            if (anim->duration == 0)
-                active_config->anim_stage = 0;
-            else
-                ws2812_change_animation(&anim_off);
+            if (anim->duration == 0) {
+                active_config->anim_stage = 0; // loop
+            } else if (active_config->next_animation != NULL) {
+                // swap in queued animation
+                ws2812_force_animation(active_config->next_animation);
+            } else {
+                ws2812_force_animation(&anim_off);
+            }
         }
     }
 }
 
 /* ----- Animation API ----- */
 void ws2812_change_animation(struct led_animation* anim) {
-    active_config->animation = *anim;
-    active_config->anim_stage = 0;
-    active_config->anim_tick = 0;
+    // only allow direct switch if no animation is running, or the current animation is looping (duration == 0)
+    if (active_config->animation.duration == 0) {
+        // No animation running, start immediately
+        active_config->animation = *anim;
+        active_config->anim_stage = 0;
+        active_config->anim_tick = 0;
+    } else {
+        // Animation is running, queue this one
+        active_config->next_animation = anim;
+    }
 }
 
 void ws2812_timer_callback(TIM_HandleTypeDef* htim) {
     // software timer callback, that steps through the animation.
     ws2812_run_animation_step();
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
+    if (active_config == NULL)
+        return;
+
+    if (htim == active_config->htim_pwm) {
+        // when a full PWM cycle is finished, stop the dma to prevent it from restarting immediately and keep the line high (idle state)
+        HAL_TIM_PWM_Stop_DMA(htim, active_config->tim_channel_pwm);
+
+        // Make absolutely sure output is low
+        __HAL_TIM_SET_COMPARE(htim, active_config->tim_channel_pwm, 0);
+        HAL_GPIO_WritePin(RGB_LED_DATA_GPIO_Port, RGB_LED_DATA_Pin, GPIO_PIN_SET);
+    }
 }

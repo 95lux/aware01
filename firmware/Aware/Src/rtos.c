@@ -37,6 +37,7 @@ static void UserInterfaceTask(void* argument);
 /* ===== Global config structs =====*/
 struct gpio_config gpio_cfg;
 struct adc_config adc_interface_cfg;
+// __attribute__((section(".sram1"))) struct SettingsData settings_data_ram;
 struct SettingsData settings_data_ram;
 
 /* ===== FreeRTOS init ===== */
@@ -74,11 +75,12 @@ void FREERTOS_Init(void) {
 
         init_gpio_interface(&gpio_cfg);
 
-#if CONFIG_USE_CALIB_STORAGE
-        int b_read = read_settings_data(&settings_data);
-        if (b_read != sizeof(struct settings_data)) {
+#ifdef CONFIG_USE_CALIB_STORAGE
+        int32_t b_read = read_settings_data(&settings_data_ram);
+        if (b_read != sizeof(struct SettingsData) || settings_data_ram.magic != MAGIC_NUMBER) {
+            // invalid data read, use defaults
 #endif
-            struct calibration_data calibration = settings_data_ram.calibration_data;
+            struct calibration_data* calibration = &settings_data_ram.calibration_data;
             // set default/fallback calibration data
             // C1/1V -> 44000 ADC value, C3/3V -> 25150 ADC value
             // C1 = 12. semitones, C3 = 36. semitones
@@ -88,15 +90,16 @@ void FREERTOS_Init(void) {
             float delta = c3 - c1; // normaled CV difference between C1 and C3
 
             if (delta > -0.5f && delta < -0.0f) {
-                calibration.voct_pitch_scale = delta_semitones / (c3 - c1);
-                calibration.voct_pitch_offset =
-                    12.0f - calibration.voct_pitch_scale * c1; // to calculate offset, either C1 or C3 can be used
+                calibration->voct_pitch_scale = delta_semitones / (c3 - c1);
+                calibration->voct_pitch_offset =
+                    12.0f - calibration->voct_pitch_scale * c1; // to calculate offset, either C1 or C3 can be used
             }
 
             for (size_t i = 1; i < NUM_CV_CHANNELS; ++i) {
-                calibration.cv_offset[i] = 0.0f;
+                calibration->cv_offset[i] = 0.0f;
             }
-#if CONFIG_USE_CALIB_STORAGE
+
+#ifdef CONFIG_USE_CALIB_STORAGE
         }
 #endif
     }
@@ -180,7 +183,6 @@ static void ControlInterfaceTask(void* argument) {
     start_control_interface();
 
     uint32_t notified;
-    struct parameters params;
 
     for (;;) {
         // wait for next adc conversion
@@ -207,7 +209,7 @@ static void UserInterfaceTask(void* argument) {
 
     ws2812_init(&ws2812_cfg);
     ws2812_start();
-    ws2812_change_animation(&anim_breathe);
+    ws2812_change_animation(&anim_off);
 
     struct user_interface_config user_interface_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
@@ -229,32 +231,48 @@ static void UserInterfaceTask(void* argument) {
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
 
-    struct calibration_data calibration = settings_data_ram.calibration_data;
-
     uint32_t hold_time = 0;
-
+    bool cv_feedback_given = false;
+    bool pot_feedback_given = false;
     // Check both buttons pressed
-    while (HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-           HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET) {
+    while (are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10));
         hold_time += 10;
-
-        if (hold_time >= POT_CALIB_HOLD_MS) {
+        if (cv_feedback_given == false && hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
+            // Short hold -> CV calibration feedback
+            ws2812_change_animation(&anim_breathe_blue);
+            cv_feedback_given = true;
+        }
+        if (pot_feedback_given == false && hold_time >= POT_CALIB_HOLD_MS) {
             // Long hold -> POT calibration
-            // led_feedback_pot_calib(); // TODO: calibraiton schemes for WS2812 LEDs
-            user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data);
-            write_settings_data(&settings_data_ram);
+            ws2812_change_animation(&anim_breathe_blue_fast);
+            pot_feedback_given = true;
+
+            // wait for buttons released before starting calibration to avoid interference with button presses during calibration
+            if (!wait_for_both_buttons_released()) {
+                ws2812_change_animation(&anim_setting_error);
+                break;
+            }
+
+            if (user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data) == 0) {
+                write_settings_data(&settings_data_ram);
+            } else {
+                ws2812_change_animation(&anim_setting_error);
+            }
         }
     }
 
     if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
         // Short hold -> CV calibration
         // led_feedback_cv_calib();
-        control_interface_start_calibration(&settings_data_ram.calibration_data);
-        write_settings_data(&settings_data_ram);
+        if (control_interface_calibrate_voct(&settings_data_ram.calibration_data) == 0) {
+            write_settings_data(&settings_data_ram);
+        } else {
+            ws2812_change_animation(&anim_setting_error);
+        }
     }
 
-    user_iface_init(&user_interface_cfg, &calibration);
+    user_iface_init(&user_interface_cfg, &settings_data_ram.calibration_data);
     user_iface_start();
 
     uint32_t notified;

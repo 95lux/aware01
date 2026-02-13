@@ -22,4 +22,6 @@ struct gpio_config {
 };
 
 int init_gpio_interface(struct gpio_config* config);
-bool wait_for_both_buttons();
+bool wait_for_both_buttons_pushed();
+bool wait_for_both_buttons_released();
+bool are_both_buttons_pushed();
