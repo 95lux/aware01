@@ -1,6 +1,7 @@
 #include "control_interface.h"
 #include "drivers/adc_driver.h"
 #include "drivers/gpio_driver.h"
+#include "drivers/ws2812_driver.h"
 #include "param_cache.h"
 #include "project_config.h"
 
@@ -79,17 +80,24 @@ int calibrate_C3() {
     }
 }
 
-// TODO: LED Mode for calibration routine
-int control_interface_start_calibration(struct calibration_data* calib_data) {
+int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     // procedure:
     // 1. input C1 voltage, then wait for button press to store C1
-    if (!wait_for_both_buttons())
+    if (!wait_for_both_buttons_pushed())
         return -1;
     calibrate_C1();
+    ws2812_change_animation(&anim_setting_step_confirmed);
+    ws2812_change_animation(&anim_breathe_blue);
+    wait_for_both_buttons_released();
+
     // 2. input C3 voltage, then wait for button press to store C3 and compute scale/offset
-    if (!wait_for_both_buttons())
+    if (!wait_for_both_buttons_pushed())
         return -1;
     int res = calibrate_C3();
+    ws2812_change_animation(&anim_setting_step_confirmed);
+    ws2812_change_animation(&anim_breathe_blue);
+    wait_for_both_buttons_released();
+
     calibrate_offsets();
     return res;
 }
