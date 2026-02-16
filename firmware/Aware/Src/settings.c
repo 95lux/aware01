@@ -5,17 +5,17 @@
 
 #include "settings.h"
 
-#define FLASH_USER_START_ADDR FLASH_BANK2_BASE                       /* Start @ of user Flash area in Bank2 */
+#define FLASH_USER_START_ADDR (FLASH_BANK2_BASE)                     /* Start @ of user Flash area in Bank2 */
 #define FLASH_USER_END_ADDR (FLASH_BANK2_BASE + FLASH_BANK_SIZE - 1) /* End @ of user Flash area in Bank2 */
 
 // get flash sector number from address
 uint32_t GetSector(uint32_t Address) {
     uint32_t sector = 0;
 
-    if (Address < (FLASH_BASE + FLASH_BANK_SIZE)) {
-        sector = (Address - FLASH_BASE) / FLASH_SECTOR_SIZE;
+    if (Address < (FLASH_BANK2_BASE + FLASH_BANK_SIZE)) {
+        sector = (Address - FLASH_BANK2_BASE) / FLASH_SECTOR_SIZE;
     } else {
-        sector = (Address - (FLASH_BASE + FLASH_BANK_SIZE)) / FLASH_SECTOR_SIZE;
+        sector = (Address - (FLASH_BANK2_BASE + FLASH_BANK_SIZE)) / FLASH_SECTOR_SIZE;
     }
 
     return sector;
@@ -31,6 +31,7 @@ uint32_t flash_write_words(uint32_t* src_ptr, uint32_t dest_addr, uint16_t numbe
     static FLASH_EraseInitTypeDef EraseInitStruct;
     uint32_t SECTORError;
 
+    // SCB_DisableICache();
     HAL_FLASH_Unlock();
 
     // Erase sectors
@@ -40,23 +41,34 @@ uint32_t flash_write_words(uint32_t* src_ptr, uint32_t dest_addr, uint16_t numbe
 
     EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
     EraseInitStruct.Sector = StartSector;
+    EraseInitStruct.Banks = FLASH_BANK_2;
     EraseInitStruct.NbSectors = EndSector - StartSector + 1;
 
     if (HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError) != HAL_OK) {
         HAL_FLASH_Lock();
+        // SCB_EnableICache();
         return HAL_FLASH_GetError();
     }
 
     uint32_t err = HAL_FLASH_ERROR_NONE;
 
-    // Write in 16-byte (FLASHWORD) blocks
-    for (uint16_t i = 0; i < numberofwords; i += 4) {
-        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, flash_addr, (uint32_t) (src_ptr + i)) != HAL_OK) {
-            err |= HAL_FLASH_GetError(); // accumulate errors
+    // Write in 16-byte (FLASHWORD) chunks
+    uint8_t* byte_ptr = (uint8_t*) src_ptr; // pointer to data as bytes
+    uint32_t total_bytes = numberofwords * 4;
+
+    for (uint32_t offset = 0; offset < total_bytes; offset += 16) {
+        // pointer to 16-byte block in RAM
+        uint32_t block_ptr = (uint32_t) (byte_ptr + offset);
+
+        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, flash_addr + offset, block_ptr) != HAL_OK) {
+            err |= HAL_FLASH_GetError();
             __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS_BANK1 | FLASH_FLAG_ALL_ERRORS_BANK2);
         }
-        flash_addr += 16;
     }
+
+    // TODO: maybe cache maintenance is not needed.
+    SCB_CleanDCache();
+    SCB_InvalidateDCache();
 
     HAL_FLASH_Lock();
     return err;
@@ -91,6 +103,8 @@ size_t flash_read_words(uint32_t src_addr, uint32_t* dst_buf, uint16_t num_words
     if (dst_buf == NULL || num_words == 0)
         return 0;
 
+    SCB_InvalidateDCache();
+
     // Point to the Flash address as a volatile 32-bit source
     // This prevents the compiler from optimizing away the reads.
     volatile uint32_t* flash_ptr = (volatile uint32_t*) src_addr;
@@ -111,29 +125,30 @@ int read_settings_data(struct SettingsData* settings_data) {
     return (int) flash_read_words(FLASH_USER_START_ADDR, (uint32_t*) settings_data, word_count);
 }
 
+// TODO: Maybe write test to verify that data written to flash can be read back correctly, and that invalid data is handled properly (e.g. by checking magic number).
 int flash_roundtrip() {
-    uint32_t original_data[4] = {0x11223344, 0x55667788, 0x99AABBCC, 0xDDEEFF00};
-    uint32_t read_back_data[4] = {0, 0, 0, 0};
+    struct SettingsData settings_data_write = {
+        .calibration_data =
+            {
+                .voct_pitch_scale = 123.4,
+                .voct_pitch_offset = 124.5,
+                .cv_offset = {1.1f, 2.2f, 3.3f, 4.4f},
+                .pitchpot_max = 0.9f,
+                .pitchpot_mid = 0.5f,
+                .pitchpot_min = 0.1f,
+            },
 
-    int result = -1; // -1 = Fail, 1 = Success
-
-    // 3. Write 4 words (16 bytes) to Flash
-    // Returns 0 on success based on your function signature
-    uint32_t write_err = flash_write_words(original_data, FLASH_USER_START_ADDR, 4);
-
-    flash_read_words(FLASH_USER_START_ADDR, read_back_data, 4);
-
-    // 4. Verify the data
-    if (write_err == HAL_FLASH_ERROR_NONE) {
-        for (int i = 0; i < 4; i++) {
-            if (read_back_data[i] != original_data[i]) {
-                result = -1; // Mismatch found
-                break;
-            }
-        }
-    } else {
-        result = -1; // Write error
-    }
-
-    return result;
+        .magic = MAGIC_NUMBER,
+        .state =
+            {
+                .tobe_reserved0 = 0xAA,
+                .tobe_reserved1 = 0xBB,
+                .tobe_reserved2 = 0xCC,
+                .tobe_reserved3 = 0xDD,
+            },
+    };
+    write_settings_data(&settings_data_write);
+    struct SettingsData settings_data_read;
+    read_settings_data(&settings_data_read);
+    return 0;
 }
