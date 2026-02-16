@@ -2,6 +2,7 @@
 #include "main.h"
 #include "project_config.h"
 #include "stm32h7xx_hal_gpio.h"
+#include "ws2812_animations.h"
 
 // PWM = 153.6 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
 // with PSC of 0 -> ARR + 1 = ( 153.6 MHz / 800 kHz ) - 1 = 192

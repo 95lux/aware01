@@ -20,6 +20,7 @@
 #include "tape_player.h"
 #include "tim.h"
 #include "user_interface.h"
+#include "ws2812_animations.h"
 
 /* ===== Global FreeRTOS objects ===== */
 TaskHandle_t audioTaskHandle;

@@ -32,7 +32,7 @@ bool wait_for_both_buttons_pushed() {
              HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET)) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
-        if (cycles >= 2000)
+        if (cycles >= 6000) // waited for 60 seconds, probably no buttons pressed, exit
             return false;
     }
     return true;
