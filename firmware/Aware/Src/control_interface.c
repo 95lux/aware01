@@ -1,16 +1,17 @@
-#include "control_interface.h"
-#include "drivers/adc_driver.h"
-#include "drivers/gpio_driver.h"
-#include "drivers/ws2812_driver.h"
-#include "param_cache.h"
-#include "project_config.h"
-
 #include "main.h"
 #include "stm32h7xx_hal.h"
 #include "string.h"
 #include <FreeRTOS.h>
 #include <queue.h>
 #include <stdint.h>
+
+#include "control_interface.h"
+#include "drivers/adc_driver.h"
+#include "drivers/gpio_driver.h"
+#include "drivers/ws2812_driver.h"
+#include "param_cache.h"
+#include "project_config.h"
+#include "ws2812_animations.h"
 
 #include "tape_player.h"
 
@@ -51,12 +52,14 @@ void control_interface_process() {
 
 // calibration procedure
 // C1 should be 1V
-void calibrate_C1() {
+// returns normalized C1 value (0..1) to be used as reference for C3 calibration and pitch calculations
+float calibrate_C1() {
     uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[ADC_V_OCT_CV];
-    active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val = float_value(adc_val);
+    return float_value(adc_val);
 }
 
 // read and store offsets for all CV channels
+// input 0V here, so that it can be subtracted from future readings to get 0-centered CV values
 void calibrate_offsets() {
     for (size_t i = 0; i < NUM_CV_CHANNELS; ++i) {
         uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[i];
@@ -65,10 +68,9 @@ void calibrate_offsets() {
 }
 
 // C3 should be 3V
-int calibrate_C3() {
+int calibrate_C3(float c1) {
     uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[ADC_V_OCT_CV];
     float c3 = float_value(adc_val);
-    float c1 = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val;
     float delta = c3 - c1;
     if (delta > -0.5f && delta < -0.0f) {
         active_ctrl_interface_cfg->calib_data->voct_pitch_scale = 24.0f / (c3 - c1);
@@ -85,19 +87,25 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     // 1. input C1 voltage, then wait for button press to store C1
     if (!wait_for_both_buttons_pushed())
         return -1;
-    calibrate_C1();
+    float c1 = calibrate_C1();
     ws2812_change_animation(&anim_setting_step_confirmed);
-    ws2812_change_animation(&anim_breathe_blue);
+    ws2812_change_animation(&anim_breathe_led1);
     wait_for_both_buttons_released();
 
     // 2. input C3 voltage, then wait for button press to store C3 and compute scale/offset
     if (!wait_for_both_buttons_pushed())
         return -1;
-    int res = calibrate_C3();
+    int res = calibrate_C3(c1);
     ws2812_change_animation(&anim_setting_step_confirmed);
-    ws2812_change_animation(&anim_breathe_blue);
+    ws2812_change_animation(&anim_breathe_led2);
     wait_for_both_buttons_released();
 
+    // 3. remove all cables and wait for button press to store offsets (assuming 0V input, so that it can be subtracted from future readings to get 0-centered CV values)
+    if (!wait_for_both_buttons_pushed())
+        return -1;
     calibrate_offsets();
+    wait_for_both_buttons_released();
+    ws2812_change_animation(&anim_setting_confirmed);
+
     return res;
 }

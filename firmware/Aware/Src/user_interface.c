@@ -7,6 +7,7 @@
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
 #include "string.h"
+#include "ws2812_animations.h"
 #include <FreeRTOS.h>
 #include <queue.h>
 
@@ -107,7 +108,7 @@ void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent) {
     __HAL_TIM_SET_COMPARE(led.htim_led, led.timer_channel, pulse);
 }
 
-static int calibrate_pitch_point(float* dst, bool inverted, uint16_t* adc_buf) {
+static int calibrate_pitch_point(float* dst, bool inverted, uint16_t* adc_buf, int step) {
     if (!wait_for_both_buttons_pushed())
         return -1;
 
@@ -120,7 +121,21 @@ static int calibrate_pitch_point(float* dst, bool inverted, uint16_t* adc_buf) {
     *dst = fval;
 
     ws2812_change_animation(&anim_setting_step_confirmed);
-    ws2812_change_animation(&anim_breathe_blue);
+    // Step-dependent LED feedback
+    switch (step) {
+    case 0:
+        ws2812_change_animation(&anim_breathe_led1); // first LED
+        break;
+    case 1:
+        ws2812_change_animation(&anim_breathe_led2); // 2 LEDs
+        break;
+    case 2:
+        ws2812_change_animation(&anim_breathe_led3); // 3 LEDs
+        break;
+    default:
+        ws2812_change_animation(&anim_breathe_blue); // fallback
+        break;
+    }
 
     wait_for_both_buttons_released();
 
@@ -131,13 +146,13 @@ int user_iface_calibrate_pitch_pot(struct calibration_data* cal) {
     uint16_t adc_buf[NUM_POT_CHANNELS];
     bool inverted = active_user_interface_cfg->pots[POT_PITCH].inverted;
 
-    if (calibrate_pitch_point(&cal->pitchpot_min, inverted, adc_buf) < 0)
+    if (calibrate_pitch_point(&cal->pitchpot_min, inverted, adc_buf, 0) < 0)
         return -1;
 
-    if (calibrate_pitch_point(&cal->pitchpot_mid, inverted, adc_buf) < 0)
+    if (calibrate_pitch_point(&cal->pitchpot_mid, inverted, adc_buf, 1) < 0)
         return -1;
 
-    if (calibrate_pitch_point(&cal->pitchpot_max, inverted, adc_buf) < 0)
+    if (calibrate_pitch_point(&cal->pitchpot_max, inverted, adc_buf, 2) < 0)
         return -1;
 
     // sanity check
