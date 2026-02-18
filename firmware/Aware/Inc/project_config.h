@@ -17,7 +17,7 @@
 #define AUDIO_BIT_DEPTH 16 // or 8 // TODO: maybe make tapebuffer use 8bit. Increase tape lenth and create nice texture?
 
 /* tape engine configs*/
-#define TAPE_SECONDS 2
+#define TAPE_SECONDS_MS 5600
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration
@@ -28,9 +28,17 @@
 #define ADC_CV2 2      // ADC channel index for CV2 input
 #define ADC_CV3 3      // ADC channel index for CV3 input
 
-// Potentiometer configuration
+// CV buffer indices
+#define CV_V_OCT 0
+#define CV1 1
+#define CV2 2
+#define CV3 3
+
+// Potentiometer indeces
 #define POT_PITCH 0 // potentiometer index for pitch control
 #define POT_PARAM2 1
+#define POT_PARAM3 2
+#define POT_PARAM4 3
 
 #define NUM_POT_LEDS 3 // TODO: currently only 3, since last LED gpio does not support PWM output :(
 // TODO: add more potentiometer mappings as needed
@@ -48,9 +56,9 @@
 
 /* ===== Derived values (do not edit) ===== */
 // playback tape size calculations
-#define TAPE_SIZE (AUDIO_SAMPLE_RATE * TAPE_SECONDS * NUM_CHANNELS)           // number of samples
-#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE) // make sure tape size is multiple of audio block size
-#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)                  // number of samples per channel
+#define TAPE_SIZE (AUDIO_SAMPLE_RATE * (TAPE_SECONDS_MS / 1000) * NUM_CHANNELS) // number of samples
+#define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)   // make sure tape size is multiple of audio block size
+#define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)                    // number of samples per channel
 
 // we have to dimension the recording buffer to handle the playhead advancement at maximum pitch shift
 #define MAX_PITCH_SHIFT_SEMITONES 48.0f // maximum pitch shift in semitones (upwards)

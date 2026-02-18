@@ -76,28 +76,27 @@ int user_iface_start() {
 // Smoothing: Hardware handles high-frequency noise; Software IIR handles remaining drift.
 // Calibration: Re-run once to lock in the new high-res values.
 void user_iface_process() {
-    static float adc_pot_smoothed[NUM_POT_CHANNELS] = {0};
-
     for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
         float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
         if (active_user_interface_cfg->pots[i].inverted)
             v = 1.0f - v;
 
-        adc_pot_smoothed[i] = smooth_filter(adc_pot_smoothed[i], v, 0.1f);
-        active_user_interface_cfg->pots[i].val = adc_pot_smoothed[i];
-        // active_user_interface_cfg->pots[i].val = v;
+        // TODO: maybe add different coefficient per pot.
+        active_user_interface_cfg->pots[i].val = smooth_filter(active_user_interface_cfg->pots[i].val, v, 0.1f);
     }
 
-    float raw = active_user_interface_cfg->pots[POT_PITCH].val;
+    // V/Oct pitch control with piecewise linear response curve and deadzone around center position.
+    float norm_voct = active_user_interface_cfg->pots[POT_PITCH].val;
     struct calibration_data* cal = active_user_interface_cfg->calibration_data;
 
+    // apply piecewise linear mapping.
     float t;
-    if (raw <= cal->pitchpot_mid) {
-        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
+    if (norm_voct <= cal->pitchpot_mid) {
+        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
     } else {
-        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
     }
-
+    // apply deadzone and rescale to maintain full range outside of deadzone
     if (fabsf(t) < DEADZONE) {
         t = 0.0f;
     } else if (t > 0.0f) {
@@ -112,6 +111,12 @@ void user_iface_process() {
     float pitch_factor_new = powf(2.0f, (semitones / 12.0f));
 
     param_cache_set_pitch_ui(pitch_factor_new);
+
+    // Envelope
+    float attack = active_user_interface_cfg->pots[POT_PARAM2].val; // 0..1
+    float decay = active_user_interface_cfg->pots[POT_PARAM3].val;  // 0..1
+    param_cache_set_env_attack(attack);
+    param_cache_set_env_decay(decay);
 }
 
 // Example: set LED brightness 0..100%

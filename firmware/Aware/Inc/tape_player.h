@@ -2,7 +2,9 @@
 
 #include "audioengine.h"
 #include "envelope.h"
+#include "param_cache.h"
 #include "project_config.h"
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -25,6 +27,8 @@ typedef struct {
 struct parameters {
     float pitch_factor;
     float starting_position; // currently not used
+    float env_attack;
+    float env_decay;
     // more params will be added according to DSP/feature requirements
 };
 
@@ -123,5 +127,6 @@ void tape_player_stop_play();
 void tape_player_record();
 void tape_player_stop_record(void);
 void tape_player_set_pitch(float pitch_factor);
+void tape_player_set_params(struct param_cache param_cache);
 
 float tape_player_get_pitch();

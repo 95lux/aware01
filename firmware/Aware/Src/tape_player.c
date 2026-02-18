@@ -1,6 +1,7 @@
 #include "tape_player.h"
 
 #include "audioengine.h"
+#include "envelope.h"
 #include "project_config.h"
 #include "string.h"
 #include <arm_math.h>
@@ -80,6 +81,7 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     tape_player->rec_state = REC_IDLE;
 
     // envelope init
+    // TODO: maybe init in own function
     tape_player->env.state = ENV_IDLE;
     tape_player->env.value = 0.0f;
     tape_player->env.attack_inc = 1 / (0.001f * AUDIO_SAMPLE_RATE);
@@ -91,7 +93,9 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     tape_player->cyclic_mode = false; // default to oneshot mode
 
     tape_player->switch_bufs_pending = false;
-    tape_player->params.pitch_factor = 1.0f; // TODO: read out pitch fader on init?
+    tape_player->params.pitch_factor = 1.0f;
+    tape_player->params.env_attack = 0.0f; // normalized env values
+    tape_player->params.env_decay = 0.2f;  // normalized env values
 
     // init cmd
     tape_player->tape_cmd_q = cmd_queue;
@@ -183,7 +187,6 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
 
         // 3. Cast to uint32 for the playhead
         uint32_t active_phase_inc = (uint32_t) tape->current_phase_inc;
-        // uint32_t active_phase_inc = tape->params.pitch_factor * 65536.0f;
 
         int16_t out_l = 0;
         int16_t out_r = 0;
@@ -294,8 +297,8 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             }
         }
 
-        // float env_val = envelope_process(&tape->env);
-        float env_val = 1.0f;
+        float env_val = envelope_process(&tape->env);
+        // float env_val = 1.0f;
 
         dma_out_buf[n] = (int16_t) out_l * env_val;
         dma_out_buf[n + 1] = (int16_t) out_r * env_val;
@@ -342,6 +345,8 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
                 return;
             }
 
+            envelope_set_attack_norm(&t->env, t->params.env_attack);
+            envelope_set_decay_norm(&t->env, t->params.env_decay);
             envelope_note_on(&t->env);
 
             t->ph_a.idx = 1;
@@ -403,6 +408,8 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
 
             t->fade_out_idx = 0;
 
+            envelope_set_attack_norm(&t->env, t->params.env_attack);
+            envelope_set_decay_norm(&t->env, t->params.env_decay);
             envelope_note_on(&t->env);
 
         } else if (evt == TAPE_EVT_STOP) {
@@ -478,4 +485,12 @@ float tape_player_get_pitch() {
         return active_tape_player->params.pitch_factor;
     }
     return 0;
+}
+
+void tape_player_set_params(struct param_cache param_cache) {
+    if (active_tape_player) {
+        active_tape_player->params.pitch_factor = param_cache.pitch_ui * param_cache.pitch_cv;
+        active_tape_player->params.env_attack = param_cache.env_attack;
+        active_tape_player->params.env_decay = param_cache.env_decay;
+    }
 }

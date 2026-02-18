@@ -14,8 +14,18 @@ void param_cache_set_pitch_ui(float v) {
     cache.pitch_ui = v;
 }
 
+void param_cache_set_env_attack(float attack) {
+    cache.env_attack = attack;
+}
+
+void param_cache_set_env_decay(float decay) {
+    cache.env_decay = decay;
+}
+
 /* ===== Reader ===== */
-uint32_t param_cache_fetch(struct param_cache* out) {
+void param_cache_fetch(struct param_cache* out) {
     out->pitch_cv = cache.pitch_cv;
     out->pitch_ui = cache.pitch_ui;
+    out->env_attack = cache.env_attack;
+    out->env_decay = cache.env_decay;
 }
