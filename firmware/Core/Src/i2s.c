@@ -21,6 +21,7 @@
 #include "i2s.h"
 
 /* USER CODE BEGIN 0 */
+#include "project_config.h"
 
 /* USER CODE END 0 */
 
@@ -55,6 +56,13 @@ void MX_I2S1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN I2S1_Init 2 */
+    HAL_I2S_DeInit(&hi2s1);
+
+    hi2s1.Init.AudioFreq = AUDIO_SAMPLE_RATE; // From our project_conf.h
+
+    if (HAL_I2S_Init(&hi2s1) != HAL_OK) {
+        Error_Handler();
+    }
 
   /* USER CODE END I2S1_Init 2 */
 
