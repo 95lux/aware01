@@ -25,6 +25,11 @@ struct led_animation {
     bool running;
 };
 
+typedef enum {
+    WS2812_RUN_MODE = 0,
+    WS2812_ANIM_MODE,
+} ws2812_state_t;
+
 struct ws2812_config {
     TIM_HandleTypeDef* htim_anim;
     TIM_HandleTypeDef* htim_pwm;
@@ -34,9 +39,9 @@ struct ws2812_config {
     struct led_animation* next_animation;
     uint32_t anim_tick;
     uint32_t anim_stage;
+
+    ws2812_state_t state;
 };
-
-
 
 /* ===== API ===== */
 void ws2812_init(struct ws2812_config* config);

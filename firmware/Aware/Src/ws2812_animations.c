@@ -172,3 +172,19 @@ struct led_animation anim_setting_error = {.stages =
                                            .total_stages = 6,
                                            .duration = 60,
                                            .running = false};
+
+// Bootup animation : LEDs turn on one - by - one in red, then all off
+struct led_animation anim_bootup = {.stages =
+                                        {// LED 1 ON (red)
+                                         {.duration = 10, .leds = {{255, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}},
+                                         // LED 2 ON (red)
+                                         {.duration = 10, .leds = {{0, 0, 0}, {255, 0, 0}, {0, 0, 0}, {0, 0, 0}}},
+                                         // LED 3 ON (red)
+                                         {.duration = 10, .leds = {{0, 0, 0}, {0, 0, 0}, {255, 0, 0}, {0, 0, 0}}},
+                                         // LED 4 ON (red)
+                                         {.duration = 10, .leds = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {255, 0, 0}}},
+                                         // All OFF
+                                         {.duration = 10, .leds = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}},
+                                    .total_stages = 5,
+                                    .duration = 50,
+                                    .running = false};

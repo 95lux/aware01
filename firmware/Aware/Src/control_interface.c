@@ -54,35 +54,46 @@ void control_interface_process() {
 // C1 should be 1V
 // returns normalized C1 value (0..1) to be used as reference for C3 calibration and pitch calculations
 float calibrate_C1() {
-    uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[ADC_V_OCT_CV];
+    uint16_t working_buf[NUM_CV_CHANNELS];
+    adc_copy_cv_to_working_buf(working_buf, NUM_CV_CHANNELS);
+    uint16_t adc_val = working_buf[ADC_V_OCT_CV];
     return float_value(adc_val);
 }
 
 // read and store offsets for all CV channels
 // input 0V here, so that it can be subtracted from future readings to get 0-centered CV values
-void calibrate_offsets() {
+void calibrate_offsets(struct calibration_data* calib_data) {
+    uint16_t working_buf[NUM_CV_CHANNELS];
+    adc_copy_cv_to_working_buf(working_buf, NUM_CV_CHANNELS);
     for (size_t i = 0; i < NUM_CV_CHANNELS; ++i) {
-        uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[i];
-        active_ctrl_interface_cfg->calib_data->cv_offset[i] = float_value(adc_val);
+        uint16_t adc_val = working_buf[i];
+        calib_data->cv_offset[i] = float_value(adc_val);
     }
 }
 
 // C3 should be 3V
-int calibrate_C3(float c1) {
-    uint16_t adc_val = active_ctrl_interface_cfg->adc_cv_working_buf[ADC_V_OCT_CV];
+int calibrate_C3(struct calibration_data* calib_data, float c1) {
+    uint16_t working_buf[NUM_CV_CHANNELS];
+    adc_copy_cv_to_working_buf(working_buf, NUM_CV_CHANNELS);
+    uint16_t adc_val = working_buf[ADC_V_OCT_CV];
     float c3 = float_value(adc_val);
     float delta = c3 - c1;
+
     if (delta > -0.5f && delta < -0.0f) {
-        active_ctrl_interface_cfg->calib_data->voct_pitch_scale = 24.0f / (c3 - c1);
-        active_ctrl_interface_cfg->calib_data->voct_pitch_offset =
-            12.0f - active_ctrl_interface_cfg->calib_data->voct_pitch_scale * c1; // reference point for C0 (because c1 - 12st = c0)
+        calib_data->voct_pitch_scale = 24.0f / delta;
+        calib_data->voct_pitch_offset = 12.0f - (calib_data->voct_pitch_scale * c1);
         return 0;
     } else {
+        // invalid calibration, delta too small or too large
         return -1;
     }
 }
 
+// this is run from user interface task, so it can use button states and ws2812 animations for feedback
 int control_interface_calibrate_voct(struct calibration_data* calib_data) {
+    if (!active_ctrl_interface_cfg) {
+        return -1;
+    }
     // procedure:
     // 1. input C1 voltage, then wait for button press to store C1
     if (!wait_for_both_buttons_pushed())
@@ -95,7 +106,10 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     // 2. input C3 voltage, then wait for button press to store C3 and compute scale/offset
     if (!wait_for_both_buttons_pushed())
         return -1;
-    int res = calibrate_C3(c1);
+    int res = calibrate_C3(calib_data, c1);
+    if (res != 0) {
+        return -1;
+    }
     ws2812_change_animation(&anim_setting_step_confirmed);
     ws2812_change_animation(&anim_breathe_led2);
     wait_for_both_buttons_released();
@@ -103,7 +117,7 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     // 3. remove all cables and wait for button press to store offsets (assuming 0V input, so that it can be subtracted from future readings to get 0-centered CV values)
     if (!wait_for_both_buttons_pushed())
         return -1;
-    calibrate_offsets();
+    calibrate_offsets(calib_data);
     wait_for_both_buttons_released();
     ws2812_change_animation(&anim_setting_confirmed);
 

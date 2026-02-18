@@ -1,5 +1,6 @@
 #include "audioengine.h"
 #include "dma.h"
+#include <stdint.h>
 
 // local DMA buffers for audio I/O - will be allocated in DMA-capable memory, not in FREERTOS task stack!
 DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE] = {0};
@@ -30,6 +31,14 @@ int start_audio_engine(void) {
         return AUDIOENGINE_ERROR;
 
     return AUDIOENGINE_OK;
+}
+
+void audio_write_to_dma_buf(int16_t l, int16_t r, uint32_t sample_idx) {
+    if (sample_idx >= active_cfg->buffer_size / 2)
+        return; // out of bounds
+
+    active_cfg->tx_buf_ptr[sample_idx] = l;
+    active_cfg->tx_buf_ptr[sample_idx + 1] = r;
 }
 
 // overload HAL I2S DMA Complete and HalfComplete callbacks to handle double buffering

@@ -68,26 +68,58 @@ static void ws2812_force_animation(struct led_animation* anim) {
     active_config->next_animation = NULL;
 }
 
-// worker function to step through animation
 void ws2812_run_animation_step(void) {
+    if (active_config == NULL)
+        return;
+
     struct led_animation* anim = &active_config->animation;
 
-    struct led_animation_stage* stage = &active_config->animation.stages[active_config->anim_stage];
+    if (anim->total_stages == 0)
+        return;
+
+    uint32_t current_stage_index = active_config->anim_stage;
+    struct led_animation_stage* stage = &anim->stages[current_stage_index];
+
+    struct led_animation_stage empty_stage = {.duration = 0, .leds = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}};
+    struct led_animation_stage* next_stage;
+
+    if (current_stage_index + 1 < anim->total_stages) {
+        next_stage = &anim->stages[current_stage_index + 1];
+    } else if (anim->duration == 0) {
+        // looping, wrap to first stage
+        next_stage = &anim->stages[0];
+    } else {
+        // non-looping, fade to black
+        next_stage = &empty_stage;
+    }
 
     for (int i = 0; i < WS2812_LED_COUNT; i++) {
-        struct ws2812_led led = stage->leds[i];
-        ws2812_set_led(i, led.r, led.g, led.b);
+        struct ws2812_led a = stage->leds[i];
+        struct ws2812_led b = next_stage->leds[i];
+
+        // fixed step size per tick (0..255)
+#define LERP_STEP 64
+        uint8_t r = a.r + ((int32_t) (b.r - a.r) * LERP_STEP) / 256;
+        uint8_t g = a.g + ((int32_t) (b.g - a.g) * LERP_STEP) / 256;
+        uint8_t bl = a.b + ((int32_t) (b.b - a.b) * LERP_STEP) / 256;
+
+        ws2812_set_led(i, r, g, bl);
     }
-    // TODO: use timer handles from active config, inited in int function
+
     ws2812_show(active_config->htim_pwm, active_config->tim_channel_pwm);
 
+    // Advance time
     active_config->anim_tick++;
+
     if (active_config->anim_tick >= stage->duration) {
+        // move to next stage
         active_config->anim_tick = 0;
         active_config->anim_stage++;
+
         if (active_config->anim_stage >= anim->total_stages) {
             if (anim->duration == 0) {
-                active_config->anim_stage = 0; // loop
+                // loop forever
+                active_config->anim_stage = 0;
             } else if (active_config->next_animation != NULL) {
                 // swap in queued animation
                 ws2812_force_animation(active_config->next_animation);

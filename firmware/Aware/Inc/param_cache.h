@@ -1,9 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-/* dirty flags */
-#define PARAM_DIRTY_PITCH_CV (1u << 0)
-#define PARAM_DIRTY_PITCH_UI (1u << 1)
+// TODO: is param cache still needed? maybe just use a single global parameters struct with atomic access? or use a queue for each parameter that gets updated when the parameter changes and read all queues in the audio task at the beginning of each cycle? maybe also add a dirty flag to only update parameters that have changed since last fetch.
 
 struct param_cache {
     float pitch_cv;

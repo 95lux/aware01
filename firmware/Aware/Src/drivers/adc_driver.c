@@ -44,11 +44,7 @@ int adc_copy_dma_to_working_buf(uint16_t* dma_buf, uint16_t* working_buf, size_t
     if (dma_buf == NULL || working_buf == NULL || len == 0) {
         return -1;
     }
-
-    taskENTER_CRITICAL();
     memcpy(working_buf, dma_buf, len * sizeof(uint16_t));
-    taskEXIT_CRITICAL();
-
     return 0;
 }
 

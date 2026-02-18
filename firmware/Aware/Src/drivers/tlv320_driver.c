@@ -84,15 +84,47 @@ void codec_read_reg(uint8_t reg, uint8_t* buf) {
     }
 }
 
-void codec_init() {
+void codec_init(audio_sample_rate_t rate) {
+    uint8_t n_val = 1;
+    uint8_t m_val = 2;
+
+    // Calculate dividers based on requested rate
+    // Formula: fs = MCLK / (N * M * OSR)
+    // 12288000 / (1 * M * 128)
+    switch (rate) {
+    case SAMPLERATE_48KHZ:
+        n_val = 1;
+        m_val = 2;
+        break;
+    case SAMPLERATE_24KHZ:
+        n_val = 1;
+        m_val = 4;
+        break;
+    case SAMPLERATE_12KHZ:
+        n_val = 1;
+        m_val = 8;
+        break;
+    case SAMPLERATE_8KHZ:
+        n_val = 1;
+        m_val = 12;
+        break;
+    default:
+        n_val = 1;
+        m_val = 2;
+        break;
+    }
+
     codec_write_reg(0x00, 0x00); // Page 0
     codec_write_reg(0x01, 0x01); // Reset
 
     // Clock & Interface
-    codec_write_reg(0x0b, 0x81); // NDAC = 1
-    codec_write_reg(0x0c, 0x82); // MDAC = 2
-    codec_write_reg(0x12, 0x81); // NADC = 1
-    codec_write_reg(0x13, 0x82); // MADC = 2
+    // Clock & Interface
+    // We set MSB to 1 to power up the dividers
+    codec_write_reg(0x0b, 0x80 | n_val); // NDAC
+    codec_write_reg(0x0c, 0x80 | m_val); // MDAC
+    codec_write_reg(0x12, 0x80 | n_val); // NADC
+    codec_write_reg(0x13, 0x80 | m_val); // MADC
+
     codec_write_reg(0x0d, 0x00);
     codec_write_reg(0x0e, 0x80); // DAC OSR = 128
     codec_write_reg(0x14, 0x80); // ADC OSR = 128

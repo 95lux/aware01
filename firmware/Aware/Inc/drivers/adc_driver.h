@@ -32,7 +32,7 @@ int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len);
 int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len);
 
 static inline float float_value(uint16_t val) {
-    float v = (float) val / 65536.0f;
+    float v = (float) val / ADC_MAX_VALUE;
     // clamp to [0.0, 1.0]
     if (v < 0.0f)
         v = 0.0f;
