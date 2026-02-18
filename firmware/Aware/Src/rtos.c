@@ -162,11 +162,8 @@ static void AudioTask(void* argument) {
 #endif
             struct param_cache param_cache;
             param_cache_fetch(&param_cache);
-            float next_pitch = tape_player_get_pitch();
-            next_pitch = param_cache.pitch_cv;
-            next_pitch *= param_cache.pitch_ui;
 
-            tape_player_set_pitch(next_pitch);
+            tape_player_set_params(param_cache);
         }
     }
 }
