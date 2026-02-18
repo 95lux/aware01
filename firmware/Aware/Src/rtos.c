@@ -1,3 +1,5 @@
+#include "rtos.h"
+
 #include "FreeRTOS.h"
 #include "drivers/ws2812_driver.h"
 #include "project_config.h"
@@ -79,6 +81,8 @@ void FREERTOS_Init(void) {
         gpio_cfg.controlIfTaskHandle = controlIfTaskHandle;
         gpio_cfg.userIfTaskHandle = userIfTaskHandle;
         gpio_cfg.tape_cmd_q = tape_cmd_q;
+        gpio_cfg.htim_button1_debounce = &htim13;
+        gpio_cfg.htim_button2_debounce = &htim14;
 
         init_gpio_interface(&gpio_cfg);
 
@@ -293,8 +297,12 @@ static void UserInterfaceTask(void* argument) {
                     // skip processing if adc fetch failed
                     continue;
                 }
-                user_iface_process();
             }
+            if (notified & GPIO_NOTIFY_BUTTON1) {
+            }
+            if (notified & GPIO_NOTIFY_BUTTON2) {
+            }
+            user_iface_process(notified);
         }
     }
 }

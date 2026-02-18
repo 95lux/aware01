@@ -3,6 +3,7 @@
 #include "drivers/ws2812_driver.h"
 #include "main.h"
 #include "project_config.h"
+#include "rtos.h"
 #include "settings.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
@@ -43,6 +44,9 @@ int user_iface_init(struct user_interface_config* config, struct calibration_dat
 
     active_user_interface_cfg = config;
 
+    active_user_interface_cfg->cyclic_mode = false;
+    active_user_interface_cfg->reverse_mode = false;
+
     return 0;
 }
 
@@ -75,48 +79,63 @@ int user_iface_start() {
 // CubeMX: ADC 12-bit + 32x Oversampling + 1-bit Shift = 16-bit output.
 // Smoothing: Hardware handles high-frequency noise; Software IIR handles remaining drift.
 // Calibration: Re-run once to lock in the new high-res values.
-void user_iface_process() {
-    for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
-        float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
-        if (active_user_interface_cfg->pots[i].inverted)
-            v = 1.0f - v;
+void user_iface_process(uint32_t notified) {
+    if (active_user_interface_cfg == NULL)
+        return;
 
-        // TODO: maybe add different coefficient per pot.
-        active_user_interface_cfg->pots[i].val = smooth_filter(active_user_interface_cfg->pots[i].val, v, 0.1f);
+    if (notified & ADC_NOTIFY_POTS_RDY) {
+        for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
+            float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
+            if (active_user_interface_cfg->pots[i].inverted)
+                v = 1.0f - v;
+
+            // TODO: maybe add different coefficient per pot.
+            active_user_interface_cfg->pots[i].val = smooth_filter(active_user_interface_cfg->pots[i].val, v, 0.1f);
+        }
+
+        // V/Oct pitch control with piecewise linear response curve and deadzone around center position.
+        float norm_voct = active_user_interface_cfg->pots[POT_PITCH].val;
+        struct calibration_data* cal = active_user_interface_cfg->calibration_data;
+
+        // apply piecewise linear mapping.
+        float t;
+        if (norm_voct <= cal->pitchpot_mid) {
+            t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
+        } else {
+            t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+        }
+        // apply deadzone and rescale to maintain full range outside of deadzone
+        if (fabsf(t) < DEADZONE) {
+            t = 0.0f;
+        } else if (t > 0.0f) {
+            t = (t - DEADZONE) * INV_RANGE;
+        } else {
+            t = (t + DEADZONE) * INV_RANGE;
+        }
+
+        t = fmaxf(-1.0f, fminf(t, 1.0f));
+
+        float semitones = t * UI_PITCH_MAX_SEMITONE_RANGE;
+        float pitch_factor_new = powf(2.0f, (semitones / 12.0f));
+
+        param_cache_set_pitch_ui(pitch_factor_new);
+
+        // Envelope
+        float attack = active_user_interface_cfg->pots[POT_PARAM2].val; // 0..1
+        float decay = active_user_interface_cfg->pots[POT_PARAM3].val;  // 0..1
+        param_cache_set_env_attack(attack);
+        param_cache_set_env_decay(decay);
     }
-
-    // V/Oct pitch control with piecewise linear response curve and deadzone around center position.
-    float norm_voct = active_user_interface_cfg->pots[POT_PITCH].val;
-    struct calibration_data* cal = active_user_interface_cfg->calibration_data;
-
-    // apply piecewise linear mapping.
-    float t;
-    if (norm_voct <= cal->pitchpot_mid) {
-        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
-    } else {
-        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+    if (notified & GPIO_NOTIFY_BUTTON1) {
+        // toggle cyclic mode;
+        active_user_interface_cfg->cyclic_mode = !active_user_interface_cfg->cyclic_mode;
+        param_cache_set_cyclic(active_user_interface_cfg->cyclic_mode);
     }
-    // apply deadzone and rescale to maintain full range outside of deadzone
-    if (fabsf(t) < DEADZONE) {
-        t = 0.0f;
-    } else if (t > 0.0f) {
-        t = (t - DEADZONE) * INV_RANGE;
-    } else {
-        t = (t + DEADZONE) * INV_RANGE;
+    if (notified & GPIO_NOTIFY_BUTTON2) {
+        // toggle reverse mode;
+        active_user_interface_cfg->reverse_mode = !active_user_interface_cfg->reverse_mode;
+        param_cache_set_reverse(active_user_interface_cfg->reverse_mode);
     }
-
-    t = fmaxf(-1.0f, fminf(t, 1.0f));
-
-    float semitones = t * UI_PITCH_MAX_SEMITONE_RANGE;
-    float pitch_factor_new = powf(2.0f, (semitones / 12.0f));
-
-    param_cache_set_pitch_ui(pitch_factor_new);
-
-    // Envelope
-    float attack = active_user_interface_cfg->pots[POT_PARAM2].val; // 0..1
-    float decay = active_user_interface_cfg->pots[POT_PARAM3].val;  // 0..1
-    param_cache_set_env_attack(attack);
-    param_cache_set_env_decay(decay);
 }
 
 // Example: set LED brightness 0..100%

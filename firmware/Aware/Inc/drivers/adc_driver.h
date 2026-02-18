@@ -19,10 +19,6 @@ struct adc_config {
     ADC_HandleTypeDef* hadc_cvs;
 };
 
-/* notification bits for ADC sources */
-#define ADC_NOTIFY_CV_RDY (1U << 0)
-#define ADC_NOTIFY_POTS_RDY (1U << 1)
-
 #define ADC_MAX_VALUE 65535.0f
 
 int init_adc_interface(struct adc_config* config);

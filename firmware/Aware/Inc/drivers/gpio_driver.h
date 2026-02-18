@@ -4,24 +4,26 @@
 #include "queue.h"
 #include "stdbool.h"
 #include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal_tim.h"
 #include "task.h"
-
-/* notification bits for ADC sources */
-#define GPIO_NOTIFY_GATE1 (1U << 0)
-#define GPIO_NOTIFY_GATE2 (1U << 1)
-#define GPIO_NOTIFY_GATE3 (1U << 2)
-#define GPIO_NOTIFY_GATE4 (1U << 3)
-#define GPIO_NOTIFY_BUTTON1 (1U << 4)
-#define GPIO_NOTIFY_BUTTON2 (1U << 5)
+#include "tim.h"
 
 struct gpio_config {
     TaskHandle_t userIfTaskHandle;
     TaskHandle_t controlIfTaskHandle;
 
     QueueHandle_t tape_cmd_q;
+    QueueHandle_t ui_cmd_q;
+
+    TIM_HandleTypeDef* htim_button1_debounce;
+    TIM_HandleTypeDef* htim_button2_debounce;
+
+    bool button1_debounce;
+    bool button2_debounce;
 };
 
 int init_gpio_interface(struct gpio_config* config);
 bool wait_for_both_buttons_pushed();
 bool wait_for_both_buttons_released();
 bool are_both_buttons_pushed();
+void button_debounce_timer_callback(TIM_HandleTypeDef* htim);

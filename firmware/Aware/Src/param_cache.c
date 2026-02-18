@@ -1,4 +1,5 @@
 #include "param_cache.h"
+
 #include "FreeRTOS.h"
 #include "atomic.h"
 #include "task.h"
@@ -22,10 +23,20 @@ void param_cache_set_env_decay(float decay) {
     cache.env_decay = decay;
 }
 
+void param_cache_set_cyclic(bool cyclic) {
+    cache.cyclic = cyclic;
+}
+
+void param_cache_set_reverse(bool reverse) {
+    cache.reverse = reverse;
+}
+
 /* ===== Reader ===== */
 void param_cache_fetch(struct param_cache* out) {
     out->pitch_cv = cache.pitch_cv;
     out->pitch_ui = cache.pitch_ui;
     out->env_attack = cache.env_attack;
     out->env_decay = cache.env_decay;
+    out->cyclic = cache.cyclic;
+    out->reverse = cache.reverse;
 }

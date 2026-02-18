@@ -29,6 +29,10 @@ struct parameters {
     float starting_position; // currently not used
     float env_attack;
     float env_decay;
+
+    // playback modes
+    bool reverse;
+    bool cyclic_mode;
     // more params will be added according to DSP/feature requirements
 };
 
