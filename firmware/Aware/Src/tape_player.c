@@ -97,6 +97,9 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     tape_player->params.env_attack = 0.0f; // normalized env values
     tape_player->params.env_decay = 0.2f;  // normalized env values
 
+    tape_player->params.reverse = false;    // default to forward playback
+    tape_player->params.cyclic_mode = true; // default to oneshot mode
+
     // init cmd
     tape_player->tape_cmd_q = cmd_queue;
 
@@ -141,16 +144,45 @@ static inline float hermite_interpolate(uint32_t idx, uint16_t frac, int16_t* bu
     return (((a * t - b) * t + c) * t + d);
 }
 
-static inline void advance_playhead(playhead_t* ph, uint32_t phase_inc) {
-    if (!ph->active)
-        return;
+void advance_playhead(playhead_t* ph, uint32_t phase_inc, bool reverse, bool cyclic) {
+    uint32_t valid_samples = active_tape_player->playback_buf->valid_samples;
 
-    // Add fractional increment
-    uint32_t new_frac = ph->frac + phase_inc;
+    if (reverse) {
+        // subtract phase_inc from frac
+        if (ph->frac < phase_inc) {
+            // need to borrow 1 from idx
+            if (ph->idx == 0) {
+                if (cyclic) {
+                    ph->idx = valid_samples - 1;
+                    ph->frac = 0x10000 + ph->frac - phase_inc; // wrap frac
+                } else {
+                    ph->idx = 0;
+                    ph->frac = 0;
+                }
+            } else {
+                ph->idx -= 1;
+                ph->frac = 0x10000 + ph->frac - phase_inc; // borrow
+            }
+        } else {
+            ph->frac -= phase_inc;
+        }
+    } else {
+        // forward
+        // add fractional increment
+        uint32_t new_frac = ph->frac + phase_inc;
+        ph->idx += new_frac >> 16; // carry into integer idx
+        ph->frac = new_frac & 0xFFFF;
 
-    // Carry overflow into integer index
-    ph->idx += new_frac >> 16;
-    ph->frac = new_frac & 0xFFFF;
+        if (cyclic && ph->idx >= valid_samples) {
+            /* ----- cyclic mode ----- */
+            ph->idx %= valid_samples; // integer wrap only, frac is already correct
+        } else if (!cyclic && ph->idx >= valid_samples) {
+            /* ----- oneshot mode ----- */
+            ph->idx = valid_samples - 1;
+            ph->frac = 0;
+            tape_player_stop_play();
+        }
+    }
 }
 
 // checks if playhead is near the end of the valid samples of the buffer and has to start fading into next buffer/silence
@@ -207,7 +239,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             uint32_t pitch_aware_step = (uint32_t) (((uint64_t) base_ratio * active_phase_inc) >> 16);
 
             // --- Q16 FIXED POINT FADE IN ---
-            if (tape->fade_in_active) {
+            if (tape->fade_in_active && !tape->params.cyclic_mode) {
                 uint32_t lut_idx = tape->fade_in_idx_q16 >> 16;
 
                 if (lut_idx >= FADE_LUT_LEN) {
@@ -221,7 +253,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             }
 
             // --- Q16 FIXED POINT FADE OUT TRIGGER ---
-            if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN)) {
+            if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN) && !tape->params.cyclic_mode) {
                 tape->fade_out_active = true;
                 tape->fade_out_idx_q16 = 0; // Reset accumulator
             }
@@ -284,16 +316,18 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                     tape->ph_b.active = false;
                     tape->xfade_retrig.active = false;
                 }
-                advance_playhead(&tape->ph_b, active_phase_inc);
+                advance_playhead(&tape->ph_a, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
             }
 
             // advance ph_a
             if (tape->ph_a.active) {
-                if (tape->cyclic_mode || (!tape->cyclic_mode && tape->ph_a.idx < tape->playback_buf->valid_samples - 3)) {
-                    advance_playhead(&tape->ph_a, active_phase_inc);
-                } else {
-                    tape_player_stop_play();
-                }
+                advance_playhead(&tape->ph_a, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+
+                // stop only when reaching the end of the buffer in oneshot mode. In cyclic mode, we will just wrap around and never stop.
+                // if (tape->ph_a.idx < tape->playback_buf->valid_samples - 3) {
+                // } else {
+                // tape_player_stop_play();
+                // }
             }
         }
 

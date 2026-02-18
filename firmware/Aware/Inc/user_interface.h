@@ -35,12 +35,15 @@ struct user_interface_config {
 
     struct calibration_data* calibration_data;
     struct ws2812_config* ws2812_config;
+
+    bool cyclic_mode;
+    bool reverse_mode;
 };
 
 int user_iface_init(struct user_interface_config* config, struct calibration_data* calibration);
 int user_iface_start();
 
 // convert working pot buffer samples to float values in range [0.0, 1.0]
-void user_iface_process();
+void user_iface_process(uint32_t notified);
 int user_iface_calibrate_pitch_pot(struct calibration_data* cal);
 void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent);

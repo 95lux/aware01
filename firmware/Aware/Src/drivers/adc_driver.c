@@ -7,6 +7,7 @@
 #include <FreeRTOS.h>
 #include <queue.h>
 
+#include "rtos.h"
 #include "tape_player.h"
 
 static struct adc_config* active_cfg = NULL;
