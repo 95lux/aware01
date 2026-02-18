@@ -15,3 +15,4 @@ extern struct led_animation anim_breathe_blue_fast;
 extern struct led_animation anim_breathe_led1;
 extern struct led_animation anim_breathe_led2;
 extern struct led_animation anim_breathe_led3;
+extern struct led_animation anim_bootup;

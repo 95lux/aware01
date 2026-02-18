@@ -14,6 +14,7 @@
 #include "drivers/adc_driver.h"
 #include "drivers/gpio_driver.h"
 #include "param_cache.h"
+#include "util.h"
 
 static struct user_interface_config* active_user_interface_cfg = NULL;
 
@@ -67,13 +68,24 @@ int user_iface_start() {
 // will also do software debouncing of buttons if needed in the future
 // TODO: implement processing of user interface data
 // and maps them to parameters
+
+#define DEADZONE 0.01f
+#define INV_RANGE (1.0f / (1.0f - DEADZONE)) // compile-time constant
+
+// CubeMX: ADC 12-bit + 32x Oversampling + 1-bit Shift = 16-bit output.
+// Smoothing: Hardware handles high-frequency noise; Software IIR handles remaining drift.
+// Calibration: Re-run once to lock in the new high-res values.
 void user_iface_process() {
+    static float adc_pot_smoothed[NUM_POT_CHANNELS] = {0};
+
     for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
         float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
         if (active_user_interface_cfg->pots[i].inverted)
             v = 1.0f - v;
 
-        active_user_interface_cfg->pots[i].val = v;
+        adc_pot_smoothed[i] = smooth_filter(adc_pot_smoothed[i], v, 0.1f);
+        active_user_interface_cfg->pots[i].val = adc_pot_smoothed[i];
+        // active_user_interface_cfg->pots[i].val = v;
     }
 
     float raw = active_user_interface_cfg->pots[POT_PITCH].val;
@@ -81,15 +93,23 @@ void user_iface_process() {
 
     float t;
     if (raw <= cal->pitchpot_mid) {
-        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min); // -1 … 0
+        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
     } else {
-        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid); // 0 … +1
+        t = (raw - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+    }
+
+    if (fabsf(t) < DEADZONE) {
+        t = 0.0f;
+    } else if (t > 0.0f) {
+        t = (t - DEADZONE) * INV_RANGE;
+    } else {
+        t = (t + DEADZONE) * INV_RANGE;
     }
 
     t = fmaxf(-1.0f, fminf(t, 1.0f));
 
     float semitones = t * UI_PITCH_MAX_SEMITONE_RANGE;
-    float pitch_factor_new = powf(2.0f, semitones / 12.0f);
+    float pitch_factor_new = powf(2.0f, (semitones / 12.0f));
 
     param_cache_set_pitch_ui(pitch_factor_new);
 }

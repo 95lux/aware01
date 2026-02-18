@@ -7,6 +7,14 @@
 #include <stddef.h>
 #include <stdint.h>
 
+// TODO: change every use of int16_t to tape_sample_t for better readability and easier bit depth changes in the future
+// --- Derived Constants ---
+#if (APP_BIT_DEPTH == 8)
+typedef int8_t tape_sample_t;
+#else
+typedef int16_t tape_sample_t;
+#endif
+
 typedef struct {
     int16_t* ch[2];         // ch[0]=L, ch[1]=R
     uint32_t size;          // samples per channel
@@ -21,7 +29,9 @@ struct parameters {
 };
 
 typedef struct {
-    uint32_t phase;
+    // use Q0.32 for indeces > 16bit index range (96000 samples at 48kHz is already > 16 bit)
+    uint32_t idx;
+    uint16_t frac;
     bool active;
 } playhead_t;
 
@@ -49,19 +59,19 @@ typedef struct {
     uint32_t pos;
     uint32_t len; // TODO make xfade length configurable. Need to implement fade lookup interpolation then (or use bigger LUT?).
     // TODO: this has to be max xfade length. Cant be super long unfortunately, since we dont have much SRAM available anymore :(
-    int16_t temp_buf_l[FADE_LUT_LEN + 3]; // +3 for hermite interpolation safety TODO: make sure this is long enough once configurable!
-    int16_t temp_buf_r[FADE_LUT_LEN + 3]; // +3 for hermite interpolation safety
+    int16_t* temp_buf_l;
+    int16_t* temp_buf_r;
     uint32_t
         temp_buf_valid_samples; // number of valid samples in the xfade temp buffer (for retrigger xfade at end of recording, when there might be less than xfade.len samples available)
 } crossfade_t;
 
 // main tape player structure
 struct tape_player {
-    size_t dma_buf_size;        // buffer size RX/TX
-    tape_buffer_t playback_buf; // holds tape audio - play source and recording
-                                // target of the tape
-    tape_buffer_t record_buf;   // holds tape audio - play source and recording
-                                // target of the tape
+    size_t dma_buf_size;         // buffer size RX/TX
+    tape_buffer_t* playback_buf; // holds tape audio - play source and recording
+                                 // target of the tape
+    tape_buffer_t* record_buf;   // holds tape audio - play source and recording
+                                 // target of the tape
 
     // playheads, use 2 for crossfading with same buffer on retrigger/cycling - Q16.16 (int16_t integer part, uint16_t frac part)
     playhead_t ph_a;
@@ -72,11 +82,19 @@ struct tape_player {
 
     crossfade_t xfade_retrig; // retrigger crossfade
     bool buffer_end_fade_active;
-    uint32_t buffer_end_fade_pos; // position in fade LUT for fading out at end of buffer
+    float fade_in_idx;         // LUT index for fade in when starting playback
+    float fade_out_idx;        // LUT index for fade out when approaching end of buffer
+    uint32_t fade_in_idx_q16;  // 16.16 fixed point
+    uint32_t fade_out_idx_q16; // 16.16 fixed point
+    bool fade_in_active;       // whether fade in is active (when starting playback)
+    bool fade_out_active;      // whether fade out is active (when approaching end of buffer)
 
     uint32_t tape_recordhead;
 
     bool switch_bufs_pending;
+
+    uint32_t current_phase_inc; // The increment actually being used
+    uint32_t target_phase_inc;  // The increment we want to reach, used for smooth pitch transitions
 
     // states
     play_state_t play_state;

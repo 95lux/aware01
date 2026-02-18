@@ -1,5 +1,6 @@
 #include "FreeRTOS.h"
 #include "drivers/ws2812_driver.h"
+#include "project_config.h"
 #include "queue.h"
 #include "settings.h"
 #include "stm32h7xx_hal.h"
@@ -30,6 +31,8 @@ TaskHandle_t userIfTaskHandle;
 QueueHandle_t tape_cmd_q;
 QueueHandle_t params_queue;
 
+SemaphoreHandle_t audioReadySemaphore;
+
 /* ===== Task prototypes ===== */
 static void AudioTask(void* argument);
 static void ControlInterfaceTask(void* argument);
@@ -49,6 +52,9 @@ void FREERTOS_Init(void) {
 
     params_queue = xQueueCreate(1, sizeof(struct parameters));
     configASSERT(params_queue);
+
+    audioReadySemaphore = xSemaphoreCreateBinary();
+    configASSERT(audioReadySemaphore);
 
     /* create audio task (highest priority) */
     xTaskCreate(AudioTask, "Audio", 512, NULL, configMAX_PRIORITIES - 1, &audioTaskHandle);
@@ -108,12 +114,11 @@ void FREERTOS_Init(void) {
 
 /* ===== Audio task ===== */
 static void AudioTask(void* argument) {
-    printf("Hello i am the audio task\n");
     (void) argument;
 
     /* configure codec */
     if (codec_i2c_is_ok() == HAL_OK) {
-        codec_init();
+        codec_init(AUDIO_SAMPLE_RATE);
     }
 
     struct audioengine_config audioengine_cfg = {
@@ -121,53 +126,48 @@ static void AudioTask(void* argument) {
 
     struct tape_player tape_player;
 
-    /* initialize audio engine */
-    init_audioengine(&audioengine_cfg);
-    init_tape_player(&tape_player, audioengine_cfg.buffer_size, tape_cmd_q);
+    // wait for audio engine to be ready (signaled from uiface after calibration)
+    if (xSemaphoreTake(audioReadySemaphore, portMAX_DELAY) == pdTRUE) {
+        /* initialize audio engine */
+        init_audioengine(&audioengine_cfg);
+        init_tape_player(&tape_player, audioengine_cfg.buffer_size, tape_cmd_q);
 
-    start_audio_engine();
+        start_audio_engine();
 
-    for (;;) {
-        /* wait for DMA signal */
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        for (;;) {
+            /* wait for DMA signal */
+            ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 #ifdef CONFIG_AUDIO_LOOPBACK
-        loopback_samples();
+            loopback_samples();
 #else
 
-        /* process audio block */
-        tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) audioengine_cfg.tx_buf_ptr);
+            /* process audio block */
+            tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) audioengine_cfg.tx_buf_ptr);
 
-        /* handle pending commands (non-blocking) */
-        tape_cmd_msg_t msg;
-        while (xQueueReceive(tape_cmd_q, &msg, 0) == pdTRUE) {
-            switch (msg.cmd) {
-            case TAPE_CMD_PLAY:
-                tape_player_play();
-                break;
-            case TAPE_CMD_STOP:
-                tape_player_stop_play();
-                break;
-            case TAPE_CMD_RECORD:
-                tape_player_record();
-                break;
+            /* handle pending commands (non-blocking) */
+            tape_cmd_msg_t msg;
+            while (xQueueReceive(tape_cmd_q, &msg, 0) == pdTRUE) {
+                switch (msg.cmd) {
+                case TAPE_CMD_PLAY:
+                    tape_player_play();
+                    break;
+                case TAPE_CMD_STOP:
+                    tape_player_stop_play();
+                    break;
+                case TAPE_CMD_RECORD:
+                    tape_player_record();
+                    break;
+                }
             }
-        }
-
-        // check for param changes
-        struct param_cache param_cache;
-        uint32_t dirty_flags;
-
-        float next_pitch = tape_player_get_pitch();
-
-        dirty_flags = param_cache_fetch(&param_cache);
-        if (dirty_flags & PARAM_DIRTY_PITCH_CV)
-            next_pitch = param_cache.pitch_cv;
-
-        if (dirty_flags & PARAM_DIRTY_PITCH_UI)
-            next_pitch = next_pitch * param_cache.pitch_ui;
-
-        tape_player_set_pitch(next_pitch);
 #endif
+            struct param_cache param_cache;
+            param_cache_fetch(&param_cache);
+            float next_pitch = tape_player_get_pitch();
+            next_pitch = param_cache.pitch_cv;
+            next_pitch *= param_cache.pitch_ui;
+
+            tape_player_set_pitch(next_pitch);
+        }
     }
 }
 
@@ -235,6 +235,9 @@ static void UserInterfaceTask(void* argument) {
     uint32_t hold_time = 0;
     bool cv_feedback_given = false;
     bool pot_feedback_given = false;
+
+    vTaskSuspend(audioTaskHandle);
+    vTaskSuspend(controlIfTaskHandle);
     // Check both buttons pressed
     while (are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10));
@@ -273,8 +276,14 @@ static void UserInterfaceTask(void* argument) {
         }
     }
 
+    vTaskResume(audioTaskHandle);
+    vTaskResume(controlIfTaskHandle);
+    xSemaphoreGive(audioReadySemaphore);
+
     user_iface_init(&user_interface_cfg, &settings_data_ram.calibration_data);
     user_iface_start();
+
+    ws2812_change_animation(&anim_bootup);
 
     uint32_t notified;
 

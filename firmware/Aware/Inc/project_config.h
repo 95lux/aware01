@@ -1,5 +1,6 @@
 #pragma once
 
+#include "drivers/tlv320_driver.h"
 #include <math.h>
 
 /* ===== Config Options ===== */
@@ -10,9 +11,10 @@
 /* ===== Engine Parameters ===== */
 
 /* audio engine config */
-#define AUDIO_BLOCK_SIZE 256
-// #define AUDIO_SAMPLE_RATE I2S_AUDIOFREQ_48K
-#define AUDIO_SAMPLE_RATE 48000
+#define AUDIO_BLOCK_SIZE 64
+// #define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
+#define AUDIO_SAMPLE_RATE SAMPLERATE_24KHZ
+#define AUDIO_BIT_DEPTH 16 // or 8 // TODO: maybe make tapebuffer use 8bit. Increase tape lenth and create nice texture?
 
 /* tape engine configs*/
 #define TAPE_SECONDS 2
@@ -29,11 +31,6 @@
 // Potentiometer configuration
 #define POT_PITCH 0 // potentiometer index for pitch control
 #define POT_PARAM2 1
-
-#define CV_V_OCT 0
-#define CV_1 1
-#define CV_2 2
-#define CV_3 3
 
 #define NUM_POT_LEDS 3 // TODO: currently only 3, since last LED gpio does not support PWM output :(
 // TODO: add more potentiometer mappings as needed
@@ -71,7 +68,9 @@
 #define TAPE_REC_BUF_SIZE_CHANNEL (AUDIO_BLOCK_SIZE * TAPE_REC_BUF_NUM_BLOCKS)
 
 #define FADE_LUT_LEN 128
-#define FADE_OUT_LENGTH 64 // fade out length when approaching end of buffer, to prevent clicks
+#define FADE_RETRIG_XFADE_LEN 32
+#define FADE_IN_OUT_LEN 64 // fade in/out length when approaching start/end of buffer, to prevent clicks
+#define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)
 
 #define CV_CALIB_HOLD_MS 1000
 #define POT_CALIB_HOLD_MS 5000
