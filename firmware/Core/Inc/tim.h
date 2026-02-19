@@ -36,6 +36,10 @@ extern TIM_HandleTypeDef htim1;
 
 extern TIM_HandleTypeDef htim12;
 
+extern TIM_HandleTypeDef htim13;
+
+extern TIM_HandleTypeDef htim14;
+
 extern TIM_HandleTypeDef htim15;
 
 extern TIM_HandleTypeDef htim17;
@@ -46,6 +50,8 @@ extern TIM_HandleTypeDef htim17;
 
 void MX_TIM1_Init(void);
 void MX_TIM12_Init(void);
+void MX_TIM13_Init(void);
+void MX_TIM14_Init(void);
 void MX_TIM15_Init(void);
 void MX_TIM17_Init(void);
 

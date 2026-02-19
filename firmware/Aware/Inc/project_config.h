@@ -12,12 +12,13 @@
 
 /* audio engine config */
 #define AUDIO_BLOCK_SIZE 64
-// #define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
-#define AUDIO_SAMPLE_RATE SAMPLERATE_24KHZ
+#define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
+// #define AUDIO_SAMPLE_RATE_HW SAMPLERATE_48KHZ
+#define AUDIO_SAMPLE_RATE_INTERNAL SAMPLERATE_24KHZ // buffer processing is done at lower sample rate to save ram
 #define AUDIO_BIT_DEPTH 16 // or 8 // TODO: maybe make tapebuffer use 8bit. Increase tape lenth and create nice texture?
 
 /* tape engine configs*/
-#define TAPE_SECONDS_MS 5600
+#define TAPE_SECONDS_MS 5300
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration
@@ -56,7 +57,7 @@
 
 /* ===== Derived values (do not edit) ===== */
 // playback tape size calculations
-#define TAPE_SIZE (AUDIO_SAMPLE_RATE * (TAPE_SECONDS_MS / 1000) * NUM_CHANNELS) // number of samples
+#define TAPE_SIZE (AUDIO_SAMPLE_RATE * (TAPE_SECONDS_MS) * NUM_CHANNELS / 1000) // number of samples
 #define TAPE_SIZE_ALIGNED ((TAPE_SIZE / AUDIO_BLOCK_SIZE) * AUDIO_BLOCK_SIZE)   // make sure tape size is multiple of audio block size
 #define TAPE_SIZE_CHANNEL (TAPE_SIZE_ALIGNED / NUM_CHANNELS)                    // number of samples per channel
 
@@ -77,7 +78,7 @@
 
 #define FADE_LUT_LEN 128
 #define FADE_RETRIG_XFADE_LEN 32
-#define FADE_IN_OUT_LEN 64 // fade in/out length when approaching start/end of buffer, to prevent clicks
+#define FADE_IN_OUT_LEN 32 // fade in/out length when approaching start/end of buffer, to prevent clicks
 #define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)
 
 #define CV_CALIB_HOLD_MS 1000
