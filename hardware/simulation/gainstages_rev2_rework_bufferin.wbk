@@ -66,6 +66,14 @@
         {
           "expr": "MAX V(IN_CODEC_BUF)",
           "format": "3~V"
+        },
+        {
+          "expr": "AVG V(IN_CODEC_BUF)",
+          "format": "3~V"
+        },
+        {
+          "expr": "PP V(IN_CODEC_BUF)",
+          "format": "3~V"
         }
       ],
       "showGrid": true,

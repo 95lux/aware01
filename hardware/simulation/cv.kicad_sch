@@ -1302,6 +1302,12 @@
 		(uuid "901da9b4-f4b0-4e04-923c-f6c7c1eae433")
 	)
 	(junction
+		(at 105.41 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "acebab09-3e0c-4652-ab54-93879cd5a6b8")
+	)
+	(junction
 		(at 123.19 50.8)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1473,16 +1479,6 @@
 	)
 	(wire
 		(pts
-			(xy 100.33 80.01) (xy 100.33 82.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a46ea8a-4909-4c03-8ca1-f8e9ea0dddf6")
-	)
-	(wire
-		(pts
 			(xy 73.66 156.21) (xy 74.93 156.21)
 		)
 		(stroke
@@ -1490,6 +1486,16 @@
 			(type default)
 		)
 		(uuid "3add0ee9-ee64-44f5-92ef-1779e564349d")
+	)
+	(wire
+		(pts
+			(xy 105.41 99.06) (xy 105.41 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d8e1b30-06d4-4525-a423-df8f1b5a36ff")
 	)
 	(wire
 		(pts
@@ -1510,6 +1516,16 @@
 			(type default)
 		)
 		(uuid "4625b23f-f19b-4b4b-855a-0ac67c1bddb3")
+	)
+	(wire
+		(pts
+			(xy 105.41 80.01) (xy 105.41 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4b4f2be5-b44a-4b2d-9ab7-1d903046c802")
 	)
 	(wire
 		(pts
@@ -1873,6 +1889,16 @@
 	)
 	(wire
 		(pts
+			(xy 105.41 69.85) (xy 110.49 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a73d4d74-5d19-43f3-afd0-c30a7db6f017")
+	)
+	(wire
+		(pts
 			(xy 124.46 74.93) (xy 125.73 74.93)
 		)
 		(stroke
@@ -1920,16 +1946,6 @@
 			(type default)
 		)
 		(uuid "bdd4f7a4-6faa-414a-b0e9-00f5eb811e34")
-	)
-	(wire
-		(pts
-			(xy 100.33 69.85) (xy 110.49 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c41d6b22-8fe3-480f-8443-8b2042591eea")
 	)
 	(wire
 		(pts
@@ -2020,6 +2036,16 @@
 			(type default)
 		)
 		(uuid "e0880a61-9969-4e0e-aa02-adbf1b19dc1f")
+	)
+	(wire
+		(pts
+			(xy 100.33 69.85) (xy 105.41 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e2bd0f75-c002-420e-81b0-12f35a495d01")
 	)
 	(wire
 		(pts
@@ -2586,7 +2612,7 @@
 	)
 	(symbol
 		(lib_id "Simulation_SPICE:VDC")
-		(at 100.33 74.93 0)
+		(at 105.41 74.93 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2594,7 +2620,7 @@
 		(dnp no)
 		(uuid "0f6149dd-08b2-4601-8d05-eb135da23367")
 		(property "Reference" "V5"
-			(at 94.488 73.152 0)
+			(at 99.568 73.152 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2602,8 +2628,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "5V"
-			(at 93.472 75.692 0)
+		(property "Value" "0.1V"
+			(at 98.552 75.692 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2612,7 +2638,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2621,7 +2647,7 @@
 			)
 		)
 		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#sec_Independent_Sources_for"
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2630,7 +2656,7 @@
 			)
 		)
 		(property "Description" "Voltage source, DC"
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2639,7 +2665,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=+ 2=-"
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2648,7 +2674,7 @@
 			)
 		)
 		(property "Sim.Type" "DC"
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2657,7 +2683,7 @@
 			)
 		)
 		(property "Sim.Device" "V"
-			(at 100.33 74.93 0)
+			(at 105.41 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2676,12 +2702,6 @@
 			(project "cv"
 				(path "/ac5dd659-8174-4dce-b2bd-6ff63c727fa9"
 					(reference "V5")
-					(unit 1)
-				)
-			)
-			(project "simulation"
-				(path "/e80dc9b1-658c-4466-ab44-cdfb41cf2b69/270709a9-ed21-4350-9ff3-4cd2d88db2d4"
-					(reference "V7")
 					(unit 1)
 				)
 			)
@@ -3929,6 +3949,113 @@
 		)
 	)
 	(symbol
+		(lib_id "Simulation_SPICE:VSIN")
+		(at 105.41 93.98 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "72c8095e-e874-4808-8b77-502dfdca9885")
+		(property "Reference" "V1"
+			(at 111.506 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "VSIN"
+			(at 113.284 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#sec_Independent_Sources_for"
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Voltage source, sinusoidal"
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=+ 2=-"
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Params" "dc=0 ampl=0 f=100 td=0 theta=0 phase=0 ac=1"
+			(at 124.968 106.172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Type" "SIN"
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "V"
+			(at 105.41 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "5bb5402d-431b-40d4-bfb5-8407d6e676c5")
+		)
+		(pin "1"
+			(uuid "377fe207-0592-4a69-8dc1-5e9305b714b6")
+		)
+		(instances
+			(project "cv"
+				(path "/ac5dd659-8174-4dce-b2bd-6ff63c727fa9"
+					(reference "V1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 158.75 78.74 0)
 		(mirror y)
@@ -4475,7 +4602,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 100.33 82.55 0)
+		(at 105.41 82.55 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4484,7 +4611,7 @@
 		(dnp no)
 		(uuid "a591d3c0-d9d7-4f31-961d-f791c29ed86f")
 		(property "Reference" "#PWR0104"
-			(at 100.33 88.9 0)
+			(at 105.41 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4493,7 +4620,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 100.33 86.614 0)
+			(at 105.41 86.614 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4502,7 +4629,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 100.33 82.55 0)
+			(at 105.41 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4511,7 +4638,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 100.33 82.55 0)
+			(at 105.41 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4520,7 +4647,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 100.33 82.55 0)
+			(at 105.41 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4535,12 +4662,6 @@
 			(project "cv"
 				(path "/ac5dd659-8174-4dce-b2bd-6ff63c727fa9"
 					(reference "#PWR0104")
-					(unit 1)
-				)
-			)
-			(project "simulation"
-				(path "/e80dc9b1-658c-4466-ab44-cdfb41cf2b69/270709a9-ed21-4350-9ff3-4cd2d88db2d4"
-					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -4948,6 +5069,73 @@
 			(project "simulation"
 				(path "/e80dc9b1-658c-4466-ab44-cdfb41cf2b69/270709a9-ed21-4350-9ff3-4cd2d88db2d4"
 					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 105.41 101.6 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c2b40025-3e94-48b6-b750-2662a5c71296")
+		(property "Reference" "#PWR03"
+			(at 105.41 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 105.41 105.664 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 105.41 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 105.41 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 105.41 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e3b445ab-e44e-490e-a688-c60a137482fb")
+		)
+		(instances
+			(project "cv"
+				(path "/ac5dd659-8174-4dce-b2bd-6ff63c727fa9"
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
