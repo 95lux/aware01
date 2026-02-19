@@ -206,12 +206,11 @@ static void UserInterfaceTask(void* argument) {
         .htim_anim = &htim17,
         .htim_pwm = &htim15,
         .tim_channel_pwm = TIM_CHANNEL_1,
-        .animation = anim_off,
+        .state.animation = anim_off,
     };
 
     ws2812_init(&ws2812_cfg);
     ws2812_start();
-    ws2812_change_animation(&anim_off);
 
     struct user_interface_config user_interface_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
@@ -301,6 +300,12 @@ static void UserInterfaceTask(void* argument) {
             if (notified & GPIO_NOTIFY_BUTTON1) {
             }
             if (notified & GPIO_NOTIFY_BUTTON2) {
+            }
+            if (notified & GPIO_NOTIFY_GATE1) {
+                ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
+            }
+            if (notified & GPIO_NOTIFY_GATE2) {
+                ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
             }
             user_iface_process(notified);
         }

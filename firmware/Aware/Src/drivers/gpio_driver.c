@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "drivers/ws2812_driver.h"
 #include "rtos.h"
 #include "tape_player.h"
 
@@ -28,11 +29,11 @@ bool are_both_buttons_pushed() {
             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET);
 }
 
+// used only for calibration, so its ok to block here for a while.
 bool wait_for_both_buttons_pushed() {
     uint32_t cycles = 0;
     // TODO: does polling create problems? since its only calibration, maybe just go for polling
-    while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_RESET &&
-             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_RESET)) {
+    while (!are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
         if (cycles >= 6000) // waited for 60 seconds, probably no buttons pressed, exit
@@ -41,11 +42,11 @@ bool wait_for_both_buttons_pushed() {
     return true;
 }
 
+// used only for calibration, so its ok to block here for a while.
 bool wait_for_both_buttons_released() {
     uint32_t cycles = 0;
     // TODO: does polling create problems? since its only calibration, maybe just go for polling
-    while (!(HAL_GPIO_ReadPin(BUTTON1_IN_GPIO_Port, BUTTON1_IN_Pin) == GPIO_PIN_SET &&
-             HAL_GPIO_ReadPin(BUTTON2_IN_GPIO_Port, BUTTON2_IN_Pin) == GPIO_PIN_SET)) {
+    while (are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
         if (cycles >= 2000)
@@ -66,24 +67,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (active_cfg == NULL) {
         return;
     }
-    /* Temporarily send tape commands directly from the ISR.
-       TODO: Planned change: notify the control-interface task here and let it
-       translate/forward commands to the tape task. 
-       Further processing can be done there (e.g., debouncing, long-press detection, etc.)
-       Maybe debouncing in gpio driver directly?
-       elaborate later
-       */
     BaseType_t hpw = pdFALSE;
     tape_cmd_msg_t msg;
     msg.pitch = 1.0f;
 
+    // button presses trigger notifications to interface task
     if (GPIO_Pin == BUTTON1_IN_Pin) {
         if (active_cfg->button1_debounce) {
             return;
         }
         active_cfg->button1_debounce = true;
         HAL_TIM_Base_Start_IT(active_cfg->htim_button1_debounce);
-        xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, GPIO_NOTIFY_BUTTON1, eSetBits, &hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_BUTTON1, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == BUTTON2_IN_Pin) {
@@ -92,19 +87,21 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         }
         active_cfg->button2_debounce = true;
         HAL_TIM_Base_Start_IT(active_cfg->htim_button2_debounce);
-        xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, GPIO_NOTIFY_BUTTON2, eSetBits, &hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_BUTTON2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == GATE1_IN_Pin) {
         msg.cmd = TAPE_CMD_PLAY;
         xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
         portYIELD_FROM_ISR(hpw);
-        // xTaskNotify(active_cfg->controlIfTaskHandle, GPIO_NOTIFY_GATE1, eSetBits, &hpw);
-        // portYIELD_FROM_ISR(hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE1, eSetBits, &hpw);
+        portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == GATE2_IN_Pin) {
         msg.cmd = TAPE_CMD_RECORD;
         xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
+        portYIELD_FROM_ISR(hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     // if (GPIO_Pin == GATE3_IN_Pin) {
