@@ -887,328 +887,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Diode:BAT54C"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "D"
-				(at 0.635 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "BAT54C"
-				(at -6.35 3.175 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-				(at 1.905 3.175 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "http://www.diodes.com/_files/datasheets/ds11005.pdf"
-				(at -2.032 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "dual schottky barrier diode, common cathode"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "schottky diode common cathode"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOT?23*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "BAT54C_0_1"
-				(polyline
-					(pts
-						(xy -3.175 -1.27) (xy -3.175 1.27) (xy -1.27 0) (xy -3.175 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.905 1.27) (xy -1.905 1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.905 0) (xy 1.905 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.27 1.27) (xy -1.905 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.27 1.27) (xy -1.27 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.27 0) (xy -3.81 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.27 -1.27) (xy -0.635 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.635 -1.27) (xy -0.635 -1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 0)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.635 -1.27) (xy 0.635 -1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 1.27) (xy 1.27 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 1.27) (xy 1.905 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -1.27) (xy 0.635 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.905 1.27) (xy 1.905 1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.175 -1.27) (xy 3.175 1.27) (xy 1.27 0) (xy 3.175 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.81 0) (xy 1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "BAT54C_1_1"
-				(pin passive line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -5.08 90)
-					(length 5.08)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Diode:BAT54S"
 			(pin_names
 				(offset 0)
@@ -1905,16 +1583,6 @@
 		)
 		(uuid "1e7c4456-b88c-43c2-8579-c31731e89466")
 	)
-	(text "circuit how it shouldve been :("
-		(exclude_from_sim no)
-		(at 129.54 101.092 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "43f9eb11-35b8-4150-b7e2-5995a5e72df0")
-	)
 	(text "In/Out Stages"
 		(exclude_from_sim no)
 		(at 18.542 18.034 0)
@@ -1927,16 +1595,6 @@
 			(justify left top)
 		)
 		(uuid "d15a2d53-0180-4e9d-92eb-277400ef7364")
-	)
-	(text "circuit ordered"
-		(exclude_from_sim no)
-		(at 94.488 91.694 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "dd4c19d1-1556-47fe-b685-b5d3fae6eb07")
 	)
 	(text "Out Stages"
 		(exclude_from_sim no)
@@ -1993,6 +1651,12 @@
 		(uuid "45f96712-8e02-45ed-b844-7ed8e33f5a36")
 	)
 	(junction
+		(at 124.46 64.77)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "46aed6de-c5ff-4252-9047-b2c5bd4da90d")
+	)
+	(junction
 		(at 223.52 119.38)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2011,10 +1675,10 @@
 		(uuid "520d406a-d9e7-4035-a6ce-cc6a476f2a0b")
 	)
 	(junction
-		(at 115.57 133.35)
+		(at 125.73 133.35)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "56bfa67b-e48c-4521-85ff-24e30b6f0811")
+		(uuid "52fcc1f4-fab1-4bbc-adf7-b0ecbe71b362")
 	)
 	(junction
 		(at 34.29 110.49)
@@ -2045,12 +1709,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8e1058cb-cc14-481f-b587-164d61b3202f")
-	)
-	(junction
-		(at 114.3 64.77)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a33e303b-5ce9-4df9-a3c5-10214e7d5e67")
 	)
 	(junction
 		(at 161.29 113.03)
@@ -2102,6 +1760,16 @@
 	)
 	(wire
 		(pts
+			(xy 125.73 133.35) (xy 129.54 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08e3e9c7-646d-4ac0-bd15-935c322f24e6")
+	)
+	(wire
+		(pts
 			(xy 217.17 50.8) (xy 223.52 50.8)
 		)
 		(stroke
@@ -2122,7 +1790,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 64.77) (xy 128.27 64.77)
+			(xy 113.03 64.77) (xy 124.46 64.77)
 		)
 		(stroke
 			(width 0)
@@ -2282,7 +1950,7 @@
 	)
 	(wire
 		(pts
-			(xy 115.57 133.35) (xy 129.54 133.35)
+			(xy 114.3 133.35) (xy 125.73 133.35)
 		)
 		(stroke
 			(width 0)
@@ -2402,16 +2070,6 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 64.77) (xy 114.3 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "46c6ce66-ac23-442c-af16-4f98a17388ec")
-	)
-	(wire
-		(pts
 			(xy 243.84 139.7) (xy 243.84 140.97)
 		)
 		(stroke
@@ -2499,6 +2157,16 @@
 			(type default)
 		)
 		(uuid "5f950d08-3a1c-4257-8a64-af6b96fd33a2")
+	)
+	(wire
+		(pts
+			(xy 124.46 64.77) (xy 128.27 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63a5fa2d-7bab-4f40-8e37-aa72532e49ee")
 	)
 	(wire
 		(pts
@@ -2619,16 +2287,6 @@
 			(type default)
 		)
 		(uuid "89a228f7-9635-4d4c-8888-bcea8d7defd8")
-	)
-	(wire
-		(pts
-			(xy 114.3 133.35) (xy 115.57 133.35)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "89e189aa-d61f-4ff6-b2aa-0cab2e954171")
 	)
 	(wire
 		(pts
@@ -3557,91 +3215,16 @@
 		)
 	)
 	(symbol
-		(lib_id "Diode:BAT54C")
-		(at 107.95 91.44 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp yes)
-		(fields_autoplaced yes)
-		(uuid "42f9c1ae-c7d4-4820-b773-4045dde098dd")
-		(property "Reference" "D8"
-			(at 110.49 90.1699 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT54C"
-			(at 110.49 92.7099 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 111.125 93.345 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.diodes.com/_files/datasheets/ds11005.pdf"
-			(at 107.95 89.408 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "dual schottky barrier diode, common cathode"
-			(at 107.95 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "0016461d-5c97-4daf-b0b7-077260a962c8")
-		)
-		(pin "1"
-			(uuid "909f04c9-7f7e-41c3-bd01-2eb466c3109d")
-		)
-		(pin "2"
-			(uuid "efedd9fa-1e5f-47ec-9592-2d13db1b64e8")
-		)
-		(instances
-			(project ""
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "D8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Diode:BAT54S")
-		(at 130.81 91.44 90)
+		(at 119.38 64.77 90)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp yes)
-		(fields_autoplaced yes)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
 		(uuid "5032de39-733d-404c-a247-472fd5705f9b")
-		(property "Reference" "D9"
-			(at 128.27 90.1699 90)
+		(property "Reference" "D4"
+			(at 117.094 63.5 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3650,7 +3233,7 @@
 			)
 		)
 		(property "Value" "BAT54S"
-			(at 128.27 92.7099 90)
+			(at 128.778 68.834 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3659,7 +3242,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 127.635 89.535 0)
+			(at 116.205 62.865 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3669,7 +3252,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 130.81 94.488 0)
+			(at 119.38 67.818 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3678,7 +3261,7 @@
 			)
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
-			(at 130.81 91.44 0)
+			(at 119.38 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3698,7 +3281,7 @@
 		(instances
 			(project ""
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "D9")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -4653,107 +4236,6 @@
 			(project "aware01_h7_rev1_2"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "C48")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:BAT54S")
-		(at 119.38 64.77 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6389ae13-dfeb-4012-a458-3e7e62c7c868")
-		(property "Reference" "D4"
-			(at 121.92 63.4999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT54S"
-			(at 121.92 66.0399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 122.555 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 119.38 61.722 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
-			(at 119.38 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Vishay Semiconductors "
-			(at 119.38 64.77 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" " BAT54C-E3-08 "
-			(at 119.38 64.77 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 78-BAT54C-E3-08 "
-			(at 119.38 64.77 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "7cbe8878-cbbb-414a-b037-3f48d202fe9a")
-		)
-		(pin "3"
-			(uuid "c6367ab8-4828-4c07-ad77-4c3a9f59a71d")
-		)
-		(pin "1"
-			(uuid "8d85bf58-e509-4278-9d5e-a104c85466bf")
-		)
-		(instances
-			(project ""
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -6909,6 +6391,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:BAT54S")
+		(at 120.65 133.35 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e159605f-1064-480e-9ec9-a4b1276bf2db")
+		(property "Reference" "D5"
+			(at 118.618 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BAT54S"
+			(at 130.302 138.176 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 117.475 131.445 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
+			(at 120.65 136.398 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
+			(at 120.65 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "886511e0-5d2c-4ace-afd6-0826208b285c")
+		)
+		(pin "3"
+			(uuid "09b24eab-dbe2-4319-a139-521de4d7d75f")
+		)
+		(pin "1"
+			(uuid "8f7ad441-4225-4a32-aca8-6757bc07eec3")
+		)
+		(instances
+			(project "aware01_h7_rev2_0"
+				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Amplifier_Operational:NE5532")
 		(at 36.83 101.6 0)
 		(unit 3)
@@ -7363,107 +6918,6 @@
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
 					(reference "U11")
 					(unit 2)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:BAT54S")
-		(at 120.65 133.35 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fcd53f5d-3842-47f8-9f63-6740a38c1435")
-		(property "Reference" "D5"
-			(at 123.19 132.0799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT54S"
-			(at 123.19 134.6199 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 123.825 135.255 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/ds11005.pdf"
-			(at 120.65 130.302 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
-			(at 120.65 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Vishay Semiconductors "
-			(at 120.65 133.35 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" " BAT54C-E3-08 "
-			(at 120.65 133.35 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 78-BAT54C-E3-08 "
-			(at 120.65 133.35 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4f31be39-6e65-4d51-ba62-bc24d8b7e074")
-		)
-		(pin "3"
-			(uuid "521abd0d-6109-429e-8e35-b4776a6fbe09")
-		)
-		(pin "1"
-			(uuid "31af8e4b-b443-4200-8ffd-d69854cfb22e")
-		)
-		(instances
-			(project "aware01_h7_rev2_0"
-				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd/9f63702e-8ad6-4a2d-8a3d-8a8b3f17f2a4"
-					(reference "D5")
-					(unit 1)
 				)
 			)
 		)
