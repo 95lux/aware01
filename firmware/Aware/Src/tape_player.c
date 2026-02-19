@@ -185,16 +185,24 @@ void advance_playhead(playhead_t* ph, uint32_t phase_inc, bool reverse, bool cyc
     }
 }
 
-// checks if playhead is near the end of the valid samples of the buffer and has to start fading into next buffer/silence
-static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len) {
+static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, uint32_t active_phase_inc) {
     uint32_t buf_size = active_tape_player->playback_buf->valid_samples;
 
-    // We need 3 samples of "lookahead" for Hermite (n+1, n+2, n+3).
-    // To be safe, we must finish the fade BEFORE the 'n+3' access hits the end.
-    if (ph->idx + fade_len >= buf_size - 4)
-        return true;
-    else
+    // Safety margin for Hermite (n+3)
+    if (buf_size < 4)
         return false;
+    uint32_t limit = buf_size - 4;
+
+    // How many steps (at current pitch) are left until we hit the limit?
+    uint32_t samples_left = (ph->idx < limit) ? (limit - ph->idx) : 0;
+
+    // Convert fade_len_samples to the same "pitch scale" as the playhead.
+    // If active_phase_inc is large (pitch up), we need to trigger much earlier
+    // in terms of buffer index to ensure the fade has enough real-time cycles to finish.
+
+    // Equivalent to: (samples_left << 16) / active_phase_inc <= fade_len_samples
+    // But multiplication is safer/faster:
+    return ((uint64_t) samples_left << 16) <= (uint64_t) fade_len_samples * active_phase_inc;
 }
 
 // worker function to process tape player state
@@ -242,7 +250,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             if (tape->fade_in_active && !tape->params.cyclic_mode) {
                 uint32_t lut_idx = tape->fade_in_idx_q16 >> 16;
 
-                if (lut_idx >= FADE_LUT_LEN) {
+                if (lut_idx >= FADE_LUT_LEN - 1) {
                     tape->fade_in_active = false;
                 } else {
                     int16_t f = fade_in_lut[lut_idx];
@@ -253,16 +261,16 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             }
 
             // --- Q16 FIXED POINT FADE OUT TRIGGER ---
-            if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN) && !tape->params.cyclic_mode) {
+            if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN, active_phase_inc) && !tape->params.cyclic_mode) {
                 tape->fade_out_active = true;
                 tape->fade_out_idx_q16 = 0; // Reset accumulator
             }
 
             // --- Q16 FIXED POINT FADE OUT PROCESS ---
-            if (tape->fade_out_active) {
+            if (tape->fade_out_active && !tape->params.cyclic_mode) {
                 uint32_t lut_idx = tape->fade_out_idx_q16 >> 16;
 
-                if (lut_idx >= FADE_LUT_LEN) {
+                if (lut_idx >= FADE_LUT_LEN - 1) {
                     // Final sample safety: force silence and kill play state
                     out_l = 0;
                     out_r = 0;
@@ -274,6 +282,43 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                     out_l = __SSAT(((int32_t) out_l * f) >> 15, 16);
                     out_r = __SSAT(((int32_t) out_r * f) >> 15, 16);
                     tape->fade_out_idx_q16 += pitch_aware_step;
+                }
+            }
+
+            // --- Cyclic Loop Trigger Logic ---
+            if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN, active_phase_inc) && tape->params.cyclic_mode) {
+                tape->fade_out_active = true;
+                tape->xfade_retrig.active = true;
+                tape->ph_b.idx = 1; // start at sample 1 for interpolation
+                tape->ph_b.frac = 0;
+                tape->ph_b.active = true;
+                tape->fade_out_idx_q16 = 0; // Reset lut accumulator for cyclic crossfade
+            }
+            // process cyclic loop crossfade
+            if (tape->fade_out_active && tape->ph_b.active) {
+                // Fetch samples for the Secondary Playhead (B) starting at the beginning
+                int16_t b_l = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->playback_buf->ch[0]);
+                int16_t b_r = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->playback_buf->ch[1]);
+
+                // Calculate LUT index based on ph_b's progress from the start
+                // This creates the Fade IN for B and Fade OUT for A
+                uint32_t lut_idx = tape->fade_out_idx_q16 >> 16;
+
+                int16_t fb = fade_in_lut[lut_idx];                    // B fades in
+                int16_t fa = fade_in_lut[FADE_LUT_LEN - 1 - lut_idx]; // A fades out
+
+                // Apply mix
+                out_l = __SSAT(((int32_t) out_l * fa + (int32_t) b_l * fb) >> 15, 16);
+                out_r = __SSAT(((int32_t) out_r * fa + (int32_t) b_r * fb) >> 15, 16);
+
+                // Advance ph_b
+                advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+
+                // Completion Check: Once B has covered the FADE_IN_OUT_LEN, B becomes A
+                if (lut_idx >= FADE_LUT_LEN - 1) {
+                    tape->ph_a = tape->ph_b; // Snap A to B's position
+                    tape->ph_b.active = false;
+                    tape->xfade_retrig.active = false;
                 }
             }
 
