@@ -12,14 +12,14 @@
 
 /* audio engine config */
 #define AUDIO_BLOCK_SIZE 64
-// #define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
-#define AUDIO_SAMPLE_RATE SAMPLERATE_24KHZ
+#define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
+// #define AUDIO_SAMPLE_RATE SAMPLERATE_24KHZ
 // #define AUDIO_SAMPLE_RATE_HW SAMPLERATE_48KHZ
 #define AUDIO_SAMPLE_RATE_INTERNAL SAMPLERATE_24KHZ // buffer processing is done at lower sample rate to save ram
 #define AUDIO_BIT_DEPTH 16 // or 8 // TODO: maybe make tapebuffer use 8bit. Increase tape lenth and create nice texture?
 
 /* tape engine configs*/
-#define TAPE_SECONDS_MS 5300
+#define TAPE_SECONDS_MS 2000
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration

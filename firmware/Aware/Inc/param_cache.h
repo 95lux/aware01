@@ -10,8 +10,10 @@ struct param_cache {
     float env_attack;
     float env_decay;
 
-    bool cyclic;
-    bool reverse;
+    bool cyclic_mode;
+    bool reverse_mode;
+
+    uint8_t decimation;
 };
 
 /* public API */
@@ -21,4 +23,6 @@ void param_cache_set_env_attack(float attack);
 void param_cache_set_env_decay(float decay);
 void param_cache_set_cyclic(bool cyclic);
 void param_cache_set_reverse(bool reverse);
+void param_cache_set_decimation(uint8_t decimation);
+
 void param_cache_fetch(struct param_cache* out);

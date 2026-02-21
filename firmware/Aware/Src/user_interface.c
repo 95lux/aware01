@@ -83,8 +83,10 @@ void user_iface_process(uint32_t notified) {
     if (active_user_interface_cfg == NULL)
         return;
 
+    // FADE POTS
     if (notified & ADC_NOTIFY_POTS_RDY) {
         for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
+            // save as normalized float for easier processing later.
             float v = float_value(active_user_interface_cfg->adc_pot_working_buf[i]);
             if (active_user_interface_cfg->pots[i].inverted)
                 v = 1.0f - v;
@@ -125,7 +127,15 @@ void user_iface_process(uint32_t notified) {
         float decay = active_user_interface_cfg->pots[POT_PARAM3].val;  // 0..1
         param_cache_set_env_attack(attack);
         param_cache_set_env_decay(decay);
+
+#define MAX_DECIMATION_FACTOR 20
+
+        // 4th pot - used for decimation
+        uint8_t decimation = (uint8_t) (active_user_interface_cfg->pots[POT_PARAM4].val * MAX_DECIMATION_FACTOR); // 0..5
+        param_cache_set_decimation(decimation);
     }
+
+    // BUTTONS
     if (notified & GPIO_NOTIFY_BUTTON1) {
         // toggle cyclic mode;
         active_user_interface_cfg->cyclic_mode = !active_user_interface_cfg->cyclic_mode;

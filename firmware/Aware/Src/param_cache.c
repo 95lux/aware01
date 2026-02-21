@@ -24,11 +24,15 @@ void param_cache_set_env_decay(float decay) {
 }
 
 void param_cache_set_cyclic(bool cyclic) {
-    cache.cyclic = cyclic;
+    cache.cyclic_mode = cyclic;
 }
 
 void param_cache_set_reverse(bool reverse) {
-    cache.reverse = reverse;
+    cache.reverse_mode = reverse;
+}
+
+void param_cache_set_decimation(uint8_t decimation) {
+    cache.decimation = decimation;
 }
 
 /* ===== Reader ===== */
@@ -37,6 +41,7 @@ void param_cache_fetch(struct param_cache* out) {
     out->pitch_ui = cache.pitch_ui;
     out->env_attack = cache.env_attack;
     out->env_decay = cache.env_decay;
-    out->cyclic = cache.cyclic;
-    out->reverse = cache.reverse;
+    out->cyclic_mode = cache.cyclic_mode;
+    out->reverse_mode = cache.reverse_mode;
+    out->decimation = cache.decimation;
 }
