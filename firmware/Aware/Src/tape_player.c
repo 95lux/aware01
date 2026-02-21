@@ -219,14 +219,20 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
     // Increase to 0.005f for smoother/slower, 0.05f for snappier.
     const float alpha = 0.01f;
 
+    // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
     for (uint32_t n = 0; n < (tape->dma_buf_size / 2); n += 2) {
         // --- The "Default" Stable IIR ---
         // current = current + alpha * (target - current)
         // This form is much more stable than the (target * coeff) version
         tape->current_phase_inc += alpha * (target_inc - tape->current_phase_inc);
 
+        // apply decimation
+        // Ensure decimation is at least 1 to avoid division by zero or weirdness
+        uint8_t pb_decimation = tape->playback_buf->decimation > 0 ? tape->playback_buf->decimation : 1;
+        float inv_decimation = 1.0f / (float) pb_decimation;
+
         // 3. Cast to uint32 for the playhead
-        uint32_t active_phase_inc = (uint32_t) tape->current_phase_inc;
+        uint32_t active_phase_inc = (uint32_t) (tape->current_phase_inc * inv_decimation);
 
         int16_t out_l = 0;
         int16_t out_r = 0;
@@ -361,7 +367,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
                     tape->ph_b.active = false;
                     tape->xfade_retrig.active = false;
                 }
-                advance_playhead(&tape->ph_a, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+                advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
             }
 
             // advance ph_a
@@ -382,18 +388,33 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
         dma_out_buf[n] = (int16_t) out_l * env_val;
         dma_out_buf[n + 1] = (int16_t) out_r * env_val;
 
-        // while recording, pitch factor does not matter at all.
-        // EVAL: maybe allow recording at pitch factor? could lead to interesting artifacts.
-        if (tape->rec_state == REC_RECORDING) {
+        switch (tape->rec_state) {
+        case REC_IDLE:
+            // do nothing
+            break;
+        case REC_RECORDING: {
             // record tape at current recordhead position
-            // if tape has recorded all the way, stop recording for now.
-            if (tape->tape_recordhead >= tape->record_buf->size) {
-                tape_player_stop_record();
+            // only record every second sample. Simple decimation.
+            uint8_t rec_decimation = tape->record_buf->decimation > 0 ? tape->record_buf->decimation : 1;
+            uint32_t frame_idx = n / 2;              // index of the current stereo frame (0, 1, 2, ...)
+            if ((frame_idx % rec_decimation) == 0) { // record only each Nth frame, where N = decimation factor
+
+                // deinterleaves input buffer into tape buffer
+                tape->record_buf->ch[0][tape->tape_recordhead] = dma_in_buf[n];
+                tape->record_buf->ch[1][tape->tape_recordhead] = dma_in_buf[n + 1];
+                tape->tape_recordhead++;
+
+                // if tape has recorded all the way, stop recording for now.
+                if (tape->tape_recordhead >= tape->record_buf->size) {
+                    tape_player_stop_record();
+                }
             }
-            // deinterleaves input buffer into tape buffer
-            tape->record_buf->ch[0][tape->tape_recordhead] = dma_in_buf[n];
-            tape->record_buf->ch[1][tape->tape_recordhead] = dma_in_buf[n + 1];
-            tape->tape_recordhead++;
+            break;
+        }
+        case REC_SWAP_PENDING:
+            break;
+        case REC_DONE:
+            break;
         }
     }
 }
@@ -406,6 +427,10 @@ static void swap_tape_buffers(struct tape_player* t) {
     t->switch_bufs_pending = false;
 }
 
+// prototypes for FSM event handling
+static void play_fsm_event(struct tape_player* t, tape_event_t evt);
+static void rec_fsm_event(struct tape_player* t, tape_event_t evt);
+
 static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
     switch (t->play_state) {
     case PLAY_STOPPED:
@@ -415,6 +440,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
             // each time a play event is triggered, switch buffers if pending.
             if (t->switch_bufs_pending) {
                 swap_tape_buffers(t);
+                rec_fsm_event(t, TAPE_EVT_SWAP_DONE);
             }
 
             // TODO: evaluate minimum number of samples
@@ -469,6 +495,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
                     t->xfade_retrig.temp_buf_r[i] = t->playback_buf->ch[1][start_idx + i];
                 }
                 swap_tape_buffers(t);
+                rec_fsm_event(t, TAPE_EVT_SWAP_DONE);
             } else {
                 // if no buffer switch pending, we can also just point the xfade buffer to the playback buffer, starting at the current phase. This saves us from copying the xfade buffer every time.
                 t->xfade_retrig.temp_buf_l = &t->playback_buf->ch[0][start_idx];
@@ -504,7 +531,8 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
     case REC_IDLE:
         if (evt == TAPE_EVT_RECORD) {
             t->tape_recordhead = 0;
-
+            // apply decimation to recording buffer. This will be reach over to playback buffer by buffer swapping
+            t->record_buf->decimation = t->params.decimation;
             t->rec_state = REC_RECORDING;
         }
         break;
@@ -516,12 +544,30 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
             t->tape_recordhead = 0;
             t->switch_bufs_pending = true;
 
+            t->rec_state = REC_DONE;
+
             // stay in recording state
         } else if (evt == TAPE_EVT_RECORD_DONE || evt == TAPE_EVT_STOP) {
             t->record_buf->valid_samples = t->tape_recordhead;
             t->switch_bufs_pending = true;
 
+            t->rec_state = REC_SWAP_PENDING;
+        }
+        break;
+    case REC_DONE:
+        //swap is done, jump to.
+        if (evt == TAPE_EVT_SWAP_DONE) {
+            t->record_buf->decimation = t->params.decimation;
+
             t->rec_state = REC_IDLE;
+        }
+        break;
+    case REC_SWAP_PENDING:
+        //swap is done, prepare for next record.
+        if (evt == TAPE_EVT_SWAP_DONE) {
+            t->record_buf->decimation = t->params.decimation;
+
+            t->rec_state = REC_RECORDING;
         }
         break;
     }
@@ -571,5 +617,8 @@ void tape_player_set_params(struct param_cache param_cache) {
         active_tape_player->params.pitch_factor = param_cache.pitch_ui * param_cache.pitch_cv;
         active_tape_player->params.env_attack = param_cache.env_attack;
         active_tape_player->params.env_decay = param_cache.env_decay;
+        active_tape_player->params.reverse = param_cache.reverse_mode;
+        active_tape_player->params.cyclic_mode = param_cache.cyclic_mode;
+        active_tape_player->params.decimation = param_cache.decimation;
     }
 }

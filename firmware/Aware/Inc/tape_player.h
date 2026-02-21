@@ -21,6 +21,7 @@ typedef struct {
     int16_t* ch[2];         // ch[0]=L, ch[1]=R
     uint32_t size;          // samples per channel
     uint32_t valid_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
+    uint8_t decimation;     // decimation factor for recording and playback
 } tape_buffer_t;
 
 // holds changeable parameters in the tape player engine. should actually not be accessed from outside
@@ -33,6 +34,8 @@ struct parameters {
     // playback modes
     bool reverse;
     bool cyclic_mode;
+
+    uint8_t decimation; // decimation factor for recording and playback.
     // more params will be added according to DSP/feature requirements
 };
 
@@ -44,23 +47,11 @@ typedef struct {
 } playhead_t;
 
 // FSM logic
-typedef enum {
-    TAPE_EVT_NONE = 0,
-    TAPE_EVT_PLAY,
-    TAPE_EVT_STOP,
-    TAPE_EVT_RECORD,
-    TAPE_EVT_RECORD_DONE,
-} tape_event_t;
+typedef enum { TAPE_EVT_NONE = 0, TAPE_EVT_PLAY, TAPE_EVT_STOP, TAPE_EVT_RECORD, TAPE_EVT_RECORD_DONE, TAPE_EVT_SWAP_DONE } tape_event_t;
 
-typedef enum {
-    PLAY_STOPPED = 0,
-    PLAY_PLAYING,
-} play_state_t;
+typedef enum { PLAY_STOPPED = 0, PLAY_PLAYING } play_state_t;
 
-typedef enum {
-    REC_IDLE = 0,
-    REC_RECORDING,
-} rec_state_t;
+typedef enum { REC_IDLE = 0, REC_RECORDING, REC_SWAP_PENDING, REC_DONE } rec_state_t;
 
 typedef struct {
     bool active;
@@ -100,6 +91,7 @@ struct tape_player {
     uint32_t tape_recordhead;
 
     bool switch_bufs_pending;
+    bool switch_bufs_done;
 
     uint32_t current_phase_inc; // The increment actually being used
     uint32_t target_phase_inc;  // The increment we want to reach, used for smooth pitch transitions
