@@ -18,6 +18,7 @@
 #include "drivers/gpio_driver.h"
 #include "drivers/swo_log.h"
 #include "drivers/tlv320_driver.h"
+#include "exciter.h"
 #include "main.h"
 #include "param_cache.h"
 #include "tape_player.h"
@@ -130,11 +131,15 @@ static void AudioTask(void* argument) {
 
     struct tape_player tape_player;
 
+    struct excite_config excite_cfg;
+
     // wait for audio engine to be ready (signaled from uiface after calibration)
     if (xSemaphoreTake(audioReadySemaphore, portMAX_DELAY) == pdTRUE) {
         /* initialize audio engine */
         init_audioengine(&audioengine_cfg);
         init_tape_player(&tape_player, audioengine_cfg.buffer_size, tape_cmd_q);
+
+        excite_init(&excite_cfg);
 
         start_audio_engine();
 
@@ -145,8 +150,16 @@ static void AudioTask(void* argument) {
             loopback_samples();
 #else
 
+            // processing half audio block from half dma buffer.
+            int16_t wet[AUDIO_HALF_BLOCK_SIZE];
+            int16_t dry[AUDIO_HALF_BLOCK_SIZE];
             /* process audio block */
-            tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) audioengine_cfg.tx_buf_ptr);
+            tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) dry);
+            excite_block(dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
+
+            for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i++) {
+                audioengine_cfg.tx_buf_ptr[i] = 0.2f * dry[i] + 0.8f * wet[i];
+            }
 
             /* handle pending commands (non-blocking) */
             tape_cmd_msg_t msg;

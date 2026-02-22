@@ -1,0 +1,173 @@
+{
+  "A_PB": 0.2056717652757185,
+  "A_PB2": 0.01,
+  "A_SB": 0.001,
+  "A_SB2": 0.0001,
+  "F_C": 0.14583333333333334,
+  "F_C2": 0.4,
+  "F_N": 0.2,
+  "F_N2": 0.4,
+  "F_PB": 0.08333333333333333,
+  "F_PB2": 0.3,
+  "F_SB": 0.0625,
+  "F_SB2": 0.4,
+  "N": 6,
+  "T_S": 0.020833333333333332,
+  "W_PB": 1,
+  "W_PB2": 1,
+  "W_SB": 1,
+  "W_SB2": 1,
+  "_id": [
+    "pyfda",
+    1
+  ],
+  "amp_specs_unit": "dB",
+  "ba": [
+    [
+      0.3582659566282503,
+      -2.149595739769502,
+      5.373989349423754,
+      -7.165319132565005,
+      5.373989349423755,
+      -2.149595739769502,
+      0.3582659566282503
+    ],
+    [
+      1.0,
+      -3.9811884900946994,
+      6.845260420275681,
+      -6.449828922995323,
+      3.495138651249086,
+      -1.0292502263335979,
+      0.12835451325963146
+    ]
+  ],
+  "creator": [
+    "ba",
+    "pyfda.input_widgets.input_coeffs"
+  ],
+  "f_S": 48.0,
+  "f_S_prev": 48.0,
+  "f_max": 48000.0,
+  "f_s_scale": 1000.0,
+  "fc": "Manual_IIR",
+  "filter_widgets": {
+    "equiripple": {
+      "grid_density": 16
+    },
+    "firwin": {
+      "disp_name": "Kaiser",
+      "id": "kaiser",
+      "par_val": [
+        10
+      ],
+      "win_len": 32
+    },
+    "ma": {
+      "delays": 5,
+      "normalize": true,
+      "stages": 2
+    }
+  },
+  "fo": "man",
+  "freqSpecsRange": [
+    0,
+    24000.0
+  ],
+  "freqSpecsRangeType": "half",
+  "freq_locked": false,
+  "freq_specs_sort": true,
+  "freq_specs_unit": "kHz",
+  "ft": "IIR",
+  "fx_base": "dec",
+  "fx_mod_class_name": "pyfda.fixpoint_widgets.iir_df1.iir_df1_pyfixp_ui",
+  "fx_sim": false,
+  "fxq": {
+    "QACC": {
+      "N_over": 0,
+      "WF": 30,
+      "WI": 3,
+      "ovfl": "wrap",
+      "quant": "floor",
+      "w_a_m": "a"
+    },
+    "QCA": {
+      "N_over": 0,
+      "WF": 12,
+      "WI": 3,
+      "ovfl": "wrap",
+      "quant": "floor",
+      "w_a_m": "a"
+    },
+    "QCB": {
+      "N_over": 0,
+      "WF": 15,
+      "WI": 3,
+      "ovfl": "wrap",
+      "quant": "floor",
+      "w_a_m": "a"
+    },
+    "QI": {
+      "N_over": 0,
+      "WF": 15,
+      "WI": 0,
+      "ovfl": "sat",
+      "quant": "round",
+      "w_a_m": "m"
+    },
+    "QO": {
+      "N_over": 0,
+      "WF": 15,
+      "WI": 0,
+      "ovfl": "wrap",
+      "quant": "floor",
+      "w_a_m": "m"
+    }
+  },
+  "info": "Ellip. LP (default)",
+  "plt_fLabel": "$f$ in kHz$\\; \\rightarrow$",
+  "plt_fUnit": "kHz",
+  "plt_phiLabel": "$\\angle H(\\mathrm{e}^{\\mathrm{j} \\Omega})$ in rad $\\rightarrow $",
+  "plt_phiUnit": "rad",
+  "plt_tLabel": "$t$ in ms$\\; \\rightarrow$",
+  "plt_tUnit": "ms",
+  "qfrmt": "qfrac",
+  "rt": "HP",
+  "sos": [],
+  "tab_yn": {
+    "display_index_k": false
+  },
+  "timestamp": 1771796641.2802815,
+  "tran_freq_win": {
+    "disp_name": "Rectangular",
+    "id": "rectangular",
+    "par_val": [],
+    "win_len": 32
+  },
+  "zpk": [
+    [
+      "0.9979782074292345+0.0034396493563869533j",
+      "1.0019753476723936+0.0034839202895990714j",
+      "0.9960177001379237-1.7969573002360983e-05j",
+      "1.0040125342852133+1.8204114210922045e-05j",
+      "0.9980093319910108-0.0034578540849736716j",
+      "1.0020068784842242-0.003465950102221425j"
+    ],
+    [
+      "0.766794848540084+0.4276242616173659j",
+      "0.7667948485400895-0.42762426161736394j",
+      "0.6398162124988077+0.26120387496364594j",
+      "0.5839831840084656+0.08726416648999029j",
+      "0.6398162124988023-0.2612038749636589j",
+      "0.5839831840084485-0.08726416648997765j"
+    ],
+    [
+      "0.3582659566282503+0.0j",
+      "0.0+0.0j",
+      "0.0+0.0j",
+      "0.0+0.0j",
+      "0.0+0.0j",
+      "0.0+0.0j"
+    ]
+  ]
+}

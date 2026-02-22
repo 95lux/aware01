@@ -59,6 +59,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/drivers/gpio_driver.c
     Aware/Src/drivers/ws2812_driver.c
     Aware/Src/ws2812_animations.c
+    Aware/Src/exciter.c
+    Aware/Src/coefficients.c
 )
 
 # Add include paths
@@ -78,6 +80,6 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-
+    "${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/DSP/Lib/ARM/arm_cortexM7lfsp_math.lib"
     # Add user defined libraries
 )
