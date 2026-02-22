@@ -1,30 +1,24 @@
 #include "arm_math.h"
 #include <stdint.h>
 
-#define NUM_STAGE_IIR 5
-#define ALPHA 0.4f
+#include "project_config.h"
 
-struct excite_config {
-    arm_biquad_cascade_stereo_df2T_instance_f32* initial_hp_instance;
-    float32_t iirState[4 * NUM_STAGE_IIR];  // 4 state variables per stage
-    float32_t iirCoeffs[5 * NUM_STAGE_IIR]; // 5 coefficients per stage (b0, b1, b2, a1, a2)
-};
+#include "exciter.h"
 
 static struct excite_config* active_config;
 
+float alpha = 0.8f;
+
+// TODO: coefficients configurable or at least pass in as parameters from ressources.h
 // b1 = -1.3856, b2 = 0.6, a0 = 0.74641, a1 = -1.4928, a2 = 0.74641
-
-void exice_init(struct excite_config* config) {
-    config->iirCoeffs[0] = -1.3856;
-    config->iirCoeffs[1] = 0.6;
-    config->iirCoeffs[2] = 0.74641;
-    config->iirCoeffs[3] = -1.4928;
-    config->iirCoeffs[4] = 0.74641;
-
+void excite_init(struct excite_config* config) {
     active_config = config;
 
     arm_biquad_cascade_stereo_df2T_init_f32(
-        active_config->initial_hp_instance, NUM_STAGE_IIR, active_config->iirCoeffs, active_config->iirState);
+        &active_config->iir_in_instance, BIQUAD_CASCADE_NUM_STAGES, active_config->iir_in_coeffs, active_config->iir_in_state);
+
+    // arm_biquad_cascade_stereo_df2T_init_f32(
+    // &active_config->iir_out_instance, NUM_STAGE_IIR, active_config->iir_out_coeffs, active_config->iir_out_state);
 }
 
 static inline float softclip_sample(float in, float alpha) {
@@ -40,22 +34,56 @@ static inline float softclip_sample(float in, float alpha) {
     return in - k * in * in2;
 }
 
-void excite_block(const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, float freq) {
-    float work_buf_in[block_size * 2];
-    float work_buf_out[block_size * 2];
+static inline float tanh_distortion(float in, float gain) {
+    float v = tanhf(in * gain);
+    return v / tanhf(gain); // normalize to keep output in [-1, 1]
+}
 
-    for (uint32_t i = 0; i < block_size * 2; i++) {
-        work_buf_in[i] = (float) in_buf[i] / 32768.0f;
+static inline float fast_tanh(float x) {
+    const float x2 = x * x;
+    return x * (27.0f + x2) / (27.0f + 9.0f * x2);
+}
+
+void bitcrusher(const float* input, float* output, uint32_t len, float normfreq, uint8_t bits) {
+    float step = 1.0f / (1 << bits); // quantization step
+    float phasor = 0.0f;
+    float last = 0.0f;
+
+    for (uint32_t i = 0; i < len; i++) {
+        phasor += normfreq;
+        if (phasor >= 1.0f) {
+            phasor -= 1.0f;
+            // quantize
+            last = step * floorf(input[i] / step + 0.5f);
+        }
+        output[i] = last;
     }
+}
+
+void excite_block(const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, float freq) {
+    float work_buf[block_size];
+
+    for (uint32_t i = 0; i < block_size; i++) {
+        work_buf[i] = (float) in_buf[i] / 32768.0f;
+    }
+
+    uint32_t frames = block_size / 2;
     // 1. hipass signal
-    arm_biquad_cascade_stereo_df2T_f32(active_config->initial_hp_instance, work_buf_in, work_buf_out, block_size);
+    arm_biquad_cascade_stereo_df2T_f32(&active_config->iir_in_instance, work_buf, work_buf, frames);
+
+    // bitcrush the block
+    // bitcrusher(work_buf_out, work_buf_out, block_size, 48000, 16);
 
     // 2. nolinear distortion to create harmonics of decimated signal
-    // use cubic softclip, taken from https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/nonlinearprocessors/standardcubic
+    // use cubic softclip, taken from https : //wiki.analog.com/resources/tools-software/sigmastudio/toolbox/nonlinearprocessors/standardcubic
     for (uint32_t i = 0; i < block_size; i++) {
-        work_buf_out[i] = softclip_sample(work_buf_out[i], ALPHA);
+        work_buf[i] = softclip_sample(work_buf[i], alpha);
+        // work_buf_out[i] = tanh_distortion(work_buf_in[i], 10.0f);
+        work_buf[i] = fast_tanh(work_buf[i]);
     }
 
-    for (uint32_t i = 0; i < block_size * 2; i++)
-        out_buf[i] = (int16_t) (work_buf_out[i] * 32767.0f);
+    // arm_biquad_cascade_stereo_df2T_f32(&active_config->iir_out_instance, work_buf, work_buf, frames);
+
+    for (uint32_t i = 0; i < block_size; i++)
+        out_buf[i] = (int16_t) (work_buf[i] * 32768.0f);
 }

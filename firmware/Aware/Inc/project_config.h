@@ -3,6 +3,8 @@
 #include "drivers/tlv320_driver.h"
 #include <math.h>
 
+#define ARM_MATH_CM7
+
 /* ===== Config Options ===== */
 // #define CONFIG_AUDIO_LOOPBACK
 #define CONFIG_USE_CALIB_STORAGE
@@ -11,7 +13,8 @@
 /* ===== Engine Parameters ===== */
 
 /* audio engine config */
-#define AUDIO_BLOCK_SIZE 64
+#define AUDIO_BLOCK_SIZE 256
+#define AUDIO_HALF_BLOCK_SIZE (AUDIO_BLOCK_SIZE / 2)
 #define AUDIO_SAMPLE_RATE SAMPLERATE_48KHZ
 // #define AUDIO_SAMPLE_RATE SAMPLERATE_24KHZ
 // #define AUDIO_SAMPLE_RATE_HW SAMPLERATE_48KHZ

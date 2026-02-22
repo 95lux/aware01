@@ -206,7 +206,7 @@ static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, 
 }
 
 // worker function to process tape player state
-void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t* dma_out_buf) {
+void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out_buf) {
     // TODO: implement circular tape buffer (?) - for now, just stop at the end of the buffer
     if (!tape || !tape->playback_buf->ch[0] || !tape->playback_buf->ch[1])
         return;
@@ -220,7 +220,7 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
     const float alpha = 0.01f;
 
     // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
-    for (uint32_t n = 0; n < (tape->dma_buf_size / 2); n += 2) {
+    for (uint32_t n = 0; n < (AUDIO_BLOCK_SIZE / 2); n += 2) {
         // --- The "Default" Stable IIR ---
         // current = current + alpha * (target - current)
         // This form is much more stable than the (target * coeff) version
@@ -385,8 +385,8 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
         float env_val = envelope_process(&tape->env);
         // float env_val = 1.0f;
 
-        dma_out_buf[n] = (int16_t) out_l * env_val;
-        dma_out_buf[n + 1] = (int16_t) out_r * env_val;
+        out_buf[n] = (int16_t) out_l * env_val;
+        out_buf[n + 1] = (int16_t) out_r * env_val;
 
         switch (tape->rec_state) {
         case REC_IDLE:
@@ -400,8 +400,8 @@ void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t*
             if ((frame_idx % rec_decimation) == 0) { // record only each Nth frame, where N = decimation factor
 
                 // deinterleaves input buffer into tape buffer
-                tape->record_buf->ch[0][tape->tape_recordhead] = dma_in_buf[n];
-                tape->record_buf->ch[1][tape->tape_recordhead] = dma_in_buf[n + 1];
+                tape->record_buf->ch[0][tape->tape_recordhead] = in_buf[n];
+                tape->record_buf->ch[1][tape->tape_recordhead] = in_buf[n + 1];
                 tape->tape_recordhead++;
 
                 // if tape has recorded all the way, stop recording for now.
