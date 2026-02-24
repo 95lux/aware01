@@ -50,16 +50,12 @@ typedef enum { REC_IDLE = 0, REC_RECORDING, REC_SWAP_PENDING, REC_DONE } rec_sta
 
 typedef struct {
     bool active;
-    // uint32_t posq_16; // Q16.16 fixed point position
     uint32_t len; // TODO make xfade length configurable. Need to implement fade lookup interpolation then (or use bigger LUT?).
     // TODO: this has to be max xfade length. Cant be super long unfortunately, since we dont have much SRAM available anymore :(
     bool
         crossfade; // if crossfade is enabled, we are using temp_buf. Otherwise this struct just holds the position and length for simple in/out fades.
 
-    // playhead for crossfade buffer. Actually should be okay to use q16 here, since fade length is not super long.
-    // TODO: but since we have some buffer switching going on on certain fade events, keep q32 for now. Should be refactored to use q16.16
-    // playhead_q16_t ph_b;
-    uint64_t pos_q32; // 32.32 fixed point: upper 32 bits are integer index, lower 32 bits are fractional part
+    uint64_t pos_q48_16; // 48.16 fixed point: upper 48 bits are integer index, lower 16 bits are fractional part
     int16_t* buf_b_ptr_l;
     int16_t* buf_b_ptr_r;
     uint32_t
@@ -76,7 +72,7 @@ struct tape_player {
 
     // playheads, use 2 for crossfading with same buffer on retrigger/cycling - Q16.16 (int16_t integer part, uint16_t frac part)
     // playhead_t ph_a;  // main playhead for playback
-    uint64_t pos_q32; // main playhead position in Q32.32 format.
+    uint64_t pos_q48_16; // main playhead position in Q48.16 format. Fractional part is 16bits for performance reasons
     // playhead_t ph_b;
 
     // TODO: make wrap mode configurable: cyclic or oneshot
@@ -92,8 +88,8 @@ struct tape_player {
     bool switch_bufs_pending;
     bool switch_bufs_done;
 
-    uint64_t current_phase_inc; // The increment actually being used
-    uint64_t target_phase_inc;  // The increment we want to reach, used for smooth pitch transitions
+    uint32_t curr_phase_inc_q16_16;   // The increment actually being used
+    uint32_t target_phase_inc_q16_16; // The increment we want to reach, used for smooth pitch transitions
 
     // states
     play_state_t play_state;

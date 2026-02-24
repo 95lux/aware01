@@ -24,7 +24,9 @@
 #define AUDIO_BIT_DEPTH 16 // or 8 // TODO: maybe make tapebuffer use 8bit. Increase tape lenth and create nice texture?
 
 /* tape engine configs*/
-#define TAPE_SECONDS_MS 2000
+// Length of the rec/playback tape in milliseconds, if samplerate is full 48kHz.
+// this length is dynamic, dependent on the decimation factor
+#define TAPE_SECONDS_MS 2500
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration
@@ -86,7 +88,6 @@
 #define FADE_RETRIG_XFADE_LEN 32
 #define FADE_IN_OUT_LEN 32 // fade in/out length when approaching start/end of buffer, to prevent clicks
 #define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)
-#define FADE_IN_OUT_STEP_Q32 ((uint64_t) (((float) FADE_LUT_LEN * 4294967296.0f) / (float) FADE_IN_OUT_LEN))
 
 #define CV_CALIB_HOLD_MS 1000
 #define POT_CALIB_HOLD_MS 5000
