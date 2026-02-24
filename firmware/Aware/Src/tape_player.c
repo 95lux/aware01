@@ -388,20 +388,52 @@ static inline uint32_t tape_compute_phase_increment(struct tape_player* tape) {
     return (tape->curr_phase_inc_q16_16 / dec);
 }
 
-// static inline void tape_process_playback_frame(struct tape_player* tape, uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
-//     if (tape->play_state != PLAY_PLAYING)
-//         return;
+static inline void tape_process_playback_frame(struct tape_player* tape, uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
+    switch (tape->play_state) {
+    case PLAY_STOPPED:
+        // output silence
+        break;
+    case PLAY_PLAYING: {
+        tape_fetch_sample(tape->pos_q48_16, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, out_l, out_r);
 
-//     tape_fetch_sample(&tape->ph_a, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, out_l, out_r);
+        tape_handle_fade_in(tape, out_l, out_r);
 
-//     tape_handle_fade_in(tape, out_l, out_r);
-//     tape_handle_fade_out(tape, active_phase_inc, out_l, out_r);
-//     tape_handle_cyclic_crossfade(tape, active_phase_inc, out_l, out_r);
-//     tape_handle_retrigger_crossfade(tape, active_phase_inc, out_l, out_r);
+        // --- Q16 FIXED POINT FADE OUT TRIGGER ---
+        if (!tape->fade_out.active && playhead_near_end(tape->pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) && !tape->params.cyclic_mode) {
+            tape->fade_out.active = true;
+            tape->fade_out.pos_q48_16 = 0; // Reset accumulator
+        }
 
-//     if (tape->ph_a.active)
-//         advance_playhead(&tape->ph_a, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
-// }
+        // --- Q16 FIXED POINT FADE OUT PROCESS ---
+        tape_handle_fade_out(tape, active_phase_inc, out_l, out_r);
+
+        // --- Cyclic Loop Trigger Logic ---
+        if (playhead_near_end(tape->pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) && tape->params.cyclic_mode) {
+            tape->xfade_cyclic.active = true;
+            tape->xfade_cyclic.pos_q48_16 = 1 << 16; // start at sample 1 for interpolation
+            // set buffer pointers for cyclic crossfade to start of playback buffer.
+            tape->xfade_cyclic.buf_b_ptr_l = tape->playback_buf->ch[0];
+            tape->xfade_cyclic.buf_b_ptr_r = tape->playback_buf->ch[1];
+
+            // TODO: this is not needed anymore. we track fade progress and active state in xfade struct
+            tape->xfade_cyclic.active = true;
+        }
+
+        tape_handle_cyclic_crossfade(tape, active_phase_inc, out_l, out_r);
+
+        tape_handle_retrigger_crossfade(tape, active_phase_inc, out_l, out_r);
+
+        // advance main playhead
+        advance_playhead_q48(&tape->pos_q48_16, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+
+        // stop only when reaching the end of the buffer in oneshot mode. In cyclic mode, we will just wrap around and never stop.
+        // if (tape->ph_a.idx < tape->playback_buf->valid_samples - 3) {
+        // } else {
+        // tape_player_stop_play();
+        // }
+    }
+    }
+}
 
 static inline void tape_process_recording_frame(struct tape_player* tape, int16_t* in_buf, uint32_t n) {
     if (tape->rec_state != REC_RECORDING)
@@ -439,48 +471,11 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
 
         switch (tape->play_state) {
         case PLAY_STOPPED:
-            // output silence
+            // output silence, but still process recording if active
             break;
-        case PLAY_PLAYING: {
-            tape_fetch_sample(tape->pos_q48_16, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, &out_l, &out_r);
-
-            tape_handle_fade_in(tape, &out_l, &out_r);
-
-            // --- Q16 FIXED POINT FADE OUT TRIGGER ---
-            if (!tape->fade_out.active && playhead_near_end(tape->pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) &&
-                !tape->params.cyclic_mode) {
-                tape->fade_out.active = true;
-                tape->fade_out.pos_q48_16 = 0; // Reset accumulator
-            }
-
-            // --- Q16 FIXED POINT FADE OUT PROCESS ---
-            tape_handle_fade_out(tape, active_phase_inc, &out_l, &out_r);
-
-            // --- Cyclic Loop Trigger Logic ---
-            if (playhead_near_end(tape->pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) && tape->params.cyclic_mode) {
-                tape->xfade_cyclic.active = true;
-                tape->xfade_cyclic.pos_q48_16 = 1 << 16; // start at sample 1 for interpolation
-                // set buffer pointers for cyclic crossfade to start of playback buffer.
-                tape->xfade_cyclic.buf_b_ptr_l = tape->playback_buf->ch[0];
-                tape->xfade_cyclic.buf_b_ptr_r = tape->playback_buf->ch[1];
-
-                // TODO: this is not needed anymore. we track fade progress and active state in xfade struct
-                tape->xfade_cyclic.active = true;
-            }
-
-            tape_handle_cyclic_crossfade(tape, active_phase_inc, &out_l, &out_r);
-
-            tape_handle_retrigger_crossfade(tape, active_phase_inc, &out_l, &out_r);
-
-            // advance main playhead
-            advance_playhead_q48(&tape->pos_q48_16, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
-
-            // stop only when reaching the end of the buffer in oneshot mode. In cyclic mode, we will just wrap around and never stop.
-            // if (tape->ph_a.idx < tape->playback_buf->valid_samples - 3) {
-            // } else {
-            // tape_player_stop_play();
-            // }
-        }
+        case PLAY_PLAYING:
+            tape_process_playback_frame(tape, active_phase_inc, &out_l, &out_r);
+            break;
         }
 
         float env_val = envelope_process(&tape->env);
