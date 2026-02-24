@@ -55,7 +55,16 @@ typedef struct {
     bool
         crossfade; // if crossfade is enabled, we are using temp_buf. Otherwise this struct just holds the position and length for simple in/out fades.
 
+    // tracking the second playhead for crossfade
     uint64_t pos_q48_16; // 48.16 fixed point: upper 48 bits are integer index, lower 16 bits are fractional part
+
+    // 16.16 fixed point fade accumulator for fade curve interpolation, independent of main playhead position and increment, so that we can have smooth fades even with low pitch factors (where main playhead moves very slowly and thus would cause stepping in the fade curve)
+    // this is just the phase accumulator for the lut access.
+    uint32_t fade_acc_q16;
+    uint16_t fade_step_q16; // how much to increment the fade_acc every sample, in Q16.16 format. Calculated from fade length and LUT size.
+    uint32_t
+        base_ratio_q16; // for crossfades, this is the ratio between the xfade buffer and the fade LUT, in Q16.16 format. Calculated from xfade length and LUT size.
+
     int16_t* buf_b_ptr_l;
     int16_t* buf_b_ptr_r;
     uint32_t

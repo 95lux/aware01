@@ -2,10 +2,10 @@
 
 #include "project_config.h"
 
-#define ATTACK_MIN_SEC 0.001f // 1 ms
+#define ATTACK_MIN_SEC 0.006f // 6 ms
 #define ATTACK_MAX_SEC 10.0f  // 10 s
-#define DECAY_MIN_SEC 0.001f  // 1 ms
-#define DECAY_MAX_SEC 10.0f   // 10 s
+#define DECAY_MIN_SEC 0.010f  // 10 ms
+#define DECAY_MAX_SEC 15.0f   // 15 s
 
 float envelope_process(envelope_t* env) {
     switch (env->state) {
@@ -13,14 +13,16 @@ float envelope_process(envelope_t* env) {
         env->value = 0.0f;
         break;
 
-    case ENV_ATTACK:
-        env->value += env->attack_inc;
-        if (env->value >= 1.0f) {
+    case ENV_ATTACK: {
+        float remaining = 1.0f - env->value;
+        env->value += env->attack_inc * remaining;
+
+        if (env->value >= 0.999f) {
             env->value = 1.0f;
             env->state = ENV_DECAY;
         }
         break;
-
+    }
     case ENV_DECAY:
         env->value -= env->decay_inc;
         if (env->value <= env->sustain) {
@@ -33,13 +35,14 @@ float envelope_process(envelope_t* env) {
         //     // hold value
         //     break;
 
-    case ENV_RELEASE:
-        env->value -= env->decay_inc;
-        if (env->value <= 0.0f) {
+    case ENV_RELEASE: {
+        env->value -= env->decay_inc * env->value;
+
+        if (env->value <= 0.0001f) {
             env->value = 0.0f;
             env->state = ENV_IDLE;
         }
-        break;
+    } break;
     }
     return env->value;
 }
