@@ -148,18 +148,19 @@ static inline float hermite_interpolate(uint64_t pos, int16_t* buffer) {
     return (((a * t - b) * t + c) * t + d);
 }
 
-static inline void tape_fetch_sample(playhead_t* ph, struct tape_player* tape, int16_t* out_l, int16_t* out_r) {
+static inline void
+tape_fetch_sample(playhead_t* ph, int16_t* buf_l, int16_t* buf_r, struct tape_player* tape, int16_t* out_l, int16_t* out_r) {
     uint32_t idx = (uint32_t) (ph->pos >> 32);
 
     // --- Hold ---
-    float hold_l = tape->playback_buf->ch[0][idx];
-    float hold_r = tape->playback_buf->ch[1][idx];
+    float hold_l = buf_l[idx];
+    float hold_r = buf_r[idx];
 
 #ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
 
     // --- Hermite ---
-    float herm_l = hermite_interpolate(ph->pos, tape->playback_buf->ch[0]);
-    float herm_r = hermite_interpolate(ph->pos, tape->playback_buf->ch[1]);
+    float herm_l = hermite_interpolate(ph->pos, buf_l);
+    float herm_r = hermite_interpolate(ph->pos, buf_r);
 
     float grit = tape_player_get_grit(tape);
 
@@ -239,6 +240,7 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
     if (!tape || !tape->playback_buf->ch[0] || !tape->playback_buf->ch[1])
         return;
 
+    //TODO: is filtering pitch per block necessary? Evaluate if zipper noise is occuring without it. Was heavier before, seems gone now.
     // 1. Calculate Target
     float target_inc = tape->params.pitch_factor * Q32_UNITY;
     // float target_inc = Q32_UNITY;
@@ -273,15 +275,8 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
             // output silence
             break;
         case PLAY_PLAYING: {
-// Fetch raw samples with Hermite
-#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
-            out_l = hermite_interpolate(tape->ph_a.pos, tape->playback_buf->ch[0]);
-            out_r = hermite_interpolate(tape->ph_a.pos, tape->playback_buf->ch[1]);
-#else
-            uint32_t idx = (uint32_t) (tape->ph_a.pos >> 32);
-            out_l = tape->playback_buf->ch[0][idx];
-            out_r = tape->playback_buf->ch[1][idx];
-#endif
+            tape_fetch_sample(&tape->ph_a, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, &out_l, &out_r);
+
             // 1. Determine Pitch-Aware Step
             // We use uint64_t for the intermediate multiplication to prevent overflow
             // This scales the fade speed perfectly with the playhead speed
@@ -331,20 +326,17 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
             if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN, active_phase_inc) && tape->params.cyclic_mode) {
                 tape->fade_out_active = true;
                 tape->xfade_retrig.active = true;
-                tape->ph_b.pos = 1 << 32; // start at sample 1 for interpolation
+                tape->ph_b.pos = 1ULL << 32; // start at sample 1 for interpolation
                 tape->ph_b.active = true;
                 tape->fade_out_idx_q16 = 0; // Reset lut accumulator for cyclic crossfade
             }
             // process cyclic loop crossfade
             if (tape->fade_out_active && tape->ph_b.active) {
-// Fetch samples for the Secondary Playhead (B) starting at the beginning
-#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
-                int16_t b_l = hermite_interpolate(tape->ph_b.pos, tape->playback_buf->ch[0]);
-                int16_t b_r = hermite_interpolate(tape->ph_b.pos, tape->playback_buf->ch[1]);
-#else
-                int16_t b_l = tape->playback_buf->ch[0][tape->ph_b.pos >> 32];
-                int16_t b_r = tape->playback_buf->ch[1][tape->ph_b.pos >> 32];
-#endif
+                int16_t b_l, b_r;
+
+                // Fetch samples for the Secondary Playhead (B) starting at the beginning
+                tape_fetch_sample(&tape->ph_b, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, &b_l, &b_r);
+
                 // Calculate LUT index based on ph_b's progress from the start
                 // This creates the Fade IN for B and Fade OUT for A
                 uint32_t lut_idx = tape->fade_out_idx_q16 >> 16;
@@ -367,52 +359,47 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
                 }
             }
 
-            //             if (tape->xfade_retrig.active) {
-            //                 // --- dual playhead crossfade ---
+            if (tape->xfade_retrig.active) {
+                // --- dual playhead crossfade ---
 
-            //                 // these are the "new" playback samples. Recently recorded
-            //                 int16_t a_l = out_l;
-            //                 int16_t a_r = out_r;
+                // these are the "new" playback samples. Recently recorded
+                int16_t a_l = out_l;
+                int16_t a_r = out_r;
+                int16_t b_l, b_r;
 
-            //                 // ph_b.phase is starting from the beginning.
-            // #ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
-            //                 int16_t b_l = hermite_interpolate(tape->ph_b.pos, tape->xfade_retrig.temp_buf_l);
-            //                 int16_t b_r = hermite_interpolate(tape->ph_b.pos, tape->xfade_retrig.temp_buf_r);
-            // #else
-            //                 int16_t b_l = tape->xfade_retrig.temp_buf_l[tape->ph_b.pos >> 32];
-            //                 int16_t b_r = tape->xfade_retrig.temp_buf_r[tape->ph_b.pos >> 32];
-            // #endif
+                // ph_b.phase is starting from the beginning.
+                tape_fetch_sample(&tape->ph_b, tape->xfade_retrig.temp_buf_l, tape->xfade_retrig.temp_buf_r, tape, &b_l, &b_r);
 
-            //                 int16_t fa;
-            //                 int16_t fb;
+                int16_t fa;
+                int16_t fb;
 
-            //                 if (tape->xfade_retrig.temp_buf_valid_samples < 2) {
-            //                     // TODO: this seems odd. if not enough samples for crossfade, we should actually fade to silence, not jump to 0.
-            //                     fa = 32767; // full a
-            //                     fb = 0;     // b silent
-            //                 } else {
-            //                     // Fade LUT access has to be scaled to crossfade length of available samples
-            //                     uint32_t lut_i = (tape->ph_b.pos >> 32) * (FADE_LUT_LEN - 1) / (tape->xfade_retrig.temp_buf_valid_samples - 1);
+                if (tape->xfade_retrig.temp_buf_valid_samples < 2) {
+                    // TODO: this seems odd. if not enough samples for crossfade, we should actually fade to silence, not jump to 0.
+                    fa = 32767; // full a
+                    fb = 0;     // b silent
+                } else {
+                    // Fade LUT access has to be scaled to crossfade length of available samples
+                    uint32_t lut_i = (tape->ph_b.pos >> 32) * (FADE_LUT_LEN - 1) / (tape->xfade_retrig.temp_buf_valid_samples - 1);
 
-            //                     fa = fade_in_lut[FADE_LUT_LEN - 1 - lut_i];
-            //                     fb = fade_in_lut[lut_i];
-            //                 }
-            //                 // Q15 * Q15 -> Q30, then sum, then >>15 back to Q15
-            //                 int32_t acc_l = (int32_t) fa * (int32_t) a_l + (int32_t) fb * (int32_t) b_l;
-            //                 int32_t acc_r = (int32_t) fa * (int32_t) a_r + (int32_t) fb * (int32_t) b_r;
+                    fa = fade_in_lut[FADE_LUT_LEN - 1 - lut_i];
+                    fb = fade_in_lut[lut_i];
+                }
+                // Q15 * Q15 -> Q30, then sum, then >>15 back to Q15
+                int32_t acc_l = (int32_t) fa * (int32_t) a_l + (int32_t) fb * (int32_t) b_l;
+                int32_t acc_r = (int32_t) fa * (int32_t) a_r + (int32_t) fb * (int32_t) b_r;
 
-            //                 // back to int16 Q15
-            //                 out_l = __SSAT(acc_l >> 15, 16);
-            //                 out_r = __SSAT(acc_r >> 15, 16);
+                // back to int16 Q15
+                out_l = __SSAT(acc_l >> 15, 16);
+                out_r = __SSAT(acc_r >> 15, 16);
 
-            //                 if ((tape->ph_b.pos >> 32) >= tape->xfade_retrig.temp_buf_valid_samples) {
-            //                     // crossfade done -> promote B to A
-            //                     // tape->ph_a = tape->ph_b; // promoting not needed anymore. A is already at the right position.
-            //                     tape->ph_b.active = false;
-            //                     tape->xfade_retrig.active = false;
-            //                 }
-            //                 advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
-            //             }
+                if ((tape->ph_b.pos >> 32) >= tape->xfade_retrig.temp_buf_valid_samples) {
+                    // crossfade done -> promote B to A
+                    // tape->ph_a = tape->ph_b; // promoting not needed anymore. A is already at the right position.
+                    tape->ph_b.active = false;
+                    tape->xfade_retrig.active = false;
+                }
+                advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+            }
 
             // advance ph_a
             if (tape->ph_a.active) {
