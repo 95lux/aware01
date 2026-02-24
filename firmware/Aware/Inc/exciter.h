@@ -10,8 +10,8 @@
 
 struct excite_config {
     arm_biquad_cascade_stereo_df2T_instance_f32 iir_in_instance;
-    float32_t iir_in_state[BIQUAD_CASCADE_NUM_STAGES * 4];  // 4 state variables per stage
-    float32_t iir_in_coeffs[BIQUAD_CASCADE_NUM_STAGES * 5]; // 5 coefficients per stage (b0, b1, b2, a1, a2)
+    float32_t iir_in_state[BIQUAD_CASCADE_NUM_STAGES * 4]; // 4 state variables per stage
+    float32_t* iir_in_coeffs;                              // 5 coefficients per stage (b0, b1, b2, a1, a2)
 
     arm_biquad_cascade_stereo_df2T_instance_f32 iir_out_instance;
     float32_t iir_out_state[BIQUAD_CASCADE_NUM_STAGES * 4];  // 4 state variables per stage

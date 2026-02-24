@@ -14,6 +14,9 @@
 #include "ressources.h"
 #include "util.h"
 
+// #define DECIMATION_FIXED 16 // fixed decimation factor for testing, will be set from params in record state machine once working.
+#define Q32_UNITY (4294967296.0f)
+
 static tape_buffer_t playback_buffer_struct;
 static tape_buffer_t record_buffer_struct;
 
@@ -58,13 +61,11 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
     tape_player->record_buf->valid_samples = 0;
 
     // playhead and reacordhead init
-    tape_player->ph_a.idx = 1;  // start at sample 1 for interpolation
-    tape_player->ph_a.frac = 0; // start at sample 1 for interpolation
+    tape_player->ph_a.pos = 1ULL << 32; // start at sample 1 for interpolation
     tape_player->ph_a.active = true;
 
     // playhead b for crossfading on retrigger/cycling, starts inactive
-    tape_player->ph_b.idx = 1;  // start at sample 1 for interpolation
-    tape_player->ph_b.frac = 0; // start at sample 1 for interpolation
+    tape_player->ph_b.pos = 1ULL << 32; // start at sample 1 for interpolation
     tape_player->ph_b.active = false;
 
     tape_player->fade_out_idx = 0;
@@ -112,9 +113,12 @@ int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, Queue
 // explained here https://ldesoras.fr/doc/articles/resampler-en.pdf
 // uses phase accumulator
 // phase: integer index + 16-bit fractional part
-static inline float hermite_interpolate(uint32_t idx, uint16_t frac, int16_t* buffer) {
-    // fractional part as Q16 -> normalized t in [0,1)
-    float t = frac * (1.0f / 65536.0f);
+static inline float hermite_interpolate(uint64_t pos, int16_t* buffer) {
+    uint32_t idx = (uint32_t) (pos >> 32);
+    uint32_t frac = (uint32_t) (pos & 0xFFFFFFFF);
+
+    // 2. Fractional part as Q32 -> normalized t in [0,1)
+    float t = frac * (1.0f / Q32_UNITY);
 
     int n = (int) idx - 1;
 
@@ -144,48 +148,67 @@ static inline float hermite_interpolate(uint32_t idx, uint16_t frac, int16_t* bu
     return (((a * t - b) * t + c) * t + d);
 }
 
-void advance_playhead(playhead_t* ph, uint32_t phase_inc, bool reverse, bool cyclic) {
+static inline void tape_fetch_sample(playhead_t* ph, struct tape_player* tape, int16_t* out_l, int16_t* out_r) {
+    uint32_t idx = (uint32_t) (ph->pos >> 32);
+
+    // --- Hold ---
+    float hold_l = tape->playback_buf->ch[0][idx];
+    float hold_r = tape->playback_buf->ch[1][idx];
+
+#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+
+    // --- Hermite ---
+    float herm_l = hermite_interpolate(ph->pos, tape->playback_buf->ch[0]);
+    float herm_r = hermite_interpolate(ph->pos, tape->playback_buf->ch[1]);
+
+    float grit = tape_player_get_grit(tape);
+
+    grit = grit * MAX_GRIT_ON_MAX_DECIMATION;
+
+    // --- Blend (difference method) ---
+    float out_l_f = herm_l + grit * (hold_l - herm_l);
+    float out_r_f = herm_r + grit * (hold_r - herm_r);
+
+#else
+    float out_l_f = hold_l;
+    float out_r_f = hold_r;
+#endif
+
+    *out_l = __SSAT((int32_t) out_l_f, 16);
+    *out_r = __SSAT((int32_t) out_r_f, 16);
+}
+
+void advance_playhead(playhead_t* ph, uint32_t phase_inc_q32, bool reverse, bool cyclic) {
     uint32_t valid_samples = active_tape_player->playback_buf->valid_samples;
+    uint64_t wrap_point = (uint64_t) valid_samples << 32;
 
     if (reverse) {
-        // subtract phase_inc from frac
-        if (ph->frac < phase_inc) {
-            // need to borrow 1 from idx
-            if (ph->idx == 0) {
-                if (cyclic) {
-                    ph->idx = valid_samples - 1;
-                    ph->frac = 0x10000 + ph->frac - phase_inc; // wrap frac
-                } else {
-                    ph->idx = 0;
-                    ph->frac = 0;
-                }
+        if (ph->pos < (uint64_t) phase_inc_q32) {
+            if (cyclic) {
+                ph->pos = wrap_point + ph->pos - phase_inc_q32;
             } else {
-                ph->idx -= 1;
-                ph->frac = 0x10000 + ph->frac - phase_inc; // borrow
+                ph->pos = 0;
+                tape_player_stop_play();
             }
         } else {
-            ph->frac -= phase_inc;
+            ph->pos -= phase_inc_q32;
         }
     } else {
-        // forward
-        // add fractional increment
-        uint32_t new_frac = ph->frac + phase_inc;
-        ph->idx += new_frac >> 16; // carry into integer idx
-        ph->frac = new_frac & 0xFFFF;
+        ph->pos += phase_inc_q32;
 
-        if (cyclic && ph->idx >= valid_samples) {
-            /* ----- cyclic mode ----- */
-            ph->idx %= valid_samples; // integer wrap only, frac is already correct
-        } else if (!cyclic && ph->idx >= valid_samples) {
-            /* ----- oneshot mode ----- */
-            ph->idx = valid_samples - 1;
-            ph->frac = 0;
-            tape_player_stop_play();
+        if (ph->pos >= wrap_point) {
+            if (cyclic) {
+                ph->pos %= wrap_point;
+            } else {
+                // Stop at last safe sample for Hermite (n-3)
+                ph->pos = (uint64_t) (valid_samples - 4) << 32;
+                tape_player_stop_play();
+            }
         }
     }
 }
 
-static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, uint32_t active_phase_inc) {
+static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, uint32_t active_phase_inc_q32) {
     uint32_t buf_size = active_tape_player->playback_buf->valid_samples;
 
     // Safety margin for Hermite (n+3)
@@ -193,8 +216,10 @@ static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, 
         return false;
     uint32_t limit = buf_size - 4;
 
+    uint32_t idx = (uint32_t) (ph->pos >> 32);
+
     // How many steps (at current pitch) are left until we hit the limit?
-    uint32_t samples_left = (ph->idx < limit) ? (limit - ph->idx) : 0;
+    uint32_t samples_left = (idx < limit) ? (limit - idx) : 0;
 
     // Convert fade_len_samples to the same "pitch scale" as the playhead.
     // If active_phase_inc is large (pitch up), we need to trigger much earlier
@@ -202,7 +227,10 @@ static inline bool playhead_near_end(playhead_t* ph, uint32_t fade_len_samples, 
 
     // Equivalent to: (samples_left << 16) / active_phase_inc <= fade_len_samples
     // But multiplication is safer/faster:
-    return ((uint64_t) samples_left << 16) <= (uint64_t) fade_len_samples * active_phase_inc;
+    uint64_t distance_left_q32 = (uint64_t) samples_left << 32;
+    uint64_t fade_reach_q32 = (uint64_t) fade_len_samples * active_phase_inc_q32;
+
+    return distance_left_q32 <= fade_reach_q32;
 }
 
 // worker function to process tape player state
@@ -212,7 +240,8 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
         return;
 
     // 1. Calculate Target
-    float target_inc = tape->params.pitch_factor * 65536.0f;
+    float target_inc = tape->params.pitch_factor * Q32_UNITY;
+    // float target_inc = Q32_UNITY;
 
     // 2. Fixed Alpha (No complex math/division)
     // 0.01f = 1% move per sample.
@@ -224,15 +253,17 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
         // --- The "Default" Stable IIR ---
         // current = current + alpha * (target - current)
         // This form is much more stable than the (target * coeff) version
-        tape->current_phase_inc += alpha * (target_inc - tape->current_phase_inc);
+        // tape->current_phase_inc += alpha * (target_inc - tape->current_phase_inc);
+        tape->current_phase_inc = target_inc;
 
-        // apply decimation
-        // Ensure decimation is at least 1 to avoid division by zero or weirdness
-        uint8_t pb_decimation = tape->playback_buf->decimation > 0 ? tape->playback_buf->decimation : 1;
-        float inv_decimation = 1.0f / (float) pb_decimation;
+        // 2. Convert to integer BEFORE dividing by decimation
+        uint64_t full_phase_q32 = (uint64_t) tape->current_phase_inc;
 
-        // 3. Cast to uint32 for the playhead
-        uint32_t active_phase_inc = (uint32_t) (tape->current_phase_inc * inv_decimation);
+        // This keeps the maximum possible precision for "ugly" numbers like 3 or 7
+        uint32_t decima = (tape->playback_buf->decimation > 0) ? tape->playback_buf->decimation : 1;
+        uint32_t active_phase_inc = (uint32_t) (full_phase_q32 / decima);
+
+        // uint32_t active_phase_inc = (uint32_t) (tape->current_phase_inc);
 
         int16_t out_l = 0;
         int16_t out_r = 0;
@@ -241,16 +272,21 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
         case PLAY_STOPPED:
             // output silence
             break;
-        case PLAY_PLAYING:
-            // Fetch raw samples with Hermite
-            out_l = hermite_interpolate(tape->ph_a.idx, tape->ph_a.frac, tape->playback_buf->ch[0]);
-            out_r = hermite_interpolate(tape->ph_a.idx, tape->ph_a.frac, tape->playback_buf->ch[1]);
-
+        case PLAY_PLAYING: {
+// Fetch raw samples with Hermite
+#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+            out_l = hermite_interpolate(tape->ph_a.pos, tape->playback_buf->ch[0]);
+            out_r = hermite_interpolate(tape->ph_a.pos, tape->playback_buf->ch[1]);
+#else
+            uint32_t idx = (uint32_t) (tape->ph_a.pos >> 32);
+            out_l = tape->playback_buf->ch[0][idx];
+            out_r = tape->playback_buf->ch[1][idx];
+#endif
             // 1. Determine Pitch-Aware Step
             // We use uint64_t for the intermediate multiplication to prevent overflow
             // This scales the fade speed perfectly with the playhead speed
             uint32_t base_ratio = (uint32_t) (((uint64_t) FADE_LUT_LEN << 16) / FADE_IN_OUT_LEN);
-            uint32_t pitch_aware_step = (uint32_t) (((uint64_t) base_ratio * active_phase_inc) >> 16);
+            uint32_t pitch_aware_step = (uint32_t) (((uint64_t) base_ratio * active_phase_inc) >> 32);
 
             // --- Q16 FIXED POINT FADE IN ---
             if (tape->fade_in_active && !tape->params.cyclic_mode) {
@@ -295,17 +331,20 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
             if (!tape->fade_out_active && playhead_near_end(&tape->ph_a, FADE_IN_OUT_LEN, active_phase_inc) && tape->params.cyclic_mode) {
                 tape->fade_out_active = true;
                 tape->xfade_retrig.active = true;
-                tape->ph_b.idx = 1; // start at sample 1 for interpolation
-                tape->ph_b.frac = 0;
+                tape->ph_b.pos = 1 << 32; // start at sample 1 for interpolation
                 tape->ph_b.active = true;
                 tape->fade_out_idx_q16 = 0; // Reset lut accumulator for cyclic crossfade
             }
             // process cyclic loop crossfade
             if (tape->fade_out_active && tape->ph_b.active) {
-                // Fetch samples for the Secondary Playhead (B) starting at the beginning
-                int16_t b_l = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->playback_buf->ch[0]);
-                int16_t b_r = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->playback_buf->ch[1]);
-
+// Fetch samples for the Secondary Playhead (B) starting at the beginning
+#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+                int16_t b_l = hermite_interpolate(tape->ph_b.pos, tape->playback_buf->ch[0]);
+                int16_t b_r = hermite_interpolate(tape->ph_b.pos, tape->playback_buf->ch[1]);
+#else
+                int16_t b_l = tape->playback_buf->ch[0][tape->ph_b.pos >> 32];
+                int16_t b_r = tape->playback_buf->ch[1][tape->ph_b.pos >> 32];
+#endif
                 // Calculate LUT index based on ph_b's progress from the start
                 // This creates the Fade IN for B and Fade OUT for A
                 uint32_t lut_idx = tape->fade_out_idx_q16 >> 16;
@@ -328,47 +367,52 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
                 }
             }
 
-            if (tape->xfade_retrig.active) {
-                // --- dual playhead crossfade ---
+            //             if (tape->xfade_retrig.active) {
+            //                 // --- dual playhead crossfade ---
 
-                // these are the "new" playback samples. Recently recorded
-                int16_t a_l = out_l;
-                int16_t a_r = out_r;
+            //                 // these are the "new" playback samples. Recently recorded
+            //                 int16_t a_l = out_l;
+            //                 int16_t a_r = out_r;
 
-                // ph_b.phase is starting from the beginning.
-                int16_t b_l = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->xfade_retrig.temp_buf_l);
-                int16_t b_r = hermite_interpolate(tape->ph_b.idx, tape->ph_b.frac, tape->xfade_retrig.temp_buf_r);
+            //                 // ph_b.phase is starting from the beginning.
+            // #ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+            //                 int16_t b_l = hermite_interpolate(tape->ph_b.pos, tape->xfade_retrig.temp_buf_l);
+            //                 int16_t b_r = hermite_interpolate(tape->ph_b.pos, tape->xfade_retrig.temp_buf_r);
+            // #else
+            //                 int16_t b_l = tape->xfade_retrig.temp_buf_l[tape->ph_b.pos >> 32];
+            //                 int16_t b_r = tape->xfade_retrig.temp_buf_r[tape->ph_b.pos >> 32];
+            // #endif
 
-                int16_t fa;
-                int16_t fb;
+            //                 int16_t fa;
+            //                 int16_t fb;
 
-                if (tape->xfade_retrig.temp_buf_valid_samples < 2) {
-                    // TODO: this seems odd. if not enough samples for crossfade, we should actually fade to silence, not jump to 0.
-                    fa = 32767; // full a
-                    fb = 0;     // b silent
-                } else {
-                    // Fade LUT access has to be scaled to crossfade length of available samples
-                    uint32_t lut_i = (tape->ph_b.idx * (FADE_LUT_LEN - 1)) / (tape->xfade_retrig.temp_buf_valid_samples - 1);
+            //                 if (tape->xfade_retrig.temp_buf_valid_samples < 2) {
+            //                     // TODO: this seems odd. if not enough samples for crossfade, we should actually fade to silence, not jump to 0.
+            //                     fa = 32767; // full a
+            //                     fb = 0;     // b silent
+            //                 } else {
+            //                     // Fade LUT access has to be scaled to crossfade length of available samples
+            //                     uint32_t lut_i = (tape->ph_b.pos >> 32) * (FADE_LUT_LEN - 1) / (tape->xfade_retrig.temp_buf_valid_samples - 1);
 
-                    fa = fade_in_lut[FADE_LUT_LEN - 1 - lut_i];
-                    fb = fade_in_lut[lut_i];
-                }
-                // Q15 * Q15 -> Q30, then sum, then >>15 back to Q15
-                int32_t acc_l = (int32_t) fa * (int32_t) a_l + (int32_t) fb * (int32_t) b_l;
-                int32_t acc_r = (int32_t) fa * (int32_t) a_r + (int32_t) fb * (int32_t) b_r;
+            //                     fa = fade_in_lut[FADE_LUT_LEN - 1 - lut_i];
+            //                     fb = fade_in_lut[lut_i];
+            //                 }
+            //                 // Q15 * Q15 -> Q30, then sum, then >>15 back to Q15
+            //                 int32_t acc_l = (int32_t) fa * (int32_t) a_l + (int32_t) fb * (int32_t) b_l;
+            //                 int32_t acc_r = (int32_t) fa * (int32_t) a_r + (int32_t) fb * (int32_t) b_r;
 
-                // back to int16 Q15
-                out_l = __SSAT(acc_l >> 15, 16);
-                out_r = __SSAT(acc_r >> 15, 16);
+            //                 // back to int16 Q15
+            //                 out_l = __SSAT(acc_l >> 15, 16);
+            //                 out_r = __SSAT(acc_r >> 15, 16);
 
-                if (tape->ph_b.idx >= tape->xfade_retrig.temp_buf_valid_samples) {
-                    // crossfade done -> promote B to A
-                    // tape->ph_a = tape->ph_b; // promoting not needed anymore. A is already at the right position.
-                    tape->ph_b.active = false;
-                    tape->xfade_retrig.active = false;
-                }
-                advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
-            }
+            //                 if ((tape->ph_b.pos >> 32) >= tape->xfade_retrig.temp_buf_valid_samples) {
+            //                     // crossfade done -> promote B to A
+            //                     // tape->ph_a = tape->ph_b; // promoting not needed anymore. A is already at the right position.
+            //                     tape->ph_b.active = false;
+            //                     tape->xfade_retrig.active = false;
+            //                 }
+            //                 advance_playhead(&tape->ph_b, active_phase_inc, tape->params.reverse, tape->params.cyclic_mode);
+            //             }
 
             // advance ph_a
             if (tape->ph_a.active) {
@@ -381,12 +425,11 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
                 // }
             }
         }
+        }
 
         float env_val = envelope_process(&tape->env);
-        // float env_val = 1.0f;
-
-        out_buf[n] = (int16_t) out_l * env_val;
-        out_buf[n + 1] = (int16_t) out_r * env_val;
+        out_buf[n] = (int16_t) (out_l * env_val);
+        out_buf[n + 1] = (int16_t) (out_r * env_val);
 
         switch (tape->rec_state) {
         case REC_IDLE:
@@ -424,6 +467,11 @@ static void swap_tape_buffers(struct tape_player* t) {
     tape_buffer_t* temp = t->playback_buf;
     t->playback_buf = t->record_buf;
     t->record_buf = temp;
+
+    // t->playback_buf->decimation = DECIMATION_FIXED;
+    // t->record_buf->decimation = DECIMATION_FIXED;
+
+    t->tape_recordhead = 0;
     t->switch_bufs_pending = false;
 }
 
@@ -454,8 +502,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
             envelope_set_decay_norm(&t->env, t->params.env_decay);
             envelope_note_on(&t->env);
 
-            t->ph_a.idx = 1;
-            t->ph_a.frac = 0;
+            t->ph_a.pos = 1ULL << 32; // start at sample 1 for interpolation
 
             // Init Fade In
             t->fade_in_idx_q16 = 0;
@@ -475,7 +522,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
 
             // copy upcoming xfade.len samples starting at current phase
             // we need to start from one sample before the current phase for hermite interpolation
-            uint32_t start_idx = t->ph_a.idx - 1;
+            uint32_t start_idx = (uint32_t) (t->ph_a.pos >> 32) - 1;
             uint32_t max_needed = t->xfade_retrig.len + 3; // +3 for hermite interpolation safety (idx-1..idx+2)
 
             // number of samples available for crossfade starting from start_idx
@@ -502,12 +549,10 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
                 t->xfade_retrig.temp_buf_r = &t->playback_buf->ch[1][start_idx];
             }
 
-            t->ph_a.idx = 1;
-            t->ph_a.frac = 0;
+            t->ph_a.pos = 1ULL << 32; // reset main play phase phase
 
             // ph_b holdes the phase for crossfade buffer
-            t->ph_b.idx = 1;
-            t->ph_b.frac = 0;
+            t->ph_b.pos = 1ULL << 32; // start at sample 1
             t->ph_b.active = true;
             t->xfade_retrig.len = FADE_RETRIG_XFADE_LEN;
             t->xfade_retrig.active = true;
@@ -532,7 +577,11 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
         if (evt == TAPE_EVT_RECORD) {
             t->tape_recordhead = 0;
             // apply decimation to recording buffer. This will be reach over to playback buffer by buffer swapping
+#ifdef DECIMATION_FIXED
+            t->record_buf->decimation = DECIMATION_FIXED;
+#else
             t->record_buf->decimation = t->params.decimation;
+#endif
             t->rec_state = REC_RECORDING;
         }
         break;
@@ -557,7 +606,11 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
     case REC_DONE:
         //swap is done, jump to.
         if (evt == TAPE_EVT_SWAP_DONE) {
+#ifdef DECIMATION_FIXED
+            t->record_buf->decimation = DECIMATION_FIXED;
+#else
             t->record_buf->decimation = t->params.decimation;
+#endif
 
             t->rec_state = REC_IDLE;
         }
@@ -565,7 +618,11 @@ static void rec_fsm_event(struct tape_player* t, tape_event_t evt) {
     case REC_SWAP_PENDING:
         //swap is done, prepare for next record.
         if (evt == TAPE_EVT_SWAP_DONE) {
+#ifdef DECIMATION_FIXED
+            t->record_buf->decimation = DECIMATION_FIXED;
+#else
             t->record_buf->decimation = t->params.decimation;
+#endif
 
             t->rec_state = REC_RECORDING;
         }
@@ -621,4 +678,25 @@ void tape_player_set_params(struct param_cache param_cache) {
         active_tape_player->params.cyclic_mode = param_cache.cyclic_mode;
         active_tape_player->params.decimation = param_cache.decimation;
     }
+}
+
+// returns value from 0..1 depending on the decimation factor
+// this is used to blend in the hold sample for a grittier sound when decimation is high. At low decimation, we rely more on the hermite interpolation, which gives a smoother sound. At high decimation, the hermite interpolation can become less accurate and introduce more artifacts, so we blend in more of the hold sample to mask these artifacts and create a more "lo-fi" sound.
+// possibility to use a power curve to have a stronger effect at higher decimation factors
+// TODO: cache this value and only update when decimation changes, since it can be expensive to calculate every block
+float tape_player_get_grit(struct tape_player* tape) {
+    uint8_t dec = tape->playback_buf->decimation;
+    if (dec < 1)
+        dec = 1;
+
+#define MAX_DECIMATION 16
+
+    float g = (float) (dec - 1) / (float) (MAX_DECIMATION - 1); // 0..1
+
+    // power curve
+    float grit = g * g; // quadratic
+    // or:
+    // float grit = g * g * g;  // cubic (stronger tail)
+
+    return grit;
 }

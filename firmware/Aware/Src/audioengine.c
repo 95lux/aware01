@@ -41,6 +41,22 @@ void audio_write_to_dma_buf(int16_t l, int16_t r, uint32_t sample_idx) {
     active_cfg->tx_buf_ptr[sample_idx + 1] = r;
 }
 
+void audio_get_dma_in_buf(int16_t* buf, uint32_t buf_size) {
+    for (uint8_t n = 0; n < (buf_size) -1; n += 2) {
+        // loopback adc data to dac
+        buf[n] = active_cfg->rx_buf_ptr[n];
+        buf[n + 1] = active_cfg->rx_buf_ptr[n + 1];
+    }
+}
+
+void audio_write_dma_out_buf(int16_t* buf, uint32_t buf_size) {
+    for (uint8_t n = 0; n < (buf_size) -1; n += 2) {
+        // loopback adc data to dac
+        active_cfg->tx_buf_ptr[n] = buf[n];
+        active_cfg->tx_buf_ptr[n + 1] = buf[n + 1];
+    }
+}
+
 // overload HAL I2S DMA Complete and HalfComplete callbacks to handle double buffering
 void HAL_I2SEx_TxRxHalfCpltCallback(I2S_HandleTypeDef* i2s_handle) {
     // First half of TX and RX buffers completed

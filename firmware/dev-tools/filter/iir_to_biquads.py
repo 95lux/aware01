@@ -21,6 +21,8 @@ sos = tf2sos(b, a)
 
 BIQUAD_CASCADE_NUM_STAGES = sos.shape[0]
 
+print(sos)
+
 # -----------------------------
 # Convert to CMSIS-DSP format: [b0, b1, b2, -a1, -a2]
 # -----------------------------

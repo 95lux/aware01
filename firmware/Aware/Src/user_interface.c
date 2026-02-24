@@ -128,10 +128,18 @@ void user_iface_process(uint32_t notified) {
         param_cache_set_env_attack(attack);
         param_cache_set_env_decay(decay);
 
-#define MAX_DECIMATION_FACTOR 20
+        // TODO: for now just use power of 2 for decimation. Other values cause pitch issues. Resolve later
+#define MAX_DECIMATION_POW 4 // 2^4 = 16
 
-        // 4th pot - used for decimation
-        uint8_t decimation = (uint8_t) (active_user_interface_cfg->pots[POT_PARAM4].val * MAX_DECIMATION_FACTOR); // 0..5
+        // pot in range 0.0f .. 1.0f
+        uint8_t pow = (uint8_t) (active_user_interface_cfg->pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
+
+        // clamp just in case
+        if (pow > MAX_DECIMATION_POW)
+            pow = MAX_DECIMATION_POW;
+
+        uint8_t decimation = 1u << pow;
+
         param_cache_set_decimation(decimation);
     }
 
