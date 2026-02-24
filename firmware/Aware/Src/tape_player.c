@@ -244,18 +244,18 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
     uint32_t limit = buf_size - 4;
 
     uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
-    // How many steps (at current pitch) are left until we hit the limit?
-    uint32_t samples_left = (idx < limit) ? (limit - idx) : 0;
+    if (idx >= limit)
+        return true;
 
-    // Convert fade_len_samples to the same "pitch scale" as the playhead.
-    // If active_phase_inc is large (pitch up), we need to trigger much earlier
-    // in terms of buffer index to ensure the fade has enough real-time cycles to finish.
+    uint32_t samples_left = limit - idx;
 
-    // But multiplication is safer/faster:
-    uint32_t distance_left_q8 = samples_left << 8;
-    uint32_t fade_reach_q8 = (fade_len_samples * (active_phase_inc_q16 >> 8));
+    // We want to know if: samples_left <= (fade_len_samples * (active_phase_inc / 65536))
+    // To avoid division, we cross-multiply:
+    // (samples_left << 16) <= (fade_len_samples * active_phase_inc)
+    uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
+    uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
 
-    return distance_left_q8 <= fade_reach_q8;
+    return physical_distance_q16 <= fade_travel_distance_q16;
 }
 
 // handle fade when starting playback. requires fade_in_active to be set when sample playback is started.
@@ -263,10 +263,11 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
 // TODO: 128 steps in LUT might be very low, maybe increase resolution of LUT
 static inline void tape_handle_fade_in(struct tape_player* tape, int16_t* out_l, int16_t* out_r) {
     // --- Q16 FIXED POINT FADE IN ---
-    if (!tape->fade_in.active && !tape->xfade_retrig.active)
+    // dont fade when retrigger crossfade is active, since that means we are already fading in.
+    if (!tape->fade_in.active || tape->xfade_retrig.active)
         return;
 
-    uint32_t lut_idx = tape->fade_in.pos_q48_16 >> 16;
+    uint32_t lut_idx = tape->fade_in.fade_acc_q16 >> 16;
 
     if (lut_idx >= FADE_LUT_LEN - 1) {
         tape->fade_in.active = false;
@@ -276,7 +277,7 @@ static inline void tape_handle_fade_in(struct tape_player* tape, int16_t* out_l,
         *out_r = __SSAT(((int32_t) (*out_r) * f) >> 15, 16);
 
         // fixed step, not pitch-aware, since we want a consistent fade in time regardless of pitch. If we wanted a pitch-aware fade in, we would need to calculate the step based on the current phase increment, similar to the fade out below.
-        tape->fade_in.pos_q48_16 += (uint64_t) FADE_IN_OUT_STEP_Q16;
+        tape->fade_in.fade_acc_q16 += FADE_IN_OUT_STEP_Q16;
     }
 }
 
@@ -287,15 +288,8 @@ static inline void tape_handle_fade_out(struct tape_player* tape, uint32_t activ
     if (!tape->fade_out.active || tape->params.cyclic_mode)
         return;
 
-    // --- Calculate pitch-aware Q32.32 step ---
-    // FADE_LUT_LEN in samples, FADE_IN_OUT_LEN in tape samples
-    // Scale step to Q32.32 directly
-    uint64_t step_q32 = ((uint64_t) FADE_LUT_LEN << 16) / FADE_IN_OUT_LEN;
-    // multiply by playhead increment to make it pitch-aware
-    uint64_t pitch_aware_step = (step_q32 * (uint64_t) active_phase_inc) >> 16;
-
-    // LUT index = top 32 bits
-    uint32_t lut_idx = tape->fade_out.pos_q48_16 >> 16;
+    // LUT index = top 16 bits
+    uint32_t lut_idx = tape->fade_out.fade_acc_q16 >> 16;
 
     if (lut_idx >= FADE_LUT_LEN - 1) {
         *out_l = 0;
@@ -307,8 +301,8 @@ static inline void tape_handle_fade_out(struct tape_player* tape, uint32_t activ
         *out_l = __SSAT(((int32_t) (*out_l) * f) >> 15, 16);
         *out_r = __SSAT(((int32_t) (*out_r) * f) >> 15, 16);
 
-        // advance Q48.16 position
-        tape->fade_out.pos_q48_16 += pitch_aware_step;
+        // advance Q16.16 position
+        tape->fade_out.fade_acc_q16 += FADE_IN_OUT_STEP_Q16;
     }
 }
 
@@ -333,7 +327,7 @@ static inline void tape_handle_cyclic_crossfade(struct tape_player* tape, uint32
 
     // Advance the "New" playhead manually and the fade progress
     tape->xfade_cyclic.pos_q48_16 += active_phase_inc;
-    tape->xfade_cyclic.fade_acc_q16 += tape->xfade_cyclic.fade_step_q16;
+    tape->xfade_cyclic.fade_acc_q16 += FADE_XFADE_CYCLIC_STEP_Q16;
 
     if (lut_idx >= FADE_LUT_LEN - 1) {
         // SWAP: The "New" playhead becomes the "Main" playhead
@@ -373,11 +367,12 @@ static inline void tape_handle_retrigger_crossfade(struct tape_player* tape, uin
     tape->xfade_retrig.pos_q48_16 += active_phase_inc;
 
     // 2. Advance the fade progress (at current pitch-aware step)
-    tape->xfade_retrig.fade_acc_q16 += tape->xfade_retrig.fade_step_q16;
+    tape->xfade_retrig.fade_acc_q16 += FADE_XFADE_RETRIG_STEP_Q16;
 
     // 3. Termination Check
     if (lut_i >= FADE_LUT_LEN - 1 || (tape->xfade_retrig.pos_q48_16 >> 16) >= tape->xfade_retrig.temp_buf_valid_samples) {
         tape->xfade_retrig.active = false;
+        tape->xfade_retrig.fade_acc_q16 = 0;
     }
 }
 
@@ -408,7 +403,7 @@ static inline void tape_process_playback_frame(struct tape_player* tape, uint32_
     case PLAY_PLAYING: {
         tape_fetch_sample(tape->pos_q48_16, tape->playback_buf->ch[0], tape->playback_buf->ch[1], tape, out_l, out_r);
 
-        // tape_handle_fade_in(tape, out_l, out_r);
+        tape_handle_fade_in(tape, out_l, out_r);
 
         // --- Q16 FIXED POINT FADE OUT TRIGGER ---
         if (!tape->fade_out.active && playhead_near_end(tape->pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) && !tape->params.cyclic_mode) {
@@ -417,7 +412,7 @@ static inline void tape_process_playback_frame(struct tape_player* tape, uint32_
         }
 
         // --- Q16 FIXED POINT FADE OUT PROCESS ---
-        // tape_handle_fade_out(tape, active_phase_inc, out_l, out_r);
+        tape_handle_fade_out(tape, active_phase_inc, out_l, out_r);
 
         // --- Cyclic Loop Trigger Logic ---
         if (!tape->xfade_cyclic.active && tape->params.cyclic_mode &&
@@ -426,10 +421,6 @@ static inline void tape_process_playback_frame(struct tape_player* tape, uint32_
             tape->xfade_cyclic.active = true;
             tape->xfade_cyclic.pos_q48_16 = 1ULL << 16; // Start new playhead at sample 1
             tape->xfade_cyclic.fade_acc_q16 = 0;        // Start LUT index at 0
-
-            // PRE-CALCULATE THE STEP HERE
-            uint32_t ratio_q16 = ((uint32_t) FADE_LUT_LEN << 16) / FADE_IN_OUT_LEN;
-            tape->xfade_cyclic.fade_step_q16 = (uint32_t) (((uint64_t) ratio_q16 * active_phase_inc) >> 16);
 
             // Set buffer pointers
             tape->xfade_cyclic.buf_b_ptr_l = tape->playback_buf->ch[0];
@@ -479,13 +470,6 @@ void tape_player_process(struct tape_player* tape, int16_t* in_buf, int16_t* out
         return;
 
     uint32_t active_phase_inc = tape_compute_phase_increment(tape);
-
-    // calculate fade steps for retrig crossfade once per block. We need to do this here, since it depends on the current pitch, which can change per block due to parameter changes.
-    if (tape->xfade_retrig.active) {
-        // Multiply the base ratio by current pitch to get pitch-aware step
-        // (Ratio * Phase) >> 16
-        tape->xfade_retrig.fade_step_q16 = (uint32_t) (((uint64_t) tape->xfade_retrig.base_ratio_q16 * active_phase_inc) >> 16);
-    }
 
     // TODO: BIG TODO!!! OPTIMIZE FADE ALGS. currently with 128 sample buffer, the cpu is not fast enough. Maybe switch to q16.16 altogeher
     // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
@@ -589,7 +573,8 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
 
             // Ensure Fade Out is clean
             t->fade_out.active = false;
-            t->fade_out.pos_q48_16 = 0;
+            t->fade_out.pos_q48_16 = 0; // this is not needed. Set anyway.
+            t->fade_out.fade_acc_q16 = 0;
 
             t->play_state = PLAY_PLAYING;
         }
@@ -632,6 +617,7 @@ static void play_fsm_event(struct tape_player* t, tape_event_t evt) {
 
             // ph_b holdes the phase for crossfade buffer
             t->xfade_retrig.pos_q48_16 = 1 << 16; // start at sample 1
+            t->xfade_retrig.fade_acc_q16 = 0;
             t->xfade_retrig.active = true;
             t->xfade_retrig.len = FADE_XFADE_RETRIG_LEN;
 
