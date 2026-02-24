@@ -37,13 +37,9 @@ struct parameters {
 
     uint8_t decimation; // decimation factor for recording and playback.
     // more params will be added according to DSP/feature requirements
-};
 
-typedef struct {
-    // use Q32.32 for indeces > 16bit index range (96000 samples at 48kHz is already > 16 bit)
-    uint64_t pos; // 32.32 fixed point: upper 32 bits are integer index, lower 32 bits are fractional part
-    bool active;
-} playhead_t;
+    float grit; // calculated from decimation factor, used for excite effect amount in audio processing task. 0..1 depending on decimation.
+};
 
 // FSM logic
 typedef enum { TAPE_EVT_NONE = 0, TAPE_EVT_PLAY, TAPE_EVT_STOP, TAPE_EVT_RECORD, TAPE_EVT_RECORD_DONE, TAPE_EVT_SWAP_DONE } tape_event_t;
@@ -54,11 +50,18 @@ typedef enum { REC_IDLE = 0, REC_RECORDING, REC_SWAP_PENDING, REC_DONE } rec_sta
 
 typedef struct {
     bool active;
-    uint32_t pos;
+    // uint32_t posq_16; // Q16.16 fixed point position
     uint32_t len; // TODO make xfade length configurable. Need to implement fade lookup interpolation then (or use bigger LUT?).
     // TODO: this has to be max xfade length. Cant be super long unfortunately, since we dont have much SRAM available anymore :(
-    int16_t* temp_buf_l;
-    int16_t* temp_buf_r;
+    bool
+        crossfade; // if crossfade is enabled, we are using temp_buf. Otherwise this struct just holds the position and length for simple in/out fades.
+
+    // playhead for crossfade buffer. Actually should be okay to use q16 here, since fade length is not super long.
+    // TODO: but since we have some buffer switching going on on certain fade events, keep q32 for now. Should be refactored to use q16.16
+    // playhead_q16_t ph_b;
+    uint64_t pos_q32; // 32.32 fixed point: upper 32 bits are integer index, lower 32 bits are fractional part
+    int16_t* buf_b_ptr_l;
+    int16_t* buf_b_ptr_r;
     uint32_t
         temp_buf_valid_samples; // number of valid samples in the xfade temp buffer (for retrigger xfade at end of recording, when there might be less than xfade.len samples available)
 } crossfade_t;
@@ -72,20 +75,17 @@ struct tape_player {
                                  // target of the tape
 
     // playheads, use 2 for crossfading with same buffer on retrigger/cycling - Q16.16 (int16_t integer part, uint16_t frac part)
-    playhead_t ph_a;
-    playhead_t ph_b;
+    // playhead_t ph_a;  // main playhead for playback
+    uint64_t pos_q32; // main playhead position in Q32.32 format.
+    // playhead_t ph_b;
 
     // TODO: make wrap mode configurable: cyclic or oneshot
     bool cyclic_mode;
 
-    crossfade_t xfade_retrig; // retrigger crossfade
-    bool buffer_end_fade_active;
-    float fade_in_idx;         // LUT index for fade in when starting playback
-    float fade_out_idx;        // LUT index for fade out when approaching end of buffer
-    uint32_t fade_in_idx_q16;  // 16.16 fixed point
-    uint32_t fade_out_idx_q16; // 16.16 fixed point
-    bool fade_in_active;       // whether fade in is active (when starting playback)
-    bool fade_out_active;      // whether fade out is active (when approaching end of buffer)
+    crossfade_t xfade_retrig; // crossfade that is used on cyclic mode repeat or retriggering sample playback.
+    crossfade_t xfade_cyclic; // crossfade that is used on cyclic mode repeat or retriggering sample playback.
+    crossfade_t fade_in;      // simple fade in when starting playback
+    crossfade_t fade_out;     // simple fadeout when approaching end of playback buffer
 
     uint32_t tape_recordhead;
 
