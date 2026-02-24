@@ -84,8 +84,8 @@
 // recording buffer size per channel, aligned to block size
 #define TAPE_REC_BUF_SIZE_CHANNEL (AUDIO_BLOCK_SIZE * TAPE_REC_BUF_NUM_BLOCKS)
 
-#define FADE_LUT_LEN 128
-#define FADE_RETRIG_XFADE_LEN 32
+#define FADE_XFADE_RETRIG_LEN 64
+#define FADE_XFADE_CYCLIC_LEN 64
 #define FADE_IN_OUT_LEN 32 // fade in/out length when approaching start/end of buffer, to prevent clicks
 #define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)
 
