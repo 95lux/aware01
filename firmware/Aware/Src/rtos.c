@@ -177,7 +177,6 @@ static void AudioTask(void* argument) {
 
             // mix wet and dry with fixed ratio for now (can be made variable later)
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i++) {
-                // wet[i] = 0.0f * dry[i] + 1.0f * wet[i];
                 wet[i] = 1.0f * dry[i] + excite_amount * wet[i];
 
                 // hardware saturation
