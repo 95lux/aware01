@@ -129,7 +129,7 @@ static void AudioTask(void* argument) {
     struct audioengine_config audioengine_cfg = {
         .i2s_handle = &hi2s1, .sample_rate = AUDIO_SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
 
-    struct tape_player tape_player;
+    static struct tape_player tape_player;
 
     struct excite_config excite_cfg;
 
@@ -144,22 +144,47 @@ static void AudioTask(void* argument) {
         start_audio_engine();
 
         for (;;) {
+            // fetch params
+            struct param_cache param_cache;
+            param_cache_fetch(&param_cache);
+
+            tape_player_set_params(param_cache);
+
             /* wait for DMA signal */
             ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 #ifdef CONFIG_AUDIO_LOOPBACK
+            // simple loopback for testing
             loopback_samples();
 #else
 
             // processing half audio block from half dma buffer.
             int16_t wet[AUDIO_HALF_BLOCK_SIZE];
+            int16_t in_buf[AUDIO_HALF_BLOCK_SIZE];
             int16_t dry[AUDIO_HALF_BLOCK_SIZE];
             /* process audio block */
-            tape_player_process(&tape_player, (int16_t*) audioengine_cfg.rx_buf_ptr, (int16_t*) dry);
+
+            audio_get_dma_in_buf(in_buf, AUDIO_HALF_BLOCK_SIZE);
+
+#ifdef CONFIG_ENABLE_TAPE_PLAYER
+            // tape player may be disabled to check simple dsp processing without tape player in the way, since it is currently the only source of audio input (no external input implemented yet)
+            tape_player_process(&tape_player, in_buf, (int16_t*) dry);
+#endif
+
             excite_block(dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
 
+            float excite_amount = tape_player_get_grit(&tape_player);
+            excite_amount = excite_amount * MAX_EXCITE_ON_MAX_DECIMATION;
+
+            // mix wet and dry with fixed ratio for now (can be made variable later)
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i++) {
-                audioengine_cfg.tx_buf_ptr[i] = 0.2f * dry[i] + 0.8f * wet[i];
+                // wet[i] = 0.0f * dry[i] + 1.0f * wet[i];
+                wet[i] = 0.6f * dry[i] + excite_amount * wet[i];
+
+                // hardware saturation
+                wet[i] = __SSAT(wet[i], 16);
             }
+
+            audio_write_dma_out_buf(wet, AUDIO_HALF_BLOCK_SIZE);
 
             /* handle pending commands (non-blocking) */
             tape_cmd_msg_t msg;
@@ -177,10 +202,6 @@ static void AudioTask(void* argument) {
                 }
             }
 #endif
-            struct param_cache param_cache;
-            param_cache_fetch(&param_cache);
-
-            tape_player_set_params(param_cache);
         }
     }
 }

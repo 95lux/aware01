@@ -1,5 +1,6 @@
 #include "arm_math.h"
 #include <stdint.h>
+#include <string.h>
 
 #include "project_config.h"
 
@@ -13,6 +14,9 @@ float alpha = 0.8f;
 // b1 = -1.3856, b2 = 0.6, a0 = 0.74641, a1 = -1.4928, a2 = 0.74641
 void excite_init(struct excite_config* config) {
     active_config = config;
+
+    memset(active_config->iir_in_state, 0, sizeof(active_config->iir_in_state));
+    active_config->iir_in_coeffs = iir_coeffs;
 
     arm_biquad_cascade_stereo_df2T_init_f32(
         &active_config->iir_in_instance, BIQUAD_CASCADE_NUM_STAGES, active_config->iir_in_coeffs, active_config->iir_in_state);
@@ -76,11 +80,11 @@ void excite_block(const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, 
 
     // 2. nolinear distortion to create harmonics of decimated signal
     // use cubic softclip, taken from https : //wiki.analog.com/resources/tools-software/sigmastudio/toolbox/nonlinearprocessors/standardcubic
-    for (uint32_t i = 0; i < block_size; i++) {
-        work_buf[i] = softclip_sample(work_buf[i], alpha);
-        // work_buf_out[i] = tanh_distortion(work_buf_in[i], 10.0f);
-        work_buf[i] = fast_tanh(work_buf[i]);
-    }
+    // for (uint32_t i = 0; i < block_size; i++) {
+    //     work_buf[i] = softclip_sample(work_buf[i], alpha);
+    //     // work_buf[i] = 0.3 * tanh_distortion(work_buf[i], 15.0f);
+    //     work_buf[i] = fast_tanh(work_buf[i]);
+    // }
 
     // arm_biquad_cascade_stereo_df2T_f32(&active_config->iir_out_instance, work_buf, work_buf, frames);
 

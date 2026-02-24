@@ -27,6 +27,9 @@ struct audioengine_config {
 int init_audioengine(struct audioengine_config* config);
 int start_audio_engine(void);
 
+void audio_get_dma_in_buf(int16_t* buf, uint32_t buf_size);
+void audio_write_dma_out_buf(int16_t* buf, uint32_t buf_size);
+
 // Test Functions
 void generateSineWave(uint16_t* phaseIndex, double phaseIncrement);
 void receiveTest();

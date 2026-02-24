@@ -40,9 +40,8 @@ struct parameters {
 };
 
 typedef struct {
-    // use Q0.32 for indeces > 16bit index range (96000 samples at 48kHz is already > 16 bit)
-    uint32_t idx;
-    uint16_t frac;
+    // use Q32.32 for indeces > 16bit index range (96000 samples at 48kHz is already > 16 bit)
+    uint64_t pos; // 32.32 fixed point: upper 32 bits are integer index, lower 32 bits are fractional part
     bool active;
 } playhead_t;
 
@@ -93,8 +92,8 @@ struct tape_player {
     bool switch_bufs_pending;
     bool switch_bufs_done;
 
-    uint32_t current_phase_inc; // The increment actually being used
-    uint32_t target_phase_inc;  // The increment we want to reach, used for smooth pitch transitions
+    uint64_t current_phase_inc; // The increment actually being used
+    uint64_t target_phase_inc;  // The increment we want to reach, used for smooth pitch transitions
 
     // states
     play_state_t play_state;
@@ -124,5 +123,6 @@ void tape_player_record();
 void tape_player_stop_record(void);
 void tape_player_set_pitch(float pitch_factor);
 void tape_player_set_params(struct param_cache param_cache);
+float tape_player_get_grit(struct tape_player* tape);
 
 float tape_player_get_pitch();

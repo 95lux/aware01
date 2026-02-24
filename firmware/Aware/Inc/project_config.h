@@ -7,8 +7,10 @@
 
 /* ===== Config Options ===== */
 // #define CONFIG_AUDIO_LOOPBACK
+#define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
 // #define CONFIG_DEBUG_LOGS
+#define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
 
 /* ===== Engine Parameters ===== */
 
@@ -87,3 +89,6 @@
 
 #define CV_CALIB_HOLD_MS 1000
 #define POT_CALIB_HOLD_MS 5000
+
+#define MAX_GRIT_ON_MAX_DECIMATION 1.0f
+#define MAX_EXCITE_ON_MAX_DECIMATION 24.0f
