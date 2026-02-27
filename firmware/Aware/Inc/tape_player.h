@@ -123,7 +123,6 @@ struct tape_player {
 typedef enum { TAPE_CMD_PLAY, TAPE_CMD_STOP, TAPE_CMD_RECORD, TAPE_CMD_SLICE } tape_cmd_t;
 typedef struct {
     tape_cmd_t cmd;
-    float pitch;
 } tape_cmd_msg_t;
 
 int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue);

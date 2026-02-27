@@ -10,33 +10,36 @@
 #include "rtos.h"
 #include "tape_player.h"
 
-static struct adc_config* active_cfg = NULL;
+static struct adc_config adc_config;
 
 // local DMA buffers for adc cv channels and potentiometer channels - will be allocated in DMA-capable memory, not in FREERTOS task stack!
 DMA_BUFFER static uint16_t adc_dma_cv_buf[NUM_CV_CHANNELS];
 DMA_BUFFER static uint16_t adc_dma_pot_buf[NUM_POT_CHANNELS];
 
-int init_adc_interface(struct adc_config* config) {
-    if (config == NULL || config->hadc_cvs == NULL || config->hadc_pots == NULL)
+int init_adc_interface(TaskHandle_t controlIfTaskHandle,
+                       TaskHandle_t userIfTaskHandle,
+                       ADC_HandleTypeDef* hadc_cvs,
+                       ADC_HandleTypeDef* hadc_pots) {
+    if (hadc_cvs == NULL || hadc_pots == NULL)
         return -1;
 
-    active_cfg = config;
+    adc_config.controlIfTaskHandle = controlIfTaskHandle;
+    adc_config.userIfTaskHandle = userIfTaskHandle;
+    adc_config.hadc_pots = hadc_pots;
+    adc_config.hadc_cvs = hadc_cvs;
 
     // assign DMA buffers
-    active_cfg->adc_cv_buf_ptr = adc_dma_cv_buf;
-    active_cfg->adc_pot_buf_ptr = adc_dma_pot_buf;
+    adc_config.adc_cv_buf_ptr = adc_dma_cv_buf;
+    adc_config.adc_pot_buf_ptr = adc_dma_pot_buf;
     return 0;
 }
 
 int start_adc_interface(void) {
-    if (active_cfg == NULL)
-        return -1;
-
-    if (active_cfg->hadc_cvs != NULL && active_cfg->adc_cv_buf_ptr != NULL) {
-        HAL_ADC_Start_DMA(active_cfg->hadc_cvs, (uint32_t*) active_cfg->adc_cv_buf_ptr, NUM_CV_CHANNELS);
+    if (adc_config.hadc_cvs != NULL && adc_config.adc_cv_buf_ptr != NULL) {
+        HAL_ADC_Start_DMA(adc_config.hadc_cvs, (uint32_t*) adc_config.adc_cv_buf_ptr, NUM_CV_CHANNELS);
     }
-    if (active_cfg->hadc_pots != NULL && active_cfg->adc_pot_buf_ptr != NULL) {
-        HAL_ADC_Start_DMA(active_cfg->hadc_pots, (uint32_t*) active_cfg->adc_pot_buf_ptr, NUM_POT_CHANNELS);
+    if (adc_config.hadc_pots != NULL && adc_config.adc_pot_buf_ptr != NULL) {
+        HAL_ADC_Start_DMA(adc_config.hadc_pots, (uint32_t*) adc_config.adc_pot_buf_ptr, NUM_POT_CHANNELS);
     }
     return 0;
 }
@@ -51,32 +54,32 @@ int adc_copy_dma_to_working_buf(uint16_t* dma_buf, uint16_t* working_buf, size_t
 
 // gets latest CV samples from DMA buffer to working buffer
 int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len) {
-    if (active_cfg == NULL || active_cfg->adc_cv_buf_ptr == NULL)
+    if (adc_config.adc_cv_buf_ptr == NULL)
         return -1;
-    return adc_copy_dma_to_working_buf(active_cfg->adc_cv_buf_ptr, working_buf, len);
+    return adc_copy_dma_to_working_buf(adc_config.adc_cv_buf_ptr, working_buf, len);
 }
 
 // gets latest potentiometer samples from DMA buffer to working buffer
 int adc_copy_pots_to_working_buf(uint16_t* working_buf, size_t len) {
-    if (active_cfg == NULL || active_cfg->adc_pot_buf_ptr == NULL)
+    if (adc_config.adc_pot_buf_ptr == NULL)
         return -1;
-    return adc_copy_dma_to_working_buf(active_cfg->adc_pot_buf_ptr, working_buf, len);
+    return adc_copy_dma_to_working_buf(adc_config.adc_pot_buf_ptr, working_buf, len);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     BaseType_t hpw = pdFALSE;
 
-    if (active_cfg == NULL) {
+    if (adc_config.hadc_cvs == NULL && adc_config.hadc_pots == NULL) {
         return;
     }
 
     // Notify control or user interface task about new data
     // Can be retrieved by adc_copy_*_to_working_buf functions
-    if (hadc == active_cfg->hadc_cvs && active_cfg->controlIfTaskHandle != NULL) {
-        xTaskNotifyFromISR(active_cfg->controlIfTaskHandle, ADC_NOTIFY_CV_RDY, eSetBits, &hpw);
+    if (hadc == adc_config.hadc_cvs && adc_config.controlIfTaskHandle != NULL) {
+        xTaskNotifyFromISR(adc_config.controlIfTaskHandle, ADC_NOTIFY_CV_RDY, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
-    } else if (hadc == active_cfg->hadc_pots && active_cfg->userIfTaskHandle != NULL) {
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, ADC_NOTIFY_POTS_RDY, eSetBits, &hpw);
+    } else if (hadc == adc_config.hadc_pots && adc_config.userIfTaskHandle != NULL) {
+        xTaskNotifyFromISR(adc_config.userIfTaskHandle, ADC_NOTIFY_POTS_RDY, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
 }

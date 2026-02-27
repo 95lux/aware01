@@ -13,13 +13,21 @@
 #include "rtos.h"
 #include "tape_player.h"
 
-static struct gpio_config* active_cfg = NULL;
+static struct gpio_config gpio_config;
 
-int init_gpio_interface(struct gpio_config* config) {
-    if (config == NULL || config->controlIfTaskHandle == NULL || config->userIfTaskHandle == NULL || config->tape_cmd_q == NULL)
+int init_gpio_interface(TaskHandle_t controlIfTaskHandle,
+                        TaskHandle_t userIfTaskHandle,
+                        TIM_HandleTypeDef* htim_button1_debounce,
+                        TIM_HandleTypeDef* htim_button2_debounce,
+                        QueueHandle_t tape_cmd_q) {
+    if (controlIfTaskHandle == NULL || userIfTaskHandle == NULL || tape_cmd_q == NULL)
         return -1;
 
-    active_cfg = config;
+    gpio_config.controlIfTaskHandle = controlIfTaskHandle;
+    gpio_config.userIfTaskHandle = userIfTaskHandle;
+    gpio_config.tape_cmd_q = tape_cmd_q;
+    gpio_config.htim_button1_debounce = htim_button1_debounce;
+    gpio_config.htim_button2_debounce = htim_button2_debounce;
 
     return 0;
 }
@@ -56,50 +64,49 @@ bool wait_for_both_buttons_released() {
 }
 
 void button_debounce_timer_callback(TIM_HandleTypeDef* htim) {
-    if (htim->Instance == TIM13) {
-        active_cfg->button1_debounce = false;
-    } else if (htim->Instance == TIM14) {
-        active_cfg->button2_debounce = false;
+    if (htim->Instance == gpio_config.htim_button1_debounce->Instance) {
+        gpio_config.button1_debounce = false;
+    } else if (htim->Instance == gpio_config.htim_button2_debounce->Instance) {
+        gpio_config.button2_debounce = false;
     }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    if (active_cfg == NULL) {
+    if (gpio_config.userIfTaskHandle == NULL) {
         return;
     }
     BaseType_t hpw = pdFALSE;
     tape_cmd_msg_t msg;
-    msg.pitch = 1.0f;
 
     // button presses trigger notifications to interface task
     if (GPIO_Pin == BUTTON1_IN_Pin) {
-        if (active_cfg->button1_debounce) {
+        if (gpio_config.button1_debounce) {
             return;
         }
-        active_cfg->button1_debounce = true;
-        HAL_TIM_Base_Start_IT(active_cfg->htim_button1_debounce);
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_BUTTON1, eSetBits, &hpw);
+        gpio_config.button1_debounce = true;
+        HAL_TIM_Base_Start_IT(gpio_config.htim_button1_debounce);
+        xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_BUTTON1, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == BUTTON2_IN_Pin) {
-        if (active_cfg->button2_debounce) {
+        if (gpio_config.button2_debounce) {
             return;
         }
-        active_cfg->button2_debounce = true;
-        HAL_TIM_Base_Start_IT(active_cfg->htim_button2_debounce);
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_BUTTON2, eSetBits, &hpw);
+        gpio_config.button2_debounce = true;
+        HAL_TIM_Base_Start_IT(gpio_config.htim_button2_debounce);
+        xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_BUTTON2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == GATE1_IN_Pin) {
         msg.cmd = TAPE_CMD_PLAY;
-        xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE1, eSetBits, &hpw);
+        xQueueSendFromISR(gpio_config.tape_cmd_q, &msg, &hpw);
+        xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_GATE1, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == GATE2_IN_Pin) {
         msg.cmd = TAPE_CMD_RECORD;
-        xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE2, eSetBits, &hpw);
+        xQueueSendFromISR(gpio_config.tape_cmd_q, &msg, &hpw);
+        xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_GATE2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
 
@@ -109,8 +116,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     // }
     if (GPIO_Pin == GATE4_IN_Pin) {
         msg.cmd = TAPE_CMD_SLICE;
-        xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
-        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE4, eSetBits, &hpw);
+        xQueueSendFromISR(gpio_config.tape_cmd_q, &msg, &hpw);
+        xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_GATE4, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
 }
