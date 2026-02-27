@@ -32,14 +32,14 @@
 // CV Channel configuration
 #define NUM_CV_CHANNELS 4
 #define NUM_POT_CHANNELS 4
-#define ADC_V_OCT_CV 0 // ADC channel index for 1V/oct CV input
+#define ADC_V_OCT_CV 0 // ADC channel index for 1V/oct CV inputcat /proc/interrupts
 #define ADC_CV1 1      // ADC channel index for CV1 input
 #define ADC_CV2 2      // ADC channel index for CV2 input
 #define ADC_CV3 3      // ADC channel index for CV3 input
 
 // CV buffer indices
 #define CV_V_OCT 0
-#define CV1 1
+#define CV_SLICE_POS 1
 #define CV2 2
 #define CV3 3
 
@@ -84,8 +84,8 @@
 // recording buffer size per channel, aligned to block size
 #define TAPE_REC_BUF_SIZE_CHANNEL (AUDIO_BLOCK_SIZE * TAPE_REC_BUF_NUM_BLOCKS)
 
-#define FADE_XFADE_RETRIG_LEN 128
-#define FADE_XFADE_CYCLIC_LEN 256
+#define FADE_XFADE_RETRIG_LEN 64
+#define FADE_XFADE_CYCLIC_LEN 4800
 #define FADE_IN_OUT_LEN 64 // fade in/out length when approaching start/end of buffer, to prevent clicks
 
 #define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)

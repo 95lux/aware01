@@ -35,6 +35,10 @@ void param_cache_set_decimation(uint8_t decimation) {
     cache.decimation = decimation;
 }
 
+void param_cache_set_slice_pos(float slice_pos) {
+    cache.slice_pos = slice_pos;
+}
+
 /* ===== Reader ===== */
 void param_cache_fetch(struct param_cache* out) {
     out->pitch_cv = cache.pitch_cv;
@@ -44,4 +48,5 @@ void param_cache_fetch(struct param_cache* out) {
     out->cyclic_mode = cache.cyclic_mode;
     out->reverse_mode = cache.reverse_mode;
     out->decimation = cache.decimation;
+    out->slice_pos = cache.slice_pos;
 }

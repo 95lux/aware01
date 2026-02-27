@@ -172,7 +172,7 @@ static void AudioTask(void* argument) {
 
             excite_block(dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
 
-            float excite_amount = tape_player_get_grit(&tape_player);
+            float excite_amount = tape_player_get_grit();
             excite_amount = excite_amount * MAX_EXCITE_ON_MAX_DECIMATION;
 
             // mix wet and dry with fixed ratio for now (can be made variable later)
@@ -197,6 +197,9 @@ static void AudioTask(void* argument) {
                     break;
                 case TAPE_CMD_RECORD:
                     tape_player_record();
+                    break;
+                case TAPE_CMD_SLICE:
+                    tape_player_set_slice();
                     break;
                 }
             }

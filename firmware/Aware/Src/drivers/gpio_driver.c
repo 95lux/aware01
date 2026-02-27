@@ -93,21 +93,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GATE1_IN_Pin) {
         msg.cmd = TAPE_CMD_PLAY;
         xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
-        portYIELD_FROM_ISR(hpw);
         xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE1, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
     if (GPIO_Pin == GATE2_IN_Pin) {
         msg.cmd = TAPE_CMD_RECORD;
         xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
-        portYIELD_FROM_ISR(hpw);
         xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
+
     // if (GPIO_Pin == GATE3_IN_Pin) {
     //     msg.cmd = TAPE_CMD_STOP;
     //     valid_cmd = true;
     // }
     if (GPIO_Pin == GATE4_IN_Pin) {
+        msg.cmd = TAPE_CMD_SLICE;
+        xQueueSendFromISR(active_cfg->tape_cmd_q, &msg, &hpw);
+        xTaskNotifyFromISR(active_cfg->userIfTaskHandle, GPIO_NOTIFY_GATE4, eSetBits, &hpw);
+        portYIELD_FROM_ISR(hpw);
     }
 }

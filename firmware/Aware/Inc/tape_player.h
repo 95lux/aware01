@@ -17,11 +17,16 @@ typedef int8_t tape_sample_t;
 typedef int16_t tape_sample_t;
 #endif
 
+#define MAX_NUM_SLICES 128
+
 typedef struct {
     int16_t* ch[2];         // ch[0]=L, ch[1]=R
     uint32_t size;          // samples per channel
     uint32_t valid_samples; // number of valid recorded samples in the buffer (for playback), updated when recording is done
     uint8_t decimation;     // decimation factor for recording and playback
+
+    uint32_t slice_positions[MAX_NUM_SLICES]; // holds start position of each slice in samples.
+    uint32_t num_slices;
 } tape_buffer_t;
 
 // holds changeable parameters in the tape player engine. should actually not be accessed from outside
@@ -36,7 +41,9 @@ struct parameters {
     bool cyclic_mode;
 
     uint8_t decimation; // decimation factor for recording and playback.
-    // more params will be added according to DSP/feature requirements
+
+    // normalized slice position, set from CV. This is used to calculate the actual slice start position in samples when starting playback or retriggering.
+    float slice_pos;
 
     float grit; // calculated from decimation factor, used for excite effect amount in audio processing task. 0..1 depending on decimation.
 };
@@ -46,7 +53,7 @@ typedef enum { TAPE_EVT_NONE = 0, TAPE_EVT_PLAY, TAPE_EVT_STOP, TAPE_EVT_RECORD,
 
 typedef enum { PLAY_STOPPED = 0, PLAY_PLAYING } play_state_t;
 
-typedef enum { REC_IDLE = 0, REC_RECORDING, REC_SWAP_PENDING, REC_DONE } rec_state_t;
+typedef enum { REC_IDLE = 0, REC_RECORDING, REC_REREC, REC_DONE } rec_state_t;
 
 typedef struct {
     bool active;
@@ -61,7 +68,7 @@ typedef struct {
     // 16.16 fixed point fade accumulator for fade curve interpolation, independent of main playhead position and increment, so that we can have smooth fades even with low pitch factors (where main playhead moves very slowly and thus would cause stepping in the fade curve)
     // this is just the phase accumulator for the lut access.
     uint32_t fade_acc_q16;
-    uint16_t fade_step_q16; // how much to increment the fade_acc every sample, in Q16.16 format. Calculated from fade length and LUT size.
+    uint32_t step_q16; // how much to increment the fade_acc every sample, in Q16.16 format. Calculated from fade length and LUT size.
     uint32_t
         base_ratio_q16; // for crossfades, this is the ratio between the xfade buffer and the fade LUT, in Q16.16 format. Calculated from xfade length and LUT size.
 
@@ -69,6 +76,7 @@ typedef struct {
     int16_t* buf_b_ptr_r;
     uint32_t
         temp_buf_valid_samples; // number of valid samples in the xfade temp buffer (for retrigger xfade at end of recording, when there might be less than xfade.len samples available)
+
 } crossfade_t;
 
 // main tape player structure
@@ -94,7 +102,7 @@ struct tape_player {
 
     uint32_t tape_recordhead;
 
-    bool switch_bufs_pending;
+    bool swap_bufs_pending;
     bool switch_bufs_done;
 
     uint32_t curr_phase_inc_q16_16;   // The increment actually being used
@@ -112,7 +120,7 @@ struct tape_player {
 };
 
 // FREERTOS queue message structure
-typedef enum { TAPE_CMD_PLAY, TAPE_CMD_STOP, TAPE_CMD_RECORD } tape_cmd_t;
+typedef enum { TAPE_CMD_PLAY, TAPE_CMD_STOP, TAPE_CMD_RECORD, TAPE_CMD_SLICE } tape_cmd_t;
 typedef struct {
     tape_cmd_t cmd;
     float pitch;
@@ -128,6 +136,7 @@ void tape_player_record();
 void tape_player_stop_record(void);
 void tape_player_set_pitch(float pitch_factor);
 void tape_player_set_params(struct param_cache param_cache);
-float tape_player_get_grit(struct tape_player* tape);
+void tape_player_set_slice();
 
+float tape_player_get_grit();
 float tape_player_get_pitch();
