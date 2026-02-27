@@ -39,15 +39,26 @@ void control_interface_process() {
         float v = float_value(active_ctrl_interface_cfg->adc_cv_working_buf[i]);
         active_ctrl_interface_cfg->cv_ins[i].val = v;
     }
-
+    // V/Oct
     float v_oct_normalized = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val;    // 0..1
     float pitch_scale = active_ctrl_interface_cfg->calib_data->voct_pitch_scale; // pitch_scale = semitones per normalized CV unit
     float pitch_offset = active_ctrl_interface_cfg->calib_data->voct_pitch_offset;
 
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
-
     param_cache_set_pitch_cv(pitch_factor_new);
+
+    // Slice position
+    // TODO: there is a logic problem here.
+    // ADC gives a bipolar signal. slice 0 cant be -5V, since when no cable is plugged in we want slice 0.
+    // Best way to do this is to hardware design gpio read, to detect if cable is plugged in.
+    // if no cable is plugged in, set offset to 0 so that slice pos is 0. if cable is plugged in, set offset to calibrated value (0.5) so that full range of slice pos is available.
+    float val = active_ctrl_interface_cfg->cv_ins[CV_SLICE_POS].val;
+    float offset = active_ctrl_interface_cfg->calib_data->cv_offset[CV_SLICE_POS];
+    // for now ignore negative ADC readings, and map positive to full 0..1 range.
+    float slice_pos = (offset - val) * 2; // 0..1
+    slice_pos = fmaxf(0.0f, fminf(1.0f, slice_pos));
+    param_cache_set_slice_pos(slice_pos);
 }
 
 // calibration procedure

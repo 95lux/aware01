@@ -14,6 +14,8 @@ struct param_cache {
     bool reverse_mode;
 
     uint8_t decimation;
+
+    float slice_pos; // normalized slice position
 };
 
 /* public API */
@@ -24,5 +26,6 @@ void param_cache_set_env_decay(float decay);
 void param_cache_set_cyclic(bool cyclic);
 void param_cache_set_reverse(bool reverse);
 void param_cache_set_decimation(uint8_t decimation);
+void param_cache_set_slice_pos(float slice_pos);
 
 void param_cache_fetch(struct param_cache* out);
