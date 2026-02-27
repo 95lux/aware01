@@ -129,15 +129,13 @@ static void AudioTask(void* argument) {
     struct audioengine_config audioengine_cfg = {
         .i2s_handle = &hi2s1, .sample_rate = AUDIO_SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
 
-    static struct tape_player tape_player;
-
     struct excite_config excite_cfg;
 
     // wait for audio engine to be ready (signaled from uiface after calibration)
     if (xSemaphoreTake(audioReadySemaphore, portMAX_DELAY) == pdTRUE) {
         /* initialize audio engine */
         init_audioengine(&audioengine_cfg);
-        init_tape_player(&tape_player, audioengine_cfg.buffer_size, tape_cmd_q);
+        init_tape_player(audioengine_cfg.buffer_size, tape_cmd_q);
 
         excite_init(&excite_cfg);
 
@@ -167,7 +165,7 @@ static void AudioTask(void* argument) {
 
 #ifdef CONFIG_ENABLE_TAPE_PLAYER
             // tape player may be disabled to check simple dsp processing without tape player in the way, since it is currently the only source of audio input (no external input implemented yet)
-            tape_player_process(&tape_player, in_buf, (int16_t*) dry);
+            tape_player_process(in_buf, (int16_t*) dry);
 #endif
 
             excite_block(dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
