@@ -7,8 +7,8 @@
 #include "tim.h"
 #include <stdint.h>
 
-#define WS2812_LED_COUNT 4        // number of LEDs on the device
-#define WS2812_ANIM_STAGE_COUNT 4 // maximum number of stages per animation, can be extended if needed
+#define WS2812_LED_COUNT 4         // number of LEDs on the device
+#define WS2812_ANIM_STAGE_COUNT 16 // maximum number of stages per animation, can be extended if needed
 
 struct ws2812_led {
     uint8_t r;

@@ -126,9 +126,9 @@ typedef struct {
     float pitch;
 } tape_cmd_msg_t;
 
-int init_tape_player(struct tape_player* tape_player, size_t dma_buf_size, QueueHandle_t cmd_queue);
+int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue);
 
-void tape_player_process(struct tape_player* tape, int16_t* dma_in_buf, int16_t* dma_out_buf);
+void tape_player_process(int16_t* in_buf, int16_t* out_buf);
 
 void tape_player_play();
 void tape_player_stop_play();
