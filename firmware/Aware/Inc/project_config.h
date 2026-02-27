@@ -40,8 +40,8 @@
 // CV buffer indices
 #define CV_V_OCT 0
 #define CV_SLICE_POS 1
-#define CV2 2
-#define CV3 3
+#define CV2 2 // could be XY plane for effectrack/destroyer
+#define CV3 3 // could be XY plane for effectrack/destroyer
 
 // Potentiometer indeces
 #define POT_PITCH 0 // potentiometer index for pitch control

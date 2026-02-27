@@ -42,8 +42,6 @@ static void ControlInterfaceTask(void* argument);
 static void UserInterfaceTask(void* argument);
 
 /* ===== Global config structs =====*/
-struct gpio_config gpio_cfg;
-struct adc_config adc_interface_cfg;
 // __attribute__((section(".sram1"))) struct SettingsData settings_data_ram;
 struct SettingsData settings_data_ram;
 
@@ -69,23 +67,10 @@ void FREERTOS_Init(void) {
     xTaskCreate(UserInterfaceTask, "UserIF", 256, NULL, configMAX_PRIORITIES - 4, &userIfTaskHandle);
 
     {
-        adc_interface_cfg.adc_cv_buf_ptr = NULL;
-        adc_interface_cfg.adc_pot_buf_ptr = NULL;
-        adc_interface_cfg.controlIfTaskHandle = controlIfTaskHandle;
-        adc_interface_cfg.userIfTaskHandle = userIfTaskHandle;
-        adc_interface_cfg.hadc_pots = &hadc1;
-        adc_interface_cfg.hadc_cvs = &hadc2;
-
-        init_adc_interface(&adc_interface_cfg);
+        init_adc_interface(controlIfTaskHandle, userIfTaskHandle, &hadc2, &hadc1);
         start_adc_interface();
 
-        gpio_cfg.controlIfTaskHandle = controlIfTaskHandle;
-        gpio_cfg.userIfTaskHandle = userIfTaskHandle;
-        gpio_cfg.tape_cmd_q = tape_cmd_q;
-        gpio_cfg.htim_button1_debounce = &htim13;
-        gpio_cfg.htim_button2_debounce = &htim14;
-
-        init_gpio_interface(&gpio_cfg);
+        init_gpio_interface(controlIfTaskHandle, userIfTaskHandle, &htim13, &htim14, tape_cmd_q);
 
 #ifdef CONFIG_USE_CALIB_STORAGE
         int32_t b_read = read_settings_data(&settings_data_ram);

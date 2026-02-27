@@ -21,7 +21,10 @@ struct adc_config {
 
 #define ADC_MAX_VALUE 65535.0f
 
-int init_adc_interface(struct adc_config* config);
+int init_adc_interface(TaskHandle_t controlIfTaskHandle,
+                       TaskHandle_t userIfTaskHandle,
+                       ADC_HandleTypeDef* hadc_cvs,
+                       ADC_HandleTypeDef* hadc_pots);
 int start_adc_interface(void);
 
 int adc_copy_cv_to_working_buf(uint16_t* working_buf, size_t len);

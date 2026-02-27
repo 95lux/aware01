@@ -22,7 +22,11 @@ struct gpio_config {
     bool button2_debounce;
 };
 
-int init_gpio_interface(struct gpio_config* config);
+int init_gpio_interface(TaskHandle_t controlIfTaskHandle,
+                        TaskHandle_t userIfTaskHandle,
+                        TIM_HandleTypeDef* htim_button1_debounce,
+                        TIM_HandleTypeDef* htim_button2_debounce,
+                        QueueHandle_t tape_cmd_q);
 bool wait_for_both_buttons_pushed();
 bool wait_for_both_buttons_released();
 bool are_both_buttons_pushed();
