@@ -195,12 +195,7 @@ static void AudioTask(void* argument) {
 static void ControlInterfaceTask(void* argument) {
     (void) argument;
 
-    struct control_interface_config control_interface_cfg = {
-        .userIfTaskHandle = userIfTaskHandle,
-        .hadc_cvs = &hadc1,
-    };
-
-    init_control_interface(&control_interface_cfg, &settings_data_ram.calibration_data);
+    init_control_interface(&settings_data_ram.calibration_data, userIfTaskHandle, &hadc1);
     start_control_interface();
 
     uint32_t notified;
@@ -208,11 +203,6 @@ static void ControlInterfaceTask(void* argument) {
     for (;;) {
         // wait for next adc conversion
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
-            if (res != 0) {
-                // skip processing if samples cant be fetched.
-                continue;
-            };
             control_interface_process();
         }
     }
@@ -221,32 +211,15 @@ static void ControlInterfaceTask(void* argument) {
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
     // init ws2812 driver
-    struct ws2812_config ws2812_cfg = {
+    ws2812_init_t ws2812_init_cfg = {
         .htim_anim = &htim17,
         .htim_pwm = &htim15,
         .tim_channel_pwm = TIM_CHANNEL_1,
-        .state.animation = anim_off,
+        .default_animation = &anim_off,
     };
 
-    ws2812_init(&ws2812_cfg);
+    ws2812_init(&ws2812_init_cfg);
     ws2812_start();
-
-    struct user_interface_config user_interface_cfg = {
-        .userIfTaskHandle = userIfTaskHandle,
-        .pots =
-            {
-                [0] = {.inverted = true},
-                [1] = {.inverted = false},
-                [2] = {.inverted = false},
-                [3] = {.inverted = true},
-            },
-        .pot_leds =
-            {
-                [0] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_2},
-                [1] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_1},
-                [2] = {.htim_led = &htim1, .timer_channel = TIM_CHANNEL_1},
-            },
-    };
 
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
@@ -299,7 +272,25 @@ static void UserInterfaceTask(void* argument) {
     vTaskResume(controlIfTaskHandle);
     xSemaphoreGive(audioReadySemaphore);
 
-    user_iface_init(&user_interface_cfg, &settings_data_ram.calibration_data);
+    // proceed with UI initialization
+    user_interface_init_t user_iface_init_cfg = {
+        .userIfTaskHandle = userIfTaskHandle,
+        .pots =
+            {
+                [0] = {.inverted = true},
+                [1] = {.inverted = false},
+                [2] = {.inverted = false},
+                [3] = {.inverted = true},
+            },
+        .pot_leds =
+            {
+                [0] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_2},
+                [1] = {.htim_led = &htim12, .timer_channel = TIM_CHANNEL_1},
+                [2] = {.htim_led = &htim1, .timer_channel = TIM_CHANNEL_1},
+            },
+    };
+
+    user_iface_init(&settings_data_ram.calibration_data, &user_iface_init_cfg, userIfTaskHandle);
     user_iface_start();
 
     ws2812_change_animation(&anim_bootup);
@@ -310,23 +301,21 @@ static void UserInterfaceTask(void* argument) {
         // wait for adc conversion
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
             if (notified & ADC_NOTIFY_POTS_RDY) {
-                int res = adc_copy_pots_to_working_buf(user_interface_cfg.adc_pot_working_buf, NUM_POT_CHANNELS);
-                if (res != 0) {
-                    // skip processing if adc fetch failed
-                    continue;
+                if (user_iface_populate_pot_bufs() != 0) {
+                    continue; // skip processing if adc fetch failed
                 }
+                if (notified & GPIO_NOTIFY_BUTTON1) {
+                }
+                if (notified & GPIO_NOTIFY_BUTTON2) {
+                }
+                if (notified & GPIO_NOTIFY_GATE1) {
+                    ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
+                }
+                if (notified & GPIO_NOTIFY_GATE2) {
+                    ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
+                }
+                user_iface_process(notified);
             }
-            if (notified & GPIO_NOTIFY_BUTTON1) {
-            }
-            if (notified & GPIO_NOTIFY_BUTTON2) {
-            }
-            if (notified & GPIO_NOTIFY_GATE1) {
-                ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
-            }
-            if (notified & GPIO_NOTIFY_GATE2) {
-                ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
-            }
-            user_iface_process(notified);
         }
     }
 }

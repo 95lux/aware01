@@ -15,15 +15,28 @@
 
 #include "tape_player.h"
 
-static struct control_interface_config* active_ctrl_interface_cfg = NULL;
+struct control_interface_config {
+    uint16_t adc_cv_working_buf[NUM_CV_CHANNELS];
+
+    TaskHandle_t userIfTaskHandle;
+
+    ADC_HandleTypeDef* hadc_cvs;
+
+    struct calibration_data* calib_data;
+
+    struct cv_in cv_ins[NUM_CV_CHANNELS];
+};
+
+static struct control_interface_config control_interface_cfg;
 
 // TODO: create substructs for control_calib_data and ui_calib_data
-int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data) {
-    if (config == NULL || config->hadc_cvs == NULL)
+int init_control_interface(struct calibration_data* calib_data, TaskHandle_t userIfTaskHandle, ADC_HandleTypeDef* hadc_cvs) {
+    if (hadc_cvs == NULL || userIfTaskHandle == NULL || calib_data == NULL)
         return -1;
 
-    active_ctrl_interface_cfg = config;
-    active_ctrl_interface_cfg->calib_data = calib_data;
+    control_interface_cfg.userIfTaskHandle = userIfTaskHandle;
+    control_interface_cfg.hadc_cvs = hadc_cvs;
+    control_interface_cfg.calib_data = calib_data;
 
     return 0;
 }
@@ -35,14 +48,20 @@ int start_control_interface() {
 
 // TODO: use offsets from calibration data to adjust CV values
 void control_interface_process() {
+    int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
+    if (res != 0) {
+        // skip processing if samples cant be fetched.
+        return;
+    };
+
     for (size_t i = 0; i < NUM_CV_CHANNELS; i++) {
-        float v = float_value(active_ctrl_interface_cfg->adc_cv_working_buf[i]);
-        active_ctrl_interface_cfg->cv_ins[i].val = v;
+        float v = float_value(control_interface_cfg.adc_cv_working_buf[i]);
+        control_interface_cfg.cv_ins[i].val = v;
     }
     // V/Oct
-    float v_oct_normalized = active_ctrl_interface_cfg->cv_ins[CV_V_OCT].val;    // 0..1
-    float pitch_scale = active_ctrl_interface_cfg->calib_data->voct_pitch_scale; // pitch_scale = semitones per normalized CV unit
-    float pitch_offset = active_ctrl_interface_cfg->calib_data->voct_pitch_offset;
+    float v_oct_normalized = control_interface_cfg.cv_ins[CV_V_OCT].val;    // 0..1
+    float pitch_scale = control_interface_cfg.calib_data->voct_pitch_scale; // pitch_scale = semitones per normalized CV unit
+    float pitch_offset = control_interface_cfg.calib_data->voct_pitch_offset;
 
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
@@ -53,8 +72,8 @@ void control_interface_process() {
     // ADC gives a bipolar signal. slice 0 cant be -5V, since when no cable is plugged in we want slice 0.
     // Best way to do this is to hardware design gpio read, to detect if cable is plugged in.
     // if no cable is plugged in, set offset to 0 so that slice pos is 0. if cable is plugged in, set offset to calibrated value (0.5) so that full range of slice pos is available.
-    float val = active_ctrl_interface_cfg->cv_ins[CV_SLICE_POS].val;
-    float offset = active_ctrl_interface_cfg->calib_data->cv_offset[CV_SLICE_POS];
+    float val = control_interface_cfg.cv_ins[CV_SLICE_POS].val;
+    float offset = control_interface_cfg.calib_data->cv_offset[CV_SLICE_POS];
     // for now ignore negative ADC readings, and map positive to full 0..1 range.
     float slice_pos = (offset - val) * 2; // 0..1
     slice_pos = fmaxf(0.0f, fminf(1.0f, slice_pos));
@@ -102,9 +121,6 @@ int calibrate_C3(struct calibration_data* calib_data, float c1) {
 
 // this is run from user interface task, so it can use button states and ws2812 animations for feedback
 int control_interface_calibrate_voct(struct calibration_data* calib_data) {
-    if (!active_ctrl_interface_cfg) {
-        return -1;
-    }
     // procedure:
     // 1. input C1 voltage, then wait for button press to store C1
     if (!wait_for_both_buttons_pushed())

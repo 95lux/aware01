@@ -8,6 +8,29 @@
 #include "project_config.h"
 #include "ws2812_animations.h"
 
+struct ws2812_mode_state {
+    ws2812_mode_t mode;
+    // for static and trigger mode
+    struct ws2812_led leds[WS2812_LED_COUNT];
+    uint32_t timeout_ticks[WS2812_LED_COUNT];
+
+    // for animation mode
+    uint32_t anim_tick;
+    uint32_t anim_stage;
+    struct led_animation animation;
+    struct led_animation* next_animation;
+
+    bool off_initialized;
+};
+
+struct ws2812_config {
+    TIM_HandleTypeDef* htim_anim;
+    TIM_HandleTypeDef* htim_pwm;
+    uint32_t tim_channel_pwm;
+
+    struct ws2812_mode_state state;
+};
+
 // PWM = 153.6 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
 // with PSC of 0 -> ARR + 1 = ( 153.6 MHz / 800 kHz ) - 1 = 192
 // Software timer (TIM17) for animation. Cyclic mode.
@@ -24,25 +47,25 @@
 DMA_BUFFER static uint16_t ws2812_pwm_buf[2][WS2812_LED_COUNT * WS2812_BITS_PER_LED + WS2812_RESET_SLOTS];
 static uint8_t buf_active = 0; // index of DMA buffer in use
 static uint8_t buf_write = 1;  // index of buffer we can write to safely
-static struct ws2812_config* active_config;
+static struct ws2812_config ws2812_config;
 
-void ws2812_init(struct ws2812_config* config) {
-    if (config == NULL)
-        return;
-
+void ws2812_init(const ws2812_init_t* init_cfg) {
     //zeroize pwm buffer (idle high at timer output)
     memset(ws2812_pwm_buf, 0, sizeof(ws2812_pwm_buf));
 
-    config->state.mode = WS2812_MODE_OFF;
-
+    ws2812_config.state.mode = WS2812_MODE_OFF;
     // zeroize animation state
-    config->state.anim_tick = 0;
-    config->state.anim_stage = 0;
+    ws2812_config.state.anim_tick = 0;
+    ws2812_config.state.anim_stage = 0;
 
     // zeroize led state
-    memset(config->state.leds, 0, sizeof(config->state.leds));
-    memset(config->state.timeout_ticks, 0, sizeof(config->state.timeout_ticks));
-    active_config = config;
+    memset(ws2812_config.state.leds, 0, sizeof(ws2812_config.state.leds));
+    memset(ws2812_config.state.timeout_ticks, 0, sizeof(ws2812_config.state.timeout_ticks));
+
+    ws2812_config.htim_anim = init_cfg->htim_anim;
+    ws2812_config.htim_pwm = init_cfg->htim_pwm;
+    ws2812_config.tim_channel_pwm = init_cfg->tim_channel_pwm;
+    ws2812_config.state.animation = *init_cfg->default_animation;
 }
 
 // helper to get current write buffer
@@ -64,12 +87,9 @@ static void swap_buffers(void) {
 
 /* ----- Internal API ----- */
 void ws2812_start() {
-    if (active_config == NULL)
-        return;
-
     swap_buffers();
     // start anim timer
-    HAL_TIM_Base_Start_IT(active_config->htim_anim);
+    HAL_TIM_Base_Start_IT(ws2812_config.htim_anim);
 }
 
 void ws2812_show(TIM_HandleTypeDef* htim, uint32_t channel) {
@@ -100,65 +120,62 @@ void ws2812_set_led(uint32_t idx, uint8_t r, uint8_t g, uint8_t b) {
 }
 
 static void ws2812_force_animation(struct led_animation* anim) {
-    active_config->state.animation = *anim;
-    active_config->state.anim_stage = 0;
-    active_config->state.anim_tick = 0;
-    active_config->state.next_animation = NULL;
+    ws2812_config.state.animation = *anim;
+    ws2812_config.state.anim_stage = 0;
+    ws2812_config.state.anim_tick = 0;
+    ws2812_config.state.next_animation = NULL;
 }
 
 void ws2812_run_step(void) {
-    if (active_config == NULL)
-        return;
-
-    switch (active_config->state.mode) {
+    switch (ws2812_config.state.mode) {
     case WS2812_MODE_OFF:
-        if (!active_config->state.off_initialized) {
+        if (!ws2812_config.state.off_initialized) {
             for (int i = 0; i < WS2812_LED_COUNT; i++) {
                 ws2812_set_led(i, 0, 0, 0);
             }
-            ws2812_show(active_config->htim_pwm, active_config->tim_channel_pwm);
-            active_config->state.off_initialized = true;
+            ws2812_show(ws2812_config.htim_pwm, ws2812_config.tim_channel_pwm);
+            ws2812_config.state.off_initialized = true;
         }
         break;
     case WS2812_MODE_STATIC:
         for (int i = 0; i < WS2812_LED_COUNT; i++) {
-            struct ws2812_led led = active_config->state.leds[i];
+            struct ws2812_led led = ws2812_config.state.leds[i];
             ws2812_set_led(i, led.r, led.g, led.b);
         }
-        ws2812_show(active_config->htim_pwm, active_config->tim_channel_pwm);
+        ws2812_show(ws2812_config.htim_pwm, ws2812_config.tim_channel_pwm);
         break;
     case WS2812_MODE_TRIGGER: {
         bool any_active = false;
 
         for (int i = 0; i < WS2812_LED_COUNT; i++) {
-            if (active_config->state.timeout_ticks[i] > 0) {
-                active_config->state.timeout_ticks[i]--;
-                ws2812_set_led(i, active_config->state.leds[i].r, active_config->state.leds[i].g, active_config->state.leds[i].b);
+            if (ws2812_config.state.timeout_ticks[i] > 0) {
+                ws2812_config.state.timeout_ticks[i]--;
+                ws2812_set_led(i, ws2812_config.state.leds[i].r, ws2812_config.state.leds[i].g, ws2812_config.state.leds[i].b);
                 any_active = true;
             } else {
                 // timeout expired, clear LED state
-                active_config->state.leds[i].r = 0;
-                active_config->state.leds[i].g = 0;
-                active_config->state.leds[i].b = 0;
+                ws2812_config.state.leds[i].r = 0;
+                ws2812_config.state.leds[i].g = 0;
+                ws2812_config.state.leds[i].b = 0;
                 ws2812_set_led(i, 0, 0, 0);
             }
         }
 
-        ws2812_show(active_config->htim_pwm, active_config->tim_channel_pwm);
+        ws2812_show(ws2812_config.htim_pwm, ws2812_config.tim_channel_pwm);
 
         // If no LEDs are active, go back to off mode
         if (!any_active) {
-            active_config->state.mode = WS2812_MODE_OFF;
+            ws2812_config.state.mode = WS2812_MODE_OFF;
         }
     } break;
 
     case WS2812_MODE_ANIMATION: {
-        struct led_animation* anim = &active_config->state.animation;
+        struct led_animation* anim = &ws2812_config.state.animation;
 
         if (anim->total_stages == 0)
             return;
 
-        uint32_t current_stage_index = active_config->state.anim_stage;
+        uint32_t current_stage_index = ws2812_config.state.anim_stage;
         struct led_animation_stage* stage = &anim->stages[current_stage_index];
 
         struct led_animation_stage empty_stage = {.duration = 0, .leds = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}};
@@ -187,25 +204,25 @@ void ws2812_run_step(void) {
             ws2812_set_led(i, r, g, bl);
         }
 
-        ws2812_show(active_config->htim_pwm, active_config->tim_channel_pwm);
+        ws2812_show(ws2812_config.htim_pwm, ws2812_config.tim_channel_pwm);
 
         // Advance time
-        active_config->state.anim_tick++;
+        ws2812_config.state.anim_tick++;
 
-        if (active_config->state.anim_tick >= stage->duration) {
+        if (ws2812_config.state.anim_tick >= stage->duration) {
             // move to next stage
-            active_config->state.anim_tick = 0;
-            active_config->state.anim_stage++;
+            ws2812_config.state.anim_tick = 0;
+            ws2812_config.state.anim_stage++;
 
-            if (active_config->state.anim_stage >= anim->total_stages) {
+            if (ws2812_config.state.anim_stage >= anim->total_stages) {
                 if (anim->duration == 0) {
                     // loop forever
-                    active_config->state.anim_stage = 0;
-                } else if (active_config->state.next_animation != NULL) {
+                    ws2812_config.state.anim_stage = 0;
+                } else if (ws2812_config.state.next_animation != NULL) {
                     // swap in queued animation
-                    ws2812_force_animation(active_config->state.next_animation);
+                    ws2812_force_animation(ws2812_config.state.next_animation);
                 } else {
-                    active_config->state.mode = WS2812_MODE_OFF;
+                    ws2812_config.state.mode = WS2812_MODE_OFF;
                 }
             }
         }
@@ -221,18 +238,15 @@ void ws2812_trigger_led(uint32_t idx, struct ws2812_led color, uint32_t timeout_
     if (idx >= WS2812_LED_COUNT)
         return;
     taskENTER_CRITICAL();
-    active_config->state.leds[idx] = color;
-    active_config->state.timeout_ticks[idx] = timeout_ticks;
-    active_config->state.off_initialized = false;
-    active_config->state.mode = WS2812_MODE_TRIGGER;
+    ws2812_config.state.leds[idx] = color;
+    ws2812_config.state.timeout_ticks[idx] = timeout_ticks;
+    ws2812_config.state.off_initialized = false;
+    ws2812_config.state.mode = WS2812_MODE_TRIGGER;
     taskEXIT_CRITICAL();
 }
 
 void ws2812_change_mode(ws2812_mode_t mode) {
-    if (active_config == NULL)
-        return;
-
-    active_config->state.mode = mode;
+    ws2812_config.state.mode = mode;
 }
 
 // TODO: since this is accessed by tasks, we should consider making this thread safe with a mutex or by disabling interrupts briefly while changing animations. For now we will just assume that animations are only changed from the user interface task and that the animation timer callback does not interrupt it, which should be the case as long as the animation steps are not too long.
@@ -240,16 +254,16 @@ void ws2812_change_mode(ws2812_mode_t mode) {
 void ws2812_change_animation(struct led_animation* anim) {
     // only allow direct switch if no animation is running, or the current animation is looping (duration == 0)
     taskENTER_CRITICAL();
-    if (active_config->state.animation.duration == 0) {
+    if (ws2812_config.state.animation.duration == 0) {
         // No animation running, start immediately
-        active_config->state.animation = *anim;
-        active_config->state.anim_stage = 0;
-        active_config->state.anim_tick = 0;
-        active_config->state.off_initialized = false;
-        active_config->state.mode = WS2812_MODE_ANIMATION;
+        ws2812_config.state.animation = *anim;
+        ws2812_config.state.anim_stage = 0;
+        ws2812_config.state.anim_tick = 0;
+        ws2812_config.state.off_initialized = false;
+        ws2812_config.state.mode = WS2812_MODE_ANIMATION;
     } else {
         // Animation is running, queue this one
-        active_config->state.next_animation = anim;
+        ws2812_config.state.next_animation = anim;
     }
     taskEXIT_CRITICAL();
 }
@@ -260,15 +274,12 @@ void ws2812_timer_callback(TIM_HandleTypeDef* htim) {
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
-    if (active_config == NULL)
-        return;
-
-    if (htim == active_config->htim_pwm) {
+    if (htim == ws2812_config.htim_pwm) {
         // when a full PWM cycle is finished, stop the dma to prevent it from restarting immediately and keep the line high (idle state)
-        HAL_TIM_PWM_Stop_DMA(htim, active_config->tim_channel_pwm);
+        HAL_TIM_PWM_Stop_DMA(htim, ws2812_config.tim_channel_pwm);
 
         // Make absolutely sure output is low
-        __HAL_TIM_SET_COMPARE(htim, active_config->tim_channel_pwm, 0);
+        __HAL_TIM_SET_COMPARE(htim, ws2812_config.tim_channel_pwm, 0);
         HAL_GPIO_WritePin(RGB_LED_DATA_GPIO_Port, RGB_LED_DATA_Pin, GPIO_PIN_SET);
     }
 }
