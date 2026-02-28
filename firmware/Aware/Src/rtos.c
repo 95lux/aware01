@@ -18,7 +18,8 @@
 #include "drivers/gpio_driver.h"
 #include "drivers/swo_log.h"
 #include "drivers/tlv320_driver.h"
-#include "exciter.h"
+#include "dsp/exciter.h"
+#include "dsp/schroeder_reverb.h"
 #include "main.h"
 #include "param_cache.h"
 #include "tape_player.h"
@@ -114,7 +115,8 @@ static void AudioTask(void* argument) {
     struct audioengine_config audioengine_cfg = {
         .i2s_handle = &hi2s1, .sample_rate = AUDIO_SAMPLE_RATE, .buffer_size = AUDIO_BLOCK_SIZE, .audioTaskHandle = audioTaskHandle};
 
-    struct excite_config excite_cfg;
+    excite_config_t exciter;
+    schroeder_stereo_t reverb;
 
     // wait for audio engine to be ready (signaled from uiface after calibration)
     if (xSemaphoreTake(audioReadySemaphore, portMAX_DELAY) == pdTRUE) {
@@ -122,7 +124,11 @@ static void AudioTask(void* argument) {
         init_audioengine(&audioengine_cfg);
         init_tape_player(audioengine_cfg.buffer_size, tape_cmd_q);
 
-        excite_init(&excite_cfg);
+        excite_init(&exciter);
+        schroeder_rev_init(&reverb);
+        schroeder_rev_set_wet(&reverb, 0.0f);
+        schroeder_rev_set_feedback(&reverb, 0.99f);
+        schroeder_rev_set_scale(&reverb, 0.01f);
 
         start_audio_engine();
 
@@ -153,7 +159,7 @@ static void AudioTask(void* argument) {
             tape_player_process(in_buf, (int16_t*) dry);
 #endif
 
-            excite_block(dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
+            excite_block(&exciter, dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
 
             float excite_amount = tape_player_get_grit();
             excite_amount = excite_amount * MAX_EXCITE_ON_MAX_DECIMATION;
@@ -164,6 +170,22 @@ static void AudioTask(void* argument) {
 
                 // hardware saturation
                 wet[i] = __SSAT(wet[i], 16);
+            }
+
+            for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i += 2) {
+                float inL = (float) wet[i] / 32768.0f;
+                float inR = (float) wet[i + 1] / 32768.0f;
+
+                float outL, outR;
+
+                schroeder_rev_process(&reverb, inL, inR, &outL, &outR);
+
+                /* back to int16 */
+                int32_t sL = (int32_t) (outL * 32768.0f);
+                int32_t sR = (int32_t) (outR * 32768.0f);
+
+                wet[i] = __SSAT(sL, 16);
+                wet[i + 1] = __SSAT(sR, 16);
             }
 
             audio_write_dma_out_buf(wet, AUDIO_HALF_BLOCK_SIZE);

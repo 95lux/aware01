@@ -1,0 +1,25 @@
+\subsection{WS2812 PWM Timer Configuration}
+
+The WS2812B protocol requires a PWM carrier frequency of \SI{800}{\kilo\hertz}, 
+with a logic \texttt{0} encoded as a \SI{33}{\percent} duty cycle ($T_{0H} \approx \SI{0.35}{\micro\second}$) 
+and a logic \texttt{1} as a \SI{66}{\percent} duty cycle ($T_{1H} \approx \SI{0.70}{\micro\second}$).
+
+TIM15 is connected to the APB2 bus, which runs at $f_{APB2} = \SI{280}{\mega\hertz}$ 
+with a prescaler of 1. The timer period register is derived from:
+
+\begin{equation}
+    f_{PWM} = \frac{f_{APB2}}{(PSC + 1)(ARR + 1)}
+\end{equation}
+
+Setting $PSC = 0$ and solving for $ARR$:
+
+\begin{equation}
+    ARR = \frac{f_{APB2}}{f_{PWM}} - 1 = \frac{\SI{280}{\mega\hertz}}{\SI{800}{\kilo\hertz}} - 1 = 349
+\end{equation}
+
+The compare register values for each bit type follow directly:
+
+\begin{equation}
+    CCR_{0} = \lfloor (ARR+1) \times 0.33 \rfloor = 115, \qquad
+    CCR_{1} = \lfloor (ARR+1) \times 0.66 \rfloor = 231
+\end{equation}
