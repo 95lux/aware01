@@ -44,6 +44,7 @@ int start_adc_interface(void) {
     return 0;
 }
 
+// snapshots latest samples from DMA buffer to working buffer for processing in control or user interface task
 int adc_copy_dma_to_working_buf(uint16_t* dma_buf, uint16_t* working_buf, size_t len) {
     if (dma_buf == NULL || working_buf == NULL || len == 0) {
         return -1;

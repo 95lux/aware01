@@ -27,7 +27,7 @@ struct control_interface_config {
     struct cv_in cv_ins[NUM_CV_CHANNELS];
 };
 
-int init_control_interface(struct control_interface_config* config, struct calibration_data* calib_data);
+int init_control_interface(struct calibration_data* calib_data, TaskHandle_t userIfTaskHandle, ADC_HandleTypeDef* hadc_cvs);
 int start_control_interface();
 void control_interface_process();
 
