@@ -4,22 +4,18 @@
 
 #include "project_config.h"
 
-#include "exciter.h"
-
-static struct excite_config* active_config;
+#include "dsp/exciter.h"
 
 float alpha = 0.8f;
 
 // TODO: coefficients configurable or at least pass in as parameters from ressources.h
 // b1 = -1.3856, b2 = 0.6, a0 = 0.74641, a1 = -1.4928, a2 = 0.74641
-void excite_init(struct excite_config* config) {
-    active_config = config;
-
-    memset(active_config->iir_in_state, 0, sizeof(active_config->iir_in_state));
-    active_config->iir_in_coeffs = iir_coeffs;
+void excite_init(excite_config_t* config) {
+    memset(config->iir_in_state, 0, sizeof(config->iir_in_state));
+    config->iir_in_coeffs = iir_coeffs;
 
     arm_biquad_cascade_stereo_df2T_init_f32(
-        &active_config->iir_in_instance, BIQUAD_CASCADE_NUM_STAGES, active_config->iir_in_coeffs, active_config->iir_in_state);
+        &config->iir_in_instance, BIQUAD_CASCADE_NUM_STAGES, config->iir_in_coeffs, config->iir_in_state);
 
     // arm_biquad_cascade_stereo_df2T_init_f32(
     // &active_config->iir_out_instance, NUM_STAGE_IIR, active_config->iir_out_coeffs, active_config->iir_out_state);
@@ -64,7 +60,7 @@ void bitcrusher(const float* input, float* output, uint32_t len, float normfreq,
     }
 }
 
-void excite_block(const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, float freq) {
+void excite_block(excite_config_t* config, const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, float freq) {
     float work_buf[block_size];
 
     for (uint32_t i = 0; i < block_size; i++) {
@@ -73,18 +69,18 @@ void excite_block(const int16_t* in_buf, int16_t* out_buf, uint32_t block_size, 
 
     uint32_t frames = block_size / 2;
     // 1. hipass signal
-    arm_biquad_cascade_stereo_df2T_f32(&active_config->iir_in_instance, work_buf, work_buf, frames);
+    arm_biquad_cascade_stereo_df2T_f32(&config->iir_in_instance, work_buf, work_buf, frames);
 
     // bitcrush the block
     // bitcrusher(work_buf_out, work_buf_out, block_size, 48000, 16);
 
     // 2. nolinear distortion to create harmonics of decimated signal
     // use cubic softclip, taken from https : //wiki.analog.com/resources/tools-software/sigmastudio/toolbox/nonlinearprocessors/standardcubic
-    // for (uint32_t i = 0; i < block_size; i++) {
-    //     work_buf[i] = softclip_sample(work_buf[i], alpha);
-    //     // work_buf[i] = 0.3 * tanh_distortion(work_buf[i], 15.0f);
-    //     work_buf[i] = fast_tanh(work_buf[i]);
-    // }
+    for (uint32_t i = 0; i < block_size; i++) {
+        // work_buf[i] = softclip_sam.ple(work_buf[i], alpha);
+        // work_buf[i] = 0.3 * tanh_distortion(work_buf[i], 15.0f);
+        // work_buf[i] = fast_tanh(work_buf[i]);
+    }
 
     // arm_biquad_cascade_stereo_df2T_f32(&active_config->iir_out_instance, work_buf, work_buf, frames);
 

@@ -1,4 +1,4 @@
-#include "coefficients.h"
+#include "dsp/coefficients.h"
 
 float32_t iir_coeffs[BIQUAD_CASCADE_NUM_STAGES * 5] = {
     0.46538463,
