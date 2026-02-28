@@ -191,6 +191,59 @@ static void AudioTask(void* argument) {
     }
 }
 
+static void boot_calibration_cleanup(void) {
+    vTaskResume(audioTaskHandle);
+    vTaskResume(controlIfTaskHandle);
+    xSemaphoreGive(audioReadySemaphore);
+}
+
+static void run_boot_calibration(void) {
+    uint32_t hold_time = 0;
+    bool cv_feedback_given = false;
+    bool pot_feedback_given = false;
+
+    vTaskSuspend(audioTaskHandle);
+    vTaskSuspend(controlIfTaskHandle);
+
+    while (are_both_buttons_pushed()) {
+        vTaskDelay(pdMS_TO_TICKS(10));
+        hold_time += 10;
+
+        if (!cv_feedback_given && hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
+            ws2812_change_animation(&anim_breathe_blue);
+            cv_feedback_given = true;
+        }
+
+        if (!pot_feedback_given && hold_time >= POT_CALIB_HOLD_MS) {
+            ws2812_change_animation(&anim_breathe_blue_fast);
+            pot_feedback_given = true;
+
+            if (!wait_for_both_buttons_released()) {
+                ws2812_change_animation(&anim_setting_error);
+                boot_calibration_cleanup();
+                return;
+            }
+
+            if (user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data) == 0)
+                write_settings_data(&settings_data_ram);
+            else
+                ws2812_change_animation(&anim_setting_error);
+
+            boot_calibration_cleanup();
+            return;
+        }
+    }
+
+    if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
+        if (control_interface_calibrate_voct(&settings_data_ram.calibration_data) == 0)
+            write_settings_data(&settings_data_ram);
+        else
+            ws2812_change_animation(&anim_setting_error);
+    }
+
+    boot_calibration_cleanup();
+}
+
 /* ===== Control interface task ===== */
 static void ControlInterfaceTask(void* argument) {
     (void) argument;
@@ -221,57 +274,10 @@ static void UserInterfaceTask(void* argument) {
     ws2812_init(&ws2812_init_cfg);
     ws2812_start();
 
+    run_boot_calibration();
+
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
-
-    uint32_t hold_time = 0;
-    bool cv_feedback_given = false;
-    bool pot_feedback_given = false;
-
-    vTaskSuspend(audioTaskHandle);
-    vTaskSuspend(controlIfTaskHandle);
-    // Check both buttons pressed
-    while (are_both_buttons_pushed()) {
-        vTaskDelay(pdMS_TO_TICKS(10));
-        hold_time += 10;
-        if (cv_feedback_given == false && hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
-            // Short hold -> CV calibration feedback
-            ws2812_change_animation(&anim_breathe_blue);
-            cv_feedback_given = true;
-        }
-        if (pot_feedback_given == false && hold_time >= POT_CALIB_HOLD_MS) {
-            // Long hold -> POT calibration
-            ws2812_change_animation(&anim_breathe_blue_fast);
-            pot_feedback_given = true;
-
-            // wait for buttons released before starting calibration to avoid interference with button presses during calibration
-            if (!wait_for_both_buttons_released()) {
-                ws2812_change_animation(&anim_setting_error);
-                break;
-            }
-
-            if (user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data) == 0) {
-                write_settings_data(&settings_data_ram);
-            } else {
-                ws2812_change_animation(&anim_setting_error);
-            }
-        }
-    }
-
-    if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
-        // Short hold -> CV calibration
-        // led_feedback_cv_calib();
-        if (control_interface_calibrate_voct(&settings_data_ram.calibration_data) == 0) {
-            write_settings_data(&settings_data_ram);
-        } else {
-            ws2812_change_animation(&anim_setting_error);
-        }
-    }
-
-    vTaskResume(audioTaskHandle);
-    vTaskResume(controlIfTaskHandle);
-    xSemaphoreGive(audioReadySemaphore);
-
     // proceed with UI initialization
     user_interface_init_t user_iface_init_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
@@ -304,18 +310,18 @@ static void UserInterfaceTask(void* argument) {
                 if (user_iface_populate_pot_bufs() != 0) {
                     continue; // skip processing if adc fetch failed
                 }
-                if (notified & GPIO_NOTIFY_BUTTON1) {
-                }
-                if (notified & GPIO_NOTIFY_BUTTON2) {
-                }
-                if (notified & GPIO_NOTIFY_GATE1) {
-                    ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
-                }
-                if (notified & GPIO_NOTIFY_GATE2) {
-                    ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
-                }
-                user_iface_process(notified);
             }
+            if (notified & GPIO_NOTIFY_BUTTON1) {
+            }
+            if (notified & GPIO_NOTIFY_BUTTON2) {
+            }
+            if (notified & GPIO_NOTIFY_GATE1) {
+                ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
+            }
+            if (notified & GPIO_NOTIFY_GATE2) {
+                ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
+            }
+            user_iface_process(notified);
         }
     }
 }

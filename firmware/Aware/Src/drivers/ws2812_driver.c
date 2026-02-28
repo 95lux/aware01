@@ -9,10 +9,10 @@
 #include "ws2812_animations.h"
 
 struct ws2812_mode_state {
-    ws2812_mode_t mode;
+    volatile ws2812_mode_t mode;
     // for static and trigger mode
     struct ws2812_led leds[WS2812_LED_COUNT];
-    uint32_t timeout_ticks[WS2812_LED_COUNT];
+    volatile uint32_t timeout_ticks[WS2812_LED_COUNT];
 
     // for animation mode
     uint32_t anim_tick;
@@ -31,13 +31,15 @@ struct ws2812_config {
     struct ws2812_mode_state state;
 };
 
-// PWM = 153.6 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
-// with PSC of 0 -> ARR + 1 = ( 153.6 MHz / 800 kHz ) - 1 = 192
-// Software timer (TIM17) for animation. Cyclic mode.
-// ARR reg -> f=60Hz <=> p=16.666ms
-// ARR = 49998 ; PSC = 50
+// PWM = 280 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
+// with PSC of 0 -> ARR + 1 = ( 280 MHz / 800 kHz ) = 350 -> ARR = 349
 
-#define TIM_PERIOD 192
+// Software timer (TIM17) for animation. Cyclic mode.
+// f_TIM17 = 280 MHz / (PSC + 1) = 280 MHz / 51 = 5.490 MHz
+// ARR reg -> f = 120 Hz <=> p = 8.333 ms
+// ARR = (5.490 MHz / 120) - 1 = 45749 ; PSC = 50
+
+#define TIM_PERIOD 350
 #define WS2812_BITS_PER_LED 24
 #define WS2812_RESET_SLOTS 50                // >50 µs low
 #define WS2812_T0H ((TIM_PERIOD * 33) / 100) // ~0.35 µs

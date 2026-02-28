@@ -15,18 +15,6 @@ struct cv_in {
     bool is_v_oct;
 };
 
-struct control_interface_config {
-    uint16_t adc_cv_working_buf[NUM_CV_CHANNELS];
-
-    TaskHandle_t userIfTaskHandle;
-
-    ADC_HandleTypeDef* hadc_cvs;
-
-    struct calibration_data* calib_data; // only calibration data for v/oct CV
-
-    struct cv_in cv_ins[NUM_CV_CHANNELS];
-};
-
 int init_control_interface(struct calibration_data* calib_data, TaskHandle_t userIfTaskHandle, ADC_HandleTypeDef* hadc_cvs);
 int start_control_interface();
 void control_interface_process();
