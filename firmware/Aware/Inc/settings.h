@@ -6,7 +6,7 @@
 // aligned settings partition size needed
 #define SETTINGS_SIZE 64
 
-// TODO: evaluate proper usage: pitch_offset: offset to be added to pitch CV input, caused by DC voltage offsets from opamps etc.
+// pitch_offset: offset to be added to pitch CV input, caused by DC voltage offsets from opamps etc.
 // pitch_scale: scaling factor for 1V/octave CV input. Float change per semitone.
 // offset[]: per-channel offsets to be subtracted from CV inputs before further processing.
 struct calibration_data {

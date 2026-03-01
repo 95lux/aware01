@@ -64,6 +64,7 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
 
     // playhead and reacordhead init
     tape_player.pos_q48_16 = 1 << 16; // start at sample 1 for interpolation
+    tape_player.swap_bufs_pending = false;
 
     tape_player.xfade_retrig.buf_b_ptr_l = xfade_retrig_temp_buf_l;
     tape_player.xfade_retrig.buf_b_ptr_r = xfade_retrig_temp_buf_r;
@@ -96,7 +97,6 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     tape_player.rec_state = REC_IDLE;
 
     // envelope init
-    // TODO: maybe init in own function
     tape_player.env.state = ENV_IDLE;
     tape_player.env.value = 0.0f;
     tape_player.env.attack_inc = 1 / (0.001f * AUDIO_SAMPLE_RATE);
@@ -104,16 +104,12 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     tape_player.env.sustain = 0.0f;
 
     // parameters
-    // TODO: switch to state events
-    tape_player.cyclic_mode = false; // default to oneshot mode
-
-    tape_player.swap_bufs_pending = false;
     tape_player.params.pitch_factor = 1.0f;
     tape_player.params.env_attack = 0.0f; // normalized env values
     tape_player.params.env_decay = 0.2f;  // normalized env values
 
-    tape_player.params.reverse = false;    // default to forward playback
-    tape_player.params.cyclic_mode = true; // default to oneshot mode
+    tape_player.params.reverse = false;     // default to forward playback
+    tape_player.params.cyclic_mode = false; // default to oneshot mode
 
     // init cmd
     tape_player.tape_cmd_q = cmd_queue;
@@ -244,7 +240,6 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
 
 // handle fade when starting playback. requires fade_in_active to be set when sample playback is started.
 // currently uses Q16 fixed point for LUT indexing.
-// TODO: 128 steps in LUT might be very low, maybe increase resolution of LUT
 static inline void tape_handle_fade_in(int16_t* out_l, int16_t* out_r) {
     // --- Q16 FIXED POINT FADE IN ---
     // dont fade when retrigger crossfade is active, since that means we are already fading in.
@@ -438,13 +433,11 @@ static inline void tape_process_recording_frame(int16_t* in_buf, uint32_t n) {
 
 // worker function to process tape player state
 void tape_player_process(int16_t* in_buf, int16_t* out_buf) {
-    // TODO: implement circular tape buffer (?) - for now, just stop at the end of the buffer
     if (!tape_player.playback_buf->ch[0] || !tape_player.playback_buf->ch[1])
         return;
 
     uint32_t active_phase_inc = tape_compute_phase_increment();
 
-    // TODO: BIG TODO!!! OPTIMIZE FADE ALGS. currently with 128 sample buffer, the cpu is not fast enough. Maybe switch to q16.16 altogeher
     // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
     for (uint32_t n = 0; n < (AUDIO_BLOCK_SIZE / 2); n += 2) {
         int16_t out_l = 0;
@@ -723,13 +716,11 @@ void tape_player_stop_record(void) {
 }
 
 // change pitch factor (playback speed)
-// TODO: evaluate where musical pitch is calculated. Probably in control interface task, and converted to simple pitch factor here.
 void tape_player_set_pitch(float pitch_factor) {
     tape_player.params.pitch_factor = pitch_factor;
 }
 
 // set slice position marker to current recordhead position.
-// TODO: slicing doesnt work correctly.
 void tape_player_set_slice() {
     if (tape_player.rec_state == REC_RECORDING) {
         uint32_t current_rec_pos = tape_player.tape_recordhead;

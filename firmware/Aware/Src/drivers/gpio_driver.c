@@ -40,7 +40,6 @@ bool are_both_buttons_pushed() {
 // used only for calibration, so its ok to block here for a while.
 bool wait_for_both_buttons_pushed() {
     uint32_t cycles = 0;
-    // TODO: does polling create problems? since its only calibration, maybe just go for polling
     while (!are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
@@ -53,7 +52,6 @@ bool wait_for_both_buttons_pushed() {
 // used only for calibration, so its ok to block here for a while.
 bool wait_for_both_buttons_released() {
     uint32_t cycles = 0;
-    // TODO: does polling create problems? since its only calibration, maybe just go for polling
     while (are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10)); // yield to other tasks
         cycles++;
@@ -110,10 +108,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         portYIELD_FROM_ISR(hpw);
     }
 
+    // TODO: after budging the pin, uncomment again
     // if (GPIO_Pin == GATE3_IN_Pin) {
     //     msg.cmd = TAPE_CMD_STOP;
     //     valid_cmd = true;
     // }
+
     if (GPIO_Pin == GATE4_IN_Pin) {
         msg.cmd = TAPE_CMD_SLICE;
         xQueueSendFromISR(gpio_config.tape_cmd_q, &msg, &hpw);

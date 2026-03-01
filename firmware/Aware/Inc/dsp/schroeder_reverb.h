@@ -25,6 +25,7 @@ typedef struct {
     sr_channel_t right;
     float wet;
     float dry;
+    float size;
 } schroeder_stereo_t;
 
 void schroeder_rev_init(schroeder_stereo_t* rev);
@@ -32,4 +33,4 @@ void schroeder_rev_process(schroeder_stereo_t* rev, float inL, float inR, float*
 
 void schroeder_rev_set_wet(schroeder_stereo_t* rev, float wet);
 void schroeder_rev_set_feedback(schroeder_stereo_t* rev, float feedback);
-void schroeder_rev_set_scale(schroeder_stereo_t* rev, float scale);
+void schroeder_rev_set_size(schroeder_stereo_t* rev, float size);

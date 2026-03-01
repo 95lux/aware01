@@ -12,6 +12,7 @@
 #include "param_cache.h"
 #include "project_config.h"
 #include "ws2812_animations.h"
+#include "xy_mapper.h"
 
 #include "tape_player.h"
 
@@ -29,7 +30,6 @@ struct control_interface_config {
 
 static struct control_interface_config control_interface_cfg;
 
-// TODO: create substructs for control_calib_data and ui_calib_data
 int init_control_interface(struct calibration_data* calib_data, TaskHandle_t userIfTaskHandle, ADC_HandleTypeDef* hadc_cvs) {
     if (hadc_cvs == NULL || userIfTaskHandle == NULL || calib_data == NULL)
         return -1;
@@ -46,7 +46,6 @@ int start_control_interface() {
     return 0;
 }
 
-// TODO: use offsets from calibration data to adjust CV values
 void control_interface_process() {
     int res = adc_copy_cv_to_working_buf(control_interface_cfg.adc_cv_working_buf, NUM_CV_CHANNELS);
     if (res != 0) {
@@ -58,7 +57,8 @@ void control_interface_process() {
         float v = float_value(control_interface_cfg.adc_cv_working_buf[i]);
         control_interface_cfg.cv_ins[i].val = v;
     }
-    // V/Oct
+
+    /* ----- V/Oct CV In ----- */
     float v_oct_normalized = control_interface_cfg.cv_ins[CV_V_OCT].val;    // 0..1
     float pitch_scale = control_interface_cfg.calib_data->voct_pitch_scale; // pitch_scale = semitones per normalized CV unit
     float pitch_offset = control_interface_cfg.calib_data->voct_pitch_offset;
@@ -67,7 +67,7 @@ void control_interface_process() {
     float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
     param_cache_set_pitch_cv(pitch_factor_new);
 
-    // Slice position
+    /* ----- Slice Position CV In ----- */
     // TODO: there is a logic problem here.
     // ADC gives a bipolar signal. slice 0 cant be -5V, since when no cable is plugged in we want slice 0.
     // Best way to do this is to hardware design gpio read, to detect if cable is plugged in.
@@ -78,6 +78,30 @@ void control_interface_process() {
     float slice_pos = (offset - val) * 2; // 0..1
     slice_pos = fmaxf(0.0f, fminf(1.0f, slice_pos));
     param_cache_set_slice_pos(slice_pos);
+
+    /* ------ XY XV Plane ------ */
+    // Read raw CV and subtract calibration offset
+    float val_x = control_interface_cfg.cv_ins[CV_X].val;
+    float offset_x = control_interface_cfg.calib_data->cv_offset[CV_X];
+    val_x -= offset_x;
+
+    float val_y = control_interface_cfg.cv_ins[CV_Y].val;
+    float offset_y = control_interface_cfg.calib_data->cv_offset[CV_Y];
+    val_y -= offset_y;
+
+    // Invert because of hardware inverting op-amps
+    val_x = -val_x;
+    val_y = -val_y;
+
+    // Map from 0..1 (after offset) to -1..1
+    float norm_x = val_x * 2.0f; // if offset already made center 0
+    float norm_y = val_y * 2.0f;
+
+    // Clamp to [-1, 1] just in case
+    norm_x = fmaxf(-1.0f, fminf(1.0f, norm_x));
+    norm_y = fmaxf(-1.0f, fminf(1.0f, norm_y));
+
+    xy_mapper_update(norm_x, norm_y);
 }
 
 // calibration procedure
