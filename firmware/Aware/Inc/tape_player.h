@@ -57,8 +57,7 @@ typedef enum { REC_IDLE = 0, REC_RECORDING, REC_REREC, REC_DONE } rec_state_t;
 
 typedef struct {
     bool active;
-    uint32_t len; // TODO make xfade length configurable. Need to implement fade lookup interpolation then (or use bigger LUT?).
-    // TODO: this has to be max xfade length. Cant be super long unfortunately, since we dont have much SRAM available anymore :(
+    uint32_t len;
     bool
         crossfade; // if crossfade is enabled, we are using temp_buf. Otherwise this struct just holds the position and length for simple in/out fades.
 
@@ -87,12 +86,8 @@ struct tape_player {
     tape_buffer_t* record_buf;   // holds tape audio - play source and recording
                                  // target of the tape
 
-    // playheads, use 2 for crossfading with same buffer on retrigger/cycling - Q16.16 (int16_t integer part, uint16_t frac part)
-    // playhead_t ph_a;  // main playhead for playback
     uint64_t pos_q48_16; // main playhead position in Q48.16 format. Fractional part is 16bits for performance reasons
-    // playhead_t ph_b;
 
-    // TODO: make wrap mode configurable: cyclic or oneshot
     bool cyclic_mode;
 
     crossfade_t xfade_retrig; // crossfade that is used on cyclic mode repeat or retriggering sample playback.

@@ -39,6 +39,21 @@ void param_cache_set_slice_pos(float slice_pos) {
     cache.slice_pos = slice_pos;
 }
 
+void param_cache_set_xy_fx(float val_x, float val_y) {
+    cache.fx_x = val_x;
+    cache.fx_y = val_y;
+}
+
+void param_cache_set_schroeder_verb_size(float size) {
+    cache.schroeder_verb_size = size;
+}
+void param_cache_set_schroeder_verb_feedback(float feedback) {
+    cache.schroeder_verb_feedback = feedback;
+}
+void param_cache_set_schroeder_verb_wet(float wet) {
+    cache.schroeder_verb_wet = wet;
+}
+
 /* ===== Reader ===== */
 void param_cache_fetch(struct param_cache* out) {
     out->pitch_cv = cache.pitch_cv;
@@ -49,4 +64,9 @@ void param_cache_fetch(struct param_cache* out) {
     out->reverse_mode = cache.reverse_mode;
     out->decimation = cache.decimation;
     out->slice_pos = cache.slice_pos;
+    out->fx_x = cache.fx_x;
+    out->fx_y = cache.fx_y;
+    out->schroeder_verb_size = cache.schroeder_verb_size;
+    out->schroeder_verb_feedback = cache.schroeder_verb_feedback;
+    out->schroeder_verb_wet = cache.schroeder_verb_wet;
 }

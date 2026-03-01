@@ -43,7 +43,6 @@ int user_iface_init(struct calibration_data* calibration,
                     const user_interface_init_t* user_interface_init_cfg,
                     TaskHandle_t userIfTaskHandle) {
     for (int i = 0; i < NUM_POT_LEDS; i++) {
-        // TODO: || config->pot_leds[i].timer_channel == faulty? check if channel was actually populated.
         if (user_interface_init_cfg->pot_leds[i].htim_led == NULL)
             return -1;
     }
@@ -66,11 +65,9 @@ int user_iface_init(struct calibration_data* calibration,
 }
 
 int user_iface_start() {
-    // TODO: apply peacewise linear calibration in user_iface_process.
     // start pwm timers
     for (int i = 0; i < NUM_POT_LEDS; i++) {
         struct fader_led led = user_interface_cfg.pot_leds[i];
-        // TODO: || config->pot_leds[i].timer_channel == faulty? check if channel was actually populated.
         HAL_StatusTypeDef result = HAL_TIM_PWM_Start(led.htim_led, led.timer_channel);
         if (result != HAL_OK) {
             return -1;
@@ -94,8 +91,6 @@ int user_iface_populate_pot_bufs() {
 // calculates float values from potentiometer ADC samples
 // will also do filtering if needed in the future
 // will also do software debouncing of buttons if needed in the future
-// TODO: implement processing of user interface data
-// and maps them to parameters
 
 #define DEADZONE 0.01f
 #define INV_RANGE (1.0f / (1.0f - DEADZONE)) // compile-time constant

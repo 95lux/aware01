@@ -40,8 +40,8 @@
 // CV buffer indices
 #define CV_V_OCT 0
 #define CV_SLICE_POS 1
-#define CV2 2 // could be XY plane for effectrack/destroyer
-#define CV3 3 // could be XY plane for effectrack/destroyer
+#define CV_X 2 // could be XY plane for effectrack/destroyer
+#define CV_Y 3 // could be XY plane for effectrack/destroyer
 
 // Potentiometer indeces
 #define POT_PITCH 0 // potentiometer index for pitch control
@@ -49,8 +49,7 @@
 #define POT_PARAM3 2
 #define POT_PARAM4 3
 
-#define NUM_POT_LEDS 3 // TODO: currently only 3, since last LED gpio does not support PWM output :(
-// TODO: add more potentiometer mappings as needed
+#define NUM_POT_LEDS 3 // currently only 3, since last LED gpio does not support PWM output :(
 
 /* ======= MEMORY SECTIONS ======= */
 

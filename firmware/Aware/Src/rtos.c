@@ -126,18 +126,16 @@ static void AudioTask(void* argument) {
 
         excite_init(&exciter);
         schroeder_rev_init(&reverb);
-        schroeder_rev_set_wet(&reverb, 0.0f);
-        schroeder_rev_set_feedback(&reverb, 0.99f);
-        schroeder_rev_set_scale(&reverb, 0.01f);
+        schroeder_rev_set_wet(&reverb, 0.5f);
 
         start_audio_engine();
 
         for (;;) {
+            // processing half audio block from half dma buffer.
+
             // fetch params
             struct param_cache param_cache;
             param_cache_fetch(&param_cache);
-
-            tape_player_set_params(param_cache);
 
             /* wait for DMA signal */
             ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -146,19 +144,22 @@ static void AudioTask(void* argument) {
             loopback_samples();
 #else
 
-            // processing half audio block from half dma buffer.
             int16_t wet[AUDIO_HALF_BLOCK_SIZE];
             int16_t in_buf[AUDIO_HALF_BLOCK_SIZE];
             int16_t dry[AUDIO_HALF_BLOCK_SIZE];
-            /* process audio block */
 
             audio_get_dma_in_buf(in_buf, AUDIO_HALF_BLOCK_SIZE);
+
+            /* ----- TAPE PLAYER ----- */
+            tape_player_set_params(param_cache);
 
 #ifdef CONFIG_ENABLE_TAPE_PLAYER
             // tape player may be disabled to check simple dsp processing without tape player in the way, since it is currently the only source of audio input (no external input implemented yet)
             tape_player_process(in_buf, (int16_t*) dry);
 #endif
+            /* ----- TAPE PLAYER END ----- */
 
+            /* ------ EXCITER ------ */
             excite_block(&exciter, dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
 
             float excite_amount = tape_player_get_grit();
@@ -171,7 +172,13 @@ static void AudioTask(void* argument) {
                 // hardware saturation
                 wet[i] = __SSAT(wet[i], 16);
             }
+            /* ------ EXCITER END ------ */
 
+            /* ------ REVERB ------ */
+            float reverb_size = param_cache.schroeder_verb_size;
+            float reverb_feedback = param_cache.schroeder_verb_feedback;
+            schroeder_rev_set_feedback(&reverb, reverb_feedback);
+            schroeder_rev_set_size(&reverb, reverb_size);
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i += 2) {
                 float inL = (float) wet[i] / 32768.0f;
                 float inR = (float) wet[i + 1] / 32768.0f;
@@ -187,6 +194,7 @@ static void AudioTask(void* argument) {
                 wet[i] = __SSAT(sL, 16);
                 wet[i + 1] = __SSAT(sR, 16);
             }
+            /* ------ REVERB END ------ */
 
             audio_write_dma_out_buf(wet, AUDIO_HALF_BLOCK_SIZE);
 

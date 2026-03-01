@@ -66,9 +66,9 @@ uint32_t flash_write_words(uint32_t* src_ptr, uint32_t dest_addr, uint16_t numbe
         }
     }
 
-    // TODO: maybe cache maintenance is not needed.
-    SCB_CleanDCache();
-    SCB_InvalidateDCache();
+    // // TODO: maybe cache maintenance is not needed.
+    // SCB_CleanDCache();
+    // SCB_InvalidateDCache();
 
     HAL_FLASH_Lock();
     return err;
@@ -125,7 +125,6 @@ int read_settings_data(struct SettingsData* settings_data) {
     return (int) flash_read_words(FLASH_USER_START_ADDR, (uint32_t*) settings_data, word_count);
 }
 
-// TODO: Maybe write test to verify that data written to flash can be read back correctly, and that invalid data is handled properly (e.g. by checking magic number).
 int flash_roundtrip() {
     struct SettingsData settings_data_write = {
         .calibration_data =

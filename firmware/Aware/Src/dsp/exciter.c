@@ -8,7 +8,6 @@
 
 float alpha = 0.8f;
 
-// TODO: coefficients configurable or at least pass in as parameters from ressources.h
 // b1 = -1.3856, b2 = 0.6, a0 = 0.74641, a1 = -1.4928, a2 = 0.74641
 void excite_init(excite_config_t* config) {
     memset(config->iir_in_state, 0, sizeof(config->iir_in_state));
@@ -74,6 +73,7 @@ void excite_block(excite_config_t* config, const int16_t* in_buf, int16_t* out_b
     // bitcrush the block
     // bitcrusher(work_buf_out, work_buf_out, block_size, 48000, 16);
 
+    //TODO: is exciter really needed here?
     // 2. nolinear distortion to create harmonics of decimated signal
     // use cubic softclip, taken from https : //wiki.analog.com/resources/tools-software/sigmastudio/toolbox/nonlinearprocessors/standardcubic
     for (uint32_t i = 0; i < block_size; i++) {

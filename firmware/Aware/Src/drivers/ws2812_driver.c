@@ -235,7 +235,7 @@ void ws2812_run_step(void) {
 /* ----- API ----- */
 
 // small delay from gate in to led flash.
-// TODO: Measure actual delay and maybe optimize.
+// TODO: measure delay
 void ws2812_trigger_led(uint32_t idx, struct ws2812_led color, uint32_t timeout_ticks) {
     if (idx >= WS2812_LED_COUNT)
         return;
@@ -251,7 +251,6 @@ void ws2812_change_mode(ws2812_mode_t mode) {
     ws2812_config.state.mode = mode;
 }
 
-// TODO: since this is accessed by tasks, we should consider making this thread safe with a mutex or by disabling interrupts briefly while changing animations. For now we will just assume that animations are only changed from the user interface task and that the animation timer callback does not interrupt it, which should be the case as long as the animation steps are not too long.
 // For a more robust solution, we could implement a queue of animations and have the timer callback check for new animations at the end of each animation cycle, but for simplicity we will just allow one queued animation.
 void ws2812_change_animation(struct led_animation* anim) {
     // only allow direct switch if no animation is running, or the current animation is looping (duration == 0)

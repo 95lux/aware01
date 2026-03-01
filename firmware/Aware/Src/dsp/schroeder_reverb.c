@@ -15,8 +15,22 @@ static const uint16_t allpass_base[2][2] = {
 
 /* ---- Static buffers ---- */
 
+// TODO: MAX_COMB_LEN on biggest value in comb_base? this way a scale of 1.0 would mean max delay line lengths.
+// Currently some headroom.
 #define MAX_COMB_LEN 1600 // max delay for combs
 #define MAX_AP_LEN 600    // max delay for allpasses
+
+// ensure feedback stability
+// feedback scaling macros: feedback increases as size decreases, to maintain perceptual consistency across different sizes. The exact curve can be tweaked for desired response.
+#define COMB_FEEDBACK(size) (0.89f + 0.1f * (1.0f - size))
+#define ALLPASS_FEEDBACK(size) (0.5f + 0.1f * (1.0f - size))
+
+// Minimum scale factors
+#define MIN_COMB_SCALE 0.05f    // combs are at least 10% of base
+#define MIN_ALLPASS_SCALE 0.05f // allpasses are at least 5% of base
+// Compute effective scale
+#define COMB_SIZE_FACTOR(size) ((size) * (1.0f - MIN_COMB_SCALE) + MIN_COMB_SCALE)
+#define ALLPASS_SIZE_FACTOR(size) ((size) * (1.0f - MIN_ALLPASS_SCALE) + MIN_ALLPASS_SCALE)
 
 /* Left comb buffers */
 static float l_c1[MAX_COMB_LEN];
@@ -41,7 +55,10 @@ static float r_a2[MAX_AP_LEN];
 /* ---- Processing ---- */
 
 static float comb_process(sr_delay_t* d, float in) {
-    float y = d->buf[d->idx];
+    // calculate read index with wraparound depending on set .length parameter
+    uint32_t read_idx = (d->idx + d->size - d->length) % d->size;
+    float y = d->buf[read_idx];
+
     d->buf[d->idx] = in + y * d->feedback;
 
     d->idx++;
@@ -52,9 +69,11 @@ static float comb_process(sr_delay_t* d, float in) {
 }
 
 static float allpass_process(sr_delay_t* d, float in) {
-    float buf = d->buf[d->idx];
-    float y = -in + buf;
+    // calculate read index with wraparound depending on set .length parameter
+    uint32_t read_idx = (d->idx + d->size - d->length) % d->size;
+    float buf = d->buf[read_idx];
 
+    float y = -in + buf;
     d->buf[d->idx] = in + buf * d->feedback;
 
     d->idx++;
@@ -133,17 +152,19 @@ void schroeder_rev_set_feedback(schroeder_stereo_t* rev, float feedback) {
     if (feedback > 0.999f)
         feedback = 0.999f;
 
-    for (int i = 0; i < SR_COMBS; i++) {
-        rev->left.combs[i].feedback = feedback;
-        rev->right.combs[i].feedback = feedback;
+    // float comb_fb = feedback * COMB_FEEDBACK(rev->size);
+    // float ap_fb = feedback * ALLPASS_FEEDBACK(rev->size);
+    float comb_fb = feedback;
+    float ap_fb = feedback;
+
+    for (int i = 0; i < 4; i++) {
+        rev->left.combs[i].feedback = comb_fb;
+        rev->right.combs[i].feedback = comb_fb;
     }
 
-    // ensure allpass feedback stability
-    float ALLPASS_MAX_FEEDBACK = 0.7f;
-
-    for (int i = 0; i < SR_ALLPASSES; i++) {
-        rev->left.allpasses[i].feedback = fminf(feedback, ALLPASS_MAX_FEEDBACK);
-        rev->right.allpasses[i].feedback = fminf(feedback, ALLPASS_MAX_FEEDBACK);
+    for (int i = 0; i < 2; i++) {
+        rev->left.allpasses[i].feedback = ap_fb;
+        rev->right.allpasses[i].feedback = ap_fb;
     }
 }
 
@@ -157,22 +178,28 @@ void schroeder_rev_set_wet(schroeder_stereo_t* rev, float wet) {
     rev->dry = 1.f - wet;
 }
 
-// scale = 1.0 -> original length
-// scale < 1.0 -> shorter RT60 / smaller room
-// scale > 1.0 -> longer RT60 / larger room
-void schroeder_rev_set_scale(schroeder_stereo_t* rev, float scale) {
-    if (scale < 0.001f)
-        scale = 0.001f;
-    if (scale > 1.0f)
-        scale = 1.0f;
+// size = 1.0 -> maximum RT60 / room size based on base delay lengths
+// size < 1.0 -> shorter RT60 / smaller room
+void schroeder_rev_set_size(schroeder_stereo_t* rev, float size) {
+    if (size < 0.01f)
+        size = 0.01f;
+    if (size > 1.0f)
+        size = 1.0f;
+
+    // float size_comb = COMB_SIZE_FACTOR(size);
+    // float size_ap = ALLPASS_SIZE_FACTOR(size);
+    float size_comb = size;
+    float size_ap = size;
+
+    rev->size = size;
 
     for (int i = 0; i < 4; i++) {
-        rev->left.combs[i].length = (uint16_t) (comb_base[0][i] * scale);
-        rev->right.combs[i].length = (uint16_t) (comb_base[1][i] * scale);
+        rev->left.combs[i].length = (uint16_t) (comb_base[0][i] * size_comb);
+        rev->right.combs[i].length = (uint16_t) (comb_base[1][i] * size_comb);
     }
 
     for (int i = 0; i < 2; i++) {
-        rev->left.allpasses[i].length = (uint16_t) (allpass_base[0][i] * scale);
-        rev->right.allpasses[i].length = (uint16_t) (allpass_base[1][i] * scale);
+        rev->left.allpasses[i].length = (uint16_t) (allpass_base[0][i] * size_ap);
+        rev->right.allpasses[i].length = (uint16_t) (allpass_base[1][i] * size_ap);
     }
 }

@@ -16,6 +16,13 @@ struct param_cache {
     uint8_t decimation;
 
     float slice_pos; // normalized slice position
+
+    float fx_x;
+    float fx_y;
+
+    float schroeder_verb_size;
+    float schroeder_verb_feedback;
+    float schroeder_verb_wet;
 };
 
 /* public API */
@@ -27,5 +34,9 @@ void param_cache_set_cyclic(bool cyclic);
 void param_cache_set_reverse(bool reverse);
 void param_cache_set_decimation(uint8_t decimation);
 void param_cache_set_slice_pos(float slice_pos);
+void param_cache_set_xy_fx(float x, float y);
+void param_cache_set_schroeder_verb_size(float size);
+void param_cache_set_schroeder_verb_feedback(float feedback);
+void param_cache_set_schroeder_verb_wet(float wet);
 
 void param_cache_fetch(struct param_cache* out);
