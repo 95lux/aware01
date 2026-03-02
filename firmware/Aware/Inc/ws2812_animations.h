@@ -2,6 +2,11 @@
 
 #include "drivers/ws2812_driver.h"
 
+/* ===== colors ===== */
+extern struct ws2812_color white;
+extern struct ws2812_color blue;
+extern struct ws2812_color red;
+
 /* ===== Predefined animations ===== */
 extern struct led_animation anim_off;
 extern struct led_animation anim_breathe;

@@ -22,15 +22,16 @@ static const uint16_t allpass_base[2][2] = {
 
 // ensure feedback stability
 // feedback scaling macros: feedback increases as size decreases, to maintain perceptual consistency across different sizes. The exact curve can be tweaked for desired response.
-#define COMB_FEEDBACK(size) (0.89f + 0.1f * (1.0f - size))
-#define ALLPASS_FEEDBACK(size) (0.5f + 0.1f * (1.0f - size))
+// Base feedback values (for size = 1.0f)
+#define COMB_FEEDBACK_BASE 0.97f
+#define ALLPASS_FEEDBACK_BASE 0.68f // Allpasses usually need less feedback
+// Scaling factor (adjust as needed)
+#define FEEDBACK_SCALE_FACTOR 0.01f // Adjust this to control how much feedback increases as size decreases
 
-// Minimum scale factors
-#define MIN_COMB_SCALE 0.05f    // combs are at least 10% of base
-#define MIN_ALLPASS_SCALE 0.05f // allpasses are at least 5% of base
-// Compute effective scale
-#define COMB_SIZE_FACTOR(size) ((size) * (1.0f - MIN_COMB_SCALE) + MIN_COMB_SCALE)
-#define ALLPASS_SIZE_FACTOR(size) ((size) * (1.0f - MIN_ALLPASS_SCALE) + MIN_ALLPASS_SCALE)
+#define COMB_FEEDBACK(size) (COMB_FEEDBACK_BASE + FEEDBACK_SCALE_FACTOR * (1.0f - size))
+#define ALLPASS_FEEDBACK(size) (ALLPASS_FEEDBACK_BASE + FEEDBACK_SCALE_FACTOR * (1.0f - size))
+
+#define MIN_ROOM_SIZE 0.3f // minimum room size to prevent instability at very low sizes
 
 /* Left comb buffers */
 static float l_c1[MAX_COMB_LEN];
@@ -59,7 +60,11 @@ static float comb_process(sr_delay_t* d, float in) {
     uint32_t read_idx = (d->idx + d->size - d->length) % d->size;
     float y = d->buf[read_idx];
 
-    d->buf[d->idx] = in + y * d->feedback;
+    float feedback_signal = y * d->feedback;
+
+    // one-pole lowpass on each combs fb path.
+    d->lp_state = (1.0f - d->lp_alpha) * feedback_signal + d->lp_alpha * d->lp_state;
+    d->buf[d->idx] = in + d->lp_state;
 
     d->idx++;
     if (d->idx >= d->size)
@@ -121,13 +126,17 @@ void schroeder_rev_init(schroeder_stereo_t* rev) {
 
     rev->wet = 0.3f;
     rev->dry = 0.7f;
+
+    // arm_biquad_cascade_df2T_init_f32(&rev->left.iir_lp_instance, lp_fc2k_but_NUM_STAGES, lp_fc2k_but_coeffs, rev->left.iir_lp_state);
+    // arm_biquad_cascade_df2T_init_f32(&rev->right.iir_lp_instance, lp_fc2k_but_NUM_STAGES, lp_fc2k_but_coeffs, rev->right.iir_lp_state);
 }
 
 static float process_channel(sr_channel_t* ch, float in) {
     float sum = 0.0f;
 
-    for (int i = 0; i < SR_COMBS; i++)
+    for (int i = 0; i < SR_COMBS; i++) {
         sum += comb_process(&ch->combs[i], in);
+    }
 
     sum *= 0.25f;
 
@@ -154,8 +163,8 @@ void schroeder_rev_set_feedback(schroeder_stereo_t* rev, float feedback) {
 
     // float comb_fb = feedback * COMB_FEEDBACK(rev->size);
     // float ap_fb = feedback * ALLPASS_FEEDBACK(rev->size);
-    float comb_fb = feedback;
-    float ap_fb = feedback;
+    float comb_fb = feedback * COMB_FEEDBACK(rev->size);
+    float ap_fb = feedback * ALLPASS_FEEDBACK(rev->size);
 
     for (int i = 0; i < 4; i++) {
         rev->left.combs[i].feedback = comb_fb;
@@ -181,25 +190,33 @@ void schroeder_rev_set_wet(schroeder_stereo_t* rev, float wet) {
 // size = 1.0 -> maximum RT60 / room size based on base delay lengths
 // size < 1.0 -> shorter RT60 / smaller room
 void schroeder_rev_set_size(schroeder_stereo_t* rev, float size) {
-    if (size < 0.01f)
-        size = 0.01f;
+    if (size < MIN_ROOM_SIZE)
+        size = MIN_ROOM_SIZE;
     if (size > 1.0f)
         size = 1.0f;
 
-    // float size_comb = COMB_SIZE_FACTOR(size);
-    // float size_ap = ALLPASS_SIZE_FACTOR(size);
-    float size_comb = size;
-    float size_ap = size;
+    rev->size = size; // Store the clamped size
 
-    rev->size = size;
-
+    // Use size directly as the scaling factor
     for (int i = 0; i < 4; i++) {
-        rev->left.combs[i].length = (uint16_t) (comb_base[0][i] * size_comb);
-        rev->right.combs[i].length = (uint16_t) (comb_base[1][i] * size_comb);
+        rev->left.combs[i].length = (uint16_t) (comb_base[0][i] * size);
+        rev->right.combs[i].length = (uint16_t) (comb_base[1][i] * size);
     }
 
     for (int i = 0; i < 2; i++) {
-        rev->left.allpasses[i].length = (uint16_t) (allpass_base[0][i] * size_ap);
-        rev->right.allpasses[i].length = (uint16_t) (allpass_base[1][i] * size_ap);
+        rev->left.allpasses[i].length = (uint16_t) (allpass_base[0][i] * size);
+        rev->right.allpasses[i].length = (uint16_t) (allpass_base[1][i] * size);
+    }
+}
+
+void schroeder_rev_set_lp_alpha(schroeder_stereo_t* rev, float alpha) {
+    if (alpha < 0.f)
+        alpha = 0.f;
+    if (alpha > 1.f)
+        alpha = 1.f;
+
+    for (int i = 0; i < SR_COMBS; i++) {
+        rev->left.combs[i].lp_alpha = alpha;
+        rev->right.combs[i].lp_alpha = alpha;
     }
 }

@@ -54,6 +54,10 @@ void param_cache_set_schroeder_verb_wet(float wet) {
     cache.schroeder_verb_wet = wet;
 }
 
+void param_cache_set_schroeder_verb_lp_alpha(float alpha) {
+    cache.schroeder_verb_lp_alpha = alpha;
+}
+
 /* ===== Reader ===== */
 void param_cache_fetch(struct param_cache* out) {
     out->pitch_cv = cache.pitch_cv;
@@ -69,4 +73,5 @@ void param_cache_fetch(struct param_cache* out) {
     out->schroeder_verb_size = cache.schroeder_verb_size;
     out->schroeder_verb_feedback = cache.schroeder_verb_feedback;
     out->schroeder_verb_wet = cache.schroeder_verb_wet;
+    out->schroeder_verb_lp_alpha = cache.schroeder_verb_lp_alpha;
 }

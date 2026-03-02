@@ -207,6 +207,12 @@ static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q1
                 // *pos_q48 %= wrap_point;
                 while (*pos_q48 >= wrap_point)
                     *pos_q48 -= wrap_point;
+
+                // if we land on n=0 of the buffer, we force the first sample because hermite needs n-1 sample.
+                if ((*pos_q48 >> 16) == 0) {
+                    uint16_t frac = *pos_q48 & 0xFFFF; // keep fractional part
+                    *pos_q48 = (1 << 16) | frac;       // integer part = 1, fractional part unchanged
+                }
             } else {
                 *pos_q48 = (uint64_t) (valid_samples - 4) << 16;
                 tape_player_stop_play();
@@ -318,6 +324,8 @@ static inline bool tape_handle_crossfade_b_is_new(crossfade_t* xfade, uint32_t a
         return false;
 
     int16_t b_l, b_r;
+    // TODO: on very high pitch ratios in cyclic mode (pitch fader turned to 100% and V/Oct input is cranked up), some miscalculation happens, and we try to fetch a sample out of bounds.
+    // probably has to do with wrapping logic in advance playhead.
     tape_fetch_sample(xfade->pos_q48_16, xfade->buf_b_ptr_l, xfade->buf_b_ptr_r, &b_l, &b_r);
 
     uint32_t lut_i = xfade->fade_acc_q16 >> 16;
@@ -367,6 +375,14 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
         // output silence
         break;
     case PLAY_PLAYING: {
+        if (tape_player.pos_q48_16 < (1 << 16)) {
+            // safety check to prevent out of bounds access in tape_fetch_sample
+            *out_l = 0;
+            *out_r = 0;
+            tape_player.pos_q48_16 = 1 << 16; // move playhead to n=1 to ensure valid interpolation
+            return;
+        }
+
         tape_fetch_sample(tape_player.pos_q48_16, tape_player.playback_buf->ch[0], tape_player.playback_buf->ch[1], out_l, out_r);
 
         tape_handle_fade_in(out_l, out_r);
@@ -385,14 +401,18 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
         if (!tape_player.xfade_cyclic.active && tape_player.params.cyclic_mode &&
             playhead_near_end(tape_player.pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc)) {
             // --- INITIALIZE CROSSFADE STATE (DO ONCE) ---
+            if (active_phase_inc > tape_player.xfade_cyclic.len << 16) {
+                tape_player.xfade_cyclic.active = true;
+                tape_player.xfade_cyclic.pos_q48_16 = 1ULL << 16; // playhead of temp buffer is the new play buffer
+                tape_player.xfade_cyclic.fade_acc_q16 = 0;        // Start LUT index at 0
 
-            tape_player.xfade_cyclic.active = true;
-            tape_player.xfade_cyclic.pos_q48_16 = 1ULL << 16; // playhead of temp buffer is the new play buffer
-            tape_player.xfade_cyclic.fade_acc_q16 = 0;        // Start LUT index at 0
-
-            // Set temp buffer to beginning of playback buf.
-            tape_player.xfade_cyclic.buf_b_ptr_l = tape_player.playback_buf->ch[0];
-            tape_player.xfade_cyclic.buf_b_ptr_r = tape_player.playback_buf->ch[1];
+                // Set temp buffer to beginning of playback buf.
+                tape_player.xfade_cyclic.buf_b_ptr_l = tape_player.playback_buf->ch[0];
+                tape_player.xfade_cyclic.buf_b_ptr_r = tape_player.playback_buf->ch[1];
+            } else {
+                // if phase inc is larger than crossfade length, just do hard switch without crossfade to avoid illegal buffer access
+                tape_player.xfade_cyclic.active = false;
+            }
         }
 
         // handle cyclic crossfade

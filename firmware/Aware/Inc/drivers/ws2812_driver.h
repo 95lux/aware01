@@ -17,7 +17,7 @@ typedef struct {
     struct led_animation* default_animation;
 } ws2812_init_t;
 
-struct ws2812_led {
+struct ws2812_color {
     uint8_t r;
     uint8_t g;
     uint8_t b;
@@ -25,7 +25,7 @@ struct ws2812_led {
 
 struct led_animation_stage {
     uint32_t duration;
-    struct ws2812_led leds[WS2812_LED_COUNT];
+    struct ws2812_color leds[WS2812_LED_COUNT];
 };
 
 struct led_animation {
@@ -41,12 +41,14 @@ typedef enum { WS2812_MODE_OFF = 0, WS2812_MODE_STATIC, WS2812_MODE_TRIGGER, WS2
 void ws2812_init(const ws2812_init_t* init_cfg);
 void ws2812_start();
 
-void ws2812_trigger_led(uint32_t idx, struct ws2812_led color, uint32_t timeout_ticks);
+void ws2812_trigger_led(uint32_t idx, struct ws2812_color color, uint32_t timeout_ticks);
 /* ===== Animation control ===== */
 
-void ws2812_change_animation(struct led_animation* anim);
+void ws2812_change_animation(uint32_t indx, struct led_animation* anim);
+void ws2812_change_animation_all(struct led_animation* anim);
 void ws2812_stop_animation(void);
 void ws2812_run_step(void);
+void ws2812_set_static_color(uint32_t idx, struct ws2812_color color);
 
 /* ===== Timer hook (called from HAL_TIM_PeriodElapsedCallback) ===== */
 void ws2812_timer_callback(TIM_HandleTypeDef* htim);
