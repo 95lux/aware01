@@ -98,8 +98,12 @@ int user_iface_populate_pot_bufs() {
 // CubeMX: ADC 12-bit + 32x Oversampling + 1-bit Shift = 16-bit output.
 // Smoothing: Hardware handles high-frequency noise; Software IIR handles remaining drift.
 // Calibration: Re-run once to lock in the new high-res values.
+static bool last_cyclic_state;
+static bool last_reverse_state;
+
 void user_iface_process(uint32_t notified) {
     // FADE POTS
+
     if (notified & ADC_NOTIFY_POTS_RDY) {
         for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
             // save as normalized float for easier processing later.
@@ -157,6 +161,9 @@ void user_iface_process(uint32_t notified) {
         uint8_t decimation = 1u << pow;
 
         param_cache_set_decimation(decimation);
+
+        //TODO: single LED animation that flickers and glitches the more decimation is set.
+        // probably new LED mode needed, that generates flicker
     }
 
     // BUTTONS
@@ -164,11 +171,33 @@ void user_iface_process(uint32_t notified) {
         // toggle cyclic mode;
         user_interface_cfg.cyclic_mode = !user_interface_cfg.cyclic_mode;
         param_cache_set_cyclic(user_interface_cfg.cyclic_mode);
+        // TODO: set static mode for cyclic here
     }
     if (notified & GPIO_NOTIFY_BUTTON2) {
         // toggle reverse mode;
         user_interface_cfg.reverse_mode = !user_interface_cfg.reverse_mode;
         param_cache_set_reverse(user_interface_cfg.reverse_mode);
+    }
+
+    bool cyclic_mode = user_interface_cfg.cyclic_mode;
+    bool reverse_mode = user_interface_cfg.reverse_mode;
+
+    // Update 3rd LED animations based on mode
+    if (cyclic_mode != last_cyclic_state || reverse_mode != last_reverse_state) {
+        if (cyclic_mode && reverse_mode) {
+            struct ws2812_color purple = {.r = 128, .g = 0, .b = 128};
+            ws2812_set_static_color(2, purple);
+        } else if (cyclic_mode) {
+            ws2812_set_static_color(2, blue);
+        } else if (reverse_mode) {
+            ws2812_set_static_color(2, red);
+        } else {
+            struct ws2812_color off = {.r = 0, .g = 0, .b = 0};
+            ws2812_set_static_color(2, off);
+        }
+
+        last_cyclic_state = cyclic_mode;
+        last_reverse_state = reverse_mode;
     }
 }
 
@@ -198,20 +227,20 @@ static int calibrate_pitch_point(float* dst, bool inverted, uint16_t* adc_buf, i
 
     *dst = fval;
 
-    ws2812_change_animation(&anim_setting_step_confirmed);
+    ws2812_change_animation_all(&anim_setting_step_confirmed);
     // Step-dependent LED feedback
     switch (step) {
     case 0:
-        ws2812_change_animation(&anim_breathe_led1); // first LED
+        ws2812_change_animation_all(&anim_breathe_led1); // first LED
         break;
     case 1:
-        ws2812_change_animation(&anim_breathe_led2); // 2 LEDs
+        ws2812_change_animation_all(&anim_breathe_led2); // 2 LEDs
         break;
     case 2:
-        ws2812_change_animation(&anim_breathe_led3); // 3 LEDs
+        ws2812_change_animation_all(&anim_breathe_led3); // 3 LEDs
         break;
     default:
-        ws2812_change_animation(&anim_breathe_blue); // fallback
+        ws2812_change_animation_all(&anim_breathe_blue); // fallback
         break;
     }
 
@@ -237,6 +266,6 @@ int user_iface_calibrate_pitch_pot(struct calibration_data* cal) {
     if (!(cal->pitchpot_min < cal->pitchpot_mid && cal->pitchpot_mid < cal->pitchpot_max))
         return -1;
 
-    ws2812_change_animation(&anim_setting_confirmed);
+    ws2812_change_animation_all(&anim_setting_confirmed);
     return 0;
 }
