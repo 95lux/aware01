@@ -121,20 +121,28 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
 // explained here https://ldesoras.fr/doc/articles/resampler-en.pdf
 // uses phase accumulator
 // phase: integer index + 16-bit fractional part
-static inline float hermite_interpolate(uint64_t pos, int16_t* buffer) {
+static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reverse) {
     uint32_t idx = (uint32_t) (pos >> 16);
     uint32_t frac = (uint32_t) (pos & 0xFFFF);
 
-    // 2. Fractional part as Q32 -> normalized t in [0,1)
-    float t = frac * (1.0f / Q16_UNITY);
-    int n = (int) idx - 1;
+    float xm1, x0, x1, x2, t;
 
-    // xm1 and x2 are only used for derivative estimation
-    // we interpolate between x0 and x1
-    float xm1 = buffer[n];
-    float x0 = buffer[n + 1];
-    float x1 = buffer[n + 2];
-    float x2 = buffer[n + 3];
+    if (reverse) {
+        // interpolate between idx and idx-1, t runs 1->0 as pos decreases
+        t = 1.0f - (frac * (1.0f / Q16_UNITY));
+        xm1 = buffer[idx + 2];
+        x0 = buffer[idx + 1];
+        x1 = buffer[idx];
+        x2 = buffer[idx - 1];
+    } else {
+        // interpolate between idx and idx+1, t runs 0->1 as pos increases
+        t = frac * (1.0f / Q16_UNITY);
+        int n = (int) idx - 1;
+        xm1 = buffer[n];
+        x0 = buffer[n + 1];
+        x1 = buffer[n + 2];
+        x2 = buffer[n + 3];
+    }
 
     // estimate derivatives by finite differences
     // Catmull-Rom splines with Tension = 0
@@ -165,8 +173,8 @@ static inline void tape_fetch_sample(uint64_t pos_q48_16, int16_t* buf_l, int16_
 #ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
 
     // --- Hermite ---
-    float herm_l = hermite_interpolate(pos_q48_16, buf_l);
-    float herm_r = hermite_interpolate(pos_q48_16, buf_r);
+    float herm_l = hermite_interpolate(pos_q48_16, buf_l, tape_player.params.reverse);
+    float herm_r = hermite_interpolate(pos_q48_16, buf_r, tape_player.params.reverse);
 
     float grit = tape_player_get_grit();
 
@@ -191,6 +199,7 @@ static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q1
     uint32_t valid_samples = tape_player.playback_buf->valid_samples;
     uint64_t wrap_point = (uint64_t) valid_samples << 16;
 
+    // TODO: Reverse logic is super buggy atm.
     if (reverse) {
         if (*pos_q48 < phase_inc_q16) {
             *pos_q48 = cyclic ? (wrap_point + *pos_q48 - phase_inc_q16) : 0;
@@ -229,19 +238,34 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
         return false;
     uint32_t limit = buf_size - 4;
 
-    uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
-    if (idx >= limit)
-        return true;
+    if (tape_player.params.reverse) {
+        // near the start of the buffer (index 1 = Hermite lower bound)
+        uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
+        uint32_t lower_bound = 1;
 
-    uint32_t samples_left = limit - idx;
+        if (idx <= lower_bound)
+            return true;
 
-    // We want to know if: samples_left <= (fade_len_samples * (active_phase_inc / 65536))
-    // To avoid division, we cross-multiply:
-    // (samples_left << 16) <= (fade_len_samples * active_phase_inc)
-    uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
-    uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
+        uint32_t samples_left = idx - lower_bound;
+        uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
+        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
 
-    return physical_distance_q16 <= fade_travel_distance_q16;
+        return physical_distance_q16 <= fade_travel_distance_q16;
+    } else {
+        uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
+        if (idx >= limit)
+            return true;
+
+        uint32_t samples_left = limit - idx;
+
+        // We want to know if: samples_left <= (fade_len_samples * (active_phase_inc / 65536))
+        // To avoid division, we cross-multiply:
+        // (samples_left << 16) <= (fade_len_samples * active_phase_inc)
+        uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
+        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
+
+        return physical_distance_q16 <= fade_travel_distance_q16;
+    }
 }
 
 // handle fade when starting playback. requires fade_in_active to be set when sample playback is started.
@@ -575,8 +599,15 @@ static void play_fsm_event(tape_event_t evt) {
                 return;
             }
 
-            // aquire playback starting position depending on current set slice
-            tape_buf_get_slice_start_pos_q48_16(&tape_player.pos_q48_16);
+            if (!tape_player.params.reverse) {
+                // aquire playback starting position depending on current set slice
+                tape_buf_get_slice_start_pos_q48_16(&tape_player.pos_q48_16);
+            } else {
+                // if reverse, start at the end of the buffer, minus 4 samples for hermite safety.
+                // TODO: for now ignore slices when reverse. This has to be implemented with thought.
+                // what to do with the slices?
+                tape_player.pos_q48_16 = ((uint64_t) (tape_player.playback_buf->valid_samples - 1)) << 16;
+            }
 
             // Init Fade In
             tape_player.fade_in.pos_q48_16 = 0;
@@ -629,8 +660,15 @@ static void play_fsm_event(tape_event_t evt) {
                 tape_player.xfade_retrig.buf_b_ptr_r = &tape_player.playback_buf->ch[1][start_idx_xfade];
             }
 
-            // aquire playback starting position depending on current set slice
-            tape_buf_get_slice_start_pos_q48_16(&tape_player.pos_q48_16);
+            if (!tape_player.params.reverse) {
+                // aquire playback starting position depending on current set slice
+                tape_buf_get_slice_start_pos_q48_16(&tape_player.pos_q48_16);
+            } else {
+                // if reverse, start at the end of the buffer, minus 4 samples for hermite safety.
+                // TODO: for now ignore slices when reverse. This has to be implemented with thought.
+                // what to do with the slices?
+                tape_player.pos_q48_16 = ((uint64_t) (tape_player.playback_buf->valid_samples - 1)) << 16;
+            }
 
             // ph_b holdes the phase for crossfade buffer
             tape_player.xfade_retrig.pos_q48_16 = 1 << 16; // start at sample 1

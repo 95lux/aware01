@@ -107,6 +107,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         xTaskNotifyFromISR(gpio_config.userIfTaskHandle, GPIO_NOTIFY_GATE2, eSetBits, &hpw);
         portYIELD_FROM_ISR(hpw);
     }
+    // TODO: maybe use GATE3 and GATE4 for cyclic and reverse toggles.
+    // slices could be added when playing while recording. Maybe delete slices after all.
+    // another option would be to make the polarity of XY plane decide if cyclic or reverse should be toggled. Could lead to some nice randomized behaviour.
 
     // TODO: after budging the pin, uncomment again
     // if (GPIO_Pin == GATE3_IN_Pin) {
