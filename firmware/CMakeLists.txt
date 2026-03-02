@@ -60,8 +60,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/drivers/ws2812_driver.c
     Aware/Src/ws2812_animations.c
     Aware/Src/dsp/exciter.c
-    Aware/Src/dsp/coefficients.c
     Aware/Src/dsp/schroeder_reverb.c
+    Aware/Src/ressources.c
+    Aware/Src/xy_mapper.c
 )
 
 # Add include paths
