@@ -23,6 +23,7 @@ struct param_cache {
     float schroeder_verb_size;
     float schroeder_verb_feedback;
     float schroeder_verb_wet;
+    float schroeder_verb_lp_alpha;
 };
 
 /* public API */
@@ -38,5 +39,6 @@ void param_cache_set_xy_fx(float x, float y);
 void param_cache_set_schroeder_verb_size(float size);
 void param_cache_set_schroeder_verb_feedback(float feedback);
 void param_cache_set_schroeder_verb_wet(float wet);
+void param_cache_set_schroeder_verb_lp_alpha(float cutoff);
 
 void param_cache_fetch(struct param_cache* out);

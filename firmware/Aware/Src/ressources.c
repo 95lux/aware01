@@ -34,3 +34,11 @@ float32_t iir_coeffs[BIQUAD_CASCADE_NUM_STAGES * 5] = {
     1.68123943,
     -0.81976044,
 };
+
+float32_t lp_fc2k_but_coeffs[lp_fc2k_but_NUM_STAGES * 5] = {
+    0.01440144,
+    0.02880288,
+    0.01440144,
+    1.63299316,
+    -0.69059892,
+};

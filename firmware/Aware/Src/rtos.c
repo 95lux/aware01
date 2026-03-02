@@ -177,8 +177,13 @@ static void AudioTask(void* argument) {
             /* ------ REVERB ------ */
             float reverb_size = param_cache.schroeder_verb_size;
             float reverb_feedback = param_cache.schroeder_verb_feedback;
+            float reverb_wet = param_cache.schroeder_verb_wet;
+            float reverb_lp_alpha = param_cache.schroeder_verb_lp_alpha;
             schroeder_rev_set_feedback(&reverb, reverb_feedback);
             schroeder_rev_set_size(&reverb, reverb_size);
+            schroeder_rev_set_wet(&reverb, reverb_wet);
+            schroeder_rev_set_lp_alpha(&reverb, reverb_lp_alpha);
+
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i += 2) {
                 float inL = (float) wet[i] / 32768.0f;
                 float inR = (float) wet[i + 1] / 32768.0f;
@@ -240,16 +245,16 @@ static void run_boot_calibration(void) {
         hold_time += 10;
 
         if (!cv_feedback_given && hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
-            ws2812_change_animation(&anim_breathe_blue);
+            ws2812_change_animation_all(&anim_breathe_blue);
             cv_feedback_given = true;
         }
 
         if (!pot_feedback_given && hold_time >= POT_CALIB_HOLD_MS) {
-            ws2812_change_animation(&anim_breathe_blue_fast);
+            ws2812_change_animation_all(&anim_breathe_blue_fast);
             pot_feedback_given = true;
 
             if (!wait_for_both_buttons_released()) {
-                ws2812_change_animation(&anim_setting_error);
+                ws2812_change_animation_all(&anim_setting_error);
                 boot_calibration_cleanup();
                 return;
             }
@@ -257,7 +262,7 @@ static void run_boot_calibration(void) {
             if (user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data) == 0)
                 write_settings_data(&settings_data_ram);
             else
-                ws2812_change_animation(&anim_setting_error);
+                ws2812_change_animation_all(&anim_setting_error);
 
             boot_calibration_cleanup();
             return;
@@ -268,7 +273,7 @@ static void run_boot_calibration(void) {
         if (control_interface_calibrate_voct(&settings_data_ram.calibration_data) == 0)
             write_settings_data(&settings_data_ram);
         else
-            ws2812_change_animation(&anim_setting_error);
+            ws2812_change_animation_all(&anim_setting_error);
     }
 
     boot_calibration_cleanup();
@@ -329,7 +334,7 @@ static void UserInterfaceTask(void* argument) {
     user_iface_init(&settings_data_ram.calibration_data, &user_iface_init_cfg, userIfTaskHandle);
     user_iface_start();
 
-    ws2812_change_animation(&anim_bootup);
+    ws2812_change_animation_all(&anim_bootup);
 
     uint32_t notified;
 
@@ -346,10 +351,10 @@ static void UserInterfaceTask(void* argument) {
             if (notified & GPIO_NOTIFY_BUTTON2) {
             }
             if (notified & GPIO_NOTIFY_GATE1) {
-                ws2812_trigger_led(0, (struct ws2812_led) {.r = 0, .g = 255, .b = 0}, 3);
+                ws2812_trigger_led(0, (struct ws2812_color) {.r = 0, .g = 255, .b = 0}, 3);
             }
             if (notified & GPIO_NOTIFY_GATE2) {
-                ws2812_trigger_led(1, (struct ws2812_led) {.r = 255, .g = 0, .b = 0}, 3);
+                ws2812_trigger_led(1, (struct ws2812_color) {.r = 255, .g = 0, .b = 0}, 3);
             }
             user_iface_process(notified);
         }

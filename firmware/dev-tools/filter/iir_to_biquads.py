@@ -1,9 +1,15 @@
 import numpy as np
 import pandas as pd
 from scipy.signal import tf2sos
+import argparse
+
+# Set up argument parser
+parser = argparse.ArgumentParser(description="Convert filter coefficients from CSV to CMSIS-DSP format.")
+parser.add_argument("csv_file", type=str, help="Path to the CSV file containing filter coefficients.")
+args = parser.parse_args()
 
 # Load CSV, skip first row if it has headers
-df = pd.read_csv("coeffs.csv", header=0, names=["b", "a"])
+df = pd.read_csv(args.csv_file, header=0, names=["b", "a"])
 
 # Convert columns to float
 b = df["b"].astype(float).to_numpy()

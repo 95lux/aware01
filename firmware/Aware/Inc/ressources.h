@@ -9,3 +9,6 @@ extern int16_t fade_in_lut[FADE_LUT_LEN];
 
 #define BIQUAD_CASCADE_NUM_STAGES 3
 extern float32_t iir_coeffs[BIQUAD_CASCADE_NUM_STAGES * 5];
+
+#define lp_fc2k_but_NUM_STAGES 1
+extern float32_t lp_fc2k_but_coeffs[lp_fc2k_but_NUM_STAGES * 5];

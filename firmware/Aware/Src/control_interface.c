@@ -150,8 +150,8 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     if (!wait_for_both_buttons_pushed())
         return -1;
     float c1 = calibrate_C1();
-    ws2812_change_animation(&anim_setting_step_confirmed);
-    ws2812_change_animation(&anim_breathe_led1);
+    ws2812_change_animation_all(&anim_setting_step_confirmed);
+    ws2812_change_animation_all(&anim_breathe_led1);
     wait_for_both_buttons_released();
 
     // 2. input C3 voltage, then wait for button press to store C3 and compute scale/offset
@@ -161,8 +161,8 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
     if (res != 0) {
         return -1;
     }
-    ws2812_change_animation(&anim_setting_step_confirmed);
-    ws2812_change_animation(&anim_breathe_led2);
+    ws2812_change_animation_all(&anim_setting_step_confirmed);
+    ws2812_change_animation_all(&anim_breathe_led2);
     wait_for_both_buttons_released();
 
     // 3. remove all cables and wait for button press to store offsets (assuming 0V input, so that it can be subtracted from future readings to get 0-centered CV values)
@@ -170,7 +170,7 @@ int control_interface_calibrate_voct(struct calibration_data* calib_data) {
         return -1;
     calibrate_offsets(calib_data);
     wait_for_both_buttons_released();
-    ws2812_change_animation(&anim_setting_confirmed);
+    ws2812_change_animation_all(&anim_setting_confirmed);
 
     return res;
 }

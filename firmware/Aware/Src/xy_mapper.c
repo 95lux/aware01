@@ -24,14 +24,18 @@ typedef struct {
 
 /* Example mappings */
 static xy_map_piecewise_t x_map[] = {
-    {.negative = {param_cache_set_schroeder_verb_feedback, 0.02f, 1.0f, 0.9f},
-     .positive = {param_cache_set_schroeder_verb_feedback, 0.02f, 1.0f, 0.9f}},
+    {.negative = {param_cache_set_schroeder_verb_feedback, 0.02f, 1.0f, 0.15f},
+     .positive = {param_cache_set_schroeder_verb_feedback, 0.02f, 1.0f, 0.15f}},
+    {.negative = {param_cache_set_schroeder_verb_wet, 0.0f, 1.0f, 0.7f},
+     .positive = {param_cache_set_schroeder_verb_wet, 0.0f, 1.0f, 0.7f}},
+    {.negative = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.6f, 1.3f},
+     .positive = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.6f, 1.3f}}
     // add more mappings on x axis here
 };
 
 static xy_map_piecewise_t y_map[] = {
-    {.negative = {param_cache_set_schroeder_verb_size, 0.01f, 1.0f, 1.0f},
-     .positive = {param_cache_set_schroeder_verb_size, 0.01f, 1.0f, 1.0f}},
+    {.negative = {param_cache_set_schroeder_verb_size, 0.05f, 1.0f, 1.0f},
+     .positive = {param_cache_set_schroeder_verb_size, 0.05f, 1.0f, 1.0f}},
     // add more mappings on y axis here
 };
 
