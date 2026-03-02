@@ -1,5 +1,9 @@
 #include "drivers/ws2812_driver.h"
 
+struct ws2812_color white = {255, 255, 255};
+struct ws2812_color blue = {0, 0, 255};
+struct ws2812_color red = {255, 0, 0};
+
 // Breathe animation for 4 LEDs (same color on all LEDs)
 struct led_animation anim_breathe = {
     .stages = {{.duration = 10, .leds = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}},
