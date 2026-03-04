@@ -14,8 +14,9 @@ More DSP FX and adjusted XY mapping is on the way and will turn Aarebot into a I
 
 
 <p align="center">
-<img src="docs/images/aware01_h7_rev2_top.png" width="22%" style="border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); margin-right: 5%;" />
-<img src="docs/images/aware01_h7_rev2_bottom.png" width="22%" style="border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+<img src="docs/images/aware01_h7_rev2.png" height="400px" style="border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); margin-right: 5%;" />
+<img src="docs/images/aware01_h7_rev2_top.png" height="400px" style="border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); margin-right: 5%;" />
+<img src="docs/images/aware01_h7_rev2_bottom.png" height="400px" style="border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
 </p>
 
 
