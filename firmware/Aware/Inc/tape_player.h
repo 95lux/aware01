@@ -81,17 +81,16 @@ typedef struct {
 // main tape player structure
 struct tape_player {
     size_t dma_buf_size;         // buffer size RX/TX
-    tape_buffer_t* playback_buf; // holds tape audio - play source and recording
-                                 // target of the tape
-    tape_buffer_t* record_buf;   // holds tape audio - play source and recording
+    tape_buffer_t* playback_buf; // pointer to the tape buffer that is currently used for playback.
+    tape_buffer_t* record_buf;   // pointer to the tape buffer that is currently used for recording.
                                  // target of the tape
 
     uint64_t pos_q48_16; // main playhead position in Q48.16 format. Fractional part is 16bits for performance reasons
 
     bool cyclic_mode;
 
-    crossfade_t xfade_retrig; // crossfade that is used on cyclic mode repeat or retriggering sample playback.
-    crossfade_t xfade_cyclic; // crossfade that is used on cyclic mode repeat or retriggering sample playback.
+    crossfade_t xfade_retrig; // crossfade that is used on retrigger sample playback.
+    crossfade_t xfade_cyclic; // crossfade that is used on cyclic playback mode.
     crossfade_t fade_in;      // simple fade in when starting playback
     crossfade_t fade_out;     // simple fadeout when approaching end of playback buffer
 
@@ -122,6 +121,7 @@ typedef struct {
 
 int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue);
 
+// entry point for tape player audio processing. The whole implementation is inside tape_player_dsp.c
 void tape_player_process(int16_t* in_buf, int16_t* out_buf);
 
 void tape_player_play();

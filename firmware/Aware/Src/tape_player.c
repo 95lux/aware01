@@ -1,10 +1,19 @@
+/**
+ * @file tape_player.c
+ * @brief Tape player — buffer management, FSMs, init, and public control API.
+ *
+ * Owns the tape buffer memory, the @c tape_player state struct, and the two
+ * finite state machines (play FSM, record FSM) that govern state transitions.
+ * Per-sample DSP (interpolation, fades, crossfades) lives in tape_player_dsp.c,
+ * which accesses @c tape_player via an @c extern declaration.
+ *
+ * @see tape_player_dsp.c  for the audio-rate processing core.
+ */
 #include "tape_player.h"
 
-#include "audioengine.h"
 #include "envelope.h"
 #include "project_config.h"
 #include "string.h"
-#include <arm_math.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -15,8 +24,6 @@
 #include "util.h"
 
 // #define DECIMATION_FIXED 16 // fixed decimation factor for testing, will be set from params in record state machine once working.
-#define Q32_UNITY (4294967296.0f)
-#define Q16_UNITY (65536.0f)
 
 static tape_buffer_t tape_buf_a;
 static tape_buffer_t tape_buf_b;
@@ -35,8 +42,20 @@ int16_t xfade_retrig_temp_buf_r[FADE_XFADE_RETRIG_LEN + 3]; // +3 for hermite in
 int16_t xfade_cyclic_temp_buf_l[FADE_XFADE_CYCLIC_LEN + 3];
 int16_t xfade_cyclic_temp_buf_r[FADE_XFADE_CYCLIC_LEN + 3]; // +3 for hermite interpolation safety
 
-static struct tape_player tape_player;
+/** Shared tape player state — also accessed by tape_player_dsp.c via extern. */
+struct tape_player tape_player;
 
+/**
+ * @brief Initialize the tape player engine.
+ *
+ * Clears both tape buffers, assigns channel pointers, resets the playhead,
+ * initialises all crossfade and fade structures, and sets default parameters.
+ * Must be called once before any other tape_player function.
+ *
+ * @param dma_buf_size  Number of samples in the DMA transfer buffer.
+ * @param cmd_queue     FreeRTOS queue handle used to receive tape commands.
+ * @return              0 on success, -1 if @p dma_buf_size is invalid.
+ */
 int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     if (dma_buf_size <= 0)
         return -1;
@@ -117,407 +136,13 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     return 0;
 }
 
-// from https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html
-// explained here https://ldesoras.fr/doc/articles/resampler-en.pdf
-// uses phase accumulator
-// phase: integer index + 16-bit fractional part
-static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reverse) {
-    uint32_t idx = (uint32_t) (pos >> 16);
-    uint32_t frac = (uint32_t) (pos & 0xFFFF);
-
-    float xm1, x0, x1, x2, t;
-
-    if (reverse) {
-        // interpolate between idx and idx-1, t runs 1->0 as pos decreases
-        t = 1.0f - (frac * (1.0f / Q16_UNITY));
-        xm1 = buffer[idx + 2];
-        x0 = buffer[idx + 1];
-        x1 = buffer[idx];
-        x2 = buffer[idx - 1];
-    } else {
-        // interpolate between idx and idx+1, t runs 0->1 as pos increases
-        t = frac * (1.0f / Q16_UNITY);
-        int n = (int) idx - 1;
-        xm1 = buffer[n];
-        x0 = buffer[n + 1];
-        x1 = buffer[n + 2];
-        x2 = buffer[n + 3];
-    }
-
-    // estimate derivatives by finite differences
-    // Catmull-Rom splines with Tension = 0
-    float m0 = 0.5f * (x1 - xm1); // derivative at x0
-    float m1 = 0.5f * (x2 - x0);  // derivative at x1
-
-    // calculate coefficients
-    // Cubic Hermite interpolation (Catmull–Rom spline)
-    float c = m0;
-    float v = x0 - x1;
-    float w = c + v;
-    float a = w + v + m1;
-    float b = w + a;
-    float d = x0;
-
-    // cubic polynomial in horner form.
-    // actually a*t^3 + b*t^2 + c*t + d
-    return (((a * t - b) * t + c) * t + d);
-}
-
-static inline void tape_fetch_sample(uint64_t pos_q48_16, int16_t* buf_l, int16_t* buf_r, int16_t* out_l, int16_t* out_r) {
-    uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
-
-    // --- Hold ---
-    float hold_l = buf_l[idx];
-    float hold_r = buf_r[idx];
-
-#ifdef CONFIG_TAPE_PLAYER_ENABLE_HERMITE
-
-    // --- Hermite ---
-    float herm_l = hermite_interpolate(pos_q48_16, buf_l, tape_player.params.reverse);
-    float herm_r = hermite_interpolate(pos_q48_16, buf_r, tape_player.params.reverse);
-
-    float grit = tape_player_get_grit();
-
-    grit = grit * MAX_GRIT_ON_MAX_DECIMATION;
-
-    // --- Blend (difference method) ---
-    float out_l_f = herm_l + grit * (hold_l - herm_l);
-    float out_r_f = herm_r + grit * (hold_r - herm_r);
-
-#else
-    float out_l_f = hold_l;
-    float out_r_f = hold_r;
-#endif
-
-    *out_l = __SSAT((int32_t) out_l_f, 16);
-    *out_r = __SSAT((int32_t) out_r_f, 16);
-}
-
-// advance Q48.16 playhead with bounds checking and wrap/clamp logic for different modes (reverse, cyclic)
-// use q16 increment for phase inc, since it is more than enough resolution for pitch control, and much faster to do the addition and bounds checking with 64-bit integers, instead of 128-bit which would be needed for Q48.16 increments.
-static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q16, bool reverse, bool cyclic) {
-    uint32_t valid_samples = tape_player.playback_buf->valid_samples;
-    uint64_t wrap_point = (uint64_t) valid_samples << 16;
-
-    // TODO: Reverse logic is super buggy atm.
-    if (reverse) {
-        if (*pos_q48 < phase_inc_q16) {
-            *pos_q48 = cyclic ? (wrap_point + *pos_q48 - phase_inc_q16) : 0;
-            if (!cyclic)
-                tape_player_stop_play();
-        } else {
-            *pos_q48 -= phase_inc_q16;
-        }
-    } else {
-        *pos_q48 += phase_inc_q16;
-        if (*pos_q48 >= wrap_point) {
-            if (cyclic) {
-                // 64bit division might be slow on M7, this is why whe use a subtraction loop for wrapping instead of mod.
-                // *pos_q48 %= wrap_point;
-                while (*pos_q48 >= wrap_point)
-                    *pos_q48 -= wrap_point;
-
-                // if we land on n=0 of the buffer, we force the first sample because hermite needs n-1 sample.
-                if ((*pos_q48 >> 16) == 0) {
-                    uint16_t frac = *pos_q48 & 0xFFFF; // keep fractional part
-                    *pos_q48 = (1 << 16) | frac;       // integer part = 1, fractional part unchanged
-                }
-            } else {
-                *pos_q48 = (uint64_t) (valid_samples - 4) << 16;
-                tape_player_stop_play();
-            }
-        }
-    }
-}
-
-static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samples, uint32_t active_phase_inc_q16) {
-    uint32_t buf_size = tape_player.playback_buf->valid_samples;
-
-    // Safety margin for Hermite (n+3)
-    if (buf_size < 4)
-        return false;
-    uint32_t limit = buf_size - 4;
-
-    if (tape_player.params.reverse) {
-        // near the start of the buffer (index 1 = Hermite lower bound)
-        uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
-        uint32_t lower_bound = 1;
-
-        if (idx <= lower_bound)
-            return true;
-
-        uint32_t samples_left = idx - lower_bound;
-        uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
-        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
-
-        return physical_distance_q16 <= fade_travel_distance_q16;
-    } else {
-        uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
-        if (idx >= limit)
-            return true;
-
-        uint32_t samples_left = limit - idx;
-
-        // We want to know if: samples_left <= (fade_len_samples * (active_phase_inc / 65536))
-        // To avoid division, we cross-multiply:
-        // (samples_left << 16) <= (fade_len_samples * active_phase_inc)
-        uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
-        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
-
-        return physical_distance_q16 <= fade_travel_distance_q16;
-    }
-}
-
-// handle fade when starting playback. requires fade_in_active to be set when sample playback is started.
-// currently uses Q16 fixed point for LUT indexing.
-static inline void tape_handle_fade_in(int16_t* out_l, int16_t* out_r) {
-    // --- Q16 FIXED POINT FADE IN ---
-    // dont fade when retrigger crossfade is active, since that means we are already fading in.
-    if (!tape_player.fade_in.active || tape_player.xfade_retrig.active)
-        return;
-
-    uint32_t lut_idx = tape_player.fade_in.fade_acc_q16 >> 16;
-
-    if (lut_idx >= FADE_LUT_LEN - 1) {
-        tape_player.fade_in.active = false;
-    } else {
-        int16_t f = fade_in_lut[lut_idx];
-        *out_l = __SSAT(((int32_t) (*out_l) * f) >> 15, 16);
-        *out_r = __SSAT(((int32_t) (*out_r) * f) >> 15, 16);
-
-        // fixed step, not pitch-aware, since we want a consistent fade in time regardless of pitch. If we wanted a pitch-aware fade in, we would need to calculate the step based on the current phase increment, similar to the fade out below.
-        tape_player.fade_in.fade_acc_q16 += FADE_IN_OUT_STEP_Q16;
-    }
-}
-
-// this might not be needed, if we clamp the envelope release to the buffer length, when not in cyclic mode.
-// TODO: clamp envelope release to buffer length in non-cyclic mode, to prevent clicks. This also means that fade out is not really needed in non-cyclic mode, since we will just do a hard stop at the end of the buffer, which should be fine since there is no looping happening. In cyclic mode however, we do need the fade out to prevent clicks when crossing the loop point.
-// if in cyclic not needed aswell, since crossfading between cycles happens indefinitely.
-static inline void tape_handle_fade_out(uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
-    if (!tape_player.fade_out.active || tape_player.params.cyclic_mode)
-        return;
-
-    // LUT index = top 16 bits
-    uint32_t lut_idx = tape_player.fade_out.fade_acc_q16 >> 16;
-
-    if (lut_idx >= FADE_LUT_LEN - 1) {
-        *out_l = 0;
-        *out_r = 0;
-        tape_player.fade_out.active = false;
-        tape_player_stop_play();
-    } else {
-        int16_t f = fade_in_lut[FADE_LUT_LEN - 1 - lut_idx];
-        *out_l = __SSAT(((int32_t) (*out_l) * f) >> 15, 16);
-        *out_r = __SSAT(((int32_t) (*out_r) * f) >> 15, 16);
-
-        // advance Q16.16 position
-        tape_player.fade_out.fade_acc_q16 += FADE_IN_OUT_STEP_Q16;
-    }
-}
-
-// buf_b = OLD, a = NEW. No promotion needed.
-static inline void tape_handle_crossfade_a_is_new(crossfade_t* xfade, uint32_t active_phase_inc, int16_t* new_l, int16_t* new_r) {
-    if (!xfade->active)
-        return;
-
-    int16_t old_l, old_r;
-    tape_fetch_sample(xfade->pos_q48_16, xfade->buf_b_ptr_l, xfade->buf_b_ptr_r, &old_l, &old_r);
-
-    uint32_t lut_i = xfade->fade_acc_q16 >> 16;
-    if (lut_i >= FADE_LUT_LEN)
-        lut_i = FADE_LUT_LEN - 1;
-
-    int16_t mix_new = fade_in_lut[lut_i];
-    int16_t mix_old = 32767 - mix_new;
-
-    *new_l = (int16_t) ((((int32_t) (*new_l) * mix_new) + ((int32_t) old_l * mix_old)) >> 15);
-    *new_r = (int16_t) ((((int32_t) (*new_r) * mix_new) + ((int32_t) old_r * mix_old)) >> 15);
-
-    xfade->pos_q48_16 += active_phase_inc;
-    xfade->fade_acc_q16 += xfade->step_q16;
-
-    if (lut_i >= FADE_LUT_LEN - 1 || (xfade->pos_q48_16 >> 16) >= xfade->temp_buf_valid_samples) {
-        xfade->active = false;
-        xfade->fade_acc_q16 = 0;
-    }
-}
-
-// buf_b = NEW, a = OLD. Returns true on termination — caller must promote pos_q48_16.
-static inline bool tape_handle_crossfade_b_is_new(crossfade_t* xfade, uint32_t active_phase_inc, int16_t* a_l, int16_t* a_r) {
-    if (!xfade->active)
-        return false;
-
-    int16_t b_l, b_r;
-    // TODO: on very high pitch ratios in cyclic mode (pitch fader turned to 100% and V/Oct input is cranked up), some miscalculation happens, and we try to fetch a sample out of bounds.
-    // probably has to do with wrapping logic in advance playhead.
-    tape_fetch_sample(xfade->pos_q48_16, xfade->buf_b_ptr_l, xfade->buf_b_ptr_r, &b_l, &b_r);
-
-    uint32_t lut_i = xfade->fade_acc_q16 >> 16;
-    if (lut_i >= FADE_LUT_LEN)
-        lut_i = FADE_LUT_LEN - 1;
-
-    int16_t mix_new = fade_in_lut[lut_i];
-    int16_t mix_old = 32767 - mix_new;
-
-    *a_l = (int16_t) ((((int32_t) (*a_l) * mix_old) + ((int32_t) b_l * mix_new)) >> 15);
-    *a_r = (int16_t) ((((int32_t) (*a_r) * mix_old) + ((int32_t) b_r * mix_new)) >> 15);
-
-    xfade->pos_q48_16 += active_phase_inc;
-    xfade->fade_acc_q16 += xfade->step_q16;
-
-    if (lut_i >= FADE_LUT_LEN - 1) {
-        xfade->active = false;
-        xfade->fade_acc_q16 = 0;
-        return true;
-    }
-
-    return false;
-}
-
-static inline uint32_t tape_compute_phase_increment() {
-    float target_inc = tape_player.params.pitch_factor * 65536.0f;
-
-    //TODO: is filtering pitch per block necessary? Evaluate if zipper noise is occuring without it. Was heavier before, seems gone now.
-    // // 0.01f = 1% move per sample.
-    // // Increase to 0.005f for smoother/slower, 0.05f for snappier.
-    // const float alpha = 0.01f;
-    // //--- The "Default" Stable IIR ---
-    // // current = current + alpha * (target - current)
-    // // This form is much more stable than the (target * coeff) version
-    // tape_player.current_phase_inc += alpha * (target_inc - tape_player.current_phase_inc);
-
-    tape_player.curr_phase_inc_q16_16 = target_inc;
-
-    uint32_t dec = tape_player.playback_buf->decimation > 0 ? tape_player.playback_buf->decimation : 1;
-    // This result is now a Q16.16 increment
-    return (tape_player.curr_phase_inc_q16_16 / dec);
-}
-
-static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
-    switch (tape_player.play_state) {
-    case PLAY_STOPPED:
-        // output silence
-        break;
-    case PLAY_PLAYING: {
-        if (tape_player.pos_q48_16 < (1 << 16)) {
-            // safety check to prevent out of bounds access in tape_fetch_sample
-            *out_l = 0;
-            *out_r = 0;
-            tape_player.pos_q48_16 = 1 << 16; // move playhead to n=1 to ensure valid interpolation
-            return;
-        }
-
-        tape_fetch_sample(tape_player.pos_q48_16, tape_player.playback_buf->ch[0], tape_player.playback_buf->ch[1], out_l, out_r);
-
-        tape_handle_fade_in(out_l, out_r);
-
-        // --- Q16 FIXED POINT FADE OUT TRIGGER ---
-        if (!tape_player.fade_out.active && playhead_near_end(tape_player.pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc) &&
-            !tape_player.params.cyclic_mode) {
-            tape_player.fade_out.active = true;
-            tape_player.fade_out.pos_q48_16 = 0; // Reset accumulator
-        }
-
-        // --- Q16 FIXED POINT FADE OUT PROCESS ---
-        tape_handle_fade_out(active_phase_inc, out_l, out_r);
-
-        // --- Cyclic Loop Trigger Logic ---
-        if (!tape_player.xfade_cyclic.active && tape_player.params.cyclic_mode &&
-            playhead_near_end(tape_player.pos_q48_16, FADE_IN_OUT_LEN, active_phase_inc)) {
-            // --- INITIALIZE CROSSFADE STATE (DO ONCE) ---
-            if (active_phase_inc > tape_player.xfade_cyclic.len << 16) {
-                tape_player.xfade_cyclic.active = true;
-                tape_player.xfade_cyclic.pos_q48_16 = 1ULL << 16; // playhead of temp buffer is the new play buffer
-                tape_player.xfade_cyclic.fade_acc_q16 = 0;        // Start LUT index at 0
-
-                // Set temp buffer to beginning of playback buf.
-                tape_player.xfade_cyclic.buf_b_ptr_l = tape_player.playback_buf->ch[0];
-                tape_player.xfade_cyclic.buf_b_ptr_r = tape_player.playback_buf->ch[1];
-            } else {
-                // if phase inc is larger than crossfade length, just do hard switch without crossfade to avoid illegal buffer access
-                tape_player.xfade_cyclic.active = false;
-            }
-        }
-
-        // handle cyclic crossfade
-        if (tape_handle_crossfade_b_is_new(&tape_player.xfade_cyclic, active_phase_inc, out_l, out_r)) {
-            // cyclic crossfade finished. buf_b is now fully faded in.
-            // promote temp buffer position to new playback buffer position.
-            tape_player.pos_q48_16 = tape_player.xfade_cyclic.pos_q48_16;
-        }
-
-        // handle retrig crossfade
-        tape_handle_crossfade_a_is_new(&tape_player.xfade_retrig, active_phase_inc, out_l, out_r);
-
-        // advance main playhead
-        advance_playhead_q48(&tape_player.pos_q48_16, active_phase_inc, tape_player.params.reverse, tape_player.params.cyclic_mode);
-    }
-    }
-}
-
-static inline void tape_process_recording_frame(int16_t* in_buf, uint32_t n) {
-    if (tape_player.rec_state != REC_RECORDING)
-        return;
-
-    uint8_t rec_decimation = tape_player.record_buf->decimation > 0 ? tape_player.record_buf->decimation : 1;
-    uint32_t frame_idx = n / 2;            // index of the current stereo frame (0, 1, 2, ...)
-    if ((frame_idx % rec_decimation) != 0) // record only each Nth frame, where N = decimation factor
-        return;
-
-    // deinterleaves input buffer into tape buffer
-    tape_player.record_buf->ch[0][tape_player.tape_recordhead] = in_buf[n];
-    tape_player.record_buf->ch[1][tape_player.tape_recordhead] = in_buf[n + 1];
-    tape_player.tape_recordhead++;
-
-    // if tape has recorded all the way, stop recording for now.
-    if (tape_player.tape_recordhead >= tape_player.record_buf->size) {
-        tape_player_stop_record();
-    }
-}
-
-// worker function to process tape player state
-void tape_player_process(int16_t* in_buf, int16_t* out_buf) {
-    if (!tape_player.playback_buf->ch[0] || !tape_player.playback_buf->ch[1])
-        return;
-
-    uint32_t active_phase_inc = tape_compute_phase_increment();
-
-    // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
-    for (uint32_t n = 0; n < (AUDIO_BLOCK_SIZE / 2); n += 2) {
-        int16_t out_l = 0;
-        int16_t out_r = 0;
-
-        switch (tape_player.play_state) {
-        case PLAY_STOPPED:
-            // output silence, but still process recording if active
-            break;
-        case PLAY_PLAYING:
-            tape_process_playback_frame(active_phase_inc, &out_l, &out_r);
-            break;
-        }
-
-        float env_val = envelope_process(&tape_player.env);
-        out_buf[n] = (int16_t) (out_l * env_val);
-        out_buf[n + 1] = (int16_t) (out_r * env_val);
-
-        switch (tape_player.rec_state) {
-        case REC_IDLE:
-            // do nothing
-            break;
-        case REC_RECORDING: {
-            // record tape at current recordhead position
-            // only record every second sample. Simple decimation.
-            tape_process_recording_frame(in_buf, n);
-            break;
-        }
-        case REC_REREC:
-            break;
-        case REC_DONE:
-            break;
-        }
-    }
-}
-
+/**
+ * @brief Recompute the grit factor from the current playback buffer decimation.
+ *
+ * Maps decimation (1–16) to a 0–1 grit value on a logarithmic curve so that
+ * the lo-fi hold-sample blend is perceptually uniform. The result is stored in
+ * @c tape_player.params.grit for use by the DSP exciter.
+ */
 static void compute_grit() {
     uint8_t dec = tape_player.playback_buf->decimation;
     if (dec < 1)
@@ -533,7 +158,13 @@ static void compute_grit() {
     tape_player.params.grit = logf(1.0f + 9.0f * g) / logf(10.0f); // maps 0..1 -> 0..1
 }
 
-// swap record and playback buffers before playing newly recorded buffer.
+/**
+ * @brief Swap the record and playback buffer pointers.
+ *
+ * Makes the just-recorded buffer the active playback source and recycles the
+ * old playback buffer for the next recording pass. Also resets the record head
+ * and recomputes the grit factor for the new buffer's decimation setting.
+ */
 static void swap_tape_buffers() {
     // switch recorded buffer to playback buffer
     tape_buffer_t* temp = tape_player.playback_buf;
@@ -548,6 +179,15 @@ static void swap_tape_buffers() {
     compute_grit();
 }
 
+/**
+ * @brief Reset all slice markers in a tape buffer.
+ *
+ * Sets every entry in @c buf->slice_positions to 0 and resets @c buf->num_slices.
+ * Called before each new recording pass so stale markers from a previous take
+ * cannot be played back.
+ *
+ * @param buf  Tape buffer whose slice table should be cleared.
+ */
 static void tape_clear_slices(tape_buffer_t* buf) {
     // clear slice positions and reset slice index
     for (int i = 0; i < MAX_NUM_SLICES; i++) {
@@ -556,6 +196,18 @@ static void tape_clear_slices(tape_buffer_t* buf) {
     buf->num_slices = 0;
 }
 
+/**
+ * @brief Resolve the normalized slice parameter to a Q48.16 buffer position.
+ *
+ * Selects a slice index proportional to @c tape_player.params.slice_pos (0–1)
+ * and converts the stored sample offset to a Q48.16 value. Enforces the minimum
+ * index of 1 required by the Hermite interpolator and ensures at least 4 samples
+ * remain after the slice start.
+ *
+ * @param[out] out_pos  Q48.16 playhead position corresponding to the chosen slice.
+ * @return              0 on success, -1 if the slice is out of range or too close
+ *                      to the end of the buffer.
+ */
 static int tape_buf_get_slice_start_pos_q48_16(uint64_t* out_pos) {
     uint32_t slice_idx = (uint32_t) (tape_player.params.slice_pos * (tape_player.playback_buf->num_slices - 1));
     uint32_t slice_pos = tape_player.playback_buf->slice_positions[slice_idx];
@@ -581,6 +233,21 @@ static int tape_buf_get_slice_start_pos_q48_16(uint64_t* out_pos) {
 static void play_fsm_event(tape_event_t evt);
 static void rec_fsm_event(tape_event_t evt);
 
+/**
+ * @brief Dispatch an event to the playback finite state machine.
+ *
+ * States: @c PLAY_STOPPED → @c PLAY_PLAYING → @c PLAY_STOPPED
+ *
+ * - **STOPPED + PLAY**: swaps buffers if pending, initialises the playhead at
+ *   the selected slice (or end of buffer in reverse), arms the fade-in and
+ *   envelope, and transitions to @c PLAY_PLAYING.
+ * - **PLAYING + PLAY** (retrigger): captures the current playback region into
+ *   the crossfade temp buffer, optionally swaps buffers, repositions the main
+ *   playhead, and starts a retrigger crossfade so the transition is click-free.
+ * - **PLAYING + STOP**: immediately transitions to @c PLAY_STOPPED.
+ *
+ * @param evt  Event to process (@c TAPE_EVT_PLAY or @c TAPE_EVT_STOP).
+ */
 static void play_fsm_event(tape_event_t evt) {
     switch (tape_player.play_state) {
     case PLAY_STOPPED:
@@ -693,14 +360,30 @@ static void play_fsm_event(tape_event_t evt) {
     }
 }
 
-// BEFORE SWAP, right after record stop
+/**
+ * @brief Finalise the record buffer after recording stops.
+ *
+ * Saves the current record head position as @c valid_samples, resets the record
+ * head, and sets the @c swap_bufs_pending flag so the next play event will
+ * promote the new recording to the playback buffer.
+ *
+ * Called before the buffer swap — must happen while recording has already stopped.
+ */
 static inline void finalize_rec_buf() {
     tape_player.record_buf->valid_samples = tape_player.tape_recordhead;
     tape_player.tape_recordhead = 0;
     tape_player.swap_bufs_pending = true;
 }
 
-// AFTER SWAP, right before record start
+/**
+ * @brief Prepare the record buffer for the next recording pass.
+ *
+ * Sets the decimation factor (from params or fixed compile-time value), clears
+ * all slice markers, and seeds the first slice at index 1 (Hermite lower bound).
+ *
+ * Called after the buffer swap — must happen while the record buffer is idle and
+ * not yet written to.
+ */
 static inline void prepare_next_rec_buf() {
     // apply decimation to recording buffer. This will be reach over to playback buffer by buffer swapping
     // prepare next rec buffer
@@ -715,6 +398,22 @@ static inline void prepare_next_rec_buf() {
     tape_player.record_buf->num_slices = 1;
 }
 
+/**
+ * @brief Dispatch an event to the recording finite state machine.
+ *
+ * States: @c REC_IDLE → @c REC_RECORDING → @c REC_DONE → @c REC_IDLE
+ *                                        ↘ @c REC_REREC → @c REC_RECORDING
+ *
+ * - **IDLE + RECORD**: prepares the record buffer and starts recording.
+ * - **RECORDING + RECORD** (re-record): finalises the current buffer and enters
+ *   @c REC_REREC, waiting for the buffer swap before starting the next pass.
+ * - **RECORDING + RECORD_DONE / STOP**: finalises the buffer and moves to
+ *   @c REC_DONE, waiting for the swap signal.
+ * - **DONE + SWAP_DONE**: swap complete, returns to @c REC_IDLE.
+ * - **REREC + SWAP_DONE**: swap complete, prepares the buffer and resumes recording.
+ *
+ * @param evt  Event to process (see @c tape_event_t).
+ */
 static void rec_fsm_event(tape_event_t evt) {
     switch (tape_player.rec_state) {
     case REC_IDLE:
@@ -757,28 +456,45 @@ static void rec_fsm_event(tape_event_t evt) {
 
 /* ----- PUBLIC API ----- */
 
+/** @brief Start or retrigger tape playback. Thread-safe via FSM event dispatch. */
 void tape_player_play(void) {
     play_fsm_event(TAPE_EVT_PLAY);
 }
 
+/** @brief Stop tape playback immediately. */
 void tape_player_stop_play(void) {
     play_fsm_event(TAPE_EVT_STOP);
 }
 
+/** @brief Start recording, or re-record over the current tape if already recording. */
 void tape_player_record(void) {
     rec_fsm_event(TAPE_EVT_RECORD);
 }
 
+/** @brief Stop recording and finalise the tape buffer. */
 void tape_player_stop_record(void) {
     rec_fsm_event(TAPE_EVT_RECORD_DONE);
 }
 
-// change pitch factor (playback speed)
+/**
+ * @brief Set the playback pitch factor directly.
+ *
+ * A value of 1.0 plays at the recorded speed; 0.5 plays at half speed (one octave
+ * down); 2.0 plays at double speed (one octave up).
+ *
+ * @param pitch_factor  Linear speed ratio relative to the recorded sample rate.
+ */
 void tape_player_set_pitch(float pitch_factor) {
     tape_player.params.pitch_factor = pitch_factor;
 }
 
-// set slice position marker to current recordhead position.
+/**
+ * @brief Mark the current record head position as a new slice boundary.
+ *
+ * Has no effect outside the @c REC_RECORDING state or when @c MAX_NUM_SLICES
+ * has already been reached. Slices are used to jump playback to sub-regions of
+ * the tape via @c tape_player.params.slice_pos.
+ */
 void tape_player_set_slice() {
     if (tape_player.rec_state == REC_RECORDING) {
         uint32_t current_rec_pos = tape_player.tape_recordhead;
@@ -790,7 +506,14 @@ void tape_player_set_slice() {
     }
 }
 
-// sets params once per block, based on current UI and CV values.
+/**
+ * @brief Update all tape player parameters from the current UI/CV cache.
+ *
+ * Called once per audio block before @c tape_player_process(). Combines the UI
+ * pitch knob and V/Oct CV input multiplicatively to produce the final pitch factor.
+ *
+ * @param param_cache  Snapshot of all current parameter values.
+ */
 void tape_player_set_params(struct param_cache param_cache) {
     tape_player.params.pitch_factor = param_cache.pitch_ui * param_cache.pitch_cv;
     tape_player.params.env_attack = param_cache.env_attack;
@@ -801,13 +524,22 @@ void tape_player_set_params(struct param_cache param_cache) {
     tape_player.params.slice_pos = param_cache.slice_pos;
 }
 
+/** @brief Return the current pitch factor (combined UI knob × V/Oct CV). */
 float tape_player_get_pitch() {
     return tape_player.params.pitch_factor;
 }
 
-// returns value from 0..1 depending on the decimation factor
-// this is used to blend in the hold sample for a grittier sound when decimation is high. At low decimation, we rely more on the hermite interpolation, which gives a smoother sound. At high decimation, the hermite interpolation can become less accurate and introduce more artifacts, so we blend in more of the hold sample to mask these artifacts and create a more "lo-fi" sound.
-// possibility to use a power curve to have a stronger effect at higher decimation factors
+/**
+ * @brief Return the grit factor for the current playback buffer (0–1).
+ *
+ * Grit is derived from the buffer's decimation factor via a logarithmic curve
+ * (see @c compute_grit()). A value of 0 means full Hermite interpolation
+ * (smooth, high-fidelity); a value of 1 blends in zero-order hold maximally,
+ * producing a lo-fi, grainy texture that is characteristic of heavily decimated
+ * tape.
+ *
+ * @return  Grit blend factor in the range [0, 1].
+ */
 float tape_player_get_grit() {
     return tape_player.params.grit;
 }
