@@ -59,6 +59,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/drivers/gpio_driver.c
     Aware/Src/drivers/ws2812_driver.c
     Aware/Src/ws2812_animations.c
+    Aware/Src/dsp/tape_player_dsp.c
     Aware/Src/dsp/exciter.c
     Aware/Src/dsp/schroeder_reverb.c
     Aware/Src/ressources.c
