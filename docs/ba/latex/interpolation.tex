@@ -139,16 +139,23 @@ H(t) = at^3 + bt^2 +ct +d, \quad t \in [0,1]
 
 but requires fewer arithmetic operations and is therefore preferred in DSP and CPU implementations.
 
+
+
 \paragraph{Phase Accumulator}
 
 Instead of using a \texttt{float} variable to track the playhead position within the tape buffer, this project uses a phase accumulator.
 This technique originates from \textit{Direct Digital Synthesis} (DDS), where it was used in  digital hardware systems without FPUs, required to generate a high precision frequency stable signal. \cite{baikadyAreaPowerEfficient2021}
 
-In this project, a $Q16.16$ phase accumulator is used to track the playhead position. 
-This phase is passed into the \texttt{hermite\_interpolate} function \ref{lst:hermite-interpolate} as \mintinline{c}|uint32_t phase|. The position is stored in a single \texttt{uint32\_t} variable, allowing it to be read and written in a single CPU operation. The 16 most significant bits encode the integer part of the position, while the 16 least significant bits represent the fractional part. 
+In this project, a $Q48.16$ phase accumulator is used to track the playhead position. 
+This phase is passed into the \texttt{hermite\_interpolate} function \ref{lst:hermite-interpolate} as \mintinline{c}|uint32_t phase|. The position is stored in a single \texttt{uint64\_t} variable, allowing it to be read and written in a single CPU operation. The 48 most significant bits encode the integer part of the position, while the 16 least significant bits represent the fractional part. 
 
 The phase accumulator is still well suited for usage in software DSP, since the sub-sample increments are accumulated in fixed-point arithmetic and are therefore bit-exact. 
 FPUs are only used when converting the fractional part to a \texttt{float} value for interpolation. 
 This ensures precise fractional tracking, since the conversion is stateless and is not altering the phase accumulation. 
 
 Conveniently the fractional part (16 least significant bits) represent a $t \in [0,1)$, which is exactly what the Hermite/Camull-Rom interpolation requires as boundaries.
+
+While a fixed-point phase accumulator provides bit-exact and deterministic phase tracking, for short playback durations, the advantages are minimal. 
+Single-precision floating-point arithmetic is good enough to represent fractional sample positions without noticeable phase drift. 
+So, the fixed-point implementation can be seen as somewhat cautious or too complicated for the current application. 
+However, it provides a strong and flexible framework that would remain accurate even for long audio playback, looping oscillators, or systems without hardware floating-point support.
