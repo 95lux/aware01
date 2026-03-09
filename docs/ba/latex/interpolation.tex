@@ -1,4 +1,5 @@
-\subsection{Interpolation during pitched Playback}
+% Focus point 1: Q48.16 fixed-point playhead + Hermite interpolation
+\subsection{Problem Statement}
 
 An obvious problem arises when dealing with variable speed playback of buffered audio pieces:
 
@@ -33,7 +34,37 @@ The upsampled signal is:
 %TODO add in block diagrams of filter -> interpolator , and decimator -> filter
 % sinc interpolator briefly explained?.
 
-\subsubsection{Choosing the algorithm}
+
+\subsubsection{Decimation}
+
+
+\subsubsection{Upsampling}
+
+
+\subsubsection{Naive Approach: Linear Interpolation}
+
+The simplest method for estimating a sample value at a non-integer playhead position is \textbf{linear interpolation}.
+Given two adjacent samples $x_0$ and $x_1$, the value at fractional offset $t \in [0, 1)$ is:
+
+\[
+y_{\text{lin}}(t) = (1 - t)\, x_0 + t\, x_1
+\]
+
+This requires only one multiply-accumulate per output sample, which makes it an obvious first candidate on constrained hardware.
+
+\subsubsection{The Aliasing Problem}
+
+Despite its computational simplicity, linear interpolation has a fundamental spectral limitation: it is only $C^0$ continuous.
+The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary.
+Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses — a signal inherently rich in high-frequency harmonic content.
+
+At low pitch ratios close to unity, the fractional step $\Delta t$ per output sample is small, so consecutive linear segments are short and nearly collinear. The slope discontinuities are minor and largely below the audible noise floor. However, at higher pitch ratios — $2\times$, $4\times$, or $8\times$ — the playhead advances by multiple samples per output step, so each output sample is interpolated between points that are further apart on the original waveform. The resulting segments are long and the slope jumps at their boundaries become large, producing harmonic distortion that falls within the audible band.
+
+As a concrete example, consider a pure 1\,kHz sine tone stored at 48\,kHz, played back at $4\times$ pitch to produce a 4\,kHz target. With linear interpolation, only one new output sample is computed for every four input samples consumed, and the reconstruction is built from these coarsely spaced linear segments. An FFT of the output reveals harmonic artefacts above the signal fundamental — distortion products that are not present in the source signal and that worsen monotonically as the pitch ratio increases.
+
+This motivates a higher-quality interpolation scheme whose output is at least $C^1$ continuous, i.e.\ one where the slope is smooth across sample boundaries.
+
+\subsection{Theory and Algorithm Selection}
 
 The resampling algorithm aims to maximise passband flatness and optimise the SNR (signal-to-noise ratio), i.e. not to alter the frequency content of the resulting signal.
 However, interpolation always introduces some degree of aliasing, resulting in degradation of the interpolated signal.
@@ -57,12 +88,64 @@ Hermite interpolation is part of the family of cubic \textit{osculating interpol
 
 A good performance vs computation tradeoff is a 2-point Hermite interpolation.
 
+
+\subsection{Comparison of Linear vs. Cubic Interpolation}
+
+When comparing the naive linear approach with its more sophisticated counterpart graphically, it becomes clear that the additional computational overhead of cubic interpolation is justified.
+
+\begin{figure}[htbp]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.1\textwidth]{../images/interpolation/fig_interpolation_comparison.pdf}
+	}
+	\caption{Interpolation method comparison.}
+	\label{fig:interpolation_comparison}
+\end{figure}
+
+In Figure \ref{fig:interpolation_comparison}, linear interpolation (1) is compared against the Catmull-Rom cubic Hermite interpolation used in this project (3), and an ideal cubic Hermite interpolation with exact derivatives (2). 
+The test signal is a sum of three sinusoids, simulating a complex audio signal:
+
+\begin{equation}
+	x(t) = 0.8\sin(2t) + 0.6\sin(t) + 0.4\sin(2.7t)
+\end{equation}
+
+The need for smooth interpolation becomes clear when the signal contains frequency content that approaches the sampling rate - the interpolator is forced to reconstruct steep, rapidly changing slopes from very few samples. 
+While this scenario would be prevented in practice by the Nyquist theorem, it serves as a useful stress test that exposes the characteristic artifacts of each method clearly.
+
+Smooth interpolation is still directly relevant to the pitched playback feature of this project though. On the DSP level, pitch shifting is implemented as a fractional sample rate conversion: the playback pointer advances through the sample buffer at a non-integer step size, meaning most output samples fall between two existing input samples. The interpolator is therefore called on every single output sample, and its accuracy in estimating the true waveform shape between discrete points directly determines the fidelity of the pitched output. A smooth, accurate interpolator is essential to avoid waveform distortion artifacts in the reconstructed signal.
+
+\paragraph{(1) Linear Interpolation}
+
+Linear interpolation has no knowledge of the signal's history or trajectory — it connects each pair of samples with a straight line. 
+This produces abrupt changes in slope at every sample boundary, which are especially visible near the peaks and troughs of the waveform, where the curvature of the underlying signal is greatest.
+
+\paragraph{(3) Cubic Hermite with Exact Derivatives}
+
+Since the test signal is analytically defined, its derivative is known exactly at every sample point:
+
+\begin{equation}
+	x'(t) = 1.6\cos(2t) + 0.6\cos(t) + 1.08\cos(2.7t)
+\end{equation}
+
+The resulting curve closely follows the original continuous signal throughout, including at the peaks and troughs where linear interpolation struggles most. This represents the theoretical upper bound of Hermite interpolation quality.
+
+\paragraph{(2) Cubic Hermite with Catmull-Rom Tangents}
+In a real-time audio context, the underlying signal and its derivatives are unknown. The Catmull-Rom approach addresses this by estimating the tangent at each point from its immediate neighbours, as described in Section \ref{sec:}. Despite relying on approximated rather than exact derivatives, the resulting curve closely resembles the ideal Hermite interpolation. The small deviation is practically negligible, making Catmull-Rom a well-justified tradeoff between computational simplicity and interpolation quality.
+
+Another observation that can be made when looking at the graph, is that the first and last sample are not being interpolated. The Catmull-Rom approach needs the $n-1$ and $n+3$ neighbouring samples solely for the tangent estimation and is not able to interpolate from these.
+
 \newpage
-\subsubsection{Implementation}
+\subsection{Implementation}
 
-A more performance-optimized implementation of this algorithm was employed in this project:
 
-\begin{listing}
+\paragraph{Interpolation Function}
+
+The algorithm is implemented as a single function that takes the phase accumulator 
+and the sample buffer as parameters. 
+As described in Section \ref{sec:numerical-architecture}, this function is the boundary between fixed-point  phase tracking and floating-point DSP computation: 
+the integer part of the phase selects the sample index, while the fractional part is converted to a \texttt{float} to serve as the interpolation parameter $t \in [0, 1)$.
+
+\begin{listing}[H]
 \begin{minted}{c}
 	float hermite_interpolate(uint32_t phase, int16_t* buffer) {
 		uint32_t idx = phase >> 16; // integer part
@@ -96,7 +179,7 @@ A more performance-optimized implementation of this algorithm was employed in th
 	}
 \end{minted}
 
-\caption{Based on Laurent de Soras' implementation from \\
+\caption{Hermite interpolation based on Laurent de Soras' implementation from \\
 		\url{https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html}}
 \label{lst:hermite-interpolate}
 \end{listing}
@@ -119,16 +202,16 @@ m_1 = \frac{x_2 - x_0}{2}
 
 This ensures a smooth cubic curve between \(x_0\) and \(x_1\) while only requiring the immediate neighbours of the interpolated points.
 
-So the actual interpolation is done between points \texttt{x0} and \texttt{x1} of the function. It is required to input also the $n-1$ sample.
+So even though the actual interpolation is done between points \texttt{x0} and \texttt{x1} of the function, the preceding sample $n-1$, as well as the following neighbour $n+2$ are also required as inputs.
 
-This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly reffered to as \textit{Catmull-Rom spline interpolation}. (source)
+This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly referred to as \textit{Catmull-Rom spline interpolation}. (source)
 
 The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points.
 
 The algorithm returns the result by computing a cubic polynomial using the nested Horner form \cite{burrusHornersMethodEvaluating}:
 
 \[
-H(t) = (a * t - b) * t + c) * t + d), \quad t \in [0,1]
+H(t) = (((a \cdot t - b) \cdot t + c) \cdot t + d), \quad t \in [0,1]
 \]
 
 which is algebraically equivalent to the standard form
@@ -138,24 +221,3 @@ H(t) = at^3 + bt^2 +ct +d, \quad t \in [0,1]
 \]
 
 but requires fewer arithmetic operations and is therefore preferred in DSP and CPU implementations.
-
-
-
-\paragraph{Phase Accumulator}
-
-Instead of using a \texttt{float} variable to track the playhead position within the tape buffer, this project uses a phase accumulator.
-This technique originates from \textit{Direct Digital Synthesis} (DDS), where it was used in  digital hardware systems without FPUs, required to generate a high precision frequency stable signal. \cite{baikadyAreaPowerEfficient2021}
-
-In this project, a $Q48.16$ phase accumulator is used to track the playhead position. 
-This phase is passed into the \texttt{hermite\_interpolate} function \ref{lst:hermite-interpolate} as \mintinline{c}|uint32_t phase|. The position is stored in a single \texttt{uint64\_t} variable, allowing it to be read and written in a single CPU operation. The 48 most significant bits encode the integer part of the position, while the 16 least significant bits represent the fractional part. 
-
-The phase accumulator is still well suited for usage in software DSP, since the sub-sample increments are accumulated in fixed-point arithmetic and are therefore bit-exact. 
-FPUs are only used when converting the fractional part to a \texttt{float} value for interpolation. 
-This ensures precise fractional tracking, since the conversion is stateless and is not altering the phase accumulation. 
-
-Conveniently the fractional part (16 least significant bits) represent a $t \in [0,1)$, which is exactly what the Hermite/Camull-Rom interpolation requires as boundaries.
-
-While a fixed-point phase accumulator provides bit-exact and deterministic phase tracking, for short playback durations, the advantages are minimal. 
-Single-precision floating-point arithmetic is good enough to represent fractional sample positions without noticeable phase drift. 
-So, the fixed-point implementation can be seen as somewhat cautious or too complicated for the current application. 
-However, it provides a strong and flexible framework that would remain accurate even for long audio playback, looping oscillators, or systems without hardware floating-point support.

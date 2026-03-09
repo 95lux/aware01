@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
+import plotstyle
 
 # ── Interpolation functions ───────────────────────────────────────────────────
 
@@ -26,17 +27,26 @@ def catmull_rom(xm1, x0, x1, x2, t):
 
 # ── Source signal ─────────────────────────────────────────────────────────────
 
-N_SAMPLES = 6
-sample_idx  = np.arange(N_SAMPLES)
+N_SAMPLES = 9
+sample_idx = np.arange(N_SAMPLES)
 
-# One full period of sine, sampled at N points
-freq        = 2 * np.pi / (N_SAMPLES - 1)
-sample_vals = np.sin(freq * sample_idx)
-sample_ders = np.cos(freq * sample_idx) * freq   # exact derivative of sine
+# Deterministic sum-of-sines signal for interpolation testing
+# Manually define frequencies and amplitudes
+freqs = [2.0, 1.0, 2.7]   # arbitrary chosen
+amps  = [0.8, 0.6, 0.4]   # amplitudes
 
-# Dense reference
+sample_vals = np.zeros(N_SAMPLES)
+sample_ders = np.zeros(N_SAMPLES)
+
+for a, f in zip(amps, freqs):
+    sample_vals += a * np.sin(f * sample_idx)
+    sample_ders += a * f * np.cos(f * sample_idx)  # exact derivative
+
+# Dense reference for plotting
 t_dense = np.linspace(0, N_SAMPLES - 1, 800)
-y_true  = np.sin(freq * t_dense)
+y_true = np.zeros_like(t_dense)
+for a, f in zip(amps, freqs):
+    y_true += a * np.sin(f * t_dense)
 
 # ── Build interpolated curves ─────────────────────────────────────────────────
 
@@ -54,6 +64,14 @@ _, y_linear = build_curve(
     lambda n, t: linear(sample_vals[n], sample_vals[n + 1], t)
 )
 
+_, y_hermite = build_curve(
+    lambda n, t: hermite(
+        sample_vals[n], sample_vals[n + 1],
+        sample_ders[n], sample_ders[n + 1],
+        t
+    )
+)
+
 # Catmull-Rom: needs n-1 and n+2, so only interior intervals are reliable
 t_cr, y_cr = [], []
 for n in range(1, N_SAMPLES - 2):
@@ -63,32 +81,25 @@ for n in range(1, N_SAMPLES - 2):
         y_cr.append(catmull_rom(xm1, x0, x1, x2, t))
 t_cr, y_cr = np.array(t_cr), np.array(y_cr)
 
-_, y_hermite = build_curve(
-    lambda n, t: hermite(
-        sample_vals[n], sample_vals[n + 1],
-        sample_ders[n], sample_ders[n + 1],
-        t
-    )
-)
-
 t_all = np.linspace(0, N_SAMPLES - 1, len(y_linear))
 
 # ── Style ─────────────────────────────────────────────────────────────────────
 
-plt.rcParams.update({
-    "font.family": "serif",
-    "font.serif": ["Latin Modern Roman"],
-    "mathtext.fontset": "cm",
-    "font.size":         13,
-    "axes.spines.top":   False,
-    "axes.spines.right": False,
-    "figure.dpi":        150,
-})
+# plt.rcParams.update({
+#     "font.family": "serif",
+#     "font.serif": ["Latin Modern Roman"],
+#     "mathtext.fontset": "cm",
+#     "font.size":         13,
+#     "axes.spines.top":   False,
+#     "axes.spines.right": False,
+#     "figure.dpi":        150,
+# })
 
 COLOR_TRUE   = "#b0b0b0"
 COLOR_INTERP = "#2a6ebb"
 COLOR_SAMPLE = "#1a1a1a"
 COLOR_TANG   = "#e07b39"
+COLOR_STEM   = "#aaaaaa"
 
 TITLES = [
     "Linear Interpolation",
@@ -113,6 +124,14 @@ for ax, title, t_c, y_c in zip(axes, TITLES, t_curves, curves):
     # Interpolated curve
     ax.plot(t_c, y_c,
             color=COLOR_INTERP, linewidth=2.0, zorder=2)
+    
+    # Baseline
+    ax.axhline(0, color=COLOR_STEM, linewidth=0.6, zorder=1)
+
+    # Stem lines from y=0 to each sample
+    ax.vlines(sample_idx, 0, sample_vals,
+              colors=COLOR_STEM, linewidth=0.9,
+              linestyle=":", zorder=3)
 
     # Samples
     ax.scatter(sample_idx, sample_vals,
@@ -137,7 +156,7 @@ for ax, tang_vals, t_range in [
 ]:
     for n, m in tang_vals:
         ax.annotate("",
-                    xy=(n + 0.22, sample_vals[n] + m * 0.22),
+                    xy=(n + 0.4, sample_vals[n] + m * 0.4),
                     xytext=(n, sample_vals[n]),
                     arrowprops=dict(arrowstyle="-|>",
                                     color=COLOR_TANG,
@@ -150,7 +169,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 
 legend_elements = [
-    Line2D([0], [0], color=COLOR_TRUE,   linewidth=1.2, linestyle="--", label="True sine"),
+    Line2D([0], [0], color=COLOR_TRUE,   linewidth=1.2, linestyle="--", label="True (continuous) signal"),
     Line2D([0], [0], color=COLOR_INTERP, linewidth=2.0,                 label="Interpolated curve"),
     Line2D([0], [0], marker="o", color="w",
            markerfacecolor="white", markeredgecolor=COLOR_SAMPLE,
@@ -165,9 +184,10 @@ fig.legend(handles=legend_elements,
 
 fig.supxlabel("Sample index $n$", fontsize=13, y=-0.05)
 
-script_dir = Path(__file__).resolve().parent
+
 
 # plt.tight_layout()
-plt.savefig(script_dir / "../../images/interpolation/fig_interpolation_comparison.pdf", bbox_inches="tight")
+script_dir = Path(__file__).resolve().parent
+plt.savefig(script_dir / "../images/interpolation/fig_interpolation_comparison.pdf", bbox_inches="tight")
 plt.savefig(script_dir / "fig_interpolation_comparison.png", bbox_inches="tight")
 print("Saved.")

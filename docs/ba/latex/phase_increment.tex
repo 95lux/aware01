@@ -1,0 +1,13 @@
+\paragraph{Fixed-Point Phase Accumulation}
+
+Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, as commonly employed in Direct Digital Synthesis (DDS) systems. The playback position is represented as an unsigned integer with fractional resolution (e.g., Q16.16 (\texttt{uint32\_t}) or Q48.16 (\texttt{uint64\_t})format). The phase is updated according to
+
+\begin{equation}
+	\phi[n+1] = \phi[n] + \Delta \phi ,
+\end{equation}
+
+where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback frequency.
+
+Using integer arithmetic for phase accumulation provides several advantages. First, wrap-around behaviour is clearly defined due to modulo-$2^N$ overflow of unsigned integers. This eliminates the need for explicit boundary checks and ensures deterministic behaviour. Second, the frequency resolution is determined directly by the word length of the accumulator, which allows precise and stable pitch control over long playback durations. Floating-point accumulation, in contrast, may introduce small rounding errors that can accumulate over time and lead to phase drift in long-running systems.
+
+For these reasons, fixed-point phase accumulators remain standard practice in oscillators, wavetable synthesizers, and embedded audio playback systems \cite{lyons_dsp, smith_pasp}.

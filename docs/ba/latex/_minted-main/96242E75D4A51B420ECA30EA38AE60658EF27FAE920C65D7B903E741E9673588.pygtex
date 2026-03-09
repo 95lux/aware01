@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{struct}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{feedback}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{float}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{buf}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{uint32\PYGZus{}t}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{;}\PYG{+w}{   }\PYG{c+cm}{/**\PYGZlt{} Buffer capacity in samples. */}
+\PYG{+w}{	}\PYG{k+kt}{uint32\PYGZus{}t}\PYG{+w}{ }\PYG{n}{idx}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{uint16\PYGZus{}t}\PYG{+w}{ }\PYG{n}{length}\PYG{p}{;}\PYG{+w}{ }\PYG{c+cm}{/**\PYGZlt{} Active delay length in samples (\PYGZlt{}= size). */}
+\PYG{+w}{	}
+\PYG{+w}{	}\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{lp\PYGZus{}state}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{lp\PYGZus{}alpha}\PYG{p}{;}\PYG{+w}{  }\PYG{c+cm}{/**\PYGZlt{} One\PYGZhy{}pole LP coefficient in the comb feedback path. */}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{sr\PYGZus{}delay\PYGZus{}t}\PYG{p}{;}
+\end{Verbatim}

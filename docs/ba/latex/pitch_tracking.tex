@@ -1,4 +1,4 @@
-\subsubsection{Calibration of V\_Oct ADCs}
+\paragraph{Calibration of V/Oct ADCs}
 
 The chosen calibration routine implemented in this project is a simple 2-point calibration, where 2 known input values are converted by the ADC. 
 From these values an equation of a straight line can be extracted, which will compensate external factors, like Opamp and electrical Ungenauigkeiten, as well as internal ADC offset and gain errors. 
@@ -27,7 +27,7 @@ During operation, the calibrated input value is obtained by
 X = \frac{S - b_c}{a_c}
 \]
 
-\paragraph{Translating the calibration to Pitch Tracking}
+\subparagraph{Translating the calibration to Pitch Tracking}
 
 The general two-point ADC calibration can be directly mapped to the pitch tracking
 (V/Oct) system by interpreting the ADC conversion codes as normalized control voltages
@@ -64,7 +64,7 @@ m = \frac{36 - 12}{c_3 - c_1} = \frac{24}{c_3 - c_1}
 b = 12 - m \cdot c_1
 \]
 
-\subsection{Pitch Tracking}
+\paragraph{Pitch Tracking}
 
 
 During operation, the pitch in semitones is calculated from a measured ADC value \( c \) as:

@@ -15,11 +15,13 @@
 \usepackage{amsmath}
 \usepackage{siunitx}
 \usepackage{appendix}
+\usepackage{makecell}
+\usepackage{placeins}
 
 \setminted{
 	breaklines,
 	breakanywhere=false,
-	linenos,
+	linenos=false,
 	xleftmargin=20pt
 }
 
@@ -62,76 +64,75 @@ Final Eurorack DSP capable hardware
 \subsection{Modular Synthesizers and Eurorack}
 \subsection{Audio and CV fundamentals}
 
-\section{System Requirements and Specification}
-\subsection{Functional Requirements}
-\subsection{Electrical Constraints}
-\subsection{Firmware Constraints}
+\section{System Implementation}
 
-\section{System Architecture}
-\subsection{High Level system overview}
+\subsection{System Requirements and Specification}
+\subsubsection{Functional Requirements}
+\subsubsection{Electrical Constraints}
+\subsubsection{Firmware Constraints}
+
+\subsection{System Architecture}
+\subsubsection{High Level System Overview}
 Block diagram of hardware? This probably belongs into hardware section
-\subsection{Signal Flow}
+
+\begin{figure}[ht]
+	\centering
+	\makebox[\linewidth][c]{%
+		\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
+	}
+	\caption{Hardware component diagram}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Signal Flow}
 Audio and CV signal flow (Analog signals)
 
-\section{Hardware Design}
-\subsection{Digital Hardware Design}
-\subsubsection{MCU selection}
-\subsubsection{Clocking and reset circuitry}
+\subsection{Hardware Design}
+\subsubsection{Digital Hardware Design}
+MCU selection
+\paragraph{Clocking and reset circuitry}
 \newpage
-\input{crystal.tex}	
-\subsubsection{Audio Codec Selection}
+\input{crystal.tex}
+\paragraph{Audio Codec Selection}
 
-\subsection{Analog Frontend Design}
-\input{gainstages.tex}	
+\subsubsection{Analog Frontend Design}
+\input{gainstages.tex}
 
-\subsubsection{PCB-Design}
-\subsubsection{Layer Stackup}
-\subsubsection{Power distribution}
-\subsubsection{signal integrity considerations}
-
+\paragraph{PCB Design}
+\paragraph{Layer Stackup}
+\paragraph{Power distribution}
+\paragraph{Signal integrity considerations}
 
 \newpage
-\section{Firmware}
+\subsection{Firmware Architecture}
+\input{firmware_architecture.tex}
 
-\subsection{Numerical Architecture and Arithmetic Design}
+\subsubsection{Numerical Architecture}
+\input{numerical_architecture.tex}
 
-The playback engine uses a mix of fixed-point and floating-point numbers. This design combines deterministic timing behaviour in the phase domain with numerically robust signal processing in the amplitude domain.
-
-\subsubsection{Fixed-Point Phase Accumulation}
-
-Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, as commonly employed in Direct Digital Synthesis (DDS) systems. The playback position is represented as an unsigned integer with fractional resolution (e.g., Q16.16 (\texttt{uint32\_t}) or Q48.16 (\texttt{uint64\_t})format). The phase is updated according to
-
-\begin{equation}
-	\phi[n+1] = \phi[n] + \Delta \phi ,
-\end{equation}
-
-where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback frequency.
-
-Using integer arithmetic for phase accumulation provides several advantages. First, wrap-around behaviour is clearly defined due to modulo-$2^N$ overflow of unsigned integers. This eliminates the need for explicit boundary checks and ensures deterministic behaviour. Second, the frequency resolution is determined directly by the word length of the accumulator, which allows precise and stable pitch control over long playback durations. Floating-point accumulation, in contrast, may introduce small rounding errors that can accumulate over time and lead to phase drift in long-running systems.
-
-For these reasons, fixed-point phase accumulators remain standard practice in oscillators, wavetable synthesizers, and embedded audio playback systems \cite{lyons_dsp, smith_pasp}.
-
-\subsubsection{Floating-Point Signal Processing}
-
-While the phase domain is handled using fixed-point arithmetic, all audio-domain processing is performed in single-precision floating-point. This includes mixing, biquad filtering, and reverberation.
-
-The target platform is based on an ARM Cortex-M7 microcontroller with hardware support for single-precision floating-point operations. The processor provides a pipelined FPU capable of efficient multiply and accumulate operations, making floating-point digital signal processing computationally practical in real-time audio applications \cite{arm_m7_trm}.
-
-Floating-point arithmetic offers several important advantages for recursive and feedback-based structures such as IIR filters and reverberation networks. The wide dynamic range reduces the risk of overflow and eliminates the need for manual scaling strategies that are typically required in fixed-point implementations. Furthermore, coefficient design tools and DSP literature predominantly assume floating-point arithmetic, simplifying implementation and validation \cite{zoelzer_dafx}.
-
-In addition, floating-point processing improves numerical robustness in cascaded filter structures, where quantization effects in fixed-point arithmetic may otherwise degrade stability or frequency response accuracy.
-
-\subsubsection{Architectural Rationale}
-
-The resulting architecture separates concerns between deterministic timing and numerical signal processing. Fixed-point arithmetic ensures stable and reproducible phase progression for accurate pitch control, while floating-point arithmetic simplifies implementation and improves robustness in the audio processing chain.
-
-Such hybrid designs are widely used in modern embedded audio systems and digital synthesizers, particularly on microcontrollers equipped with hardware floating-point units. This approach achieves a balance between precision, performance, and implementation complexity appropriate for real-time embedded audio applications.
-
-\input{interpolation.tex}
-\newpage
+\subsubsection{Calibration and Pitch Tracking}
 \input{pitch_tracking.tex}
 
+\newpage
+\section{Phase Increment}
+\input{phase_increment.tex}
 
+
+% -----------------------------------------------------------------------
+\newpage
+\section{Pitch Interpolation}
+
+\input{interpolation.tex}
+
+% -----------------------------------------------------------------------
+\newpage
+\section{Crossfade System}
+\input{crossfade_system.tex}
+
+% -----------------------------------------------------------------------
+\newpage
+\section{Reverb}
+\input{schroeder_reverb.tex}
 
 \section{Verification and Testing}
 \subsection{Hardware Testing}

@@ -1,0 +1,32 @@
+The playback engine uses a mix of fixed-point and floating-point numbers. This design combines deterministic timing behaviour in the phase domain with numerically robust signal processing in the amplitude domain.
+
+\paragraph{Fixed-Point Phase Accumulation}
+
+Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, as commonly employed in Direct Digital Synthesis (DDS) systems. The playback position is represented as an unsigned integer with fractional resolution (e.g., Q16.16 (\texttt{uint32\_t}) or Q48.16 (\texttt{uint64\_t})format). The phase is updated according to
+
+\begin{equation}
+	\phi[n+1] = \phi[n] + \Delta \phi ,
+\end{equation}
+
+where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback frequency.
+
+Using integer arithmetic for phase accumulation provides several advantages. First, wrap-around behaviour is clearly defined due to modulo-$2^N$ overflow of unsigned integers. This eliminates the need for explicit boundary checks and ensures deterministic behaviour. Second, the frequency resolution is determined directly by the word length of the accumulator, which allows precise and stable pitch control over long playback durations. Floating-point accumulation, in contrast, may introduce small rounding errors that can accumulate over time and lead to phase drift in long-running systems.
+
+For these reasons, fixed-point phase accumulators remain standard practice in oscillators, wavetable synthesizers, and embedded audio playback systems \cite{lyons_dsp, smith_pasp}.
+
+\paragraph{Floating-Point Signal Processing}
+
+While the phase domain is handled using fixed-point arithmetic, all audio-domain processing is performed in single-precision floating-point. This includes mixing, biquad filtering, and reverberation.
+
+The target platform is based on an ARM Cortex-M7 microcontroller with hardware support for single-precision floating-point operations. The processor provides a pipelined FPU capable of efficient multiply and accumulate operations, making floating-point digital signal processing computationally practical in real-time audio applications \cite{arm_m7_trm}.
+
+Floating-point arithmetic offers several important advantages for recursive and feedback-based structures such as IIR filters and reverberation networks. The wide dynamic range reduces the risk of overflow and eliminates the need for manual scaling strategies that are typically required in fixed-point implementations. Furthermore, coefficient design tools and DSP literature predominantly assume floating-point arithmetic, simplifying implementation and validation \cite{zoelzer_dafx}.
+
+In addition, floating-point processing improves numerical robustness in cascaded filter structures, where quantization effects in fixed-point arithmetic may otherwise degrade stability or frequency response accuracy.
+
+\paragraph{Architectural Rationale}
+
+The resulting architecture separates concerns between deterministic timing and numerical signal processing. Fixed-point arithmetic ensures stable and reproducible phase progression for accurate pitch control, while floating-point arithmetic simplifies implementation and improves robustness in the audio processing chain.
+
+Such hybrid designs are widely used in modern embedded audio systems and digital synthesizers, particularly on microcontrollers equipped with hardware floating-point units. %TODO Source!
+This approach achieves a balance between precision, performance, and implementation complexity appropriate for real-time embedded audio applications.
