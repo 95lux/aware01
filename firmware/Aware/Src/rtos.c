@@ -33,7 +33,6 @@ TaskHandle_t controlIfTaskHandle;
 TaskHandle_t userIfTaskHandle;
 
 QueueHandle_t tape_cmd_q;
-QueueHandle_t params_queue;
 
 SemaphoreHandle_t audioReadySemaphore;
 
@@ -51,9 +50,6 @@ void FREERTOS_Init(void) {
     /* create command queue */
     tape_cmd_q = xQueueCreate(8, sizeof(tape_cmd_msg_t));
     configASSERT(tape_cmd_q);
-
-    params_queue = xQueueCreate(1, sizeof(struct parameters));
-    configASSERT(params_queue);
 
     audioReadySemaphore = xSemaphoreCreateBinary();
     configASSERT(audioReadySemaphore);

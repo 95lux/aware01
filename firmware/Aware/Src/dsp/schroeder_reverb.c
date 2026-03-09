@@ -1,11 +1,15 @@
+/**
+ * @file schroeder_reverb.c
+ * @brief Stereo Schroeder reverb: 4 parallel lowpass-comb filters into 2 series allpass filters per channel.
+ */
 #include "dsp/schroeder_reverb.h"
 #include "arm_math.h"
 #include <string.h>
 /* ---- Prime delays (~48kHz) ---- */
 // Base comb & allpass lengths (primes for stereo)
 static const uint16_t comb_base[2][4] = {
-    {1553, 1613, 1499, 1427}, // left
-    {1567, 1601, 1487, 1433}  // right
+    {1613, 1553, 1499, 1427}, // left
+    {1601, 1567, 1487, 1433}  // right
 };
 
 static const uint16_t allpass_base[2][2] = {
@@ -17,7 +21,7 @@ static const uint16_t allpass_base[2][2] = {
 
 // TODO: MAX_COMB_LEN on biggest value in comb_base? this way a scale of 1.0 would mean max delay line lengths.
 // Currently some headroom.
-#define MAX_COMB_LEN 1600 // max delay for combs
+#define MAX_COMB_LEN 1620 // max delay for combs
 #define MAX_AP_LEN 600    // max delay for allpasses
 
 // ensure feedback stability
@@ -55,6 +59,7 @@ static float r_a2[MAX_AP_LEN];
 
 /* ---- Processing ---- */
 
+/** @brief Lowpass-comb filter: feedback with one-pole LP damping. */
 static float comb_process(sr_delay_t* d, float in) {
     // calculate read index with wraparound depending on set .length parameter
     uint32_t read_idx = (d->idx + d->size - d->length) % d->size;
@@ -73,6 +78,7 @@ static float comb_process(sr_delay_t* d, float in) {
     return y;
 }
 
+/** @brief Schroeder allpass filter: unity gain, disperses phase. */
 static float allpass_process(sr_delay_t* d, float in) {
     // calculate read index with wraparound depending on set .length parameter
     uint32_t read_idx = (d->idx + d->size - d->length) % d->size;
@@ -131,6 +137,7 @@ void schroeder_rev_init(schroeder_stereo_t* rev) {
     // arm_biquad_cascade_df2T_init_f32(&rev->right.iir_lp_instance, lp_fc2k_but_NUM_STAGES, lp_fc2k_but_coeffs, rev->right.iir_lp_state);
 }
 
+/** @brief Run one sample through the parallel combs then series allpasses. */
 static float process_channel(sr_channel_t* ch, float in) {
     float sum = 0.0f;
 
@@ -154,6 +161,8 @@ void schroeder_rev_process(schroeder_stereo_t* rev, float in_l, float in_r, floa
     *out_l = rev->dry * in_l + rev->wet * wet_l;
     *out_r = rev->dry * in_r + rev->wet * wet_r;
 }
+
+/* ----- PUBLIC API ----- */
 
 void schroeder_rev_set_feedback(schroeder_stereo_t* rev, float feedback) {
     if (feedback < 0.f)
