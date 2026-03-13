@@ -17,6 +17,7 @@
 \usepackage{appendix}
 \usepackage{makecell}
 \usepackage{placeins}
+\usepackage{booktabs}
 
 \setminted{
 	breaklines,
@@ -24,6 +25,8 @@
 	linenos=false,
 	xleftmargin=20pt
 }
+
+\setlength{\parindent}{0pt}
 
 
 
@@ -55,115 +58,103 @@
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \section{Introduction}
-\subsection{Motivation}
-Problem statement and Motivation
-\subsection{Objectives}
-Final Eurorack DSP capable hardware
+	\subsection{Motivation}
+	Problem statement and Motivation
+	\subsection{Objectives}
+	Final Eurorack DSP capable hardware
 
 \section{Background and Fundamentals}
-\subsection{Modular Synthesizers and Eurorack}
-\subsection{Audio and CV fundamentals}
+	\subsection{Modular Synthesizers and Eurorack}
+	\subsection{Audio and CV fundamentals}
 
-\section{System Implementation}
+\section{System Design}
 
-\subsection{System Requirements and Specification}
-\subsubsection{Functional Requirements}
-\subsubsection{Electrical Constraints}
-\subsubsection{Firmware Constraints}
+	\subsection{System Requirements and Specification}
+		\subsubsection{Functional Requirements}
+		\subsubsection{Electrical Constraints}
+		\subsubsection{Firmware Constraints}
 
-\subsection{System Architecture}
-\subsubsection{High Level System Overview}
-Block diagram of hardware? This probably belongs into hardware section
+	\subsection{System Architecture}
+		\subsubsection{High Level System Overview}
 
-\begin{figure}[ht]
-	\centering
-	\makebox[\linewidth][c]{%
-		\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
-	}
-	\caption{Hardware component diagram}
-\end{figure}
-\FloatBarrier
+		\begin{figure}[ht]
+			\centering
+			\makebox[\linewidth][c]{%
+				\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
+			}
+			\caption{Hardware component diagram}
+		\end{figure}
+		\FloatBarrier
 
-\subsubsection{Signal Flow}
-Audio and CV signal flow (Analog signals)
+	\subsection{Hardware Design}
+		\input{digital_hardware_design.tex}
+			
+		\subsubsection{Analog Frontend Design}
+		\input{gainstages.tex}
+	
+		\subsubsection{PCB Design}
+			\paragraph{Layer Stackup}
+			\paragraph{Power distribution}
+			\paragraph{Signal integrity considerations}
 
-\subsection{Hardware Design}
-\subsubsection{Digital Hardware Design}
-MCU selection
-\paragraph{Clocking and reset circuitry}
-\newpage
-\input{crystal.tex}
-\paragraph{Audio Codec Selection}
+	\newpage
+	\subsection{Firmware Architecture}
+	\input{firmware_architecture.tex}
 
-\subsubsection{Analog Frontend Design}
-\input{gainstages.tex}
+		\subsubsection{Numerical Architecture}
+		\label{sec:numerical-architecture}
+		\input{numerical_architecture.tex}
+		
+		\subsubsection{Calibration and Pitch Tracking}
+		\input{pitch_tracking.tex}
 
-\paragraph{PCB Design}
-\paragraph{Layer Stackup}
-\paragraph{Power distribution}
-\paragraph{Signal integrity considerations}
-
-\newpage
-\subsection{Firmware Architecture}
-\input{firmware_architecture.tex}
-
-\subsubsection{Numerical Architecture}
-\input{numerical_architecture.tex}
-
-\subsubsection{Calibration and Pitch Tracking}
-\input{pitch_tracking.tex}
-
-\newpage
-\section{Phase Increment}
-\input{phase_increment.tex}
+%\newpage
+%\section{Phase Increment}
+%\input{phase_increment.tex}
 
 
 % -----------------------------------------------------------------------
 \newpage
-\section{Pitch Interpolation}
+\section{Focus Point 1: Pitch Interpolation}
 
 \input{interpolation.tex}
 
 % -----------------------------------------------------------------------
-\newpage
-\section{Crossfade System}
-\input{crossfade_system.tex}
+%\newpage
+%\section{Crossfade System}
+%\input{crossfade_system.tex}
 
 % -----------------------------------------------------------------------
 \newpage
-\section{Reverb}
+\section{Focus Point 2: Reverb}
 \input{schroeder_reverb.tex}
 
-\section{Verification and Testing}
-\subsection{Hardware Testing}
-\subsubsection{Power and safety tests}
+\section{Verification and Evaluation}
+	\subsection{Hardware Testing}
+		\subsubsection{Power and safety tests}
 
-\subsubsection{Signal integrity measurements}
-\input{input_signal_test.tex}
+		\subsubsection{Signal integrity measurements}
+		\input{input_signal_test.tex}
 
-\subsubsection{Noise and distortion measurements}
+		\subsubsection{Noise and distortion measurements}
 
-\subsection{Firmware Testing}
-\subsubsection{Driver verification}
+	\subsection{Firmware Testing}
+		\subsubsection{Driver verification}
 
-\subsubsection{Timing and latency analysis}
+		\subsubsection{Timing and latency analysis}
 
-\subsubsection{Calibration accuracy}
+		\subsubsection{Calibration accuracy}
 
-\subsection{System-Level Validation}
+		\subsection{System-Level Validation}
 
 End-to-end signal tests/loopback?
 
 Eurorack compatibility tests
 
-\section{Results and Evaluation}
-\subsection{Measured performance vs requirements}
-
-\subsection{Audio quality evaluation}
-
-\subsection{Calibration accuracy and stability}
-
-\subsubsection{Discussion of limitations}
+\subsection{Summary}
+	\subsubsection{Summary}
+	Discussion of Limitations
+	\subsubsection{Ausblick}
 
 \newpage
 \addcontentsline{toc}{section}{References}

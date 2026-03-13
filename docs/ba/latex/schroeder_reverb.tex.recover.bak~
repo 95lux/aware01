@@ -236,6 +236,7 @@ typedef struct {
 \label{lst:schroeder-delayline-struct}
 \end{listing}
 
+This allows the active delay length to be changed at runtime without reallocating memory, since the buffer is always allocated at maximum size and only the \texttt{length} field is updated.
 
 The functionality of both, the comb- and allpass filters are implemented in the respective \texttt{*\_process} functions:
 
@@ -349,9 +350,7 @@ A minimum room size of 0.30 is enforced to prevent the delay lines from becoming
 	\item[\texttt{lp\_alpha} $(d)$] Controls the cutoff of the one-pole IIR filter in each comb feedback path, attenuating high frequencies and producing a more natural, air-absorbed decay.
 \end{description}
 
-\paragraph{Parameter Coupling}
-\label{sec:schroeder_parameter_coupling}
-The feedback gain and room size parameters are implicitly coupled through the stability macros. The \texttt{size} scalar is stored in the \texttt{schroeder\_stereo\_t} struct so that \texttt{schroeder\_rev\_set\_feedback} can reference it when computing the scaled feedback values:
+\paragraph{Parameter Coupling} The feedback gain and room size parameters are implicitly coupled through the stability macros. The \texttt{size} scalar is stored in the \texttt{schroeder\_stereo\_t} struct so that \texttt{schroeder\_rev\_set\_feedback} can reference it when computing the scaled feedback values:
 \begin{minted}{c}
 	float comb_fb = feedback * COMB_FEEDBACK(rev->size);
 \end{minted}
@@ -364,7 +363,7 @@ This means that calling public API function \texttt{schroeder\_rev\_set\_size} a
 Figure~\ref{fig:schroeder_env_decay_measurement} shows the measured envelope decay 
 of the reverb unit under varying feedback and room size parameters. Each curve 
 represents the smoothed amplitude envelope of a 20\,ms white noise burst passed 
-through the reverb and plotted until the signal 
+through the reverb, normalized to 0\,dB at the peak and plotted until the signal 
 reaches $-60$\,dB.
 
 \begin{figure}[H]
@@ -372,61 +371,24 @@ reaches $-60$\,dB.
 	\makebox[\textwidth][c]{%
 		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_envelope.pdf}
 	}
-	\caption{Reverb Decay Times of a \qty{20}{ms} White Noise Burst}
+	\caption{Allpass Filter}
 	\label{fig:schroeder_env_decay_measurement}
 \end{figure}
 
-\paragraph{Feedback and Room Size} As expected, higher feedback coefficients result in longer decay times. 
+\paragraph{Feedback} As expected, higher feedback coefficients result in longer decay times. 
 At maximum feedback ($fb = 0.975$), the reverb tail extends significantly longer than at minimum feedback ($fb = 0.442$), which decays rapidly toward the noise floor. 
 The most important validation is the stability at maximum feedback, on both maximum and minimum room sizes.
 
-The room size parameter scales the delay line lengths of 
+\paragraph{Room Size} The room size parameter scales the delay line lengths of 
 the comb filters. At maximum room size, the decay is smoother and more diffuse, 
 while at minimum room size the shorter delay lines produce a denser, more colored 
-decay. \\
+decay.
 
+\paragraph{RT60} The $-60$\,dB decay time (RT60) can be read directly from the 
+x-axis. At maximum feedback and room size, the RT60 is approximately 
+$5 \$ while at minimum feedback it falls below \texttt{TODO}\,s.
 
-The parameter boundaries were determined empirically during testing, chosen to represent the range that produces the most musically useful results --- long, dense decay at the upper end, and short, subtle  ambience at the lower end --- while ensuring the filters remain stable throughout.
-\paragraph{RT60} The \qty{-60}{dB} decay time (RT60) can be read directly from the 
-x-axis. At maximum feedback and room size, the RT60 is approximately \qty{5}{s}, while at minimum feedback it falls below \qty{0.5}{s}. 
-Notably, at minimum room size the RT60 reaches only approximately \qty{3.25}{s} even at maximum feedback --- significantly shorter than the \qty{5}{s} observed at maximum room size. 
-During testing, it became clear that feedback scaling (described in Section~\ref{sec:schroeder_parameter_coupling}) alone cannot fully compensate 
-for the shorter decay at smaller room sizes --- increasing feedback further risks 
-instability before the RT60 of larger room sizes can be matched.
-
-\subsubsection{Spectrogram}
-
-Figure~\ref{fig:schroeder_env_spectrogram} shows the spectrogram of the reverb tail 
-at maximum feedback ($fb = 0.975$, size $= 1.0$), comparing the comb filter lowpass 
-enabled and disabled. The input is a \qty{20}{ms} white noise burst, plotted over 
-\qty{5}{s} of decay.
-
-
-\begin{figure}[H]
-	\centering
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_spectrogram.png}
-	}
-	\caption{Reverb Tail Spectrogram at comb lowpass filter on feedback settings}
-	\label{fig:schroeder_env_spectrogram}
-\end{figure}
-
-\paragraph{LP enabled} With the lowpass active ($d = 0.4$), high-frequency energy 
-decays significantly faster than low-frequency content. The rolloff is clearly visible 
-as the bright energy concentrates toward the lower frequencies over time, producing 
-the characteristic warm, darkening tail associated with natural room acoustics.
-
-\paragraph{LP disabled} Without lowpass damping, energy is distributed more evenly 
-across the frequency spectrum throughout the decay, resulting in a brighter and more 
-unnatural sounding tail.
-
-\paragraph{Summary} Both variants have usable applications in music production. 
-Engaging the lowpass produces a more natural sounding reverb tail, modelling the 
-frequency-dependent absorption of a natural acoustic space, where high frequencies 
-are absorbed more rapidly than low frequencies.\\
-
-An interesting observation is that the frequency content of the reverb tail extends 
-almost to the Nyquist limit of $f_s / 2$ (\qty{24}{kHz}), confirming that neither 
-the used audio interface (RME Fireface UFX\,II interface \cite{FirefaceUFXII}) nor the embedded system 
-introduce any significant bandlimiting, and the observed high-frequency content 
-reflects the true output of the reverb algorithm.
+% TODO: record click/bassdrum in bitwig with different feedback/size combinations.
+% ensure stability
+% plot .wave files via matplotlib
+% measure cpu usage of the reverb (has to be made for later evaluation anyways.)

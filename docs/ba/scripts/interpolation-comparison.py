@@ -25,6 +25,7 @@ def catmull_rom(xm1, x0, x1, x2, t):
     return hermite(x0, x1, m0, m1, t)
 
 
+
 # ── Source signal ─────────────────────────────────────────────────────────────
 
 N_SAMPLES = 9
@@ -72,6 +73,13 @@ _, y_hermite = build_curve(
     )
 )
 
+def zoh(x0, t):
+    return x0
+
+_, y_zoh = build_curve(
+    lambda n, t: zoh(sample_vals[n], t)
+)
+
 # Catmull-Rom: needs n-1 and n+2, so only interior intervals are reliable
 t_cr, y_cr = [], []
 for n in range(1, N_SAMPLES - 2):
@@ -102,18 +110,20 @@ COLOR_TANG   = "#e07b39"
 COLOR_STEM   = "#aaaaaa"
 
 TITLES = [
-    "Linear Interpolation",
-    "Catmull-Rom \n(finite-difference tangents)",
-    "Cubic Hermite \n(exact derivatives)",
+    "(1) Zero-Order Hold (ZOH)",
+    "(2) Linear Interpolation",
+    "(3) Cubic Hermite (exact derivatives)",
+    "(4) Catmull-Rom (finite-difference tangents)",
 ]
 
-curves   = [y_linear, y_cr,  y_hermite]
-t_curves = [t_all,    t_cr,  t_all    ]
+curves   = [y_zoh,  y_linear, y_hermite, y_cr  ]
+t_curves = [t_all,  t_all,    t_all,     t_cr  ]
 
 # Catmull-Rom valid sample range for scatter
 cr_sample_range = range(N_SAMPLES)
 
-fig, axes = plt.subplots(1, 3, figsize=(13, 4), sharey=True)
+fig, axes = plt.subplots(2, 2, figsize=(13, 8), sharey=True)
+axes = axes.flatten()
 
 for ax, title, t_c, y_c in zip(axes, TITLES, t_curves, curves):
 
@@ -140,18 +150,18 @@ for ax, title, t_c, y_c in zip(axes, TITLES, t_curves, curves):
 
     ax.set_title(title, pad=8)
     ax.set_xticks(sample_idx)
-    for i, (ax, title, t_c, y_c) in enumerate(zip(axes, TITLES, t_curves, curves), 1):
-    # add number in parentheses before title
-        ax.set_title(f"({i}) {title}", pad=8)
-
 
 axes[0].set_ylabel("Amplitude")
+axes[2].set_ylabel("Amplitude")
+
+for ax in axes:
+    ax.set_xlabel("Sample index $n$")
 
 # Tangent arrows on Hermite panels (Catmull-Rom and True Hermite)
 for ax, tang_vals, t_range in [
-    (axes[1], [(n, (sample_vals[n+1] - sample_vals[n-1]) / 2.0)
+    (axes[2], [(n, (sample_vals[n+1] - sample_vals[n-1]) / 2.0)
                for n in range(1, N_SAMPLES - 2)], None),
-    (axes[2], [(n, sample_ders[n])
+    (axes[3], [(n, sample_ders[n])
                for n in range(N_SAMPLES)], None),
 ]:
     for n, m in tang_vals:
@@ -178,16 +188,14 @@ legend_elements = [
 ]
 
 fig.legend(handles=legend_elements,
-           loc="lower center", ncol=5,
+           loc="lower center", ncol=4,
            frameon=True, fontsize=13,
-           bbox_to_anchor=(0.5, -0.18))
+           bbox_to_anchor=(0.5, -0.02))
 
-fig.supxlabel("Sample index $n$", fontsize=13, y=-0.05)
-
-
-
+plt.subplots_adjust(hspace=0.5)
 # plt.tight_layout()
 script_dir = Path(__file__).resolve().parent
 plt.savefig(script_dir / "../images/interpolation/fig_interpolation_comparison.pdf", bbox_inches="tight")
 plt.savefig(script_dir / "fig_interpolation_comparison.png", bbox_inches="tight")
+plt.show()
 print("Saved.")

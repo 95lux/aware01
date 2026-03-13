@@ -60,20 +60,20 @@ The sequence concludes on Page~0 by powering up the DAC and ADC blocks, setting 
 
 
 \begin{listing}[h]
-	\begin{minted}{c}
-		/* sample-rate-dependent dividers: fs = MCLK / (N * M * OSR) */
-		switch (rate) {
-			case SAMPLERATE_48KHZ: n_val = 1; m_val = 2;  break;
-			case SAMPLERATE_24KHZ: n_val = 1; m_val = 4;  break;
-			case SAMPLERATE_8KHZ:  n_val = 1; m_val = 12; break;
-			default:               n_val = 1; m_val = 2;  break;
-		}
-		codec_write_reg(0x0b, 0x80 | n_val); /* NDAC - MSB powers up divider */
-		codec_write_reg(0x0c, 0x80 | m_val); /* MDAC */
-		codec_write_reg(0x0e, 0x80);         /* DAC OSR = 128 */
-	\end{minted}
-	\caption{TLV320AIC3204 clock divider configuration}
-	\label{lst:codec_clk}
+\begin{minted}{c}
+/* sample-rate-dependent dividers: fs = MCLK / (N * M * OSR) */
+switch (rate) {
+	case SAMPLERATE_48KHZ: n_val = 1; m_val = 2;  break;
+	case SAMPLERATE_24KHZ: n_val = 1; m_val = 4;  break;
+	case SAMPLERATE_8KHZ:  n_val = 1; m_val = 12; break;
+	default:               n_val = 1; m_val = 2;  break;
+}
+codec_write_reg(0x0b, 0x80 | n_val); /* NDAC - MSB powers up divider */
+codec_write_reg(0x0c, 0x80 | m_val); /* MDAC */
+codec_write_reg(0x0e, 0x80);         /* DAC OSR = 128 */
+\end{minted}
+\caption{TLV320AIC3204 clock divider configuration}
+\label{lst:codec_clk}
 \end{listing}
 
 Full register details and their respective configuration values are documented in TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557, section~5.2, pp.~96--128~\cite{TLV320AIC3204ApplicationReference2012}.

@@ -1,0 +1,29 @@
+\subsubsection{Digital Hardware Design}
+\paragraph{MCU selection}
+MCUMCU
+
+\paragraph{Crystal}
+
+The NX2520SA-24.000000\,MHz crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in \cite{HowSelectCompatible2025}. Crystal compatibility requires a gain margin of at least 5, defined as:
+
+\[
+\text{Gain Margin} = \frac{g_{m,\mathrm{crit,max}} \cdot 5}{g_{m,\mathrm{crit}}} \geq 5
+\]
+
+where the critical transconductance $g_{m,\mathrm{crit}}$ is calculated from the crystal parameters as:
+
+\[
+g_{m,\mathrm{crit}} = 4 \cdot ESR \cdot (2\pi F)^2 \cdot (C_0 + C_L)^2
+\]
+
+With $ESR = 100~\Omega$, $F = 24~\text{MHz}$, $C_0 = 7~\text{pF}$, $C_L = 10~\text{pF}$, and $g_{m,\mathrm{crit,max}} = 1.5~\mathrm{mA/V}$ for the STM32H7 \cite[p.~107]{stmicroelectronicsStm32h7a3riDatasheet}, the resulting gain margin is $7.31$, confirming crystal compatibility.
+
+The external load capacitors were calculated as:
+
+\[
+C_{L1} = C_{L2} = 2 \cdot (C_L - C_s) = 2 \cdot (10~\text{pF} - 3~\text{pF}) = \qty{14}{pF}
+\]
+
+where $C_s = 3~\text{pF}$ accounts for MCU pin and PCB parasitic capacitance.
+
+\paragraph{Audio Codec Selection}

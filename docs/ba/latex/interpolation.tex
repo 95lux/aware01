@@ -1,120 +1,160 @@
 % Focus point 1: Q48.16 fixed-point playhead + Hermite interpolation
 \subsection{Problem Statement}
 
-An obvious problem arises when dealing with variable speed playback of buffered audio pieces:
+An obvious problem arises when dealing with variable speed playback of buffered audio:
 
 the playback speed may not be an integer multiple of the original sample rate. 
 This technique is generally known as \textbf{sample-rate conversion}. 
-Its goal is essentially to obtain a new discrete representation \(y[n]\) of the underlying continuous signal \(x(t)\).
-
-\bigskip
-When playing back faster, the effective sample rate is reduced and the time resolution of the discrete samples decreases. 
-Some samples of the original signal are skipped. This process is called \textbf{decimation}. 
-If the decimation factor is \(L\), the downsampled signal can be written as:
-
-\[
-y[n] = x[nL], \quad n = 0,1,2,\dots
-\]
-
-\bigskip
-Conversely, slowing down the playback speed creates the need for additional sample points between the original discrete-time samples. 
-The interpolation of the sample rate is described by a factor \(M\). 
-The upsampled signal is:
-
-%TODO: are these functions correct? Source
-%
-%\[
-%y[n] =
-%\begin{cases}
-%	x[n/M], & n \text{ multiple of } M \\
-%	0, & \text{otherwise}
-%\end{cases}
-%\]
-
-%TODO add in block diagrams of filter -> interpolator , and decimator -> filter
-% sinc interpolator briefly explained?.
-
+Its goal is essentially to obtain a new discrete representation \(x_d[n]\) of the underlying continuous signal \(x_c(t)\).
 
 \subsubsection{Decimation}
 
+The simplest case of sample-rate conversion is \textbf{decimation}:
+reducing the sample rate by an integer factor $M$.
+This is achieved by retaining only every $M$-th sample of the original sequence:
+
+\[
+x_d[n] = x[nM] = x_c(nMT)
+\]
+
+However, directly subsampling without prefiltering causes aliasing if the signal contains energy above the new Nyquist limit $\pi/M$. 
+To avoid this, a discrete-time lowpass filter with cutoff $\pi/M$ must be applied before compression. \cite[p.~186]{oppenheimDiscretetimeSignalProcessing2014} 
+
+In the context of faster-than-unity playback, the playhead advances by more than one sample per output step, which is analogous to decimation --- some input samples are skipped entirely.
 
 \subsubsection{Upsampling}
+The inverse operation is \textbf{upsampling}: increasing the sampling rate by an integer factor $L$. 
+The classical approach inserts $L-1$ zeros between each pair of input samples to produce an expanded sequence:
+
+\[
+x_e[n] = \begin{cases} x[n/L], & n = 0, \pm L, \pm 2L, \dots \\ 0, & \text{otherwise} \end{cases}
+\]
+
+The zero-insertion creates spectral images of the original signal at multiples of $2\pi/L$. These are removed by a lowpass filter with cutoff $\pi/L$ and gain $L$, which reconstructs the missing sample values. \cite[p.~191]{oppenheimDiscretetimeSignalProcessing2014}
+
+\subsubsection{Non-Integer Rate Conversion}
+In practice, the playback speed of an audio sampler is not constrained to integer multiples of the original rate. 
+A pitch shift of a perfect fifth corresponds to a factor of $1.5\times$; an arbitrary detuning may produce any irrational ratio. 
+The classical integer-factor approach — upsample by $L$, filter, then downsample by $
+M$ — can approximate any rational ratio $L/M$, but requires a different filter for each ratio and cannot smoothly vary over time \cite[p.~197]{oppenheimDiscretetimeSignalProcessing2014}.
+
+A more practical approach for real-time audio is to treat sample-rate conversion as a continuous interpolation problem: given the discrete samples $x[n]$, evaluate the signal at an arbitrary fractional position $t \in R$. 
+
+The playhead is represented as a fixed-point number with a fractional part, and the output at each step is computed by interpolating between the nearest input samples. 
+The quality of this interpolation determines the spectral fidelity of the pitch-shifted output.
 
 
-\subsubsection{Naive Approach: Linear Interpolation}
 
-The simplest method for estimating a sample value at a non-integer playhead position is \textbf{linear interpolation}.
-Given two adjacent samples $x_0$ and $x_1$, the value at fractional offset $t \in [0, 1)$ is:
+\subsubsection{Naive Approach: ZOH and Linear Interpolation}
 
+The simplest possible strategy is \textbf{zero-order hold (ZOH)}: the output simply 
+repeats the last known sample value until the playhead reaches the next integer position.
+\[
+y_{\text{ZOH}}(t) = x_0, \quad t \in [0, 1)
+\]
+ZOH requires no arithmetic at all, but produces a staircase-shaped waveform with 
+discontinuities at every sample boundary, introducing significant high-frequency 
+distortion. It is included here as a baseline to establish the minimum quality floor.
+
+A straightforward improvement is \textbf{linear interpolation}: given two adjacent 
+samples $x_0$ and $x_1$, the value at fractional offset $t \in [0, 1)$ is:
 \[
 y_{\text{lin}}(t) = (1 - t)\, x_0 + t\, x_1
 \]
-
-This requires only one multiply-accumulate per output sample, which makes it an obvious first candidate on constrained hardware.
+This requires only one multiply-accumulate per output sample, which makes it an 
+obvious first candidate on constrained hardware. While linear interpolation eliminates 
+the discontinuities of ZOH, it remains only $C^0$ continuous 
+\footnote{A function is $C^n$ continuous if its derivatives up to order $n$ exist and are continuous everywhere. $C^0$ therefore denotes a function that is continuous but whose first derivative may be discontinuous. $C^1$ additionally requires a continuous first derivative. \cite{weissteinSmoothFunction}} 
+-- the interpolated values match at sample boundaries, but the slope changes abruptly at each one.
 
 \subsubsection{The Aliasing Problem}
 
-Despite its computational simplicity, linear interpolation has a fundamental spectral limitation: it is only $C^0$ continuous.
-The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary.
-Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses — a signal inherently rich in high-frequency harmonic content.
+Despite its computational simplicity, linear interpolation has a fundamental spectral limitation: it is only $C^0$ continuous. 
+The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary. 
+Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses --- a signal inherently rich in high-frequency harmonic content.
 
-At low pitch ratios close to unity, the fractional step $\Delta t$ per output sample is small, so consecutive linear segments are short and nearly collinear. The slope discontinuities are minor and largely below the audible noise floor. However, at higher pitch ratios — $2\times$, $4\times$, or $8\times$ — the playhead advances by multiple samples per output step, so each output sample is interpolated between points that are further apart on the original waveform. The resulting segments are long and the slope jumps at their boundaries become large, producing harmonic distortion that falls within the audible band.
+The aliasing problem is most severe during \textbf{upsampling}, i.e.\ at playback speeds below $1.0\times$, where the playhead advances by less than one sample per output step and the interpolator must synthesise the majority of output samples from scratch. At $0.5\times$ the interpolator is called for every other output sample; at $0.25\times$ it is called three times for every input sample consumed. 
+The accumulated interpolation error produces aliasing artefacts that worsen monotonically as the playback speed decreases.
 
-As a concrete example, consider a pure 1\,kHz sine tone stored at 48\,kHz, played back at $4\times$ pitch to produce a 4\,kHz target. With linear interpolation, only one new output sample is computed for every four input samples consumed, and the reconstruction is built from these coarsely spaced linear segments. An FFT of the output reveals harmonic artefacts above the signal fundamental — distortion products that are not present in the source signal and that worsen monotonically as the pitch ratio increases.
+At playback speeds above unity, the playhead advances by more than one sample per output step and some input samples are skipped. 
+The interpolator is still invoked for each output sample, but the fractional offset $\Delta t$ between consecutive output samples varies less and the slope discontinuities at sample boundaries are smaller. Aliasing artefacts are therefore less prominent in the downsampling regime.
 
-This motivates a higher-quality interpolation scheme whose output is at least $C^1$ continuous, i.e.\ one where the slope is smooth across sample boundaries.
+%As a concrete example, consider a \qty{100}{Hz} sawtooth stored at \qty{48}{kHz}, played back at $0.25\times$ pitch. The playhead advances by $0.25$ samples per output step, meaning three out of every four output samples are fully interpolated. 
+With linear interpolation, the piecewise-linear reconstruction introduces slope discontinuities at every sample boundary, producing harmonic artefacts between the signal's spectral lines that are clearly visible in an FFT of the output.
+
+Therefore a higher-quality interpolation scheme is desirable, whose output is at least $C^1$ 
+continuous, i.e.\ one where the slope is smooth across sample boundaries.
 
 \subsection{Theory and Algorithm Selection}
 
-The resampling algorithm aims to maximise passband flatness and optimise the SNR (signal-to-noise ratio), i.e. not to alter the frequency content of the resulting signal.
+A high quality resampling algorithm aims to maximise passband flatness and optimise the SNR (signal-to-noise ratio), i.e. not to alter the frequency content of the resulting signal.
 However, interpolation always introduces some degree of aliasing, resulting in degradation of the interpolated signal.
 
-On an embedded platform, it is important to choose an algorithm that is mostly aliasing-free and computationally fast.
+On an embedded platform, it is important to choose an algorithm that is mostly aliasing-free and computationally fast, while being aesthetically pleasing.
 
-%TODO describe polynomial interpolators - control points?
-
-
-Interpolators can generally be classified as either polynomial or FIR. 
-While FIR-based interpolation provides optimal band-limited reconstruction, its computational cost makes it impractical for real-time embedded audio systems.
+Interpolators can generally be classified as either IIR or FIR/polynomial. \cite[p.~11]{juliuso.smithInterpolatedDelayLines2022} 
+While FIR-based interpolation provides optimal band-limited reconstruction, its computational cost makes it impractical for real-time embedded audio systems. %TODO Source?
 Polynomial Interpolators generally give decent results at low computational cost, which make them a solid choice for embedded realtime resampling.
 Polynomial interpolators calculate an underlying polynomial that passes through all the given control points in order to interpolate points.
 The greater the number of control points, the higher the degree of the polynomial. 
 
 A classic example of a polynomial interpolator is the \textit{Lagrangian interpolation}, which finds an $N$ order polynomial through $N+1$ given control points. \cite{smithjuliuso.DigitalAudioResampling}
-When increasing the number of matching points with the Lagrangian polynomial, the interpolation converges with the sinc ideal interpolation. This is computational expensive though. %TODO source?
+When increasing the number of matching points with the Lagrangian polynomial, the interpolation converges with the sinc ideal interpolation. 
+This level of accuracy can only be achieved with very high computational cost.
 
 Another polynomial interpolation technique \textit{cubic splines}, involves fitting a cubic (third-order) polynomial through two known points. It achieves smoothness by also adjusting the polynomials' slope, by changing its coefficients. \cite{smithjuliuso.DigitalAudioResampling}
 Hermite interpolation is part of the family of cubic \textit{osculating interpolation}, in which in addition to matching the function value at the control points, the points also match a number of derivatives at the control points. \cite{olliniemitaloPolynomialInterpolatorsHighQuality2001}
 
-A good performance vs computation tradeoff is a 2-point Hermite interpolation.
+A good performance vs computation tradeoff is a 4-point Hermite interpolation.
 
 
-\subsection{Comparison of Linear vs. Cubic Interpolation}
+\subsection{Comparison of ZOH vs. Linear vs. Cubic Interpolation}
 
-When comparing the naive linear approach with its more sophisticated counterpart graphically, it becomes clear that the additional computational overhead of cubic interpolation is justified.
+\subsubsection{Time-Domain Comparison}
+\label{sec:interpolation-comparision-time-domain}
+When comparing the naive linear approach with its more sophisticated counterpart graphically, it becomes clear that the additional computational overhead of cubic interpolation is justified. \\
 
-\begin{figure}[htbp]
-	\centering
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1.1\textwidth]{../images/interpolation/fig_interpolation_comparison.pdf}
-	}
-	\caption{Interpolation method comparison.}
-	\label{fig:interpolation_comparison}
-\end{figure}
-
-In Figure \ref{fig:interpolation_comparison}, linear interpolation (1) is compared against the Catmull-Rom cubic Hermite interpolation used in this project (3), and an ideal cubic Hermite interpolation with exact derivatives (2). 
+In Figure \ref{fig:interpolation_comparison}, zero-order hold (1), linear interpolation (2), 
+the Catmull-Rom cubic Hermite interpolation used in this project (3), and an ideal cubic 
+Hermite interpolation with exact derivatives (4) are compared.
 The test signal is a sum of three sinusoids, simulating a complex audio signal:
 
 \begin{equation}
 	x(t) = 0.8\sin(2t) + 0.6\sin(t) + 0.4\sin(2.7t)
 \end{equation}
 
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=0.9\textwidth]{../images/interpolation/fig_interpolation_comparison.pdf}
+	}
+	\caption{Interpolation method comparison}
+	\label{fig:interpolation_comparison}
+\end{figure}
+
+
+
 The need for smooth interpolation becomes clear when the signal contains frequency content that approaches the sampling rate - the interpolator is forced to reconstruct steep, rapidly changing slopes from very few samples. 
 While this scenario would be prevented in practice by the Nyquist theorem, it serves as a useful stress test that exposes the characteristic artifacts of each method clearly.
 
 Smooth interpolation is still directly relevant to the pitched playback feature of this project though. On the DSP level, pitch shifting is implemented as a fractional sample rate conversion: the playback pointer advances through the sample buffer at a non-integer step size, meaning most output samples fall between two existing input samples. The interpolator is therefore called on every single output sample, and its accuracy in estimating the true waveform shape between discrete points directly determines the fidelity of the pitched output. A smooth, accurate interpolator is essential to avoid waveform distortion artifacts in the reconstructed signal.
 
-\paragraph{(1) Linear Interpolation}
+\newpage
+\paragraph{(1) Zero-Order Hold (ZOH)}
+\label{sec:zoh}
+Zero-order hold is the simplest possible interpolation strategy: the output holds the 
+last known sample value until the next sample is reached, producing a staircase-shaped 
+waveform, it introduces no smoothing whatsoever.
+
+Formally, the ZOH has an impulse response of unity over one sampling interval $T_s$, 
+giving a frequency response of \cite[pp~107-109]{moirRudimentsSignalProcessing2022}:
+\[
+|H(j\omega)| = \left| T_s \, \mathrm{sinc}\!\left(\frac{\omega T_s}{2}\right) \right|
+\]
+This sinc-shaped magnitude response causes the ZOH to attenuate high frequencies of the original signal, an effect known as \textit{ZOH droop}. 
+At the same time, the staircase discontinuities introduce new high-frequency harmonic content not present in the original signal. In the context of interpolation for pitch shifting, both effects contribute to audible distortion.
+
+\paragraph{(2) Linear Interpolation}
 
 Linear interpolation has no knowledge of the signal's history or trajectory — it connects each pair of samples with a straight line. 
 This produces abrupt changes in slope at every sample boundary, which are especially visible near the peaks and troughs of the waveform, where the curvature of the underlying signal is greatest.
@@ -129,12 +169,32 @@ Since the test signal is analytically defined, its derivative is known exactly a
 
 The resulting curve closely follows the original continuous signal throughout, including at the peaks and troughs where linear interpolation struggles most. This represents the theoretical upper bound of Hermite interpolation quality.
 
-\paragraph{(2) Cubic Hermite with Catmull-Rom Tangents}
-In a real-time audio context, the underlying signal and its derivatives are unknown. The Catmull-Rom approach addresses this by estimating the tangent at each point from its immediate neighbours, as described in Section \ref{sec:}. Despite relying on approximated rather than exact derivatives, the resulting curve closely resembles the ideal Hermite interpolation. The small deviation is practically negligible, making Catmull-Rom a well-justified tradeoff between computational simplicity and interpolation quality.
+\paragraph{(4) Cubic Hermite with Catmull-Rom Tangents}
+In a real-time audio context, the underlying signal and its derivatives are unknown. The Catmull-Rom approach addresses this by estimating the tangent at each point from its immediate neighbours. Despite relying on approximated rather than exact derivatives, the resulting curve closely resembles the ideal Hermite interpolation. The small deviation is practically negligible, making Catmull-Rom a well-justified tradeoff between computational simplicity and interpolation quality.
 
 Another observation that can be made when looking at the graph, is that the first and last sample are not being interpolated. The Catmull-Rom approach needs the $n-1$ and $n+3$ neighbouring samples solely for the tangent estimation and is not able to interpolate from these.
 
-\newpage
+\subsection{Frequency Response comparison}
+\label{sec:interpolation-comparision-frequency-response}
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.0\textwidth]{../images/interpolation/fig_interpolation_freq_response.pdf}
+	}
+	\caption{Interpolation method Frequency Response Comparison}
+	\label{fig:interpolation_comparison_frequency_response}
+\end{figure}
+
+When comparing frequency response of the 3 given interpolators, it becomes clear that Hermite has the least high frequency aliasing beyond of $f_s$. 
+The continuity of the Hermite Interpolator -- which is visible in the time domain (Section \ref{sec:interpolation-comparision-time-domain}) -- is directly reflected in the frequency domain.
+Smoother time-domain reconstruction corresponds to faster rolloff and lower aliasing lobes beyond Nyquist.
+
+The Catmull-Rom / Hermite response exhibits a characteristic \textit{punctured} sidelobe structure: each aliasing band is split into two sub-lobes by a notch, a consequence of the slight negative values in the kernel at $|t| \in [1, 2]$.
+ 
+As noted by Niemitalo \cite[p.~12]{olliniemitaloPolynomialInterpolatorsHighQuality2001}, this puncturing reduces the peak aliasing energy significantly compared to Lagrange interpolators of the same order, while the passband remains nearly flat up to the Nyquist limit. 
+This combination of flat passband and suppressed aliasing lobes makes the 4-point cubic Hermite a well-justified choice for real-time resampling on constrained hardware.
+
+
 \subsection{Implementation}
 
 
@@ -143,40 +203,40 @@ Another observation that can be made when looking at the graph, is that the firs
 The algorithm is implemented as a single function that takes the phase accumulator 
 and the sample buffer as parameters. 
 As described in Section \ref{sec:numerical-architecture}, this function is the boundary between fixed-point  phase tracking and floating-point DSP computation: 
-the integer part of the phase selects the sample index, while the fractional part is converted to a \texttt{float} to serve as the interpolation parameter $t \in [0, 1)$.
+the integer part of the phase selec ts the sample index, while the fractional part is converted to a \texttt{float} to serve as the interpolation parameter $t \in [0, 1)$.
 
 \begin{listing}[H]
-\begin{minted}{c}
-	float hermite_interpolate(uint32_t phase, int16_t* buffer) {
-		uint32_t idx = phase >> 16; // integer part
-		float t = (phase & 0xFFFF) * (1.0f / 65536.0f);
-		
-		int n = (int) idx - 1;
-		
-		// xm1 and x2 are only used for derivative estimation
-		// we interpolate between x0 and x1
-		float xm1 = buffer[n];
-		float x0 = buffer[n + 1];
-		float x1 = buffer[n + 2];
-		float x2 = buffer[n + 3];
-		
-		// estimate derivatives by finite differences
-		float m0 = 0.5f * (x1 - xm1); // derivative at x0
-		float m1 = 0.5f * (x2 - x0);  // derivative at x1
-		
-		// calculate coefficients
-		// Cubic Hermite interpolation (Catmull-Rom spline with Tension = 0)
-		float c = m0;
-		float v = x0 - x1;
-		float w = c + v;
-		float a = w + v + m1;
-		float b = w + a;
-		float d = x0;
-		
-		// cubic polynomial in Horner form.
-		// actually a*t^3 + b*t^2 + c*t + d
-		return (((a * t - b) * t + c) * t + d);
-	}
+\begin{minted}[linenos]{c}
+float hermite_interpolate(uint32_t phase, int16_t* buffer) {
+	uint32_t idx = phase >> 16; // integer part
+	float t = (phase & 0xFFFF) * (1.0f / 65536.0f);
+	
+	int n = (int) idx - 1;
+	
+	// xm1 and x2 are only used for derivative estimation
+	// we interpolate between x0 and x1
+	float xm1 = buffer[n];
+	float x0 = buffer[n + 1];
+	float x1 = buffer[n + 2];
+	float x2 = buffer[n + 3];
+	
+	// estimate derivatives by finite differences
+	float m0 = 0.5f * (x1 - xm1); // derivative at x0
+	float m1 = 0.5f * (x2 - x0);  // derivative at x1
+	
+	// calculate coefficients
+	// Cubic Hermite interpolation (Catmull-Rom spline with Tension = 0)
+	float c = m0;
+	float v = x0 - x1;
+	float w = c + v;
+	float a = w + v + m1;
+	float b = w + a;
+	float d = x0;
+	
+	// cubic polynomial in Horner form.
+	// actually a*t^3 + b*t^2 + c*t + d
+	return (((a * t - b) * t + c) * t + d);
+}
 \end{minted}
 
 \caption{Hermite interpolation based on Laurent de Soras' implementation from \\
@@ -186,14 +246,15 @@ the integer part of the phase selects the sample index, while the fractional par
 
 \vspace{5mm}	
 
+\newpage
 Although the function reads four samples \(y[n-1], y[n], y[n+1], y[n+2]\), 
 the actual Hermite interpolation is performed only between the two central points, 
-\(y[n] = \texttt{x0}\) and \(y[n+1] = \texttt{x1}\). 
+\(y[n] = \texttt{x0}\) and \(y[n+1] = \texttt{x1}\) (lines 10--11). 
 The two outer points, \(y[n-1] = \texttt{xm1}\) and \(y[n+2] = \texttt{x2}\), 
-are used exclusively to estimate the derivatives at the interpolation points. 
+are used exclusively to estimate the derivatives at the interpolation points (lines 9, 12). 
 
 Since the derivatives of a discrete-time audio signal are not directly available, 
-they are approximated using finite differences:
+they are approximated using finite differences (lines 15--16):
 
 \[
 m_0 = \frac{x_1 - x_{-1}}{2}, \quad
@@ -204,11 +265,11 @@ This ensures a smooth cubic curve between \(x_0\) and \(x_1\) while only requiri
 
 So even though the actual interpolation is done between points \texttt{x0} and \texttt{x1} of the function, the preceding sample $n-1$, as well as the following neighbour $n+2$ are also required as inputs.
 
-This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly referred to as \textit{Catmull-Rom spline interpolation}. (source)
+This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly referred to as \textit{Catmull-Rom spline interpolation}. \cite[p.11]{olliniemitaloPolynomialInterpolatorsHighQuality2001}
 
-The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points.
+The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points (lines 20--25).
 
-The algorithm returns the result by computing a cubic polynomial using the nested Horner form \cite{burrusHornersMethodEvaluating}:
+The algorithm returns the result by computing a cubic polynomial using the nested Horner form (line 29) \cite{burrusHornersMethodEvaluating}:
 
 \[
 H(t) = (((a \cdot t - b) \cdot t + c) \cdot t + d), \quad t \in [0,1]
@@ -221,3 +282,78 @@ H(t) = at^3 + bt^2 +ct +d, \quad t \in [0,1]
 \]
 
 but requires fewer arithmetic operations and is therefore preferred in DSP and CPU implementations.
+
+\subsection{Evaluation}
+\subsubsection{Measurement Setup}
+
+To evaluate interpolation quality, a \qty{100}{Hz} sawtooth wave was loaded into the 
+tape buffer. A sawtooth was chosen as the test signal because it contains both even and 
+odd harmonics, maximising the number of spectral components visible in the FFT output.
+
+The two interpolation methods under comparison were ZOH and the 4-point cubic Hermite 
+with Catmull-Rom tangents. Each method was recorded separately at the following playback 
+speeds: $0.25\times$ ($-2$ octaves), $0.33\times$, $0.5\times$ ($-1$ octave), 
+$0.75\times$, $1.0\times$ (unity), $1.5\times$, $2.0\times$ ($+1$ octave), and 
+$4.0\times$ ($+2$ octaves).
+
+To eliminate possible parameter jitter and value inaccuracy from the ADC, the playback speed was fixed at compile 
+time via a macro in \texttt{project\_config.h}, bypassing the control interface entirely:
+
+\begin{minted}[linenos]{c}
+	#define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
+\end{minted}
+
+The output was captured at $f_s = \qty{48}{kHz}$ as 24-bit \texttt{.wav} files 
+using a professional RME Fireface UFX\,II audio interface.
+
+\newpage
+\subsubsection{Results}
+
+Figure~\ref{fig:interpolation_linear_vs_zoh_fft} shows the FFT magnitude spectra of 
+the recorded signals for each playback speed. 
+
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.0\textwidth]{../images/interpolation/fig_interpolation_fft.pdf}
+	}
+	\caption{FFT of 100Hz Saw signal - interpolated via Hermite and ZOH with different playback speeds}
+	\label{fig:interpolation_linear_vs_zoh_fft}
+\end{figure}
+\newpage
+At unity playback ($1.0\times$), both methods produce nearly identical spectra: the 
+harmonic series of the sawtooth is clearly visible with no significant aliasing, as no 
+interpolation is required when the playhead advances at exactly one sample per output step.
+
+As the playback speed decreases below $1.0\times$, the effective upsampling ratio 
+increases and the interpolator is called more frequently, making its quality increasingly 
+audible. At $0.5\times$ and below, ZOH shows clearly visible aliasing humps between the 
+signal harmonics — folded spectral energy from above Nyquist. At $0.25\times$, a second 
+aliasing hump appears, consistent with the broad sidelobe structure predicted by the ZOH 
+frequency response in Section~\ref{sec:interpolation-comparision-frequency-response}.
+
+The Hermite interpolator shows substantially lower aliasing across all upsampling 
+ratios. Even at $0.25\times$, where ZOH produces prominent aliasing humps, the Hermite 
+output retains only a small residual artefact — consistent with the suppressed sidelobe 
+structure of the Catmull-Rom kernel discussed in 
+Section~\ref{sec:interpolation-comparision-frequency-response}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lp{3.5cm}p{4.5cm}}
+		\toprule
+		\textbf{Playback Speed} & \textbf{ZOH} & \textbf{Hermite (Catmull-Rom)} \\
+		\midrule
+		$4.0\times$ ($+2$ oct)   & Clean & Clean \\
+		$2.0\times$ ($+1$ oct)   & Clean & Clean \\
+		$1.5\times$              & Clean & Clean \\
+		$1.0\times$ (unity)      & Clean & Clean \\
+		$0.75\times$             & Minor aliasing & Clean \\
+		$0.5\times$  ($-1$ oct)  & Visible aliasing humps & Minor aliasing \\
+		$0.33\times$             & Strong aliasing & Minor aliasing \\
+		$0.25\times$ ($-2$ oct)  & Strong aliasing, double hump & Residual artefact only \\
+		\bottomrule
+	\end{tabular}
+	\caption{Qualitative comparison of aliasing artefacts at each playback speed.}
+	\label{tab:interpolation_aliasing_comparison}
+\end{table}
