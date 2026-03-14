@@ -140,9 +140,9 @@ static void AudioTask(void* argument) {
             loopback_samples();
 #else
 
-            int16_t wet[AUDIO_HALF_BLOCK_SIZE];
-            int16_t in_buf[AUDIO_HALF_BLOCK_SIZE];
-            int16_t dry[AUDIO_HALF_BLOCK_SIZE];
+            int16_t processed[AUDIO_HALF_BLOCK_SIZE]; // output of exciter, input to reverb, output of reverb (pre-dac)
+            int16_t in_buf[AUDIO_HALF_BLOCK_SIZE];    // input from codec, output of tape player (pre-exciter)
+            int16_t dry[AUDIO_HALF_BLOCK_SIZE];       // output of tape player, input to exciter (pre-reverb)
 
             audio_get_dma_in_buf(in_buf, AUDIO_HALF_BLOCK_SIZE);
 
@@ -152,24 +152,28 @@ static void AudioTask(void* argument) {
 #ifdef CONFIG_ENABLE_TAPE_PLAYER
             // tape player may be disabled to check simple dsp processing without tape player in the way, since it is currently the only source of audio input (no external input implemented yet)
             tape_player_process(in_buf, (int16_t*) dry);
-#endif
+
             /* ----- TAPE PLAYER END ----- */
 
             /* ------ EXCITER ------ */
-            excite_block(&exciter, dry, wet, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
+            excite_block(&exciter, dry, processed, AUDIO_HALF_BLOCK_SIZE, 1000.0f);
 
             float excite_amount = tape_player_get_grit();
             excite_amount = excite_amount * MAX_EXCITE_ON_MAX_DECIMATION;
 
             // mix wet and dry with fixed ratio for now (can be made variable later)
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i++) {
-                wet[i] = 1.0f * dry[i] + excite_amount * wet[i];
+                processed[i] = 1.0f * dry[i] + excite_amount * processed[i];
 
                 // hardware saturation
-                wet[i] = __SSAT(wet[i], 16);
+                processed[i] = __SSAT(processed[i], 16);
             }
             /* ------ EXCITER END ------ */
 
+#else
+            // if tape player is disabled, just pass input directly to exciter and reverb for testing
+            memcpy(processed, in_buf, sizeof(int16_t) * AUDIO_HALF_BLOCK_SIZE);
+#endif
             /* ------ REVERB ------ */
             float reverb_size = param_cache.schroeder_verb_size;
             float reverb_feedback = param_cache.schroeder_verb_feedback;
@@ -178,11 +182,12 @@ static void AudioTask(void* argument) {
             schroeder_rev_set_feedback(&reverb, reverb_feedback);
             schroeder_rev_set_size(&reverb, reverb_size);
             schroeder_rev_set_wet(&reverb, reverb_wet);
+            // schroeder_rev_set_wet(&reverb, 1.0);
             schroeder_rev_set_lp_alpha(&reverb, reverb_lp_alpha);
 
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i += 2) {
-                float inL = (float) wet[i] / 32768.0f;
-                float inR = (float) wet[i + 1] / 32768.0f;
+                float inL = (float) processed[i] / 32768.0f;
+                float inR = (float) processed[i + 1] / 32768.0f;
 
                 float outL, outR;
 
@@ -192,12 +197,12 @@ static void AudioTask(void* argument) {
                 int32_t sL = (int32_t) (outL * 32768.0f);
                 int32_t sR = (int32_t) (outR * 32768.0f);
 
-                wet[i] = __SSAT(sL, 16);
-                wet[i + 1] = __SSAT(sR, 16);
+                processed[i] = __SSAT(sL, 16);
+                processed[i + 1] = __SSAT(sR, 16);
             }
             /* ------ REVERB END ------ */
 
-            audio_write_dma_out_buf(wet, AUDIO_HALF_BLOCK_SIZE);
+            audio_write_dma_out_buf(processed, AUDIO_HALF_BLOCK_SIZE);
 
             /* handle pending commands (non-blocking) */
             tape_cmd_msg_t msg;

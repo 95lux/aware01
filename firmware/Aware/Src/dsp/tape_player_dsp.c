@@ -397,7 +397,11 @@ static inline bool tape_handle_crossfade_b_is_new(crossfade_t* xfade, uint32_t a
  * @return Q16.16 phase increment to pass to @c advance_playhead_q48().
  */
 static inline uint32_t tape_compute_phase_increment() {
+#ifdef CONFIG_TAPE_PITCH_OVERRIDE
+    float target_inc = CONFIG_TAPE_PITCH_OVERRIDE * 65536.0f;
+#else
     float target_inc = tape_player.params.pitch_factor * 65536.0f;
+#endif
 
     //TODO: is filtering pitch per block necessary? Evaluate if zipper noise is occuring without it. Was heavier before, seems gone now.
     // // 0.01f = 1% move per sample.
@@ -552,9 +556,14 @@ void tape_player_process(int16_t* in_buf, int16_t* out_buf) {
             break;
         }
 
+#ifdef CONFIG_ENABLE_ENVELOPE
         float env_val = envelope_process(&tape_player.env);
         out_buf[n] = (int16_t) (out_l * env_val);
         out_buf[n + 1] = (int16_t) (out_r * env_val);
+#else
+        out_buf[n] = (int16_t) (out_l);
+        out_buf[n + 1] = (int16_t) (out_r);
+#endif
 
         switch (tape_player.rec_state) {
         case REC_IDLE:

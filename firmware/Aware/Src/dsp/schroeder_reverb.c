@@ -27,10 +27,10 @@ static const uint16_t allpass_base[2][2] = {
 // ensure feedback stability
 // feedback scaling macros: feedback increases as size decreases, to maintain perceptual consistency across different sizes. The exact curve can be tweaked for desired response.
 // Base feedback values (for size = 1.0f)
-#define COMB_FEEDBACK_BASE 0.97f
+#define COMB_FEEDBACK_BASE 0.972f
 #define ALLPASS_FEEDBACK_BASE 0.68f // Allpasses usually need less feedback
 // Scaling factor (adjust as needed)
-#define FEEDBACK_SCALE_FACTOR 0.01f // Adjust this to control how much feedback increases as size decreases
+#define FEEDBACK_SCALE_FACTOR 0.005f // Adjust this to control how much feedback increases as size decreases
 
 #define COMB_FEEDBACK(size) (COMB_FEEDBACK_BASE + FEEDBACK_SCALE_FACTOR * (1.0f - size))
 #define ALLPASS_FEEDBACK(size) (ALLPASS_FEEDBACK_BASE + FEEDBACK_SCALE_FACTOR * (1.0f - size))

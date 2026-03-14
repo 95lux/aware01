@@ -28,8 +28,8 @@ static xy_map_piecewise_t x_map[] = {
      .positive = {param_cache_set_schroeder_verb_feedback, 0.02f, 1.0f, 0.15f}},
     {.negative = {param_cache_set_schroeder_verb_wet, 0.0f, 1.0f, 0.7f},
      .positive = {param_cache_set_schroeder_verb_wet, 0.0f, 1.0f, 0.7f}},
-    {.negative = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.6f, 1.3f},
-     .positive = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.6f, 1.3f}}
+    {.negative = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.0f, 1.3f},
+     .positive = {param_cache_set_schroeder_verb_lp_alpha, 0.0f, 0.4f, 1.3f}}
     // add more mappings on x axis here
 };
 
