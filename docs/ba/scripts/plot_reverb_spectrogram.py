@@ -45,5 +45,5 @@ plt.tight_layout()
 script_dir = Path(__file__).resolve().parent
 plt.savefig(script_dir / "../images/schroeder_reverb/fig_reverb_spectrogram.pdf", bbox_inches="tight")
 plt.savefig(script_dir / "../images/schroeder_reverb/fig_reverb_spectrogram.png", 
-            bbox_inches="tight", dpi=150)
+            bbox_inches="tight", dpi=300)
 plt.show()
