@@ -101,80 +101,65 @@ int user_iface_populate_pot_bufs() {
 static bool last_cyclic_state;
 static bool last_reverse_state;
 
-void user_iface_process(uint32_t notified) {
-    // FADE POTS
+void user_iface_process_gates(uint32_t notified) {
+    if (notified & GPIO_NOTIFY_GATE1) {
+        ws2812_trigger_led(0, (struct ws2812_color){.r = 0, .g = 255, .b = 0}, 3);
+    }
+    if (notified & GPIO_NOTIFY_GATE2) {
+        ws2812_trigger_led(1, (struct ws2812_color){.r = 255, .g = 0, .b = 0}, 3);
+    }
+}
 
-    if (notified & ADC_NOTIFY_POTS_RDY) {
-        for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
-            // save as normalized float for easier processing later.
-            float v = float_value(user_interface_cfg.adc_pot_working_buf[i]);
-            if (user_interface_cfg.pots[i].inverted)
-                v = 1.0f - v;
+void user_iface_process_pots(void) {
+    if (user_iface_populate_pot_bufs() != 0)
+        return;
 
-            // TODO: maybe add different coefficient per pot.
-            user_interface_cfg.pots[i].val = smooth_filter(user_interface_cfg.pots[i].val, v, 0.1f);
-        }
-
-        // V/Oct pitch control with piecewise linear response curve and deadzone around center position.
-        float norm_voct = user_interface_cfg.pots[POT_PITCH].val;
-        struct calibration_data* cal = user_interface_cfg.calibration_data;
-
-        // apply piecewise linear mapping.
-        float t;
-        if (norm_voct <= cal->pitchpot_mid) {
-            t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
-        } else {
-            t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
-        }
-        // apply deadzone and rescale to maintain full range outside of deadzone
-        if (fabsf(t) < DEADZONE) {
-            t = 0.0f;
-        } else if (t > 0.0f) {
-            t = (t - DEADZONE) * INV_RANGE;
-        } else {
-            t = (t + DEADZONE) * INV_RANGE;
-        }
-
-        t = fmaxf(-1.0f, fminf(t, 1.0f));
-
-        float semitones = t * UI_PITCH_MAX_SEMITONE_RANGE;
-        float pitch_factor_new = powf(2.0f, (semitones / 12.0f));
-
-        param_cache_set_pitch_ui(pitch_factor_new);
-
-        // Envelope
-        float attack = user_interface_cfg.pots[POT_PARAM2].val; // 0..1
-        float decay = user_interface_cfg.pots[POT_PARAM3].val;  // 0..1
-        param_cache_set_env_attack(attack);
-        param_cache_set_env_decay(decay);
-
-        // TODO: for now just use power of 2 for decimation. Other values cause pitch issues. Resolve later
-#define MAX_DECIMATION_POW 4 // 2^4 = 16
-
-        // pot in range 0.0f .. 1.0f
-        uint8_t pow = (uint8_t) (user_interface_cfg.pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
-
-        // clamp just in case
-        if (pow > MAX_DECIMATION_POW)
-            pow = MAX_DECIMATION_POW;
-
-        uint8_t decimation = 1u << pow;
-
-        param_cache_set_decimation(decimation);
-
-        //TODO: single LED animation that flickers and glitches the more decimation is set.
-        // probably new LED mode needed, that generates flicker
+    for (size_t i = 0; i < NUM_POT_CHANNELS; i++) {
+        float v = float_value(user_interface_cfg.adc_pot_working_buf[i]);
+        if (user_interface_cfg.pots[i].inverted)
+            v = 1.0f - v;
+        user_interface_cfg.pots[i].val = smooth_filter(user_interface_cfg.pots[i].val, v, 0.1f);
     }
 
-    // BUTTONS
+    // V/Oct pitch
+    float norm_voct = user_interface_cfg.pots[POT_PITCH].val;
+    struct calibration_data* cal = user_interface_cfg.calibration_data;
+
+    float t;
+    if (norm_voct <= cal->pitchpot_mid) {
+        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
+    } else {
+        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+    }
+    if (fabsf(t) < DEADZONE) {
+        t = 0.0f;
+    } else if (t > 0.0f) {
+        t = (t - DEADZONE) * INV_RANGE;
+    } else {
+        t = (t + DEADZONE) * INV_RANGE;
+    }
+    t = fmaxf(-1.0f, fminf(t, 1.0f));
+
+    param_cache_set_pitch_ui(powf(2.0f, t * UI_PITCH_MAX_SEMITONE_RANGE / 12.0f));
+
+    param_cache_set_env_attack(user_interface_cfg.pots[POT_PARAM2].val);
+    param_cache_set_env_decay(user_interface_cfg.pots[POT_PARAM3].val);
+
+    // TODO: for now just use power of 2 for decimation. Other values cause pitch issues. Resolve later
+    uint8_t pow = (uint8_t)(user_interface_cfg.pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
+    if (pow > MAX_DECIMATION_POW)
+        pow = MAX_DECIMATION_POW;
+    param_cache_set_decimation(1u << pow);
+
+    // TODO: single LED animation that flickers and glitches the more decimation is set.
+}
+
+void user_iface_process_buttons(uint32_t notified) {
     if (notified & GPIO_NOTIFY_BUTTON1) {
-        // toggle cyclic mode;
         user_interface_cfg.cyclic_mode = !user_interface_cfg.cyclic_mode;
         param_cache_set_cyclic(user_interface_cfg.cyclic_mode);
-        // TODO: set static mode for cyclic here
     }
     if (notified & GPIO_NOTIFY_BUTTON2) {
-        // toggle reverse mode;
         user_interface_cfg.reverse_mode = !user_interface_cfg.reverse_mode;
         param_cache_set_reverse(user_interface_cfg.reverse_mode);
     }
@@ -182,20 +167,16 @@ void user_iface_process(uint32_t notified) {
     bool cyclic_mode = user_interface_cfg.cyclic_mode;
     bool reverse_mode = user_interface_cfg.reverse_mode;
 
-    // Update 3rd LED animations based on mode
     if (cyclic_mode != last_cyclic_state || reverse_mode != last_reverse_state) {
         if (cyclic_mode && reverse_mode) {
-            struct ws2812_color purple = {.r = 128, .g = 0, .b = 128};
-            ws2812_set_static_color(2, purple);
+            ws2812_set_static_color(2, (struct ws2812_color){.r = 128, .g = 0, .b = 128});
         } else if (cyclic_mode) {
             ws2812_set_static_color(2, blue);
         } else if (reverse_mode) {
             ws2812_set_static_color(2, red);
         } else {
-            struct ws2812_color off = {.r = 0, .g = 0, .b = 0};
-            ws2812_set_static_color(2, off);
+            ws2812_set_static_color(2, (struct ws2812_color){.r = 0, .g = 0, .b = 0});
         }
-
         last_cyclic_state = cyclic_mode;
         last_reverse_state = reverse_mode;
     }

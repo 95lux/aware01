@@ -287,13 +287,9 @@ static void ControlInterfaceTask(void* argument) {
     init_control_interface(&settings_data_ram.calibration_data, userIfTaskHandle, &hadc1);
     start_control_interface();
 
-    uint32_t notified;
-
     for (;;) {
-        // wait for next adc conversion
-        if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            control_interface_process();
-        }
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        control_interface_process();
     }
 }
 
@@ -340,24 +336,16 @@ static void UserInterfaceTask(void* argument) {
     uint32_t notified;
 
     for (;;) {
-        // wait for adc conversion
+        // wait for any notification (ADC pots ready, buttons, gates)
         if (xTaskNotifyWait(0, UINT32_MAX, &notified, portMAX_DELAY) == pdTRUE) {
-            if (notified & ADC_NOTIFY_POTS_RDY) {
-                if (user_iface_populate_pot_bufs() != 0) {
-                    continue; // skip processing if adc fetch failed
-                }
-            }
-            if (notified & GPIO_NOTIFY_BUTTON1) {
-            }
-            if (notified & GPIO_NOTIFY_BUTTON2) {
-            }
-            if (notified & GPIO_NOTIFY_GATE1) {
-                ws2812_trigger_led(0, (struct ws2812_color) {.r = 0, .g = 255, .b = 0}, 3);
-            }
-            if (notified & GPIO_NOTIFY_GATE2) {
-                ws2812_trigger_led(1, (struct ws2812_color) {.r = 255, .g = 0, .b = 0}, 3);
-            }
-            user_iface_process(notified);
+            if (notified & ADC_NOTIFY_POTS_RDY)
+                user_iface_process_pots();
+
+            if (notified & (GPIO_NOTIFY_BUTTON1 | GPIO_NOTIFY_BUTTON2))
+                user_iface_process_buttons(notified);
+
+            if (notified & (GPIO_NOTIFY_GATE1 | GPIO_NOTIFY_GATE2))
+                user_iface_process_gates(notified);
         }
     }
 }
