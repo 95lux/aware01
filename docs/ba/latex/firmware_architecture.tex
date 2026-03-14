@@ -1,39 +1,43 @@
-\subsubsection{RTOS, DMA, and Memory Layout}
+\subsubsection{DMA, and Memory Layout}
 % TODO: RTOS task structure, DMA buffer scheme, SDRAM/TCM layout
 \subsubsection{RTOS Task Structure}
 
-The firmware employs FreeRTOS with three concurrent tasks organized by priority:
+The firmware employs FreeRTOS with three concurrent tasks organised by priority.
+Figure~\ref{fig:freertos-flow-diagram} illustrates the task structure and signalling flow:
 
-\begin{table}[h]
-	\caption{FreeRTOS Task Summary}
-	\makebox[\textwidth][c]{%
-		\begin{tabular}{|l|l|l|l|l|}
-			\hline
-			\textbf{Task Name} & \textbf{Priority} & \textbf{Stacksize} & \textbf{Notification Source} & \textbf{Responsibilities} \\
-			\hline
-			\texttt{AudioTask} & \texttt{56 - 1} & 512 & \makecell[l]{DMA \\ Transfer-complete ISR} & \makecell[l]{Audio DSP, DMA buffer I/O, \\ tape command dispatch} \\
-			\hline
-			\texttt{ControlInterfaceTask} & \texttt{56 - 3} & 256 & \makecell[l]{ADC \\ Conversion Complete ISR} & Calibrated CV and V/oct pitch \\
-			\hline
-			\texttt{UserInterfaceTask} & \texttt{56 - 4} & 256 & \makecell[l]{ADC, GPIO \\ Conversion Complete ISR \\ EXTI ISR} & \makecell[l]{LED logic, boot calibration, \\ pot/button handling} \\
-			\hline
-	\end{tabular}}
-	\label{tab:rtos_tasks}
-\end{table}
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{%
+        \includegraphics[width=1.15\textwidth]{../diagrams/freertos_flow_diagram.drawio.pdf}
+    }
+    \caption{System Software Flow Diagram}
+    \label{fig:freertos-flow-diagram}
+\end{figure}
 
-The highest-priority task, \texttt{AudioTask}, is responsible for all real-time audio processing: it initializes the codec and audio engine, then enters a perpetual loop in which it blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt. 
-On each wakeup it fetches a snapshot of the current parameters via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from the \texttt{tape\_cmd\_q} queue before yielding. 
+\paragraph{AudioTask}
+The highest-priority \texttt{AudioTask} is responsible for all real-time audio processing.
+After waiting on the binary semaphore \texttt{audioReadySemaphore}---which gates execution until the boot-time calibration routine has completed---it initialises the codec and audio engine, then enters a perpetual processing loop. Each iteration blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt; upon wakeup, it fetches a consistent parameter snapshot via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages in sequence, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from \texttt{tape\_cmd\_q} before yielding.
 
-The mid-priority \texttt{ControlInterfaceTask} waits on task notifications from the ADC driver and, upon wakeup, calls \texttt{control\_interface\_process} to convert raw ADC readings into calibrated CV and pitch values. 
+\paragraph{ControlInterfaceTask}
+The mid-priority \texttt{ControlInterfaceTask} waits on task notifications from the ADC driver and, upon wakeup, calls \texttt{control\_interface\_process} to convert raw ADC readings into calibrated CV and pitch values.
 
-The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver, executes the boot-time calibration routine---during which the audio and control tasks are explicitly suspended via \texttt{vTaskSuspend}---and thereafter responds to pot-movement and GPIO notifications to update the user-visible LED state and parameter mappings. 
-In order to give the calibration routine the full CPU, it is handled by a binary semaphore \texttt{audioReadySemaphore} that gates the audio task until calibration has completed.
+\paragraph{UserInterfaceTask}
+The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver and executes the boot-time calibration routine, during which the audio and control tasks are explicitly suspended via \texttt{vTaskSuspend} to give the calibration sequence exclusive CPU access. 
+Once calibration completes, \texttt{audioReadySemaphore} is released and the task thereafter responds to pot-movement and GPIO notifications to update the LED state and parameter mappings.
 
-Parameter data propagated from the control and user interface tasks to the audio task bypasses FreeRTOS queuing entirely: \texttt{param\_cache} implements a lock-free shared-memory scheme in which the lower-priority tasks write individual fields using atomic store operations, and \texttt{AudioTask} reads a consistent snapshot each processing cycle via \texttt{param\_cache\_fetch}. 
-This pattern avoids priority inversion and eliminates any blocking on the time-critical audio path, following the principle that real-time audio threads should never contend on a mutex~\cite{reinders2021}. 
+\paragraph{Parameter Cache}
+Parameter data propagated from the control and user-interface tasks to \texttt{AudioTask} bypasses FreeRTOS queuing entirely. 
+\texttt{param\_cache} implements a lock-free shared-memory scheme in which lower-priority tasks write individual fields using atomic store operations, while \texttt{AudioTask} reads a consistent snapshot each cycle via
+\texttt{param\_cache\_fetch}. 
+This eliminates all blocking on the time-critical audio path and avoids priority inversion, following the established principle that real-time audio threads should never contend on a mutex~\cite{reinders2021}. 
+Lock-free communication of this kind is well established in the real-time systems literature: Herlihy and Shavit provide a thorough theoretical grounding for wait-free and lock-free data structures~\cite{herlihy2012art}, while Butenhof gives a practical treatment of memory visibility and atomic operations in concurrent C programs~\cite{butenhof1997programming}.
 
-%Lock-free shared-memory communication of this kind is well established in the real-time systems literature: Herlihy and Shavit provide a thorough theoretical grounding for wait-free and lock-free data structures~\cite{herlihy2012art}, while Butenhof gives a practical treatment of memory visibility and atomic operations in the context of concurrent C programs~\cite{butenhof1997programming}.
-
+\paragraph{Non-FreeRTOS Domain}
+Outside the FreeRTOS task hierarchy, several interrupt-driven subsystems operate directly on the hardware. 
+The I2S peripheral drives a circular DMA buffer that manages bidirectional audio data transfer between the codec and the MCU. 
+A dedicated hardware timer controls the tick rate of the WS2812 animation system. 
+GPIO interrupts notify \texttt{UserInterfaceTask} of button presses and gate-input events, and separately signal \texttt{ControlInterfaceTask} for gate-signal evaluation. 
+The custom ADC driver raises ISRs on slide-potentiometer and \mbox{V/Oct} conversion-complete events and notifies the respective tasks when fresh data is available.
 
 \subsubsection{Drivers and Peripherals}
 % TODO: codec driver, ADC driver, CV input handling
