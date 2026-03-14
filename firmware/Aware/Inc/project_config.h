@@ -9,9 +9,12 @@
 // #define CONFIG_AUDIO_LOOPBACK
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
+#define CONFIG_ENABLE_ENVELOPE
 // #define CONFIG_DEBUG_LOGS
 #define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
 
+// for testing: override tape pitch factor with fixed value. 1.0f = normal speed, 2.0f = one octave up, 0.5f = one octave down
+// #define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
 /* ===== Engine Parameters ===== */
 
 /* audio engine config */
@@ -96,5 +99,7 @@
 #define CV_CALIB_HOLD_MS 1000
 #define POT_CALIB_HOLD_MS 5000
 
-#define MAX_GRIT_ON_MAX_DECIMATION 0.6f
-#define MAX_EXCITE_ON_MAX_DECIMATION 4.0f
+#define MAX_GRIT_ON_MAX_DECIMATION 0.0f
+// #define MAX_GRIT_ON_MAX_DECIMATION 0.6f
+#define MAX_EXCITE_ON_MAX_DECIMATION 0.0f
+// #define MAX_EXCITE_ON_MAX_DECIMATION 4.0f
