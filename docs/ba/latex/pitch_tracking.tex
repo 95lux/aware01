@@ -1,4 +1,5 @@
 \paragraph{Calibration of V/Oct ADCs}
+\label{sec:calibration-and-pitch-tracking}
 
 The chosen calibration routine implemented in this project is a simple 2-point calibration, where 2 known input values are converted by the ADC. 
 From these values an equation of a straight line can be extracted, which will compensate external factors, like Opamp and electrical Ungenauigkeiten, as well as internal ADC offset and gain errors. 
@@ -41,7 +42,7 @@ Two known reference voltages are applied to the V/Oct input:
 
 The corresponding ADC conversion results are denoted as
 \( c_{1,\mathrm{adc}} \) and \( c_{3,\mathrm{adc}} \).
-These values are normalized to the range \([0,1]\) using the ADC's max value of $2^16$:
+These values are normalized to the range \([0,1]\) using the ADC's max value of $2^{16}$:
 \[
 c_1 = \frac{c_{1,\mathrm{adc}}}{2^{16}}, \quad
 c_3 = \frac{c_{3,\mathrm{adc}}}{2^{16}}

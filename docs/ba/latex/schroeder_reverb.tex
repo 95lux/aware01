@@ -291,6 +291,8 @@ For the comb filter, the fed-back sample passes through a one-pole lowpass (line
 The allpass filter uses the same ring structure but applies the Schroeder allpass topology directly (lines 22--23): the delayed sample \texttt{buf} is summed with the negated input for the output, while the write combines the input with the unfiltered delayed sample scaled by \texttt{feedback}, preserving the all-pass magnitude response while dispersing phase.
 
 \paragraph{Static Memory Allocation} 
+\label{sec:schroeder_memory_allocation}
+
 Twelve buffers are allocated in total: eight comb buffers of \texttt{MAX\_COMB\_LEN}~=~1620 samples and four allpass buffers of \texttt{MAX\_AP\_LEN} = 600 samples. At 32-bit float precision (4 bytes per sample), the total static memory footprint is:
 \[
 (8 \times 1620 + 4 \times 600) \times 4\ \text{bytes} = 61.4\ \text{kB}
