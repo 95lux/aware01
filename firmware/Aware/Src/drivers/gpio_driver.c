@@ -27,6 +27,10 @@ int init_gpio_interface(TaskHandle_t controlIfTaskHandle,
     gpio_config.userIfTaskHandle = userIfTaskHandle;
     gpio_config.tape_cmd_q = tape_cmd_q;
     gpio_config.htim_button1_debounce = htim_button1_debounce;
+
+    // For 20ms debounce timer
+    // PSC = 27999 -> Timer clock = 280MHz / 28000 = 10kHz
+    // ARR = 199 -> Period = 200 ticks × 0.1ms = 20ms
     gpio_config.htim_button2_debounce = htim_button2_debounce;
 
     return 0;

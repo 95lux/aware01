@@ -72,15 +72,9 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GATE3_IN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GATE2_IN_Pin GATE1_IN_Pin */
-  GPIO_InitStruct.Pin = GATE2_IN_Pin|GATE1_IN_Pin;
+  /*Configure GPIO pins : GATE2_IN_Pin GATE1_IN_Pin BUTTON1_IN_Pin BUTTON2_IN_Pin */
+  GPIO_InitStruct.Pin = GATE2_IN_Pin|GATE1_IN_Pin|BUTTON1_IN_Pin|BUTTON2_IN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BUTTON1_IN_Pin BUTTON2_IN_Pin */
-  GPIO_InitStruct.Pin = BUTTON1_IN_Pin|BUTTON2_IN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
