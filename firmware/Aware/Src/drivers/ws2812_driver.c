@@ -98,6 +98,10 @@ void ws2812_start() {
     swap_buffers();
     // start anim timer
     HAL_TIM_Base_Start_IT(ws2812_config.htim_anim);
+    for (int i = 0; i < WS2812_LED_COUNT; i++) {
+        struct ws2812_color color = {0,0,0};
+        ws2812_set_static_color(i, color);
+    }
 }
 
 void ws2812_show(TIM_HandleTypeDef* htim, uint32_t channel) {
