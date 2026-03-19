@@ -9,9 +9,10 @@
 // #define CONFIG_AUDIO_LOOPBACK
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
-#define CONFIG_ENABLE_ENVELOPE
+// #define CONFIG_ENABLE_ENVELOPE
 // #define CONFIG_DEBUG_LOGS
 #define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+// #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
 
 // for testing: override tape pitch factor with fixed value. 1.0f = normal speed, 2.0f = one octave up, 0.5f = one octave down
 // #define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
@@ -29,7 +30,8 @@
 /* tape engine configs*/
 // Length of the rec/playback tape in milliseconds, if samplerate is full 48kHz.
 // this length is dynamic, dependent on the decimation factor
-#define TAPE_SECONDS_MS 2500
+// #define TAPE_SECONDS_MS 2500
+#define TAPE_SECONDS_MS 100
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration

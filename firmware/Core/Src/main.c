@@ -315,6 +315,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM15) {
         volatile uint32_t breakpoint = 0;
     }
+
     // Fader LEDs
     if (htim->Instance == TIM12 || htim->Instance == TIM1) {
         volatile uint32_t breakpoint = 0;

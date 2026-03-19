@@ -1,9 +1,11 @@
 #pragma once
 
+#include "FreeRTOS.h"
 #include "stdbool.h"
 #include "stdint.h"
 #include "stm32h7xx_hal.h"
 #include "string.h"
+#include "task.h"
 #include "tim.h"
 #include <stdint.h>
 
@@ -15,6 +17,7 @@ typedef struct {
     TIM_HandleTypeDef* htim_pwm;
     uint32_t tim_channel_pwm;
     struct led_animation* default_animation;
+    TaskHandle_t userIfTaskHandle;
 } ws2812_init_t;
 
 struct ws2812_color {

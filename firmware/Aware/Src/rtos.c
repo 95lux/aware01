@@ -301,6 +301,7 @@ static void UserInterfaceTask(void* argument) {
         .htim_pwm = &htim15,
         .tim_channel_pwm = TIM_CHANNEL_1,
         .default_animation = &anim_off,
+        .userIfTaskHandle = userIfTaskHandle,
     };
 
     ws2812_init(&ws2812_init_cfg);
@@ -346,6 +347,9 @@ static void UserInterfaceTask(void* argument) {
 
             if (notified & (GPIO_NOTIFY_GATE1 | GPIO_NOTIFY_GATE2))
                 user_iface_process_gates(notified);
+
+            if (notified & WS2812_ANIM_NOTIFY)
+                ws2812_run_step();
         }
     }
 }

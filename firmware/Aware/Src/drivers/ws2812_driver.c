@@ -6,6 +6,7 @@
 #include "drivers/ws2812_driver.h"
 #include "main.h"
 #include "project_config.h"
+#include "rtos.h"
 #include "ws2812_animations.h"
 
 struct ws2812_led_state {
@@ -30,6 +31,7 @@ struct ws2812_config {
     uint32_t tim_channel_pwm;
 
     struct ws2812_mode_state state;
+    TaskHandle_t userIfTaskHandle;
 };
 
 // PWM = 280 MHz / ((PSC + 1) * (ARR + 1)) = 800 kHz
@@ -53,6 +55,10 @@ static uint8_t buf_write = 1;  // index of buffer we can write to safely
 static struct ws2812_config ws2812_config;
 
 void ws2812_init(const ws2812_init_t* init_cfg) {
+    if (init_cfg == NULL || init_cfg->htim_anim == NULL || init_cfg->htim_pwm == NULL || init_cfg->default_animation == NULL ||
+        init_cfg->userIfTaskHandle == NULL) {
+        return;
+    }
     //zeroize pwm buffer (idle high at timer output)
     memset(ws2812_pwm_buf, 0, sizeof(ws2812_pwm_buf));
 
@@ -74,6 +80,7 @@ void ws2812_init(const ws2812_init_t* init_cfg) {
     ws2812_config.htim_anim = init_cfg->htim_anim;
     ws2812_config.htim_pwm = init_cfg->htim_pwm;
     ws2812_config.tim_channel_pwm = init_cfg->tim_channel_pwm;
+    ws2812_config.userIfTaskHandle = init_cfg->userIfTaskHandle;
 }
 
 // helper to get current write buffer
@@ -99,7 +106,7 @@ void ws2812_start() {
     // start anim timer
     HAL_TIM_Base_Start_IT(ws2812_config.htim_anim);
     for (int i = 0; i < WS2812_LED_COUNT; i++) {
-        struct ws2812_color color = {0,0,0};
+        struct ws2812_color color = {0, 0, 0};
         ws2812_set_static_color(i, color);
     }
 }
@@ -280,7 +287,9 @@ void ws2812_change_animation_all(struct led_animation* anim) {
 
 void ws2812_timer_callback(TIM_HandleTypeDef* htim) {
     // software timer callback, that steps through the animation.
-    ws2812_run_step();
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xTaskNotifyFromISR(ws2812_config.userIfTaskHandle, WS2812_ANIM_NOTIFY, eSetBits, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
