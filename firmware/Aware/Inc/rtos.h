@@ -9,5 +9,6 @@
 #define GPIO_NOTIFY_GATE4 (1U << 5)
 #define GPIO_NOTIFY_BUTTON1 (1U << 6)
 #define GPIO_NOTIFY_BUTTON2 (1U << 7)
+#define WS2812_ANIM_NOTIFY (1U << 8)
 
 void FREERTOS_Init(void);

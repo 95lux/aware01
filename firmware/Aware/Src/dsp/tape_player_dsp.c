@@ -450,6 +450,7 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
 
         tape_fetch_sample(tape_player.pos_q48_16, tape_player.playback_buf->ch[0], tape_player.playback_buf->ch[1], out_l, out_r);
 
+#ifdef CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
         tape_handle_fade_in(out_l, out_r);
 
         // --- Q16 FIXED POINT FADE OUT TRIGGER ---
@@ -458,9 +459,9 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
             tape_player.fade_out.active = true;
             tape_player.fade_out.pos_q48_16 = 0; // Reset accumulator
         }
-
         // --- Q16 FIXED POINT FADE OUT PROCESS ---
         tape_handle_fade_out(active_phase_inc, out_l, out_r);
+#endif
 
         // --- Cyclic Loop Trigger Logic ---
         if (!tape_player.xfade_cyclic.active && tape_player.params.cyclic_mode &&
