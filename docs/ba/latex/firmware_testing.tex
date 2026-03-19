@@ -1,0 +1,93 @@
+\subsubsection{Driver verification}
+
+\subsubsection{Timing and Latency Analysis}
+
+\paragraph{Measurement Setup}
+
+The end-to-end latency of the tape player engine was measured from gate signal 
+input to audio output. A gate signal was applied to the play input and the 
+resulting audio output was captured simultaneously on a two-channel oscilloscope. 
+To provide sharp signal edges suitable for precise timing measurement, the fade-in, 
+fade-out, and amplitude envelope were disabled for the duration of the measurement by commenting out the implemented feature-enable macros in \texttt{project\_config.h}:
+
+\begin{minted}{c}
+	// #define CONFIG_ENABLE_ENVELOPE
+	// #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
+\end{minted}
+
+The measurement captures the full latency chain: gate detection, FreeRTOS task 
+notification, command queue processing, tape player FSM transition, DMA buffer 
+output, and codec output stage.
+
+Multiple oscilloscope captures were taken to characterise both the average latency 
+and the worst-case jitter introduced by the block-based command processing.
+
+\paragraph{Expected Latency}
+
+With a sample rate of $f_s = \qty{48}{kHz}$ and a DMA half-block size of 64 
+samples, the theoretical baseline latency and maximum deviation are:
+
+\begin{align}
+	t_{\text{block}} &= \frac{64}{48000} = \qty{1.333}{ms} \\
+	t_{\text{baseline}} &= 2 \times t_{\text{block}} = \qty{2.667}{ms} \\
+	t_{\text{max}} &= t_{\text{baseline}} + t_{\text{block}} = \qty{4.000}{ms} \\
+	\Delta t_{\text{jitter}} &= t_{\text{block}} = \qty{1.333}{ms}
+\end{align}
+
+The realtime latency requirement of $< \qty{5}{ms}$ (Section~\ref{sec:requirements}) is 
+therefore expected to be met in all cases.
+
+\paragraph{Results}
+
+Figure~\ref{fig:latency_osc} shows oscilloscope captures of the gate-in to 
+audio-out timing. Channel 1 (yellow) is the audio output signal, Channel 2 (blue) 
+is the gate/play signal.
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../images/signal_tests/gate-in_audio_out_latency_tape_enabled/gate-in_audio-out_latency_tape_enabled_02_max_latency.png}
+		\subcaption{Maximum measured latency.}
+		\label{fig:latency_osc_max}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../images/signal_tests/gate-in_audio_out_latency_tape_enabled/gate-in_audio-out_latency_tape_enabled_07_min_latency.png}
+		\subcaption{Minimum measured latency.}
+		\label{fig:latency_osc_min}
+	\end{minipage}
+	\caption{Gate input to audio output latency — oscilloscope captures.}
+	\label{fig:latency_osc}
+\end{figure}
+
+The measured latency values across all captures are summarised in 
+Table~\ref{tab:latency_results}:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lr}
+		\toprule
+		\textbf{Measurement} & \textbf{Latency} \\
+		\midrule
+		Minimum measured     & \qty{1.640}{ms} \\
+		Maximum measured     & \qty{2.100}{ms}\\
+		Average              & \qty{1.896}{ms} \\
+		Std deviation        & \qty{0.144}{ms} \\
+		Theoretical maximum  & \qty{4.000}{ms} \\
+		\bottomrule
+	\end{tabular}
+	\caption{Gate-in to audio-out latency measurement results.}
+	\label{tab:latency_results}
+\end{table}
+
+The measured latency ranges from \qty{1.640}{ms} to \qty{2.100}{ms} across all $n = 19$ measurements, with a mean of \qty{1.896}{ms} and a standard deviation of \qty{0.144}{ms}. 
+The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms},confirming that command latency is dominated by the block-based processing architecture as expected.
+
+All measurements fall comfortably within the \qty{5}{ms} latency requirement (Section~\ref{sec:requirements}), with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
+The tight standard deviation indicates consistent and predictable timing behaviour across repeated triggers.
+
+\subsubsection{Calibration accuracy}
+
+\subsection{System-Level Validation}

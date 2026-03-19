@@ -1,3 +1,215 @@
+% ============================================================
+%  Peripheral Overview — STM32H7A3RITx
+%  Generated from firmware.ioc + rtos.c
+% ============================================================
+
+\subsubsection{Peripheral Tables}
+\label{sec:peripheral-tables}
+
+The following tables document the complete hardware resource allocation of the
+\mbox{STM32H7A3RITx} as configured in the firmware.
+All timer frequencies are derived from the \SI{280}{\mega\hertz} CPU clock,
+with APB2 running at \SI{140}{\mega\hertz} (timer clock \SI{280}{\mega\hertz} after the ×2 multiplier).
+
+% ── Timers ────────────────────────────────────────────────
+\paragraph{Timer Allocation}
+\label{sec:timers}
+
+\begin{table}[h]
+	\centering
+	\caption{Hardware timer allocation}
+	\label{tab:timers}
+	\small
+	\begin{tabular}{llllll}
+		\toprule
+		\textbf{Timer} & \textbf{Channel} & \textbf{PSC / ARR} & \textbf{Frequency} & \textbf{Function} & \textbf{Notifies} \\
+		\midrule
+		TIM7   & —      & kernel default  & \SI{1}{\kilo\hertz}  & FreeRTOS timebase (SysTick alt.) & Kernel \\
+		TIM13  & —      & 27999 / 499     & \SI{10}{\hertz}      & GPIO interface tick A (OPM)       & ControlIF, UserIF \\
+		TIM14  & —      & 27999 / 199     & \SI{25}{\hertz}      & GPIO interface tick B (OPM)       & ControlIF, UserIF \\
+		TIM15  & CH1    & — / 349         & \(\approx\)\SI{800}{\kilo\hertz} bit & WS2812 PWM bitstream & DMA1 Stream 4 \\
+		TIM17  & —      & 50 / 24999      & \(\approx\)\SI{220}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
+		TIM1   & CH1N   & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 3 PWM (complementary)   & PWM hardware \\
+		TIM12  & CH1/2  & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 1 \& 2 PWM              & PWM hardware \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+TIM13 and TIM14 operate in one-pulse mode (OPM), generating a single pulse per
+trigger event rather than running continuously.
+TIM15 is clocked such that its PWM duty cycle encodes WS2812 bit values;
+the DMA transfer loads successive compare values into the capture/compare register
+without CPU involvement.
+TIM17's period-elapsed ISR issues a direct-to-task notification to
+\texttt{UserInterfaceTask}, which calls \texttt{ws2812\_process} upon wakeup,
+keeping all animation logic within the task context.
+
+% ── DMA ───────────────────────────────────────────────────
+\paragraph{DMA Channel Allocation}
+\label{sec:dma}
+
+\begin{table}[h]
+	\centering
+	\caption{DMA1 stream allocation}
+	\label{tab:dma}
+	\small
+	\begin{tabular}{lllllll}
+		\toprule
+		\textbf{Stream} & \textbf{Request} & \textbf{Direction} & \textbf{Mode} & \textbf{Width} & \textbf{NVIC priority} & \textbf{Function} \\
+		\midrule
+		Stream 0 & SPI1\_RX & Periph $\to$ Mem & Circular & 16-bit & 5 & I2S audio RX (codec $\to$ MCU) \\
+		Stream 1 & SPI1\_TX & Mem $\to$ Periph & Circular & 16-bit & 5 & I2S audio TX (MCU $\to$ codec) \\
+		Stream 2 & ADC1     & Periph $\to$ Mem & Circular & 16-bit & 7 & Slide-potentiometer sampling \\
+		Stream 3 & ADC2     & Periph $\to$ Mem & Circular & 16-bit & 8 & CV / V\slash Oct input sampling \\
+		Stream 4 & TIM15\_CH1 & Mem $\to$ Periph & Normal  & 16-bit & 5 & WS2812 PWM compare values \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+All DMA streams operate without CPU involvement once initiated.
+The I2S streams (0 and 1) use circular mode to implement a double-buffered audio
+pipeline: the half-transfer and transfer-complete interrupts notify
+\texttt{AudioTask} to process each half-block while the other half is being
+transferred.
+The WS2812 stream uses normal (non-circular) mode and is re-armed by the driver
+for each LED frame.
+
+% ── ADC ───────────────────────────────────────────────────
+\paragraph{ADC Configuration}
+\label{sec:adc}
+
+Both ADC instances run in continuous conversion mode with DMA circular transfer,
+so fresh conversion results are always available in memory without CPU polling.
+Hardware oversampling (32$\times$ with a 5-bit right shift) raises the effective
+resolution and reduces noise on all analogue inputs.
+
+\begin{table}[H]
+	\centering
+	\caption{ADC channel assignment}
+	\label{tab:adc}
+	\small
+	\begin{tabular}{lllll}
+		\toprule
+		\textbf{Instance} & \textbf{Channel} & \textbf{Pin} & \textbf{Label} & \textbf{Consumer} \\
+		\midrule
+		ADC1 & IN7  & PA7 & \texttt{FADER1\_IN} & UserInterfaceTask \\
+		ADC1 & IN8  & PC5 & \texttt{FADER2\_IN} & UserInterfaceTask \\
+		ADC1 & IN9  & PB0 & \texttt{FADER3\_IN} & UserInterfaceTask \\
+		ADC1 & IN5  & PB1 & \texttt{FADER4\_IN} & UserInterfaceTask \\
+		\midrule
+		ADC2 & IN10 & PC0 & \texttt{V/OCT\_IN}  & ControlInterfaceTask \\
+		ADC2 & IN11 & PC1 & \texttt{CV1\_IN}    & ControlInterfaceTask \\
+		ADC2 & IN12 & PC2 & \texttt{CV2\_IN}    & ControlInterfaceTask \\
+		ADC2 & IN13 & PC3 & \texttt{CV3\_IN}    & ControlInterfaceTask \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+ADC1 is configured as master and samples the four slide potentiometers.
+ADC2 samples the four CV inputs including the V\slash Oct pitch input.
+Both use an asynchronous clock of \SI{6}{\mega\hertz} derived from PLL3-R
+(divided by 4 inside the ADC), with a sampling time of \num{64.5} cycles per channel.
+
+% ── GPIO interrupts ───────────────────────────────────────
+paragraph{GPIO and External Interrupts}
+\label{sec:gpio}
+
+\begin{table}[H]
+	\centering
+	\caption{GPIO interrupt (EXTI) assignment}
+	\label{tab:exti}
+	\small
+	\begin{tabular}{lllll}
+		\toprule
+		\textbf{Pin} & \textbf{Label} & \textbf{Trigger} & \textbf{NVIC priority} & \textbf{Notifies} \\
+		\midrule
+		PA9  & \texttt{GATE1\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PA8  & \texttt{GATE2\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PC7  & \texttt{GATE4\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PA10 & \texttt{BUTTON1\_IN} & Falling edge & 10 & UserInterfaceTask \\
+		PA11 & \texttt{BUTTON2\_IN} & Falling edge & 10 & UserInterfaceTask \\
+		\midrule
+		PC9  & \texttt{GATE3\_IN}   & — (polled)   & —  & Polled by GPIO driver \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+GATE3 (PC9) is configured as a plain digital input without an EXTI line and is
+therefore polled by the GPIO driver rather than interrupt-driven.
+All other gate and button inputs generate falling-edge interrupts at NVIC
+priority~10, which is below \texttt{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY},
+permitting the use of FreeRTOS API calls (specifically
+\texttt{xTaskNotifyFromISR}) inside these handlers.
+
+% ── Serial / audio buses ──────────────────────────────────
+\paragraph{Serial and Audio Interfaces}
+\label{sec:serial}
+
+\begin{table}[H]
+	\centering
+	\caption{Serial and audio bus assignment}
+	\label{tab:serial}
+	\small
+	\begin{tabular}{lp{3.5cm}p{3.5cm}p{5cm}}
+		\toprule
+		\textbf{Peripheral} & \textbf{Pins} & \textbf{Configuration} & \textbf{Function} \\
+		\midrule
+		I2S1 (SPI1) &
+		PA4 WS, PA5 CK, PB4 SDI, PB5 SDO, PC4 MCK &
+		Full-duplex master, \SI{48}{\kilo\hertz}, 16-bit &
+		Bidirectional audio data to/from TLV320AIC3204 codec \\
+		\addlinespace
+		I2C1 &
+		PB6 SCL, PB7 SDA &
+		Timing register \texttt{0x20B0CCFF} &
+		Codec register configuration and readback \\
+		\addlinespace
+		UART4 &
+		PA0 TX, PA1 RX &
+		Asynchronous &
+		Debug output (auxiliary to SWO on PB3) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\noindent
+The I2S master clock (MCK) on PC4 is driven by PLL2-P at \SI{12.288}{\mega\hertz},
+which is exactly $256 \times f_s$ at \SI{48}{\kilo\hertz} and allows the codec to
+derive all internal clocks from a single external reference without its own PLL.
+
+% ── Clock summary ─────────────────────────────────────────
+\paragraph{Clock Summary}
+\label{sec:clocks}
+
+The STM32H7A3 uses three independent PLLs to derive the required clock domains.
+PLL2 generates the I2S master clock at exactly $256 \times f_s = \SI{12.288}{\mega\hertz}$, allowing the codec to derive all internal clocks from this single reference without its own PLL.
+
+The \SI{6}{\mega\hertz} ADC clock and 32$\times$ oversampling yield an effective per-channel rate of approximately \SI{610}{\hertz}, which is sufficient for slowly varying potentiometer inputs; however it does not allow for higher audio-rate CV tracking.
+A future revision could increase the ADC clock and reduce oversampling on the CV input channels to approach sample rates suitable for pitch-accurate CV at audio rates.
+
+\begin{table}[H]
+	\centering
+	\caption{Key derived clock frequencies}
+	\label{tab:clocks}
+	\small
+	\begin{tabular}{lll}
+		\toprule
+		\textbf{Domain} & \textbf{Source} & \textbf{Frequency} \\
+		\midrule
+		CPU / AHB        & PLL1-P & \SI{280}{\mega\hertz} \\
+		APB1 / APB2      & AHB / 2 & \SI{140}{\mega\hertz} \\
+		Timer clock (APB×2) & — & \SI{280}{\mega\hertz} \\
+		I2S / SPI123     & PLL2-P & \SI{12.288}{\mega\hertz} \\
+		ADC              & PLL3-R / 4 & \SI{6}{\mega\hertz} \\
+		HSE oscillator   & PH0/PH1 & \SI{24}{\mega\hertz} (external crystal) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 \subsubsection{DMA, and Memory Layout}
 \paragraph{Memory Layout}
 
@@ -71,8 +283,13 @@ After waiting on the binary semaphore \texttt{audioReadySemaphore}---which gates
 The mid-priority \texttt{ControlInterfaceTask} waits on task notifications from the ADC driver and, upon wakeup, calls \texttt{control\_interface\_process} to convert raw ADC readings into calibrated CV and pitch values.
 
 \paragraph{UserInterfaceTask}
-The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver and executes the boot-time calibration routine, during which the audio and control tasks are explicitly suspended via \texttt{vTaskSuspend} to give the calibration sequence exclusive CPU access. 
+The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver and starts its animation timer. Then -- when both buttons are pressed during startup -- the boot-time calibration routine is executed, during which the audio and control tasks are explicitly suspended via \texttt{vTaskSuspend} to give the calibration sequence exclusive CPU access. 
 Once calibration completes, \texttt{audioReadySemaphore} is released and the task thereafter responds to pot-movement and GPIO notifications to update the LED state and parameter mappings.
+
+Animation updates are driven by a hardware timer ISR, which issues a 
+direct-to-task notification on each tick; \texttt{UserInterfaceTask} calls 
+\texttt{ws2812\_process} upon wakeup, keeping animation logic entirely within the task 
+context and the ISR minimal.
 
 \paragraph{Parameter Cache}
 Parameter data propagated from the control and user-interface tasks to \texttt{AudioTask} bypasses FreeRTOS queuing entirely. 

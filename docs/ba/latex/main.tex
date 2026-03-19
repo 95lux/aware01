@@ -18,6 +18,7 @@
 \usepackage{makecell}
 \usepackage{placeins}
 \usepackage{booktabs}
+\usepackage{subcaption}
 
 \setminted{
 	breaklines,
@@ -30,7 +31,7 @@
 
 
 
-\title{Designing aapsdkaspokd}
+\title{Designing }
 \author{Jonas Lux}
 \date{May - October 2025}
 
@@ -38,11 +39,48 @@
 
 \begin{titlepage}
 	\centering
-	\maketitle
-	\thispagestyle{empty}
-	\vspace{2cm}
-	\vspace{3.2cm}
+	\vspace*{0.1cm}
+	
+	{\Large Technische Hochstule Köln}\\[0.5cm]
+	{\large Computer Science and Systems-Engineering}
+	
+	\vspace{1.5cm}
+	
+	\rule{\textwidth}{0.68pt}\\[0.4cm]
+	{\LARGE \textbf{Designing a Eurorack Synthesizer Module}}\\[0.3cm]
+	{\large DSP Implementation on Embedded Hardware}\\[0.2cm]
+	\rule{\textwidth}{0.4pt}
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		\includegraphics[width=0.25\textwidth]{../../../hardware/panel_design/blender_render/aarebot_render_topdown_20260316.png}
+	\end{center}
+	
 	\vfill
+	
+	\begin{minipage}{0.45\textwidth}
+		\raggedright
+		\textbf{Verfasser:}\\
+		Jonas Lux\\
+		Matrikelnummer: 1153302
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\textbf{Betreuer:}\\
+		Prof. Dr. Markus Cremer\\[0.5cm]
+		\textbf{Zweitprüfer:}\\
+		Prof. Dr. Harald Elders-Boll
+	\end{minipage}
+	
+	\vspace{1.5cm}
+	
+	\rule{\textwidth}{0.4pt}\\[0.3cm]
+	{\large Bachelorarbeit}\\[0.2cm]
+	{\large Mai -- Oktober 2025}\\[0.2cm]
+	\rule{\textwidth}{0.4pt}
+	
 \end{titlepage}
 
 \pagestyle{empty}  
@@ -133,6 +171,7 @@
 \section{Focus Point 2: Reverb}
 \input{schroeder_reverb.tex}
 
+\newpage
 \section{Verification and Evaluation}
 	\subsection{Hardware Testing}
 		\subsubsection{Power and safety tests}
@@ -143,13 +182,8 @@
 		\subsubsection{Noise and distortion measurements}
 
 	\subsection{Firmware Testing}
-		\subsubsection{Driver verification}
+		\input{firmware_testing.tex}
 
-		\subsubsection{Timing and latency analysis}
-
-		\subsubsection{Calibration accuracy}
-
-		\subsection{System-Level Validation}
 
 End-to-end signal tests/loopback?
 
