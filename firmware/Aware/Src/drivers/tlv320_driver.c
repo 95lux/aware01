@@ -144,14 +144,14 @@ void codec_init(audio_sample_rate_t rate) {
     // Routing
     codec_write_reg(0x0e, 0x08); // DAC to LOL
     codec_write_reg(0x0f, 0x08); // DAC to LOR
-    codec_write_reg(0x34, 0x80);
-    codec_write_reg(0x36, 0x08); // LINE_IN L
-    codec_write_reg(0x37, 0x80);
-    codec_write_reg(0x39, 0x08); // LINE_IN R
-    codec_write_reg(0x12, 0x00);
+    codec_write_reg(0x34, 0xc0); // IN1L to MICPGA with 40k input resistance
+    codec_write_reg(0x36, 0x0c); // CM via CM2L with 40k input resistance
+    codec_write_reg(0x37, 0xc0); // IN1R to MICPGA with 40k input resistance
+    codec_write_reg(0x39, 0x0c); // CM via CM2R with 40k input resistance
+    codec_write_reg(0x12, 0x00); // 0dB Line Out Gain
     codec_write_reg(0x13, 0x00); // Unmute LOL/LOR
-    codec_write_reg(0x3b, 0x0c);
-    codec_write_reg(0x3c, 0x0c); // Unmute PGA L/R
+    codec_write_reg(0x3b, 0x18); // LeftMICPGA to 0dB. Since we are using 40k input resistance 0x00 corresponds to -12dB, so 0x18 is 0dB.
+    codec_write_reg(0x3c, 0x18); // RightMICPGA to 0dB
     codec_write_reg(0x09, 0x3C); // Power LOL/LOR
 
     codec_write_reg(0x00, 0x00); // Back to Page 0

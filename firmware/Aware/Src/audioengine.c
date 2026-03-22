@@ -50,7 +50,6 @@ void audio_get_dma_in_buf(int16_t* buf, uint32_t buf_size) {
 
 void audio_write_dma_out_buf(int16_t* buf, uint32_t buf_size) {
     for (uint8_t n = 0; n < (buf_size) -1; n += 2) {
-        // loopback adc data to dac
         active_cfg->tx_buf_ptr[n] = buf[n];
         active_cfg->tx_buf_ptr[n + 1] = buf[n + 1];
     }
@@ -83,8 +82,10 @@ void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef* i2s_handle) {
 void loopback_samples() {
     for (uint8_t n = 0; n < (active_cfg->buffer_size / 2) - 1; n += 2) {
         // loopback adc data to dac
-        active_cfg->tx_buf_ptr[n] = active_cfg->rx_buf_ptr[n];
-        active_cfg->tx_buf_ptr[n + 1] = active_cfg->rx_buf_ptr[n + 1];
+        // float gain = 1.3; // 1.3 gain corresponds to approx +3dB, which is the atteunation by the input/output stages
+        float gain = 1; // unity gain
+        active_cfg->tx_buf_ptr[n] = (int16_t) (gain * active_cfg->rx_buf_ptr[n]);
+        active_cfg->tx_buf_ptr[n + 1] = (int16_t) (gain * active_cfg->rx_buf_ptr[n + 1]);
     }
 }
 
