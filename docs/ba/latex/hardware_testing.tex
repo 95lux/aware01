@@ -1,0 +1,151 @@
+\subsubsection{Power and safety tests}
+
+\subsubsection{ADC Input Range and Signal Levels}
+
+The TLV320AIC audio codec used in this project is powered with \SI{1.8}{\volt} (\(AVDD\)), resulting in a common-mode voltage of
+\[
+V_\mathrm{CM} = \frac{AVDD}{2} = \SI{0.9}{\volt}.
+\]
+
+According to the ADC electrical characteristics in the TLV320AIC datasheet \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC is configured for a full-scale input of \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\). This corresponds to a maximum peak-to-peak voltage of
+\[
+V_\mathrm{pp,max} = (V_\mathrm{CM} + \SI{0.53}{\volt}) - (V_\mathrm{CM} - \SI{0.53}{\volt}) = \SI{1.06}{\volt_{pp}}.
+\]
+
+Any input signal exceeding this range results in saturation of the ADC, producing clipped samples. In our measurements, the input sine wave reached a maximum of \SI{1.4}{\volt} and a minimum of \SI{0.08}{\volt}, which is outside the ADC's safe range. Consequently, the recorded sample buffers contain values at the int16 limits (\(-32768\) to \(32767\)).
+
+The input stage includes a voltage divider, originally designed with resistor values of \(\SI{1.8}{\kilo\ohm}/\SI{12}{\kilo\ohm}\), resulting in an attenuation of 0.15. With a typical Eurorack input signal of \SI{10}{\volt_{pp}}, this configuration drives the TLV320AIC ADC beyond its maximum input range. 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../images/signal_tests/10Vpp_sine_in_amps_old_instage.png}
+	\caption{Attenuation of a \SI{10}{\volt_{pp}} Eurorack-level signal to a biased \SI{1.32}{\volt_{pp}} ADC input.}
+	\label{fig:attenuated_signal}
+\end{figure}
+
+
+\paragraph{Input Attenuator Changes}
+\label{sec:input-attenuator-changes}
+To provide additional headroom and prevent clipping, the voltage divider was adjusted to \(\SI{1}{\kilo\ohm}/\SI{12}{\kilo\ohm}\), yielding an attenuation of approximately 0.084. This reduces the \SI{10}{\volt_{pp}} input signal amplitude to about \SI{0.77}{\volt_{pp}}, which is safely within the ADC's input range. 
+
+This configuration also allows more headroom for larger signals. For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) can be used to boost the signal, thereby utilizing the full resolution of the ADC.
+
+
+\subsubsection{Loopback and Signal Level Measurements}
+
+\paragraph{Measurement Setup}
+
+To evaluate the audio signal path including analog frontents and AD/DA conversion, a sine was applied to 
+the analog input at frequencies of \SI{100}{Hz}, \SI{1}{kHz}, and 
+\qty{10}{kHz}. A
+ll test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
+Input and output signals were captured simultaneously on a two-channel oscilloscope to verify signal integrity through the analog frontend and codec stages. 
+To characterise the digital headroom, the DMA RX and TX buffers were read out via SWD during signal playback and plotted alongside the oscilloscope captures.
+
+\paragraph{Results}
+
+Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow)
+and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
+
+\begin{figure}[H]
+
+	\centering
+	\begin{minipage}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{../images/signal_tests/codec_loopback/scope_loopback_fw-gain-1_10Vpp_sine_100Hz.png}
+			\subcaption{\qty{100}{Hz}}
+		\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../images/signal_tests/codec_loopback/scope_loopback_fw-gain-1_10Vpp_sine_1kHz.png}
+		\subcaption{\qty{1}{kHz}}
+	\end{minipage}
+	\hfill
+
+	\caption{Oscilloscope captures -- \SI{10}{V_{pp}} sine wave loopback.}
+	\label{fig:loopback_scope}
+\end{figure}
+
+Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer 
+contents at \qty{1}{kHz}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../images/signal_tests/codec_loopback/fig_loopback_buf_10Vpp_sine_1kHz.pdf}
+	\caption{RX/TX DMA buffer contents -- \SI{10}{V_{pp}} \qty{1}{kHz} sine wave.}
+	\label{fig:loopback_buf}
+\end{figure}
+
+Both frequencies pass through the signal chain without observable distortion. 
+The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input — the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-levels}).
+
+The available headroom of \qty{3.2}{dB} is sufficient for the current implementation. 
+For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level. 
+Since scaling up a signal in the digital domain is always possible — at the cost of increased 
+quantisation noise floor — a more conservative analog gain setting would give greater flexibility in the DSP processing chain.
+
+\subsubsection{Frequency Response}
+
+\paragraph{Measurement Setup}
+
+The frequency response of the analog signal path was measured using a logarithmic sine sweep from \qty{20}{Hz} to \qty{20}{kHz} generated in software and played back through the RME Fireface UFX\,II audio interface. 
+The swept sine method was chosen as it provides a high signal-to-noise ratio across the full audio band and is robust against nonlinear distortion \cite{TODO}.
+
+To remove the frequency response of the measurement chain itself — including the RME output and input stages, cables, and impedance interactions — a reference measurement was taken with the RME output connected directly to the RME input via a loopback cable. 
+This reference response was then subtracted from the DUT measurement in the logarithmic domain, yielding the frequency response of the device under test alone:
+
+\[
+H_{\text{device}}(f) = H_{\text{DUT}}(f) - H_{\text{ref}}(f) \quad \text{[dB]}
+\]
+
+The DUT measurement was taken with the sweep signal routed through the module's 
+analog frontend, AD conversion, firmware loopback, DA conversion, and analog 
+output stage. The firmware was configured in loopback mode with unity gain and all 
+DSP processing disabled.
+
+Both measurements were performed at $f_s = \qty{48}{kHz}$ with a sweep duration 
+of \qty{5}{s}, giving a frequency resolution of \qty{0.2}{Hz}. The resulting 
+transfer function was smoothed with a simple moving average filter 
+before plotting.
+
+\paragraph{Results}
+
+\texttt{TODO: describe results once plot is available — passband flatness, 
+	-3dB frequency, rolloff behaviour.}
+	
+% TODO Input Impedance Calculation is influenced by PGA gain. TODO Calculate and see if cutoff frequency is still below audible range
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{../images/signal_tests/fig_frequency_response.pdf}
+	\caption{Measured frequency response of the analog signal path, corrected for 
+		the RME Fireface UFX\,II measurement chain response.}
+	\label{fig:frequency_response}
+\end{figure}
+
+\paragraph{Input Stage High-Pass Filter}
+The high-pass filter at the ADC input is formed by the AC-coupling capacitor C3 and the internal input impedance $R_{in}$ of the TLV320AIC3204, configured via the MICPGA routing registers \cite[p.~X]{texasinstrumentsTlv320aic3204Datasheet}:
+\[
+f_c = \frac{1}{2\pi \cdot R_{in} \cdot C_3}
+\]
+With $R_{in} = \SI{40}{\kilo\ohm}$ and $C_3 = \SI{2.2}{\micro\farad}$, the theoretical cutoff frequency is approximately \qty{1.8}{\Hz}, well below the 
+audible range. 
+It is important to note that the correct input impedance must be 
+configured in firmware before performing frequency response measurements, as an 
+incorrect register value will result in a higher effective $R_{in}$ and a 
+correspondingly elevated cutoff frequency. Alternatively, the rolloff can be 
+compensated in firmware using a first-order low-shelf biquad filter. changes.
+
+\subsubsection{Noise and distortion measurements}
+
+\paragraph{Measurement Setup}
+The noise floor was measured by recording \qty{10}{\second} of silence at the module output with no input signal applied. 
+The spectrum was computed via FFT using a Hann window and normalised to amplitude spectral density in dBFS, correcting for the FFT bin width and window noise power bandwidth ($\text{NPB} = 1.50$) to ensure the result is independent of recording length \cite{FFTScalingNoise}:
+
+\begin{equation}
+	\text{NF}[k] = 20 \log_{10}\!\left(
+	\frac{|S[k]|}{(n/2)\,\sqrt{\text{NPB}}}
+	\right)
+\end{equation}
+
+

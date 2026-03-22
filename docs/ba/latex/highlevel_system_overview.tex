@@ -1,0 +1,53 @@
+\subsubsection{High Level System Overview}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../images/panel_design/module_overview.drawio.pdf}
+	\label{fig:module_overview}
+\end{figure}
+
+\begin{table}[H]
+	\renewcommand{\arraystretch}{1.4}
+	\raisebox{0pt}[0pt][0pt]{%
+		\begin{minipage}[t]{0.48\textwidth}
+			\raggedright
+			\textbf{Controls and UI}\\[0.5em]
+			\begin{tabular}{lp{5.5cm}}
+				\toprule
+				\textbf{\#} & \textbf{Description} \\
+				\midrule
+				1  & \textbf{Play State LED} \newline Blinks green on play trigger \\
+				2  & \textbf{Record State LED} \newline Blinks red on record trigger \\
+				3  & \textbf{Play Mode LED} \newline Blue: cyclic, Red: reverse, Purple: both \\
+				4  & \textbf{Unassigned LED} \\
+				5  & \textbf{Cyclic Mode Button} \newline Toggle cyclic on/off \\
+				6  & \textbf{Reverse Mode Button} \newline Toggle reverse on/off \\
+				7  & \textbf{Base Pitch} \newline $\pm24$ semitones \\
+				8  & \textbf{Envelope Attack} \newline Bottom short, top long \\
+				9  & \textbf{Envelope Release} \newline Bottom short, top long \\
+				10 & \textbf{Decimate Amount} \newline Off to $\times16$ decimation \\
+				\bottomrule
+			\end{tabular}
+	\end{minipage}}
+	\hfill
+	\raisebox{0pt}[0pt][0pt]{%
+		\begin{minipage}[t]{0.48\textwidth}
+			\raggedright
+			\textbf{Inputs and Outputs}\\[0.5em]
+			\begin{tabular}{lp{5.5cm}}
+				\toprule
+				\textbf{\#} & \textbf{Description} \\
+				\midrule
+				A & \textbf{V/Oct CV In} \newline Pitch control \\
+				B & \textbf{Slice Position CV In} \newline Selects playback slice \\
+				C & \textbf{XY Effect CV In} \newline Bipolar effect control \\
+				D & \textbf{Play Gate In} \newline Triggers playback \\
+				E & \textbf{Record Gate In} \newline Triggers recording \\
+				F & \textbf{Unassigned Gate In} \\
+				G & \textbf{Add Slice Marker Gate In} \newline Marks slice during record \\
+				H & \textbf{Stereo Audio In} \newline InL normalized to InR if unplugged \\
+				I & \textbf{Stereo Audio Out} \\
+				\bottomrule
+			\end{tabular}
+	\end{minipage}}
+\end{table}

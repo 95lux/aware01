@@ -19,6 +19,7 @@
 \usepackage{placeins}
 \usepackage{booktabs}
 \usepackage{subcaption}
+\usepackage{enumitem}
 
 \setminted{
 	breaklines,
@@ -101,31 +102,36 @@
 	\subsection{Objectives}
 	Final Eurorack DSP capable hardware
 
+\newpage
 \section{Background and Fundamentals}
 	\subsection{Modular Synthesizers and Eurorack}
-
+	\input{eurorack_fundamentals.tex}
 	\input{audio_cv_fundamentals.tex}
 
+\newpage
 \section{System Design}
 
 	\subsection{System Requirements and Specification}
 		\subsubsection{Functional Requirements}
 		\subsubsection{Electrical Constraints}
+		
 		\subsubsection{Firmware Constraints}
-
+	
+	\newpage
 	\subsection{System Architecture}
-		\subsubsection{High Level System Overview}
+		\input{highlevel_system_overview.tex}
 
-		\begin{figure}[ht]
-			\centering
-			\makebox[\linewidth][c]{%
-				\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
-			}
-			\caption{Hardware component diagram}
-		\end{figure}
-		\FloatBarrier
 
+	\newpage
 	\subsection{Hardware Design}
+	\begin{figure}[ht]
+		\centering
+		\makebox[\linewidth][c]{%
+			\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
+		}
+		\caption{Hardware component diagram}
+	\end{figure}
+	\FloatBarrier
 		\input{digital_hardware_design.tex}
 			
 		\subsubsection{Analog Frontend Design}
@@ -135,6 +141,10 @@
 			\paragraph{Layer Stackup}
 			\paragraph{Power distribution}
 			\paragraph{Signal integrity considerations}
+			
+		\newpage
+		\subsubsection{Panel Design}
+		\input{panel_design.tex}
 
 	\newpage
 	\subsection{Firmware Architecture}
@@ -174,12 +184,7 @@
 \newpage
 \section{Verification and Evaluation}
 	\subsection{Hardware Testing}
-		\subsubsection{Power and safety tests}
-
-		\subsubsection{Signal integrity measurements}
-		\input{input_signal_test.tex}
-
-		\subsubsection{Noise and distortion measurements}
+		\input{hardware_testing.tex}
 
 	\subsection{Firmware Testing}
 		\input{firmware_testing.tex}

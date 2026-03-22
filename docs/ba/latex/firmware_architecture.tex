@@ -323,6 +323,8 @@ The TLV320AIC3204 is configured over I\textsuperscript{2}C using a thin register
 The \texttt{codec\_init} function executes a fixed register-write sequence to bring the codec into a known operating state. 
 It begins with a software reset, then configures the clock dividers NDAC, MDAC, NADC, and MADC, whose values are selected at runtime from the \texttt{audio\_sample\_rate\_t} argument according to the relation $f_s = f_{MCLK} / (N \cdot M \cdot \text{OSR})$, with a 12.288~MHz master clock and a fixed OSR of 128. The I\textsuperscript{2}C interface is configured for 16-bit I\textsuperscript{2}S framing. 
 
+The input impedance of the left and right MICPGA positive terminals is configured to \SI{40}{\kilo\ohm} by writing \texttt{0xC0} to Page~1, Register~\texttt{0x34} and Register~\texttt{0x34} respectively, selecting the \texttt{11} encoding of bits D7--D6 as defined in the register map \cite[p.~135]{TLV320AIC3204ApplicationReference2012}.
+
 Subsequent writes on Page~1 enable the AVDD LDO, configure headphone soft-stepping, set the microphone PGA settling delay, and establish the reference charge time. 
 The signal routing writes connect the DAC outputs to the line-output drivers LOL and LOR, and route the line inputs through the PGA to the ADC. 
 
