@@ -44,8 +44,11 @@ To characterise the digital headroom, the DMA RX and TX buffers were read out vi
 
 \paragraph{Results}
 
-Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow)
-and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
+Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow)and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
+Note that these measurements were taken with an incorrectly configured input impedance of\SI{20}{\kilo\ohm} instead of \SI{40}{\kilo\ohm}, which raises the high-pass cutoff frequency. 
+Nevertheless, signal integrity can still be evaluated from these measurements.
+
+%TODO Make these new with 40k input impedance!!
 
 \begin{figure}[H]
 
@@ -77,7 +80,7 @@ contents at \qty{1}{kHz}.
 \end{figure}
 
 Both frequencies pass through the signal chain without observable distortion. 
-The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input — the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-levels}).
+The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input — the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-fundmentals}).
 
 The available headroom of \qty{3.2}{dB} is sufficient for the current implementation. 
 For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level. 
@@ -109,32 +112,52 @@ transfer function was smoothed with a simple moving average filter
 before plotting.
 
 \paragraph{Results}
-
 \texttt{TODO: describe results once plot is available — passband flatness, 
 	-3dB frequency, rolloff behaviour.}
-	
-% TODO Input Impedance Calculation is influenced by PGA gain. TODO Calculate and see if cutoff frequency is still below audible range
 
+% TODO Input Impedance Calculation is influenced by PGA gain. TODO Calculate and see if cutoff frequency is still below audible range
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{../images/signal_tests/fig_frequency_response.pdf}
+	\includegraphics[width=1.0\textwidth]{../images/signal_tests/frequency_response/fig_frequency_response_aarebot_rme-corrected.pdf}
 	\caption{Measured frequency response of the analog signal path, corrected for 
 		the RME Fireface UFX\,II measurement chain response.}
 	\label{fig:frequency_response}
 \end{figure}
 
-\paragraph{Input Stage High-Pass Filter}
-The high-pass filter at the ADC input is formed by the AC-coupling capacitor C3 and the internal input impedance $R_{in}$ of the TLV320AIC3204, configured via the MICPGA routing registers \cite[p.~X]{texasinstrumentsTlv320aic3204Datasheet}:
+The high-pass filter at the ADC input is formed by the AC-coupling capacitor $C_3$ and 
+the effective input impedance $R_{eq}$ of the TLV320AIC3204. In single-ended input mode, 
+$R_{eq}$ depends on the programmed input resistor $R_{in}$ and the analog PGA gain $g$ 
+(in linear terms) \cite{FAQTLV320AICCODECs2019}:
+
 \[
-f_c = \frac{1}{2\pi \cdot R_{in} \cdot C_3}
+R_{eq} = R_{in} \cdot \frac{1 + 2g}{1 + g}, \qquad
+g = \frac{10000 \cdot 2^{\lfloor G/6 \rfloor}}{R_{in}}
 \]
-With $R_{in} = \SI{40}{\kilo\ohm}$ and $C_3 = \SI{2.2}{\micro\farad}$, the theoretical cutoff frequency is approximately \qty{1.8}{\Hz}, well below the 
-audible range. 
-It is important to note that the correct input impedance must be 
-configured in firmware before performing frequency response measurements, as an 
-incorrect register value will result in a higher effective $R_{in}$ and a 
-correspondingly elevated cutoff frequency. Alternatively, the rolloff can be 
-compensated in firmware using a first-order low-shelf biquad filter. changes.
+
+With $R_{in} = \SI{40}{\kilo\ohm}$ and a programmed PGA gain of $G = \SI{0}{\decibel}$, 
+the linear gain evaluates to $g = 0.25$, giving:
+
+\[
+R_{eq} = \SI{40}{\kilo\ohm} \cdot \frac{1 + 0.5}{1 + 0.25} = \SI{48}{\kilo\ohm}
+\]
+
+The theoretical cutoff frequency is therefore:
+
+\[
+f_c = \frac{1}{2\pi \cdot R_{eq} \cdot C_3} 
+= \frac{1}{2\pi \cdot \SI{48}{\kilo\ohm} \cdot \SI{2.2}{\micro\farad}} 
+\approx \SI{1.5}{\Hz}
+\]
+
+This is well below the audible range. However, the measured frequency response in 
+Figure~\ref{fig:frequency_response} shows a high-pass rolloff with a \SI{-3}{\decibel} 
+cutoff frequency of approximately \SI{37.6}{\Hz}. The cause of this discrepancy is 
+currently under investigation; the analog signal path and output AC-coupling stage have 
+been ruled out as sources. % TODO: refer to output stage calculations
+
+The measured passband shows a broadband attenuation of approximately \SI{-3.2}{\decibel}, 
+which is expected given that the input stage attenuation exceeds the output stage gain. 
+This offset can be compensated in software via PGA or digital gain adjustment.
 
 \subsubsection{Noise and distortion measurements}
 

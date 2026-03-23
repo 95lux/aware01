@@ -48,9 +48,8 @@ def measure_fr(dev, in_ch, out_ch):
 
     recorded = recorded[:, 0]
     n = min(len(sweep), len(recorded))
-    window = np.hanning(n)
-    S_in = np.fft.rfft(sweep[:n] * window)
-    S_out = np.fft.rfft(recorded[:n] * window)
+    S_in  = np.fft.rfft(sweep[:n])
+    S_out = np.fft.rfft(recorded[:n])
     freqs = np.fft.rfftfreq(n, 1.0 / FS)
     S_in_safe = np.where(np.abs(S_in) < 1e-10, 1e-10, S_in)
     FR = 20 * np.log10(np.abs(S_out) / np.abs(S_in_safe))
@@ -86,6 +85,21 @@ def _plot_fr(freqs, FR, fr_mean, fr_min, title, label):
                label=f"Mean = {fr_mean:.1f} dB")
     ax.axhline(fr_min,  color="#e07b39", linewidth=1.0, linestyle=":",
                label=f"Min = {fr_min:.1f} dB")
+
+    # find first crossing from the low end
+    # --- -3dB frequency marker ---
+    target = fr_mean - 3.0
+    crossings = np.where(np.diff(np.sign(FR - target)))[0]
+    if len(crossings) > 0:
+        idx = crossings[0]
+        f0, f1 = freqs[idx], freqs[idx + 1]
+        v0, v1 = FR[idx], FR[idx + 1]
+        f_3db = f0 + (target - v0) * (f1 - f0) / (v1 - v0)
+        if f_3db >= PLOT_F0:
+            ax.axvline(f_3db, color="#c0392b", linewidth=1.0, linestyle="--",
+                       label=f"-3 dB @ {f_3db:.1f} Hz")
+            ax.plot(f_3db, target, 'o', color="#c0392b", markersize=5)
+
     ax.grid(True, which='both', color='#e0e0e0', linewidth=0.5)
     ax.grid(True, which='minor', color='#f0f0f0', linewidth=0.3)
     ax.set_yticks([0, -3, -6, -10, -20, -40])

@@ -16,28 +16,53 @@ With a coupling capacitor of $C_c = 2.2\,\mu\text{F}$ and $R_\text{eq} = 40\,\te
 f_c = \frac{1}{2 \pi \cdot 40\,\text{k}\Omega \cdot 2.2\,\mu\text{F}} \approx 1.81\,\text{Hz}
 \]
 
-\paragraph{Input Scaling}
 
-The TLV datasheet specifies a maximum input voltage on the analog pins of $0.5\,V_\text{RMS}$ with a common-mode voltage of 0.9\,V \cite{slaa557}. To map Eurorack audio levels into this range, the signal must be attenuated appropriately. Typical Eurorack signals reach $\pm 5$\,V, i.e., 10\,V$_\text{pp}$ \cite{doepfer_a110-2}.
+\subsubsection{ADC Input Range and Attenuation Design}
 
-The target ADC peak-to-peak voltage is calculated from the RMS specification:
+The TLV320AIC codec is powered with \SI{1.8}{\volt} (\(AVDD\)), resulting in a 
+common-mode voltage of
 \[
-V_\text{ADC,peak} = V_\text{ADC,RMS} \cdot \sqrt{2} \approx 0.707\,\text{V}
+V_\mathrm{CM} = \frac{AVDD}{2} = \SI{0.9}{\volt}.
 \]
+According to the ADC electrical characteristics in the TLV320AIC datasheet 
+\cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC full-scale input range 
+is \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\), corresponding to a maximum 
+peak-to-peak voltage of
 \[
-V_\text{ADC,pp} = 2 \cdot V_\text{ADC,peak} \approx 1.414\,\text{V}
+V_\mathrm{pp,max} = \SI{1.06}{\volt_{pp}}.
 \]
 
-The required attenuation factor is then
-\[
-a = \frac{V_\text{ADC,pp}}{V_\text{Eurorack}} = \frac{1.414}{5} \approx 0.283
-\]
+\paragraph{Initial Design and Error}
 
-To satisfy the input impedance requirements while providing this attenuation, a \textbf{unity-gain buffer op-amp} is used before a passive resistor divider. The buffer presents an input impedance equal to the op-amp's own input impedance, which is typically greater than $200\,\text{k}\Omega$, thereby easily meeting the desired 100\,k$\Omega$ input impedance at the module. The resistor divider can then be designed to provide the necessary attenuation without significantly loading the signal source.
+During the initial hardware design, the attenuation factor was derived from the 
+absolute maximum input rating of the ADC pins rather than the functional full-scale 
+input range. The absolute maximum rating specifies that input pins must remain within 
+\(-0.3\,\mathrm{V}\) to \((AVDD + 0.3\,\mathrm{V}) = \SI{2.1}{\volt}\), which is 
+the damage threshold of the device, not the operational input range. This distinction 
+was overlooked during the design phase.
+
+Based on this incorrect reference value, the resistor divider was designed with 
+\(R_{14} = \SI{12}{\kilo\ohm}\) and \(R_{16} = \SI{1.8}{\kilo\ohm}\), yielding an 
+attenuation factor of
+\[
+a = \frac{R_{16}}{R_{14} + R_{16}} = \frac{1.8}{13.8} \approx 0.130.
+\]
+For a \SI{10}{\volt_{pp}} Eurorack signal, this produces an attenuated amplitude of 
+approximately \SI{1.30}{\volt_{pp}}, which is within the absolute maximum rating but 
+exceeds the functional ADC input range of \SI{1.06}{\volt_{pp}}. As a result, the ADC 
+saturates on full-scale Eurorack signals.
+
+Additionally, \(R_{16}\) was subsequently revised to \SI{1}{\kilo\ohm} to achieve 
+greater attenuation and prevent clipping, yielding
+\[
+a = \frac{1.0}{13.0} \approx 0.077,
+\]
+which reduces \SI{10}{\volt_{pp}} to approximately \SI{0.77}{\volt_{pp}} — safely 
+within the ADC input range. 
 
 
 \paragraph{Design Rationale}
-
+%TODO REWORK THIS SECTION
 The chosen signal-conditioning approach uses a unity-gain buffer followed by a passive resistor divider. This decision is based on the constraints of the system and the electrical design conclusions of other commonly used amplification circuits. An inverting amplifier topology is unsuitable because its input impedance is determined directly by the input resistor \(R_\text{in}\). Since the module requires an input impedance on the order of \(100\,\text{k}\Omega\), the corresponding feedback resistor \(R_\text{f}\) would also need to be of similar magnitude in order to achieve the desired gain. Such large resistor values introduce significant thermal noise, as described by the Johnson noise expression
 \[
 v_\text{n} = \sqrt{4 k T R},
