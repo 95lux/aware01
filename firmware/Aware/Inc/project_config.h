@@ -6,7 +6,7 @@
 #define ARM_MATH_CM7
 
 /* ===== Config Options ===== */
-// #define CONFIG_AUDIO_LOOPBACK
+#define CONFIG_AUDIO_LOOPBACK
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
 // #define CONFIG_ENABLE_ENVELOPE

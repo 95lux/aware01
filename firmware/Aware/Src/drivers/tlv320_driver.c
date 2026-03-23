@@ -128,7 +128,8 @@ void codec_init(audio_sample_rate_t rate) {
     codec_write_reg(0x0d, 0x00);
     codec_write_reg(0x0e, 0x80); // DAC OSR = 128
     codec_write_reg(0x14, 0x80); // ADC OSR = 128
-    codec_write_reg(0x3d, 0x01); // PRB_R1
+    codec_write_reg(0x3d, 0x01); // Processing Block PRB_R1 for ADC
+    codec_write_reg(0x3c, 0x01); // Processing Block PRB_P1 for DAC
     codec_write_reg(0x1b, 0x00); // I2S 16-bit
 
     // Power Supplies
