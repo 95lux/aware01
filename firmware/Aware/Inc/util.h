@@ -2,6 +2,17 @@
 
 #include <stdint.h>
 
+typedef struct {
+    uint32_t audio_percent;
+    uint32_t control_percent;
+    uint32_t userif_percent;
+    uint32_t idle_percent;
+} cpu_stats_t;
+
+extern volatile cpu_stats_t cpu_stats;
+
+void update_cpu_stats(void);
+
 static inline uint32_t min_u32(uint32_t a, uint32_t b) {
     return (a < b) ? a : b;
 }

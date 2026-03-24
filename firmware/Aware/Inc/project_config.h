@@ -6,13 +6,15 @@
 #define ARM_MATH_CM7
 
 /* ===== Config Options ===== */
-#define CONFIG_AUDIO_LOOPBACK
+// #define CONFIG_AUDIO_LOOPBACK // for testing: bypass tape player and exciter, just pass input directly to reverb and output, to test reverb performance and quality at different block sizes and sample rates
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
 // #define CONFIG_ENABLE_ENVELOPE
-// #define CONFIG_DEBUG_LOGS
-#define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+// #define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
 // #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
+// #define CONFIG_ENABLE_REVERB
+
+// #define CONFIG_DEBUG_LOGS // not working currently
 
 // for testing: override tape pitch factor with fixed value. 1.0f = normal speed, 2.0f = one octave up, 0.5f = one octave down
 // #define CONFIG_TAPE_PITCH_OVERRIDE 4.0f

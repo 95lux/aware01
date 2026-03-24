@@ -64,6 +64,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Aware/Src/dsp/schroeder_reverb.c
     Aware/Src/ressources.c
     Aware/Src/xy_mapper.c
+    Aware/Src/util.c
 )
 
 # Add include paths
