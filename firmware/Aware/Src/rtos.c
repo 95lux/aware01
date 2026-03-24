@@ -25,6 +25,7 @@
 #include "tape_player.h"
 #include "tim.h"
 #include "user_interface.h"
+#include "util.h"
 #include "ws2812_animations.h"
 
 /* ===== Global FreeRTOS objects ===== */
@@ -174,6 +175,8 @@ static void AudioTask(void* argument) {
             // if tape player is disabled, just pass input directly to exciter and reverb for testing
             memcpy(processed, in_buf, sizeof(int16_t) * AUDIO_HALF_BLOCK_SIZE);
 #endif
+
+#ifdef CONFIG_ENABLE_REVERB
             /* ------ REVERB ------ */
             float reverb_size = param_cache.schroeder_verb_size;
             float reverb_feedback = param_cache.schroeder_verb_feedback;
@@ -201,7 +204,7 @@ static void AudioTask(void* argument) {
                 processed[i + 1] = __SSAT(sR, 16);
             }
             /* ------ REVERB END ------ */
-
+#endif
             audio_write_dma_out_buf(processed, AUDIO_HALF_BLOCK_SIZE);
 
             /* handle pending commands (non-blocking) */
@@ -293,8 +296,12 @@ static void ControlInterfaceTask(void* argument) {
     }
 }
 
+TickType_t last_print = 0;
+
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
+    DWT_Init();
+
     // init ws2812 driver
     ws2812_init_t ws2812_init_cfg = {
         .htim_anim = &htim17,
@@ -350,6 +357,11 @@ static void UserInterfaceTask(void* argument) {
 
             if (notified & WS2812_ANIM_NOTIFY)
                 ws2812_run_step();
+        }
+
+        if ((xTaskGetTickCount() - last_print) > pdMS_TO_TICKS(100)) {
+            update_cpu_stats();
+            last_print = xTaskGetTickCount();
         }
     }
 }
