@@ -88,6 +88,93 @@ The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-b
 All measurements fall comfortably within the \qty{5}{ms} latency requirement (Section~\ref{sec:requirements}), with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
 The tight standard deviation indicates consistent and predictable timing behaviour across repeated triggers.
 
+
+\subsubsection{CPU Utilization Measurement}
+
+CPU utilization is measured using the FreeRTOS runtime statistics API in combination 
+with the ARM Cortex-M7 DWT cycle counter, which increments at the CPU core frequency 
+of 280~MHz and serves as the time base for task scheduling measurements. \cite{RunTimeStatistics}
+The DWT counter is enabled during system initialization and mapped to the FreeRTOS \texttt{portGET\_RUN\_TIME\_COUNTER\_VALUE} macro, allowing the scheduler to sample elapsed cycles on every context switch.
+
+A delta-based windowed measurement is used rather than lifetime cumulative averages. 
+At each measurement interval, \texttt{uxTaskGetSystemState()} is called and per-task utilization is computed as:
+
+\begin{equation}
+	U_i = \frac{\Delta C_i}{\Delta C_{\text{total}}} \times 100\%
+\end{equation}
+
+where $\Delta C_i$ is the change in cycle count for task $i$ since the previous 
+measurement, and $\Delta C_{\text{total}}$ is the change in total runtime over the 
+same window.
+
+\paragraph{Results}
+
+Table~\ref{tab:cpu_utilization} summarizes the measured CPU utilization of the audio 
+processing task under various processing configurations during active playback and 
+recording, averaged over a 5-second window during steady-state operation.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lc}
+		\toprule
+		\textbf{Configuration} & \textbf{Audio Task Utilization (\%)} \\
+		\midrule
+		Full DSP chain (reverb, fades, hermite) & 60--66 \\
+		Without Schroeder reverb                & 31--34 \\
+		Without reverb and fade processing      & 26--28 \\
+		Without reverb, fades, and hermite      & 18--21 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Audio task CPU utilization under varying DSP configurations during 
+		playback and recording with cyclic playback fading active.}
+	\label{tab:cpu_utilization}
+\end{table}
+
+The full DSP chain consumes between 60 and 66\% of total CPU time during active 
+playback and recording. The remaining 34--40\% is attributed to the idle task, 
+indicating sufficient headroom for the current feature set. The control interface 
+and user interface tasks consistently measured at 0\%, as both are notification-driven 
+and spend the vast majority of their time blocked.
+
+\paragraph{Per-Stage Cost Analysis}
+
+By selectively disabling individual processing stages the computational cost of 
+each stage was isolated, as summarized in Table~\ref{tab:stage_cost}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lc}
+		\toprule
+		\textbf{Processing Stage} & \textbf{Approximate CPU Cost (\%)} \\
+		\midrule
+		Schroeder stereo reverb      & 28--32 \\
+		Hermite interpolation        & 7--9   \\
+		Fade processing              & 5--6   \\
+		Remaining (tape, exciter)    & 18--21 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Approximate per-stage CPU cost derived from incremental disabling 
+		of processing stages.}
+	\label{tab:stage_cost}
+\end{table}
+
+The Schroeder stereo reverb is the dominant processing cost, accounting for 
+approximately half of the total audio task utilization, as it evaluates multiple 
+allpass and comb filter stages per sample across both stereo channels at the full 
+48~kHz sample rate.
+
+\paragraph{Optimization Proposals}
+
+The per-stage analysis identifies the Schroeder reverb as the primary candidate 
+for optimization. Downsampling the reverb input to 24~kHz, processing at half the 
+sample rate, and upsampling the output back to 48~kHz would halve the number of 
+filter evaluations per second. Given the perceptually diffuse nature of reverb 
+tails, the resulting reduction in high-frequency content could be acceptable
+in practice, and could reduce total audio task utilization to approximately 
+30--36\% under full DSP load.
+
+The gained performance can be used to implement more DSP features, like grain-synthesis or experimental filtering.
+
 \subsubsection{Calibration accuracy}
 %TODO do v/oct calibration, then record 1kHz sine. Pitch test signal octaves and measure frequency. Record deviation.
 
