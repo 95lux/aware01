@@ -389,7 +389,7 @@ Flash interface:
 \end{minted}
 
 The \texttt{SettingsData} struct is fixed at exactly \qty{64}{bytes} via explicit 
-padding, and declared \texttt{\_\_attribute\_\_((aligned(16)))} to satisfy the 
+padding, and declared \newline \texttt{\_\_attribute\_\_((aligned(16)))} to satisfy the 
 STM32H7 flashword alignment requirement:
 
 \begin{minted}{c}
