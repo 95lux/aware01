@@ -37,15 +37,14 @@ This configuration also allows more headroom for larger signals. For lower-ampli
 
 To evaluate the audio signal path including analog frontents and AD/DA conversion, a sine was applied to 
 the analog input at frequencies of \SI{100}{Hz}, \SI{1}{kHz}, and 
-\qty{10}{kHz}. A
-ll test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
+\qty{10}{kHz}. All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
 Input and output signals were captured simultaneously on a two-channel oscilloscope to verify signal integrity through the analog frontend and codec stages. 
 To characterise the digital headroom, the DMA RX and TX buffers were read out via SWD during signal playback and plotted alongside the oscilloscope captures.
 
 \paragraph{Results}
 
-Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow)and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
-Note that these measurements were taken with an incorrectly configured input impedance of\SI{20}{\kilo\ohm} instead of \SI{40}{\kilo\ohm}, which raises the high-pass cutoff frequency. 
+Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow) and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
+Note that these measurements were taken with an incorrectly configured input impedance of \SI{20}{\kilo\ohm} instead of \SI{40}{\kilo\ohm}, which raises the high-pass cutoff frequency. 
 Nevertheless, signal integrity can still be evaluated from these measurements.
 
 %TODO Make these new with 40k input impedance!!
@@ -70,7 +69,7 @@ Nevertheless, signal integrity can still be evaluated from these measurements.
 \end{figure}
 
 Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer 
-contents at \qty{1}{kHz}.
+contents at \qty{1}{kHz} test signal.
 
 \begin{figure}[H]
 	\centering

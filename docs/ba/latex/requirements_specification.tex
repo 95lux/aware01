@@ -1,0 +1,67 @@
+\subsection{System Requirements and Specification}
+
+This section summarizes the requirements and constraints that govern the design
+of the embedded DSP Eurorack synthesizer module. The full requirements and
+technical specification are documented separately and form the contractual basis
+for implementation and acceptance.
+
+\subsubsection{Functional Requirements}
+
+The system shall acquire audio signals via an external audio codec, process them
+in real time using DSP algorithms executing on the MCU, and output the processed
+signal through the same codec. The following functional capabilities are required:
+
+\begin{itemize}
+    \item Stereo audio input and output via 3.5\,mm mono jack sockets
+    \item Real-time DSP processing with deterministic latency
+    \item Two control voltage (CV) inputs, one V/Oct pitch input, and four gate
+    inputs for Eurorack-compatible modulation
+    \item Four slide potentiometers and two push buttons for direct user control
+    of DSP parameters and playback modes
+    \item Four WS2812 RGB LEDs for visual feedback
+    \item Concurrent handling of audio processing and control interface updates
+    without mutual interference
+\end{itemize}
+
+\subsubsection{Electrical Constraints}
+
+The hardware must be compatible with the Eurorack modular synthesizer standard,
+which imposes specific electrical requirements on signal levels and mechanical
+dimensions.
+
+\begin{itemize}
+    \item All inputs must tolerate the full Eurorack signal range of approximately
+    $-10$\,V to $+10$\,V without damage to downstream circuitry
+    \item Gate inputs are protected via transistor clamping circuits; CV inputs
+    use rail-guarded op-amp stages to prevent overvoltage at the MCU ADC
+    pins
+    \item Audio inputs are attenuated, diode-protected, and AC-coupled to
+    safeguard the codec's analog front end
+    \item Power is derived from the Eurorack bus; a 5\,V buck converter supplies
+    the WS2812 LEDs, while a 3.3\,V LDO provides a clean supply for the
+    MCU and analog circuitry
+    \item PCB layout must minimize noise coupling between digital and analog
+    signal paths
+    \item Mechanical dimensions conform to the Eurorack 3U standard as derived
+    from \textbf{IEC~60297} / \textbf{DIN~41494}
+\end{itemize}
+
+\subsubsection{Firmware Constraints}
+
+The firmware must satisfy real-time processing requirements while maintaining a
+modular architecture that supports future extension to other MCU-based Eurorack
+modules.
+
+\begin{itemize}
+    \item Audio acquisition and output are driven by DMA transfers to ensure
+    uninterrupted data flow independent of task scheduling
+    \item FreeRTOS provides preemptive task scheduling; high-priority audio
+    processing tasks are strictly separated from lower-priority control and
+    interface tasks
+    \item DSP algorithms are implemented in C, with CMSIS-DSP library routines
+    used where applicable to exploit the STM32H7's hardware acceleration
+    \item The audio codec (TLV320AIC3204) is configured at startup via a custom
+    I2C driver; its digital audio stream is transferred via I2S
+    \item Calibration data may be persisted to the MCU's internal flash;
+    no external mass storage is required
+\end{itemize}
