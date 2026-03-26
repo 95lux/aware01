@@ -17,3 +17,5 @@
 **/*.vrb
 **/*.run.xml
 **/*.bib
+# ignore compiled main.pdf
+ba/latex/main.pdf
