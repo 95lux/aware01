@@ -32,6 +32,7 @@
 TaskHandle_t audioTaskHandle;
 TaskHandle_t controlIfTaskHandle;
 TaskHandle_t userIfTaskHandle;
+static TaskHandle_t bootCalibTaskHandle = NULL;
 
 QueueHandle_t tape_cmd_q;
 
@@ -231,12 +232,15 @@ static void AudioTask(void* argument) {
 }
 
 static void boot_calibration_cleanup(void) {
+    bootCalibTaskHandle = NULL;
     vTaskResume(audioTaskHandle);
     vTaskResume(controlIfTaskHandle);
     xSemaphoreGive(audioReadySemaphore);
 }
 
-static void run_boot_calibration(void) {
+static void BootCalibTask(void* argument) {
+    (void) argument;
+
     uint32_t hold_time = 0;
     bool cv_feedback_given = false;
     bool pot_feedback_given = false;
@@ -260,6 +264,7 @@ static void run_boot_calibration(void) {
             if (!wait_for_both_buttons_released()) {
                 ws2812_change_animation_all(&anim_setting_error);
                 boot_calibration_cleanup();
+                vTaskDelete(NULL);
                 return;
             }
 
@@ -269,6 +274,7 @@ static void run_boot_calibration(void) {
                 ws2812_change_animation_all(&anim_setting_error);
 
             boot_calibration_cleanup();
+            vTaskDelete(NULL);
             return;
         }
     }
@@ -281,6 +287,11 @@ static void run_boot_calibration(void) {
     }
 
     boot_calibration_cleanup();
+    vTaskDelete(NULL);
+}
+
+static void run_boot_calibration(void) {
+    xTaskCreate(BootCalibTask, "BootCalib", 256, NULL, configMAX_PRIORITIES - 2, &bootCalibTaskHandle);
 }
 
 /* ===== Control interface task ===== */
@@ -314,6 +325,7 @@ static void UserInterfaceTask(void* argument) {
     ws2812_init(&ws2812_init_cfg);
     ws2812_start();
 
+    // runs its own task of buttons are held during boot
     run_boot_calibration();
 
     // TODO: rewire to different pin which supports pwm output.
@@ -350,7 +362,8 @@ static void UserInterfaceTask(void* argument) {
                 user_iface_process_pots();
 
             if (notified & (GPIO_NOTIFY_BUTTON1 | GPIO_NOTIFY_BUTTON2))
-                user_iface_process_buttons(notified);
+                if (!bootCalibTaskHandle) // only process button presses if not in boot calibration, to avoid interference with calibration process
+                    user_iface_process_buttons(notified);
 
             if (notified & (GPIO_NOTIFY_GATE1 | GPIO_NOTIFY_GATE2))
                 user_iface_process_gates(notified);
