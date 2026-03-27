@@ -9,10 +9,10 @@
 // #define CONFIG_AUDIO_LOOPBACK // for testing: bypass tape player and exciter, just pass input directly to reverb and output, to test reverb performance and quality at different block sizes and sample rates
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
-// #define CONFIG_ENABLE_ENVELOPE
-// #define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
-// #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
-// #define CONFIG_ENABLE_REVERB
+#define CONFIG_ENABLE_ENVELOPE
+#define CONFIG_TAPE_PLAYER_ENABLE_HERMITE
+#define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
+#define CONFIG_ENABLE_REVERB
 
 // #define CONFIG_DEBUG_LOGS // not working currently
 
@@ -32,8 +32,8 @@
 /* tape engine configs*/
 // Length of the rec/playback tape in milliseconds, if samplerate is full 48kHz.
 // this length is dynamic, dependent on the decimation factor
-// #define TAPE_SECONDS_MS 2500
-#define TAPE_SECONDS_MS 100
+#define TAPE_SECONDS_MS 2500
+// #define TAPE_SECONDS_MS 100
 #define NUM_CHANNELS 2 // stereo
 
 // CV Channel configuration
