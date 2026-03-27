@@ -1,0 +1,31 @@
+\subsection{Digital Audio Fundamentals}
+\label{sec:digital-audio-fundamentals}
+
+\subsubsection{Sampling}
+
+A continuous-time audio signal $x_c(t)$ is converted to a discrete-time sequence by sampling it at regular intervals of period $T = 1/f_s$:
+
+\[
+x[n] = x_c(nT)
+\]
+
+The \textit{Nyquist--Shannon sampling theorem} states that a bandlimited signal with highest frequency component $f_{\max}$ can be perfectly reconstructed from its samples provided the sample rate satisfies $f_s \geq 2 f_{\max}$ \cite[p.~523]{oppenheimDiscretetimeSignalProcessing2014}.
+The frequency $f_s / 2$ is called the \textit{Nyquist frequency} and represents the highest frequency representable at a given sample rate.
+
+If signal energy is present above the Nyquist frequency at the time of sampling, those components fold back into the audible band as \textit{aliasing} --- a form of distortion that cannot be removed after the fact.
+A lowpass \textit{anti-aliasing filter} applied before the ADC suppresses out-of-band energy to prevent this.
+
+This project uses a sample rate of \qty{48}{kHz}, yielding a Nyquist frequency of \qty{24}{kHz}, which covers the full range of human hearing.
+
+\subsubsection{Quantization}
+
+Each sample amplitude is represented as an integer with $N$ bits, dividing the signal range into $2^N$ discrete levels.
+The rounding error introduced by this process is \textit{quantization noise}, which limits the dynamic range of the system.
+For uniform quantization, the theoretical signal-to-noise ratio is approximately \cite[p.~175]{zoelzer_dafx}:
+
+\[
+\text{SNR} \approx 6.02 \cdot N + 1.76 \; \text{dB}
+\]
+
+A 16-bit system therefore provides approximately \qty{98}{dB} of dynamic range, which is sufficient for audio applications.
+The TLV320AIC3204 codec used in this project operates at 16-bit resolution over I\textsuperscript{2}S.

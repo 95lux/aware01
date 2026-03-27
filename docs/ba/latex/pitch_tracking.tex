@@ -2,7 +2,7 @@
 \label{sec:calibration-and-pitch-tracking}
 
 The chosen calibration routine implemented in this project is a simple 2-point calibration, where 2 known input values are converted by the ADC. 
-From these values an equation of a straight line can be extracted, which will compensate external factors, like Opamp and electrical Ungenauigkeiten, as well as internal ADC offset and gain errors. 
+From these values an equation of a straight line can be extracted, which will compensate external factors, like Opamp and electrical inaccuracies, as well as internal ADC offset and gain errors. 
 
 The implemented procedure is described in TI's "General ADC Calibration" article \cite{texasinstrumentsGeneralADCCalibration}.
 
@@ -78,3 +78,10 @@ relationship between pitch and frequency:
 \[
 \text{playback\_speed} = 2^{\frac{p}{12}}
 \]
+
+\paragraph{Limitations}
+The pitch offset $b$ is derived by extrapolating the calibration line to 0\,V, making absolute pitch accuracy dependent on the accuracy of the reference voltages applied during calibration. 
+Relative pitch tracking between notes is unaffected.
+
+When no cable is connected, the inverting input stage idles at a bias voltage determined by the input resistor network, causing a small pitch offset from true base pitch.
+This could be resolved in a future revision by reading the jack detection pin to bypass V/Oct tracking when no cable is inserted.

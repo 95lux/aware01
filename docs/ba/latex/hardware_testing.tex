@@ -114,7 +114,7 @@ before plotting.
 \texttt{TODO: describe results once plot is available — passband flatness, 
 	-3dB frequency, rolloff behaviour.}
 
-% TODO Input Impedance Calculation is influenced by PGA gain. TODO Calculate and see if cutoff frequency is still below audible range
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{../images/signal_tests/frequency_response/fig_frequency_response_aarebot_rme-corrected.pdf}
@@ -156,18 +156,18 @@ been ruled out as sources. % TODO: refer to output stage calculations
 
 The measured passband shows a broadband attenuation of approximately \SI{-3.2}{\decibel}, 
 which is expected given that the input stage attenuation exceeds the output stage gain. 
-This offset can be compensated in software via PGA or digital gain adjustment.
+This offset can be compensated in software via PGA or digital gain adjustment
 
-\subsubsection{Noise and distortion measurements}
-
-\paragraph{Measurement Setup}
-The noise floor was measured by recording \qty{10}{\second} of silence at the module output with no input signal applied. 
-The spectrum was computed via FFT using a Hann window and normalised to amplitude spectral density in dBFS, correcting for the FFT bin width and window noise power bandwidth ($\text{NPB} = 1.50$) to ensure the result is independent of recording length \cite{FFTScalingNoise}:
-
-\begin{equation}
-	\text{NF}[k] = 20 \log_{10}\!\left(
-	\frac{|S[k]|}{(n/2)\,\sqrt{\text{NPB}}}
-	\right)
-\end{equation}
+%\subsubsection{Noise and distortion measurements}
+%
+%\paragraph{Measurement Setup}
+%The noise floor was measured by recording \qty{10}{\second} of silence at the module output with no input signal applied. 
+%The spectrum was computed via FFT using a Hann window and normalised to amplitude spectral density in dBFS, correcting for the FFT bin width and window noise power bandwidth ($\text{NPB} = 1.50$) to ensure the result is independent of recording length \cite{FFTScalingNoise}:
+%
+%\begin{equation}
+%	\text{NF}[k] = 20 \log_{10}\!\left(
+%	\frac{|S[k]|}{(n/2)\,\sqrt{\text{NPB}}}
+%	\right)
+%\end{equation}
 
 

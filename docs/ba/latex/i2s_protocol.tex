@@ -1,0 +1,17 @@
+\subsection{I\textsuperscript{2}S Protocol}
+\label{sec:i2s-protocol}
+
+I\textsuperscript{2}S (Inter-IC Sound) is a serial bus standard originally defined by Philips for transmitting digital audio between integrated circuits \cite{i2s_spec}.
+It uses three signal lines:
+
+\begin{description}
+    \item[BCLK] Bit clock. Clocks each data bit. The bit rate equals $f_s \times \text{bit depth} \times 2$ (two channels).
+    At \qty{48}{kHz} with 16-bit stereo, BCLK runs at \qty{1.536}{MHz}.
+
+    \item[LRCK] Left/Right clock (also called Word Select). Toggles at $f_s$ to indicate which channel --- left or right --- is currently being transmitted.
+
+    \item[SD] Serial data. Audio samples are transmitted MSB-first, one channel per LRCK half-period.
+\end{description}
+
+Many codecs also accept an optional \textit{Master Clock} (MCLK), typically a fixed multiple of $f_s$ (commonly $256 \times f_s$), from which the codec derives BCLK and LRCK internally.
+In this project, the STM32H7 generates an MCLK of \qty{12.288}{MHz} ($256 \times \qty{48}{kHz}$) using PLL2, and the TLV320AIC3204 codec operates as an I\textsuperscript{2}S slave.

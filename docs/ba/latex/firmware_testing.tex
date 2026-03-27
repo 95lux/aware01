@@ -165,17 +165,12 @@ allpass and comb filter stages per sample across both stereo channels at the ful
 
 \paragraph{Optimization Proposals}
 
-The per-stage analysis identifies the Schroeder reverb as the primary candidate 
-for optimization. Downsampling the reverb input to 24~kHz, processing at half the 
-sample rate, and upsampling the output back to 48~kHz would halve the number of 
-filter evaluations per second. Given the perceptually diffuse nature of reverb 
-tails, the resulting reduction in high-frequency content could be acceptable
-in practice, and could reduce total audio task utilization to approximately 
-30--36\% under full DSP load.
+The per-stage analysis identifies the Schroeder reverb as the primary candidate for optimization. 
+Downsampling the reverb input to 24~kHz, processing at half the sample rate, and upsampling the output back to 48~kHz would halve the number of filter evaluations per second. 
+Given the perceptually diffuse nature of reverb tails, the resulting reduction in high-frequency content could be acceptable in practice, and reduce total audio task utilization to approximately 30--36\% under full DSP load.
 
 The gained performance can be used to implement more DSP features, like grain-synthesis or experimental filtering.
 
 \subsubsection{Calibration accuracy}
 %TODO do v/oct calibration, then record 1kHz sine. Pitch test signal octaves and measure frequency. Record deviation.
 
-\subsection{System-Level Validation}

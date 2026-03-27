@@ -1,4 +1,5 @@
 \subsubsection{High Level System Overview}
+\label{sec:high-level-system-overview}
 
 \begin{figure}[H]
 	\centering
@@ -99,7 +100,50 @@ The X axis controls both dry/wet mix and feedback amount, while the Y axis contr
 
 \paragraph{Visual Feedback}
 Four WS2812 RGB LEDs provide visual feedback on the current module state. 
-The Play State LED (1) blinks green on each play trigger, and the Record State LED
-(2) blinks red on each record trigger. 
+The Play State LED (1) blinks green on each play trigger, and the Record State LED (2) blinks red on each record trigger. 
 The Play Mode LED (3) reflects the current combination of cyclic and reverse modes through its color. 
 The fourth LED (4) is currently unassigned and available for future functionality.
+
+\subsubsection{Calibration}
+
+Two calibration routines are accessible at boot time by holding both buttons (5 \& 6) simultaneously while powering on the device. 
+The active routine is indicated by the LED animation as described below. 
+All calibration values are persisted to non-volatile storage and restored automatically on subsequent power cycles.
+
+\paragraph*{V/Oct CV Calibration}
+
+Hold both buttons at power-on until the LEDs begin breathing blue slowly, then release.
+The following three-step procedure will begin:
+
+\begin{enumerate}
+	\item Patch a \textbf{C1 (1\,V)} signal into the V/Oct CV input. Hold both buttons
+	to confirm. The first LED will begin breathing blue.
+	\item Patch a \textbf{C3 (3\,V)} signal into the V/Oct CV input. Hold both buttons
+	to confirm. The second LED will begin breathing blue.
+	\item \textbf{Remove all CV patch cables.} Hold both buttons to confirm the
+	zero-offset capture.
+\end{enumerate}
+
+Each step is acknowledged by a brief confirmation animation. On success, a final confirmation animation plays and the calibration is saved. 
+If the measured values fail a sanity check (e.g.\ the voltage delta between C1 and C3 is out of range), an error animation is shown and the previous calibration is retained.
+
+\paragraph*{Pitch Potentiometer Calibration}
+
+Continue holding both buttons past the V/Oct threshold until the LEDs begin breathing blue rapidly, then release. 
+The following three-step procedure will begin:
+
+\begin{enumerate}
+	\item Slide the pitch slide potentiometer fully \textbf{down}. Hold both buttons to confirm.
+	\item Set the pitch slide potentiometer to the \textbf{center detent}. Hold both buttons to confirm.
+	\item Slide the pitch slide potentiometer fully \textbf{up}. Hold both buttons to confirm.
+\end{enumerate}
+
+Each step is acknowledged by a progressive LED animation. 
+On success, a final confirmation animation plays and the calibration is saved. 
+If the three captured values are not strictly ordered (min $<$ center $<$ max), an error animation is shown and the
+previous calibration is retained.
+
+\paragraph*{Normal Boot}
+
+If the buttons are released before either threshold is reached, the device boots
+normally using the existing calibration data.

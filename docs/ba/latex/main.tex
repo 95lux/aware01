@@ -20,6 +20,7 @@
 \usepackage{booktabs}
 \usepackage{subcaption}
 \usepackage{enumitem}
+\usepackage{acronym}
 
 \setminted{
 	breaklines,
@@ -42,14 +43,14 @@
 	\centering
 	\vspace*{0.1cm}
 	
-	{\Large Technische Hochstule Köln}\\[0.5cm]
+	{\Large Technische Hochschule Köln}\\[0.5cm]
 	{\large Computer Science and Systems-Engineering}
 	
 	\vspace{1.5cm}
 	
 	\rule{\textwidth}{0.68pt}\\[0.4cm]
-	{\LARGE \textbf{Designing a Eurorack Synthesizer Module}}\\[0.3cm]
-	{\large DSP Implementation on Embedded Hardware}\\[0.2cm]
+	{\LARGE \textbf{Development of an Embedded DSP \\ Eurorack Synthesizer Module}}\\[0.3cm]
+	{\large Implementation on the STM32H7 Platform}\\[0.2cm]
 	\rule{\textwidth}{0.4pt}
 	
 	\vspace{0.5cm}
@@ -79,7 +80,7 @@
 	
 	\rule{\textwidth}{0.4pt}\\[0.3cm]
 	{\large Bachelorarbeit}\\[0.2cm]
-	{\large Mai -- Oktober 2025}\\[0.2cm]
+	{\large Abgabedatum 15.04.2026}\\[0.2cm]
 	\rule{\textwidth}{0.4pt}
 	
 \end{titlepage}
@@ -91,16 +92,14 @@
 \tableofcontents
 \newpage
 \listoffigures
-\newpage
 
 \pagestyle{plain} 
 \setcounter{page}{1}
 \pagenumbering{arabic}
+
+\newpage
 \section{Introduction}
-	\subsection{Motivation}
-	Problem statement and Motivation
-	\subsection{Objectives}
-	Final Eurorack DSP capable hardware
+\input{introduction.tex}
 
 \newpage
 \section{Background and Fundamentals}
@@ -108,6 +107,9 @@
     \label{sec:eurorack-fundamentals}
 	\input{eurorack_fundamentals.tex}
 	\input{audio_cv_fundamentals.tex}
+	\input{digital_audio_fundamentals.tex}
+	\input{digital_filters.tex}
+	\input{i2s_protocol.tex}
 
 \newpage
 \section{System Design}
@@ -129,14 +131,10 @@
 	\end{figure}
 	\FloatBarrier
 		\input{digital_hardware_design.tex}
-			
-		\subsubsection{Analog Frontend Design}
-		\input{gainstages.tex}
+		
+		\input{analog_frontend.tex}
 	
-		\subsubsection{PCB Design}
-			\paragraph{Layer Stackup}
-			\paragraph{Power distribution}
-			\paragraph{Signal integrity considerations}
+		\input{pcb_design.tex}
 			
 		\newpage
 		\subsubsection{Panel Design}
@@ -163,22 +161,18 @@
 
 % -----------------------------------------------------------------------
 \newpage
-\section{Focus Point 1: Pitch Interpolation}
+\section{Pitch Interpolation}
 \label{sec:focus-1-pitch-interpolation}
 \input{interpolation.tex}
 
 % -----------------------------------------------------------------------
-%\newpage
-%\section{Crossfade System}
-%\input{crossfade_system.tex}
-
-% -----------------------------------------------------------------------
 \newpage
-\section{Focus Point 2: Reverb}
+\section{Schröder Reverb}
 \input{schroeder_reverb.tex}
 
 \newpage
 \section{Verification and Evaluation}
+	This section documents the verification of the hardware and firmware against the requirements defined in Section~\ref{sec:requirements}, and evaluates the performance of the implemented system.
 	\subsection{Hardware Testing}
 		\input{hardware_testing.tex}
 
@@ -186,14 +180,14 @@
 		\input{firmware_testing.tex}
 
 
-End-to-end signal tests/loopback?
-
-Eurorack compatibility tests
-
-\subsection{Summary}
-	\subsubsection{Summary}
+\section{Summary}
+	\subsection{Summary}
 	Discussion of Limitations
-	\subsubsection{Ausblick}
+	\subsection{Ausblick}
+
+\newpage
+\input{acronyms_overview.tex}
+
 
 \newpage
 \addcontentsline{toc}{section}{References}

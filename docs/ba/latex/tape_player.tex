@@ -52,7 +52,7 @@ Four \texttt{crossfade\_t} instances handle different transition scenarios: a re
 
 Each crossfade maintains its own secondary playhead position (\texttt{pos\_q48\_16}) and a fade accumulator (\texttt{fade\_acc\_q16}) that advances independently of the main playhead. 
 This independence is important at low pitch factors: when the main playhead advances by only a fraction of a sample per output step, tying the fade curve to the playhead position would cause the crossfade to progress extremely slowly and produce audible stepping. 
-By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed wall-clock time regardless of pitch.
+By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed time regardless of pitch.
 
 The fade curve shape is a quarter period of a sine function, stored as a pre-computed lookup table (LUT). 
 A raised cosine / quarter-sine fade produces a perceptually smooth gain transition — the slope starts at zero, rises through the midpoint, and flattens again at unity — avoiding the abrupt onset and offset that a linear ramp would produce at the boundaries. 
@@ -67,6 +67,8 @@ For crossfades between two buffer regions (retrigger and cyclic), a second buffe
 The two signals are blended using complementary fade-in and fade-out curves derived from the same LUT, ensuring a constant-power crossfade.
 
 \paragraph{Playback Trigger Modes}
+
+%TODO Figures for Fades!
 
 Three distinct trigger scenarios are handled by the play FSM, each requiring a 
 different crossfade strategy:

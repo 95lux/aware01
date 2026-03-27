@@ -28,9 +28,9 @@ with APB2 running at \SI{140}{\mega\hertz} (timer clock \SI{280}{\mega\hertz} af
 		TIM13  & —      & 27999 / 499     & \SI{10}{\hertz}      & GPIO interface tick A (OPM)       & ControlIF, UserIF \\
 		TIM14  & —      & 27999 / 199     & \SI{25}{\hertz}      & GPIO interface tick B (OPM)       & ControlIF, UserIF \\
 		TIM15  & CH1    & — / 349         & \(\approx\)\SI{800}{\kilo\hertz} bit & WS2812 PWM bitstream & DMA1 Stream 4 \\
-		TIM17  & —      & 50 / 24999      & \(\approx\)\SI{220}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
-		TIM1   & CH1N   & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 3 PWM (complementary)   & PWM hardware \\
-		TIM12  & CH1/2  & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 1 \& 2 PWM              & PWM hardware \\
+		TIM17  & —      & 2332 / 999      & \(\approx\)\SI{120}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
+%		TIM1   & CH1N   & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 3 PWM (complementary)   & PWM hardware \\
+%		TIM12  & CH1/2  & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 1 \& 2 PWM              & PWM hardware \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -248,7 +248,8 @@ The linker script assigns each region a specific role based on access speed and 
 %	\label{lst:gcc-build-output}
 %\end{listing}
 
-Placing DMA buffers in non-cacheable memory is a gewollte design decicion: on the Cortex-M7, the D-cache and DMA transfers operate independently. 
+Placing DMA buffers in non-cacheable memory is a deliberate design decision: on the Cortex-M7, the D-cache is a fast, CPU-side memory buffer that is invisible to the DMA controller, which accesses main memory directly \cite{ArmCortexM7Processor}. 
+The two can therefore hold different values for the same address simultaneously.
 If a DMA buffer resides in cached memory, the CPU may read stale data from the cache after a DMA write, or a 
 DMA read may see outdated values that the CPU has not yet written back. 
 ST's application note AN4839 explicitly recommends this approach: 
@@ -277,19 +278,22 @@ Figure~\ref{fig:freertos-flow-diagram} illustrates the task structure and signal
 
 \paragraph{AudioTask}
 The highest-priority \texttt{AudioTask} is responsible for all real-time audio processing.
-After waiting on the binary semaphore \texttt{audioReadySemaphore}---which gates execution until the boot-time calibration routine has completed---it initialises the codec and audio engine, then enters a perpetual processing loop. Each iteration blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt; upon wakeup, it fetches a consistent parameter snapshot via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages in sequence, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from \texttt{tape\_cmd\_q} before yielding.
+The AudioTask initialises the codec and audio engine, then enters a perpetual processing loop. 
+The whole DSP processing chain is being worked on sequentially in this task, per DMA half-buffer. 
+Each iteration blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt; upon wakeup, it fetches a consistent parameter snapshot via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages in sequence, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from \texttt{tape\_cmd\_q} before yielding.
+
 
 \paragraph{ControlInterfaceTask}
 The mid-priority \texttt{ControlInterfaceTask} waits on task notifications from the ADC driver and, upon wakeup, calls \texttt{control\_interface\_process} to convert raw ADC readings into calibrated CV and pitch values.
 
 \paragraph{UserInterfaceTask}
-The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver and starts its animation timer. Then -- when both buttons are pressed during startup -- the boot-time calibration routine is executed, during which the audio and control tasks are explicitly suspended via \texttt{vTaskSuspend} to give the calibration sequence exclusive CPU access. 
-Once calibration completes, \texttt{audioReadySemaphore} is released and the task thereafter responds to pot-movement and GPIO notifications to update the LED state and parameter mappings.
-
-Animation updates are driven by a hardware timer ISR, which issues a 
-direct-to-task notification on each tick; \texttt{UserInterfaceTask} calls 
-\texttt{ws2812\_process} upon wakeup, keeping animation logic entirely within the task 
-context and the ISR minimal.
+The lowest-priority \texttt{UserInterfaceTask} initialises the WS2812 LED driver and starts its animation timer.
+If both buttons are held during startup, a dedicated \texttt{BootCalibTask} is spawned at elevated priority to execute the calibration sequence.
+\texttt{BootCalibTask} explicitly suspends \texttt{AudioTask} and \texttt{ControlInterfaceTask} via \texttt{vTaskSuspend} for the duration of the procedure, then resumes them and releases \texttt{audioReadySemaphore} on completion before deleting itself.
+Spawning the calibration logic into its own task allows \texttt{UserInterfaceTask} to continue running its notification loop, keeping the WS2812 animation engine ticking and providing live LED feedback during calibration.
+If no buttons are held at boot, no calibration task is created and the module proceeds directly to normal operation.
+Once calibration completes or is skipped, \texttt{UserInterfaceTask} plays the boot animation and thereafter responds to pot-movement and GPIO notifications to update LED state and parameter mappings.
+Animation updates are driven by a hardware timer ISR, which issues a direct-to-task notification on each tick; \texttt{UserInterfaceTask} calls \texttt{ws2812\_run\_step} upon wakeup, keeping animation logic entirely within the task context and the ISR minimal.
 
 \paragraph{Parameter Cache}
 Parameter data propagated from the control and user-interface tasks to \texttt{AudioTask} bypasses FreeRTOS queuing entirely. 
@@ -344,7 +348,7 @@ codec_write_reg(0x0b, 0x80 | n_val); /* NDAC - MSB powers up divider */
 codec_write_reg(0x0c, 0x80 | m_val); /* MDAC */
 codec_write_reg(0x0e, 0x80);         /* DAC OSR = 128 */
 \end{minted}
-\caption{TLV320AIC3204 clock divider configuration}
+\caption{Excerpt of TLV320AIC3204 driver -- clock divider configuration}
 \label{lst:codec_clk}
 \end{listing}
 
@@ -385,7 +389,7 @@ erases those sectors via \texttt{HAL\_FLASHEx\_Erase}, then programs the data in
 Flash interface:
 
 \begin{minted}{c}
-	HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, flash_addr + offset, block_ptr);
+HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, flash_addr + offset, block_ptr);
 \end{minted}
 
 The \texttt{SettingsData} struct is fixed at exactly \qty{64}{bytes} via explicit 
@@ -393,12 +397,12 @@ padding, and declared \newline \texttt{\_\_attribute\_\_((aligned(16)))} to sati
 STM32H7 flashword alignment requirement:
 
 \begin{minted}{c}
-	struct SettingsData {
-		struct calibration_data calibration_data; // 36 bytes
-		struct State state;                       //  4 bytes
-		uint8_t padding[...];                     // 20 bytes
-		uint32_t magic;                           //  4 bytes
-	} __attribute__((aligned(16)));               // total: 64 bytes
+struct SettingsData {
+	struct calibration_data calibration_data; // 36 bytes
+	struct State state;                       //  4 bytes
+	uint8_t padding[...];                     // 20 bytes
+	uint32_t magic;                           //  4 bytes
+} __attribute__((aligned(16)));               // total: 64 bytes
 \end{minted}
 
 The fixed size ensures the struct always occupies exactly four flashwords, making the 
