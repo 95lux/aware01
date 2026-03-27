@@ -2,9 +2,9 @@
   "last_sch_text_sim_command": "",
   "tabs": [
     {
-      "analysis": "AC",
+      "analysis": "TRAN",
       "commands": [
-        ".ac dec 20 1 30k",
+        ".tran 10u 30m 0 0",
         ".kicad adjustpaths",
         ".save all",
         ".probe alli",
@@ -17,28 +17,51 @@
         "right": 70,
         "top": 30
       },
-      "measurements": [],
+      "measurements": [
+        {
+          "expr": "PP V(IN_Jack_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "AVG V(IN_Jack_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MAX V(IN_Jack_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MIN V(IN_Jack_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MIN V(IN_ADC_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MAX V(IN_ADC_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "PP V(IN_ADC_V/Oct)",
+          "format": "3~V"
+        },
+        {
+          "expr": "AVG V(IN_ADC_V/Oct)",
+          "format": "3~V"
+        }
+      ],
       "showGrid": true,
       "traces": [
         {
-          "color": "rgb(55, 126, 184)",
-          "signal": "V(IN_ADC_CV_neg_fb) (phase)",
-          "trace_type": 517
+          "color": "rgb(255, 255, 51)",
+          "signal": "V(IN_ADC_V/Oct)",
+          "trace_type": 257
         },
         {
-          "color": "rgb(55, 126, 184)",
-          "signal": "V(IN_ADC_CV_neg_fb) (gain)",
-          "trace_type": 521
-        },
-        {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(IN_Jack_CV_neg_fb) (phase)",
-          "trace_type": 517
-        },
-        {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(IN_Jack_CV_neg_fb) (gain)",
-          "trace_type": 521
+          "color": "rgb(255, 127, 0)",
+          "signal": "V(IN_Jack_V/Oct)",
+          "trace_type": 257
         }
       ]
     }

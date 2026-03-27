@@ -21,23 +21,13 @@
       "showGrid": true,
       "traces": [
         {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(IN_CODEC_BUF) (phase)",
-          "trace_type": 517
-        },
-        {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(IN_CODEC_BUF) (gain)",
-          "trace_type": 521
-        },
-        {
           "color": "rgb(55, 126, 184)",
-          "signal": "V(IN_JACK_BUF) (phase)",
+          "signal": "V(OUT_Jack) (phase)",
           "trace_type": 517
         },
         {
           "color": "rgb(55, 126, 184)",
-          "signal": "V(IN_JACK_BUF) (gain)",
+          "signal": "V(OUT_Jack) (gain)",
           "trace_type": 521
         }
       ]
@@ -60,25 +50,49 @@
       },
       "measurements": [
         {
-          "expr": "MIN V(IN_CODEC_BUF)",
+          "expr": "PP V(OUT_Jack)",
           "format": "3~V"
         },
         {
-          "expr": "MAX V(IN_CODEC_BUF)",
+          "expr": "AVG V(OUT_Jack)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MIN V(OUT_Jack)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MAX V(OUT_Jack)",
+          "format": "3~V"
+        },
+        {
+          "expr": "PP V(OUT_Codec)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MIN V(OUT_Codec)",
+          "format": "3~V"
+        },
+        {
+          "expr": "MAX V(OUT_Codec)",
+          "format": "3~V"
+        },
+        {
+          "expr": "AVG V(OUT_Codec)",
           "format": "3~V"
         }
       ],
       "showGrid": true,
       "traces": [
         {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(IN_CODEC_BUF)",
-          "trace_type": 257
+          "color": "rgb(55, 126, 184)",
+          "signal": "V(OUT_Codec)",
+          "trace_type": 1
         },
         {
-          "color": "rgb(77, 175, 74)",
-          "signal": "V(IN_JACK_BUF)",
-          "trace_type": 257
+          "color": "rgb(152, 78, 163)",
+          "signal": "V(OUT_Jack)",
+          "trace_type": 1
         }
       ]
     }
