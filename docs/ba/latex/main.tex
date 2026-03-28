@@ -21,6 +21,9 @@
 \usepackage{subcaption}
 \usepackage{enumitem}
 \usepackage{acronym}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{pdfpages}
 
 \setminted{
 	breaklines,
@@ -78,9 +81,11 @@
 	
 	\vspace{1.5cm}
 	
-	\rule{\textwidth}{0.4pt}\\[0.3cm]
+	\rule{\textwidth}{0.4pt}\\[0.2cm]
 	{\large Bachelorarbeit}\\[0.2cm]
 	{\large Abgabedatum 15.04.2026}\\[0.2cm]
+    {\small \url{https://github.com/95lux/aware01}}\\[0.2cm]
+ 
 	\rule{\textwidth}{0.4pt}
 	
 \end{titlepage}
@@ -109,7 +114,7 @@
 	\input{audio_cv_fundamentals.tex}
 	\input{digital_audio_fundamentals.tex}
 	\input{digital_filters.tex}
-	\input{i2s_protocol.tex}
+	% \input{i2s_protocol.tex}
 
 \newpage
 \section{System Design}
@@ -122,14 +127,8 @@
 
 	\newpage
 	\subsection{Hardware Design}
-	\begin{figure}[ht]
-		\centering
-		\makebox[\linewidth][c]{%
-			\includegraphics[width=1.1\linewidth]{../../images/componentdiagram_hardware.drawio.pdf}
-		}
-		\caption{Hardware component diagram}
-	\end{figure}
-	\FloatBarrier
+        \input{hardware_design_overview.tex}
+
 		\input{digital_hardware_design.tex}
 		
 		\input{analog_frontend.tex}
@@ -179,11 +178,11 @@
 	\subsection{Firmware Testing}
 		\input{firmware_testing.tex}
 
-
+\newpage
 \section{Summary}
-	\subsection{Summary}
-	Discussion of Limitations
-	\subsection{Ausblick}
+\input{summary.tex}
+
+\subsection{Outlook}
 
 \newpage
 \input{acronyms_overview.tex}
@@ -192,5 +191,17 @@
 \newpage
 \addcontentsline{toc}{section}{References}
 \printbibliography
-	
+
+
+\appendix
+\section{Appendix}
+\label{app:}
+\includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/schem_rev2.pdf}
+
+\label{app:layout}
+\includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_front.pdf}
+\includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_pwr.pdf}
+\includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_gnd.pdf}
+\includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_back.pdf}
+
 \end{document}

@@ -22,10 +22,11 @@ which is well below the \qty{20}{\hertz} lower bound of the audible range.
 
 \subparagraph{ADC Input Range and Attenuation Design}
 
-The TLV320AIC codec is powered with \SI{1.8}{\volt} (\(AVDD\)), resulting in a common-mode voltage of:
+The TLV320AIC codec is supplied with \SI{3.3}{\volt}, from which its internal LDO generates a regulated \SI{1.8}{\volt} analog supply (\(AVDD\)), resulting in a common-mode voltage of:
 \[
 V_\mathrm{CM} = \frac{AVDD}{2} = \SI{0.9}{\volt}
 \]
+
 According to the ADC electrical characteristics in the TLV320AIC datasheet \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC full-scale input range is \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\), corresponding to a maximum peak-to-peak voltage of
 \[
 V_\mathrm{pp,max} = \SI{1.06}{\volt_{pp}}.
@@ -54,7 +55,7 @@ A BAT54S dual Schottky diode package clamps the attenuated signal to the codec s
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/schem_audio_in_stage_simulation.png}
+	\includegraphics[width=0.7\textwidth]{../images/hardware_design/simulation/schem_audio_in_stage_simulation.png}
 	\caption{Input stage schematic: unity-gain buffer followed by passive voltage divider.}
 	\label{fig:schem_input_stage}
 \end{figure}
@@ -81,7 +82,7 @@ A SPICE transient simulation was conducted to verify the input stage operating p
 
 \begin{figure}[H]
 	\centering
-	\begin{minipage}{0.65\textwidth}
+	\begin{minipage}{0.55\textwidth}
 		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_audio_in_simulation.png}
 	\end{minipage}
 	\hfill
@@ -138,7 +139,7 @@ A \qty{1}{\kilo\ohm} series resistor at the op-amp output limits short-circuit c
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/schem_audio_out_stage_simulation.png}
+	\includegraphics[width=0.7\textwidth]{../images/hardware_design/simulation/schem_audio_out_stage_simulation.png}
 	\caption{Output stage schematic: AC-coupled inverting amplifier with current-limiting resistor.}
 	\label{fig:schem_output_stage}
 \end{figure}
@@ -183,7 +184,7 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{2.84}{\hertz} and fl
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/bode_audio_out_simulation.png}
+	\includegraphics[width=0.75\textwidth]{../images/hardware_design/simulation/bode_audio_out_simulation.png}
 	\caption{Bode plot of the output stage. The high-pass cutoff frequency of \qty{2.84}{\hertz} is well below the audible range, and the frequency response is flat up to \qty{20}{\kilo\hertz}.}
 	\label{fig:bode_output_stage}
 \end{figure}
@@ -217,7 +218,7 @@ mapping the full \qty{\pm 5}{\volt} CV range onto the \qtyrange{0}{3.3}{\volt} A
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/schem_cv_simulation.png}
+	\includegraphics[width=0.65\textwidth]{../images/hardware_design/simulation/schem_cv_simulation.png}
 	\caption{General CV input stage schematic: inverting summing amplifier with \qty{-10}{\volt} bias reference.}
 	\label{fig:schem_cv_input}
 \end{figure}
@@ -229,7 +230,7 @@ The bias and feedback resistors are adjusted to \(R_9 = \qty{180}{\kilo\ohm}\) a
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/schem_voct_simulation.png}
+	\includegraphics[width=0.65\textwidth]{../images/hardware_design/simulation/schem_voct_simulation.png}
 	\caption{V/Oct input stage schematic: inverting summing amplifier with \qty{-10}{\volt} bias reference, dimensioned for the V/Oct input range.}
 	\label{fig:schem_voct_input}
 \end{figure}
@@ -240,7 +241,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 
 \begin{figure}[H]
 	\centering
-	\begin{minipage}{0.65\textwidth}
+	\begin{minipage}{0.55\textwidth}
 		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_cv_simulation.png}
 	\end{minipage}
 	\hfill
@@ -270,7 +271,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 
 \begin{figure}[H]
 	\centering
-	\begin{minipage}{0.65\textwidth}
+	\begin{minipage}{0.55\textwidth}
 		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_v_oct_simulation.png}
 	\end{minipage}
 	\hfill

@@ -1,10 +1,18 @@
 \subsubsection{Digital Hardware Design}
-\paragraph{MCU selection}
-MCUMCU
+\paragraph{MCU Selection}
+The \textbf{STM32H7A3RITx} was selected as the central processing unit for this project. 
+Prior experience with the STM32 platform, including peripheral configuration, pin assignment, and clock tree setup via STM32CubeMX, was a significant factor in this decision, as it reduced the risk of hardware bring-up issues and allowed development to focus on the DSP implementation rather than low-level platform familiarisation. 
+The STM32 HAL further accelerates development by providing a well-documented abstraction layer for peripheral initialisation and data transfer.
+
+The Cortex-M7 core running at up to \qty{280}{\mega\hertz} provides sufficient headroom for real-time DSP at \qty{48}{\kilo\hertz}.  The device integrates all peripherals required by this project: 
+I\textsuperscript{2}S for digital audio, I\textsuperscript{2}C for codec configuration, multiple ADC channels for CV and potentiometer inputs, GPIO for gate inputs and user controls, and PWM timers for LED driving. 
+Multiple independent DMA streams allow audio buffer transfers, ADC acquisition, and peripheral communication to proceed concurrently without CPU involvement, which is essential for deterministic real-time audio 
+processing \cite{stmicroelectronicsStm32h7a3riDatasheet}.
 
 \paragraph{Crystal}
 
-The NX2520SA-24.000000\,MHz crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in \cite{HowSelectCompatible2025}. Crystal compatibility requires a gain margin of at least 5, defined as:
+The \textit{NDK NX2520SA-24.000000\,MHz} \cite{Ndk_08142018_NX2520SA24000000MHzB8} crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in \cite{HowSelectCompatible2025}. 
+Crystal compatibility requires a gain margin of at least 5, defined as:
 
 \[
 \text{Gain Margin} = \frac{g_{m,\mathrm{crit,max}} \cdot 5}{g_{m,\mathrm{crit}}} \geq 5
@@ -27,3 +35,22 @@ C_{L1} = C_{L2} = 2 \cdot (C_L - C_s) = 2 \cdot (10~\text{pF} - 3~\text{pF}) = \
 where $C_s = 3~\text{pF}$ accounts for MCU pin and PCB parasitic capacitance.
 
 \paragraph{Audio Codec Selection}
+The \textbf{TI TLV320AIC3204} was selected as the audio codec for this project. 
+The primary selection criterion was compatibility with the STM32H7 I\textsuperscript{2}S peripheral at \qty{48}{\kilo\hertz} with 16-bit stereo framing. 
+Beyond the interface compatibility, the device was well suited to the project requirements for the following reasons:
+
+\begin{itemize}
+    \item A programmable gain amplifier (PGA) on both the ADC input and DAC output 
+    paths allows software-controlled level adjustment without external components
+    \item Configurable input impedance up to \qty{40}{\kilo\ohm} allows the 
+    AC-coupling high-pass cutoff frequency to be pushed well below \qty{20}{\hertz}
+    \item Internal LDO regulators accept a \qty{3.3}{\volt} supply and generate the 
+    required \qty{1.8}{\volt} analog and digital rails internally, simplifying power 
+    distribution
+    \item Full runtime configurability of signal routing, gain, clocking, and power 
+    management via an I\textsuperscript{2}C register interface
+\end{itemize}
+
+The main limitation encountered during bring-up was the complexity of the register map and the large number of interdependent configuration pages, which required careful sequencing during initialisation. 
+TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557 \cite{TLV320AIC3204ApplicationReference2012} was the primary reference for register-level configuration. 
+The \textit{TI E2E community forums} \cite{TIE2ESupport} proved additionally valuable, providing access to example initialisation sequences from other developers and direct answers to individual configuration questions.
