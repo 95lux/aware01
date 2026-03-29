@@ -1,3 +1,7 @@
+/**
+ * @file param_cache.h
+ * @brief Thread-safe parameter snapshot shared between UI/CV and audio tasks.
+ */
 #pragma once
 #include <stdbool.h>
 #include <stdint.h>

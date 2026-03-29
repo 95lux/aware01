@@ -1,3 +1,7 @@
+/**
+ * @file swo_log.h
+ * @brief SWO debug logging via ITM and DWT cycle counter.
+ */
 #pragma once
 // TODO: change to UART logging for simplicity.
 

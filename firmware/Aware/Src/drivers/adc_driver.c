@@ -1,3 +1,7 @@
+/**
+ * @file adc_driver.c
+ * @brief ADC DMA init, half/full transfer callbacks, and buffer snapshot API.
+ */
 #include "drivers/adc_driver.h"
 
 #include "main.h"

@@ -1,3 +1,7 @@
+/**
+ * @file envelope.h
+ * @brief ADSR envelope generator with normalized parameter setters.
+ */
 #pragma once
 
 #include <stdbool.h>

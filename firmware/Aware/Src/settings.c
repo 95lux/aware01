@@ -1,3 +1,7 @@
+/**
+ * @file settings.c
+ * @brief FLASH sector erase/write for persistent calibration and settings storage.
+ */
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_flash.h"
 #include "string.h"

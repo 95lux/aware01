@@ -1,3 +1,7 @@
+/**
+ * @file ws2812_driver.c
+ * @brief WS2812B PWM/DMA encoding and animation state machine.
+ */
 #include "FreeRTOS.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_gpio.h"

@@ -1,3 +1,7 @@
+/**
+ * @file ws2812_animations.h
+ * @brief Predefined WS2812B LED animations and colors.
+ */
 #pragma once
 
 #include "drivers/ws2812_driver.h"

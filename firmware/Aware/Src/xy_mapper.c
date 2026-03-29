@@ -1,6 +1,7 @@
-// XY Mapper
-//
-// Maps normalized XY CV inputs to DSP parameters and updates the param_cache.
+/**
+ * @file xy_mapper.c
+ * @brief Maps normalized XY CV inputs to DSP parameters and updates the param_cache.
+ */
 
 #include "xy_mapper.h"
 

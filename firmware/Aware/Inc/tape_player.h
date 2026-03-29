@@ -1,3 +1,7 @@
+/**
+ * @file tape_player.h
+ * @brief Tape sampler: buffer structures, FSM events, and audio processing API.
+ */
 #pragma once
 
 #include "audioengine.h"

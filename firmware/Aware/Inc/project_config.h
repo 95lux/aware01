@@ -1,3 +1,7 @@
+/**
+ * @file project_config.h
+ * @brief Build-time configuration: sample rates, buffer sizes, feature flags, and derived constants.
+ */
 #pragma once
 
 #include "drivers/tlv320_driver.h"

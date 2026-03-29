@@ -1,3 +1,7 @@
+/**
+ * @file control_interface.c
+ * @brief CV input processing, V/Oct pitch scaling, and XY effect parameter routing.
+ */
 #include "main.h"
 #include "stm32h7xx_hal.h"
 #include "string.h"
@@ -64,7 +68,7 @@ void control_interface_process() {
     float pitch_offset = control_interface_cfg.calib_data->voct_pitch_offset;
 
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
-    float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // convert musical pitch (semitones) to linear playback speed
+    float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // equal temperament: 2^(n/12) doubles frequency each octave (12 semitones)
     param_cache_set_pitch_cv(pitch_factor_new);
 
     /* ----- Slice Position CV In ----- */

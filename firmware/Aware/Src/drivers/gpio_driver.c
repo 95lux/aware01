@@ -1,3 +1,7 @@
+/**
+ * @file gpio_driver.c
+ * @brief GPIO EXTI callbacks, button debounce timer management, and calibration blocking waits.
+ */
 #include "drivers/gpio_driver.h"
 
 #include "main.h"

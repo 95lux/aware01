@@ -1,3 +1,7 @@
+/**
+ * @file adc_driver.h
+ * @brief Dual ADC DMA interface for CV and potentiometer inputs.
+ */
 #pragma once
 
 #include "FreeRTOS.h"

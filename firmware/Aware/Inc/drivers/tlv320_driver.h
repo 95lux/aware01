@@ -1,3 +1,7 @@
+/**
+ * @file tlv320_driver.h
+ * @brief TLV320 audio codec I2C register access and initialization.
+ */
 #pragma once
 
 #include "stdint.h"
