@@ -20,19 +20,18 @@ with APB2 running at \SI{140}{\mega\hertz} (timer clock \SI{280}{\mega\hertz} af
 	\caption{Hardware timer allocation}
 	\label{tab:timers}
 	\small
-	\begin{tabular}{llllll}
-		\toprule
-		\textbf{Timer} & \textbf{Channel} & \textbf{PSC / ARR} & \textbf{Frequency} & \textbf{Function} & \textbf{Notifies} \\
-		\midrule
-		TIM7   & —      & kernel default  & \SI{1}{\kilo\hertz}  & FreeRTOS timebase (SysTick alt.) & Kernel \\
-		TIM13  & —      & 27999 / 499     & \SI{10}{\hertz}      & GPIO interface tick A (OPM)       & ControlIF, UserIF \\
-		TIM14  & —      & 27999 / 199     & \SI{25}{\hertz}      & GPIO interface tick B (OPM)       & ControlIF, UserIF \\
-		TIM15  & CH1    & — / 349         & \(\approx\)\SI{800}{\kilo\hertz} bit & WS2812 PWM bitstream & DMA1 Stream 4 \\
-		TIM17  & —      & 2332 / 999      & \(\approx\)\SI{120}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
-%		TIM1   & CH1N   & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 3 PWM (complementary)   & PWM hardware \\
-%		TIM12  & CH1/2  & 50 / 49998      & \(\approx\)\SI{56}{\hertz}          & Fader LED 1 \& 2 PWM              & PWM hardware \\
-		\bottomrule
-	\end{tabular}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{llllll}
+			\toprule
+			\textbf{Timer} & \textbf{Channel} & \textbf{PSC / ARR} & \textbf{Frequency} & \textbf{Function} & \textbf{Notifies} \\
+			\midrule
+			TIM7   & —      & kernel default  & \SI{1}{\kilo\hertz}  & FreeRTOS timebase (SysTick alt.) & Kernel \\
+			TIM13  & —      & 27999 / 499     & \SI{10}{\hertz}      & GPIO interface tick A (OPM)       & ControlIF, UserIF \\
+			TIM14  & —      & 27999 / 199     & \SI{25}{\hertz}      & GPIO interface tick B (OPM)       & ControlIF, UserIF \\
+			TIM15  & CH1    & — / 349         & \(\approx\)\SI{800}{\kilo\hertz} bit & WS2812 PWM bitstream & DMA1 Stream 4 \\
+			TIM17  & —      & 2332 / 999      & \(\approx\)\SI{120}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
+			\bottomrule
+	\end{tabular}}
 \end{table}
 
 \noindent
@@ -58,11 +57,11 @@ keeping all animation logic within the task context.
 		\toprule
 		\textbf{Stream} & \textbf{Request} & \textbf{Direction} & \textbf{Mode} & \textbf{Width} & \textbf{NVIC priority} & \textbf{Function} \\
 		\midrule
-		Stream 0 & SPI1\_RX & Periph $\to$ Mem & Circular & 16-bit & 5 & I2S audio RX (codec $\to$ MCU) \\
-		Stream 1 & SPI1\_TX & Mem $\to$ Periph & Circular & 16-bit & 5 & I2S audio TX (MCU $\to$ codec) \\
-		Stream 2 & ADC1     & Periph $\to$ Mem & Circular & 16-bit & 7 & Slide-potentiometer sampling \\
-		Stream 3 & ADC2     & Periph $\to$ Mem & Circular & 16-bit & 8 & CV / V\slash Oct input sampling \\
-		Stream 4 & TIM15\_CH1 & Mem $\to$ Periph & Normal  & 16-bit & 5 & WS2812 PWM compare values \\
+		Stream 0 & SPI1\_RX & P $\to$ M & Circular & 16-bit & 5 & I2S RX (codec $\to$ MCU) \\
+		Stream 1 & SPI1\_TX & M $\to$ P & Circular & 16-bit & 5 & I2S TX (MCU $\to$ codec) \\
+		Stream 2 & ADC1     & P $\to$ M & Circular & 16-bit & 7 & Potentiometer sampling \\
+		Stream 3 & ADC2     & P $\to$ M & Circular & 16-bit & 8 & CV input sampling \\
+		Stream 4 & TIM15\_CH1 & M $\to$ P & Normal & 16-bit & 5 & WS2812 PWM \\
 		\bottomrule
 	\end{tabular}
 \end{table}

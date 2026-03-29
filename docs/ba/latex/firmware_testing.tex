@@ -34,7 +34,7 @@ samples, the theoretical baseline latency and maximum deviation are:
 	\Delta t_{\text{jitter}} &= t_{\text{block}} = \qty{1.333}{ms}
 \end{align}
 
-The realtime latency requirement of $< \qty{5}{ms}$ (Section~\ref{sec:requirements}) is 
+The realtime latency requirement of $< \qty{5}{ms}$ (Section~\ref{sec:system-requirements}) is 
 therefore expected to be met in all cases.
 
 \paragraph{Results}
@@ -85,7 +85,7 @@ Table~\ref{tab:latency_results}:
 The measured latency ranges from \qty{1.640}{ms} to \qty{2.100}{ms} across all $n = 19$ measurements, with a mean of \qty{1.896}{ms} and a standard deviation of \qty{0.144}{ms}. 
 The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms}, confirming that command latency is dominated by the block-based processing architecture as expected.
 
-All measurements fall comfortably within the \qty{5}{ms} latency requirement (Section~\ref{sec:requirements}), with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
+All measurements fall comfortably within the \qty{5}{ms} latency requirement (Section~\ref{sec:system-requirements}), with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
 The tight standard deviation indicates consistent and predictable timing behaviour across repeated triggers.
 
 

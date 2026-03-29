@@ -40,11 +40,13 @@ Instead, the audio hardware collects samples into a \textit{buffer} of fixed siz
 and notifies the processor when a block is ready.
 The processor must compute $N$ output samples before the hardware finishes filling the
 next block; if it does not, the output buffer underruns and an audible glitch occurs.
+%TODO citation
 
 This block-based model is the standard operating mode of DMA-driven audio peripherals.
-The DMA engine fills a circular buffer of $2N$ samples continuously; at the halfway point and at the end of each full cycle it raises an interrupt (half-transfer and transfer-complete), giving the CPU a budget of exactly $N / f_s$ seconds to process one block \cite{arm_m7_trm}.
+The DMA engine operates in double-buffer mode, continuously filling a circular buffer of $2N$ samples; at each end of transaction it swaps memory pointers and raises an interrupt, giving the CPU a budget of exactly $N / f_s$ seconds to process one block \cite[Section~15.3.11]{stmicroelectronicsRM0433ReferenceManual2023}.
 
 The block size $N$ directly controls the trade-off between latency and CPU efficiency.
 A smaller block reduces the buffering delay contributed by the audio pipeline but increases the interrupt rate and the per-sample overhead of entering and leaving the processing callback.
 A larger block amortises this overhead but adds latency equal to $N / f_s$. 
 This project uses a block size of $N = 128$ samples, yielding a single-block buffering latency of \qty{1}{ms} at $f_s = \qty{48}{kHz}$.
+%TODO citation

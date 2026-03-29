@@ -6,7 +6,9 @@
 \usepackage[backend=biber,style=ieee,sorting=nyt]{biblatex}
 \addbibresource{literature.bib}
 
-\usepackage{graphicx} % Required for inserting images
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{minted2}
 \usepackage{caption}
@@ -20,7 +22,7 @@
 \usepackage{booktabs}
 \usepackage{subcaption}
 \usepackage{enumitem}
-\usepackage{acronym}
+\usepackage[nohyperlinks]{acronym}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{pdfpages}
@@ -43,6 +45,7 @@
 \begin{document}
 
 \begin{titlepage}
+	\pagenumbering{alph}
 	\centering
 	\vspace*{0.1cm}
 	
@@ -90,19 +93,17 @@
 	
 \end{titlepage}
 
-\pagestyle{empty}  
-%\input{abstract.tex}
+\pagestyle{empty}
+\pagenumbering{roman}        % front matter gets i, ii, iii...
 \newpage
 \addtocontents{toc}{\protect}
 \tableofcontents
 \newpage
 \listoffigures
-
-\pagestyle{plain} 
-\setcounter{page}{1}
-\pagenumbering{arabic}
-
 \newpage
+\pagestyle{plain}
+\pagenumbering{arabic}       % main content starts at 1
+\setcounter{page}{1}
 \section{Introduction}
 \input{introduction.tex}
 
@@ -197,10 +198,10 @@ This section documents the verification of the hardware and firmware against the
 
 \appendix
 \section{Appendix}
-\label{app:}
+\label{app:schematic}
 \includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/schem_rev2.pdf}
 
-\label{app:layout}
+\label{app:pcb-layout}
 \includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_front.pdf}
 \includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_pwr.pdf}
 \includepdf[pages=-, landscape=true, pagecommand={}]{../../schematics/layout_rev2_gnd.pdf}

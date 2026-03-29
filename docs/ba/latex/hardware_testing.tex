@@ -55,7 +55,7 @@ contents at \qty{1}{kHz} test signal.
 \end{figure}
 
 Both frequencies pass through the signal chain without observable distortion. 
-The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input — the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-fundmentals}).
+The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input -- the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-fundamentals}).
 
 The available headroom of \qty{3.2}{dB} is sufficient for the current implementation. 
 For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level. 
@@ -67,7 +67,7 @@ quantisation noise floor — a more conservative analog gain setting would give 
 \paragraph{Measurement Setup}
 
 The frequency response of the analog signal path was measured using a logarithmic sine sweep from \qty{20}{Hz} to \qty{20}{kHz} generated in software and played back through the RME Fireface UFX\,II audio interface. 
-The swept sine method was chosen as it provides a high signal-to-noise ratio across the full audio band and is robust against nonlinear distortion \cite{TODO}.
+The swept sine method was chosen as it provides a high signal-to-noise ratio across the full audio band and is robust against nonlinear distortion \cite[p.20]{massaraniTransferFunctionMeasurementSweeps2001}.
 
 To remove the frequency response of the measurement chain itself — including the RME output and input stages, cables, and impedance interactions — a reference measurement was taken with the RME output connected directly to the RME input via a loopback cable. 
 This reference response was then subtracted from the DUT measurement in the logarithmic domain, yielding the frequency response of the device under test alone:
