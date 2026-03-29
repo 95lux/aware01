@@ -1,15 +1,16 @@
 \subsection{Motivation}
-Modular synthesizers have seen continuous growth in popularity over the past decade, with the Eurorack format establishing itself as the dominant standard for modular synthesis hardware.
-The ModularGrid database, a community-maintained catalogue of Eurorack modules, lists over 11,700 distinct modules from manufacturers ranging from large commercial companies to small community projects --- of which over 9,400 remain in active production today \cite{ModulesModularGrid}.
-Despite the scale of this ecosystem, commercially available modules are often closed-source, expensive, and offer limited flexibility for experimentation with novel DSP algorithms.
+The popularity of modular synthesizers has grown continuously over the past decade, with the Eurorack format becoming the standard in the consumer electronic music industry.
+The ModularGrid database, a community-maintained catalogue of Eurorack modules, lists over 11,700 distinct modules from manufacturers ranging from large commercial companies to small community projects. 
+Over 9,400 of these modules remain in active production today \cite{ModulesModularGrid}.
+Despite the scale of this ecosystem, commercially available modules are often closed-source, expensive, and offer limited flexibility for experimentation with custom DSP algorithms.
 
-Developing a custom DSP-capable Eurorack module from the ground up offers a unique opportunity to explore the full hardware-firmware stack --- from analog signal conditioning and PCB design to real-time audio processing on embedded hardware.
-The STM32H7 platform, with its Cortex-M7 core running at up to 280\,MHz and hardware floating-point support, is a well-established target for embedded audio applications and provides sufficient computational headroom for the DSP workloads explored in this thesis.
+The STM32H7 platform is well-suited to embedded audio applications. 
+With its Cortex-M7 core running at up to 280 MHz and hardware floating-point support, it provides sufficient computational headroom for the DSP workloads explored in this thesis.
 
 \subsubsection{What is Eurorack?}
 %TODO Image of patched Eurorack synth
 %TODO Sources
-Eurorack is a modular synthesizer format originally specified in 1995 by Dieter Doepfer with the introduction of the A-100 system --- the first modular synthesizer built around the format that now bears its name \cite{ZeittabelleDeutschEnglisch}.
+Eurorack is a modular synthesizer format that dates back to 1995, when Dieter Doepfer introduced his A-100 system, making it the very first modular synthesizer built around what is now known as the Eurorack standard. \cite{ZeittabelleDeutschEnglisch}.
 
 \begin{wrapfigure}{r}{0.44\textwidth}
     \centering
@@ -21,7 +22,7 @@ Eurorack is a modular synthesizer format originally specified in 1995 by Dieter 
     \label{fig:a-100}
 \end{wrapfigure}
 
-The format defines mechanical, electrical, and signal standards that allow modules from different manufacturers to be combined freely in the same case, a property that has been central to its adoption.
+The format defines mechanical, electrical, and signal standards that allow modules from different manufacturers to be combined freely in the same case.
 In the mid to late-2000s, manufacturers such as Make Noise and TipTop Audio began producing compatible modules, and the ecosystem has grown continuously since \cite{SOSGuideChoosing}. 
 
 The appeal of Eurorack lies in the big number of available modules: with so many modules to choose from, no two systems are alike.
@@ -29,19 +30,21 @@ Each module contributes its own sonic character and workflow, and together they 
 However, the barrier to entry remains significant.
 
 The high price point of Eurorack modules is a direct consequence of small production 
-runs and significant development effort; a module from a boutique manufacturer may 
-sell only a few hundred units, making economies of scale unavailable \cite{douglasAreModularSynths2023}.
+runs and bears a significant development effort; a module from a boutique manufacturer may 
+sell only a few hundred units \cite{douglasAreModularSynths2023}.
+Scaling production costs is therefore often not possible.
 This creates a natural motivation for open, community-driven hardware development 
 as an alternative path into the ecosystem.
 
 
 \subsection{Objectives}
-The primary objective of this thesis is the development of a fully functional, DSP-capable Eurorack synthesizer module, encompassing the following:
+The primary objective of this thesis is the development of a fully functional, DSP-capable Eurorack synthesizer module. 
+This will include the following::
 
 \begin{itemize}
 	\item Design and implementation of a Eurorack-compliant analog frontend, including CV input conditioning, V/Oct pitch tracking, and audio codec interfacing
 	\item Development of a real-time firmware architecture on the STM32H7 platform using FreeRTOS, meeting the latency and stability requirements of a live performance instrument
-	\item Implementation of a tape-loop playback engine with pitch shifting, supporting real-time CV control
+	\item Implementation of a tape-style playback engine with pitch shifting, supporting real-time CV control
 	\item Investigation of pitch interpolation algorithms suitable for embedded real-time audio
 	\item Implementation and evaluation of a Schroeder reverb algorithm as a secondary DSP focus point
 	\item Verification of the complete system against defined hardware and firmware requirements

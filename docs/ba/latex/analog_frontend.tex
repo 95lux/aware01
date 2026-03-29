@@ -11,7 +11,7 @@ The AC-coupling capacitor together with the input impedance of the codec ADC for
 \[
 f_c = \frac{1}{2 \pi R_\text{eq} C_c}
 \]
-The cutoff frequency should be well below the audible range to avoid attenuation or phase shift of low-frequency audio content.
+The cutoff frequency should be below the audible range to avoid attenuation or phase shift of low-frequency audio content.
 With a coupling capacitor of $C_c = \qty{2.2}{\micro\farad}$ and $R_\text{eq} = \qty{40}{\kilo\ohm}$, the cutoff frequency is
 \[
 f_c = \frac{1}{2 \pi \cdot \qty{40}{\kilo\ohm} \cdot \qty{2.2}{\micro\farad}}
@@ -22,20 +22,16 @@ which is well below the \qty{20}{\hertz} lower bound of the audible range.
 
 \subparagraph{ADC Input Range and Attenuation Design}
 
-The TLV320AIC codec is supplied with \SI{3.3}{\volt}, from which its internal LDO generates a regulated \SI{1.8}{\volt} analog supply (\(AVDD\)), resulting in a common-mode voltage of:
-\[
-V_\mathrm{CM} = \frac{AVDD}{2} = \SI{0.9}{\volt}
-\]
+The TLV320AIC codec is supplied with \SI{3.3}{\volt}, from which its internal LDO generates a regulated \SI{1.8}{\volt} analog supply ((AVDD)). 
+The common-mode voltage was configured to \SI{0.9}{\volt}.
 
 According to the ADC electrical characteristics in the TLV320AIC datasheet \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC full-scale input range is \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\), corresponding to a maximum peak-to-peak voltage of
-\[
-V_\mathrm{pp,max} = \SI{1.06}{\volt_{pp}}.
-\]
+$ V_\mathrm{pp,max}~=~\SI{1.06}{\volt_{pp}}$. 
 
 \subparagraph{Initial Design and Error}
 
 During the initial hardware design, the attenuation factor was derived from the absolute maximum input rating of the ADC pins rather than the functional full-scale input range.
-The absolute maximum rating specifies that input pins must remain within \(\qty{-0.3}{\volt}\) to \((AVDD + \qty{0.3}{\volt}) = \SI{2.1}{\volt}\), which is the damage threshold of the device, not the operational input range.
+The absolute maximum rating specifies that input pins must remain within \(\qty{-0.3}{\volt}\) to \(AVDD + \qty{0.3}{\volt} = \SI{2.1}{\volt}\) \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, which is the damage threshold of the device, not the operational input range.
 This distinction was overlooked during the design phase.
 
 Based on this incorrect reference value, the resistor divider was designed with \(R_{14} = \qty{12}{\kilo\ohm}\) and \(R_{16} = \qty{1.8}{\kilo\ohm}\), yielding an attenuation factor of
@@ -43,15 +39,23 @@ Based on this incorrect reference value, the resistor divider was designed with 
 a = \frac{R_{16}}{R_{14} + R_{16}} = \frac{1.8}{13.8} \approx 0.130.
 \]
 For a \SI{10}{\volt_{pp}} Eurorack signal, this produces an attenuated amplitude of approximately \SI{1.30}{\volt_{pp}}, which is within the absolute maximum rating but exceeds the functional ADC input range of \SI{1.06}{\volt_{pp}}.
-As a result, the ADC saturates on full-scale Eurorack signals.
 
-\(R_{16}\) was subsequently revised to \qty{1}{\kilo\ohm} to achieve greater attenuation, yielding
+\subparagraph{Input Attenuator Revision}
+\label{sec:input-attenuator-changes}
+
+\(R_{16}\) was revised to \qty{1}{\kilo\ohm} to achieve greater attenuation, yielding
 \[
 a = \frac{1.0}{13.0} \approx 0.077,
 \]
 which reduces \SI{10}{\volt_{pp}} to approximately \SI{0.77}{\volt_{pp}}, safely within the ADC input range.
+For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) can be used to boost the signal, thereby utilising the full resolution of the ADC.
+All measurements in Section~\ref{sec:loopback-signal-level-measaurements} and all schematics reflect the revised values.
 
-A BAT54S dual Schottky diode package clamps the attenuated signal to the codec supply rails: one diode clamps to the codecs \(AVDD = \SI{1.8}{\volt}\) and the other to \SI{0}{\volt}, ensuring that voltage peaks or malformed signals cannot exceed the absolute maximum input rating of the ADC.
+A BAT54S dual Schottky diode package clamps the attenuated signal to the codec supply rails: one diode clamps to \(AVDD = \SI{1.8}{\volt}\) and the other to \SI{0}{\volt}, ensuring that voltage peaks or malformed signals cannot exceed the absolute maximum input rating of the ADC.
+However, a pin mapping error was introduced during schematic entry due to a mismatch between the simulation model and the actual SOT-23 package pinout of the BAT54S.
+As a result, the component was placed with reversed orientation on the PCB.
+Since the BAT54S SOT-23 package has its two diode terminals on the outer pins with the common node on the centre pin, the error was corrected by bending the component pins upward and soldering it inverted, effectively swapping the outer pins and restoring the correct diode orientation.
+A corrected footprint assignment is required in the next PCB revision to eliminate the bodge.
 
 \begin{figure}[H]
 	\centering
@@ -70,9 +74,9 @@ A_\text{v} = 1 + \frac{R_\text{f}}{R_\text{g}} \geq 1
 \]
 cannot be less than unity, and therefore cannot attenuate the incoming signal.
 The buffer followed by a passive divider avoids both limitations: the buffer presents a high impedance to the source, while the passive divider freely realises any attenuation factor below unity.
-The divider consists of \(R_\text{top} = \qty{10}{\kilo\ohm}\) and \(R_\text{bot} = \qty{1}{\kilo\ohm}\), giving an attenuation factor of
+The divider consists of \(R_{1} = \qty{12}{\kilo\ohm}\) and \(R_\text{2} = \qty{1}{\kilo\ohm}\), giving an attenuation factor of
 \[
-a = \frac{R_\text{bot}}{R_\text{top} + R_\text{bot}} = \frac{1}{11} \approx 0.091.
+a = \frac{R_\text{2}}{R_\text{1} + R_\text{2}} = \frac{1}{12} \approx 0,0833.
 \]
 
 
@@ -190,6 +194,7 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{2.84}{\hertz} and fl
 \end{figure}
 
 \paragraph{CV Input Stage Design}
+\label{ref:cv-input-stage-design}
 
 \subparagraph{Design Rationale}
 
@@ -198,7 +203,7 @@ First, no AC coupling is used, as CV signals carry DC information that must be p
 Second, a bias resistor connected to a \qty{-10}{\volt} reference rail is summed at the inverting input to shift the output into the STM32H7 ADC input range of \qtyrange{0}{3.3}{\volt}.
 
 The general CV input accepts signals in the range of \qty{\pm 5}{\volt}, while the V/Oct input accepts \qty{-1.5}{\volt} to \qty{5}{\volt}.
-Both circuits share the same topology with \(R_{in} = \qty{100}{\kilo\ohm}\), differing only in the bias and feedback resistor values to accommodate their respective input ranges.
+Both circuits share the same topology with \(R_{in} = \qty{100}{\kilo\ohm}\), differing only in the bias and feedback resistor values to match their respective input ranges.
 A \qty{1}{\nano\farad} capacitor in parallel with the feedback resistor acts as an anti-aliasing filter, attenuating high-frequency noise above the CV signal bandwidth.
 
 \subparagraph{General CV Input}

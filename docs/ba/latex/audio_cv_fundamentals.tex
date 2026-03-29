@@ -4,11 +4,11 @@
 \label{sec:pitch-and-scales}
 
 A musical scale is a succession of notes arranged in ascending or descending order 
-of pitch. The construction of scales has fascinated mathematicians and musicians 
-since the time of the Greeks \cite[p.~174]{wheelerScienceSound2014}.
+of pitch. 
+Scales and their musical construction have fascinated mathematicians and musicians since the time of the Greeks \cite[p.~174]{wheelerScienceSound2014}.
 
 The most fundamental division of pitch in music is the \textit{octave}.
-The interval between two notes whose frequencies are in a $2:1$ ratio \cite[p.~89]{wheelerScienceSound2014}. 
+It is defined as the interval between two notes whose frequencies are in a $2:1$ ratio \cite[p.~89]{wheelerScienceSound2014}. 
 The octave appears in nearly all musical cultures, and in a sense, the different musical scales are different ways of dividing it up.
 
 Western music divides the octave into 12 steps called \textit{semitones}. 
@@ -17,11 +17,11 @@ Most compositions use a subset of the chromatic scale, the most common being the
 
 Even though the division and number of tones that form scales, differentiate through different cultures, the Octave remains the constant factor that unifies music all over the globe. [p.~174]\cite{wheelerScienceSound2014}
 
-The \textit{Pythagorean scale} for example, attributed to Pythagoras (~580 B.C.), constructs intervals by stacking perfect fifths (frequency ratio $3:2$) and fourths ($4:3$). 
-While this produces very consonant fourths and fifths (musical interval of two tones), it results in poorly tuned thirds (another interval) \cite[p.~176]{wheelerScienceSound2014}.
+The \textit{Pythagorean scale}, for example, was invented by Pythagoras (~580 B.C.). 
+It is a musical scale that  is constructed by stacking intervals of perfect fifths (frequency ratio $3:2$) and fourths ($4:3$). 
+While this produces very consonant fourths and fifths (musical interval of two tones), it results in out-of-tune thirds (another interval) \cite[p.~176]{wheelerScienceSound2014}.
 
-The difficulty in scale construction arises from the fact that no finite number of perfect fifths ($3:2$) can ever exactly equal a whole number of octaves ($2:1$), since no power of $\frac{3}{2}$ is also a power of 2. 
-Twelve perfect fifths overshoot seven octaves by a small amount known as the \textit{Pythagorean comma} \cite[p.~180]{wheelerScienceSound2014}. 
+The difficulty in scale construction is due to the fact that no finite number of perfect fifths ($3:2$) can ever exactly equal a whole number of octaves ($2:1$), since no power of $\frac{3}{2}$ is also a power of 2 \cite[p.~180]{wheelerScienceSound2014}. 
 Different temperament systems represent different compromises in distributing this discrepancy across the scale.
 
 The system used in modern Western music is \textit{equal temperament}, which resolves this by making all semitones identical. 
@@ -44,12 +44,10 @@ This exponential relationship between semitone distance and frequency is the mat
 
 \paragraph{Control Voltage and V/Oct}
 
-In modular synthesizer systems, audio parameters such as pitch are controlled by 
-analog DC voltages known as \textit{Control Voltages} (CV). 
-This principle was introduced by Robert Moog, who produced the first commercially available 
-synthesizer in the 1960s \cite{TechnicalDetailsA100}.
+In modular synthesizer systems, audio parameters are controlled by analog DC voltages known as \textit{Control Voltages} (CV). 
+This principle was introduced by Robert Moog, who produced the first commercially available synthesizer in the 1960s \cite{TechnicalDetailsA100}.
 
-In the case of a voltage-controlled oscillator (VCO), pitch is controlled by an external CV input: an increase of \qty{1}{V} corresponds to an increase of one octave in pitch. 
+In the case of a voltage-controlled oscillator (VCO) -- or any module that needs pitch control in a musical way -- , it is controlled by an external CV input: an increase of \qty{1}{V} corresponds to an increase of one octave in pitch. 
 This convention is known as the \textit{Volt per Octave} (V/Oct) standard \cite{TechnicalDetailsA100}.
 
 Because the relationship between frequency and pitch is exponential, a linear voltage change on the CV input produces an exponential change in frequency. 
@@ -62,4 +60,4 @@ To recover the corresponding playback speed factor from a V/Oct input voltage $V
 This maps directly onto the equal temperament frequency relationship established above: equal voltage steps always correspond to equal musical intervals, regardless of the absolute pitch.
 
 There is no formal published standard for the Eurorack format. 
-The A-100 system manual by Doepfer \cite{TechnicalDetailsA100} serves as the closest reference, as Doepfer invented the Eurorack format in 1995 and their documentation defines the electrical and signal conventions adopted by the modular synthesis community.
+The A-100 system manual by Doepfer \cite{TechnicalDetailsA100} serves as the closest reference.

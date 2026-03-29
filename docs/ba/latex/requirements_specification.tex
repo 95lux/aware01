@@ -50,7 +50,7 @@
         \midrule
         \label{req:FC-01}FC-01 & Audio acquisition and output are driven by DMA transfers to ensure uninterrupted data flow independent of task scheduling \\
         \label{req:FC-02}FC-02 & FreeRTOS provides preemptive task scheduling; high-priority audio tasks are strictly separated from lower-priority control and interface tasks \\
-        \label{req:FC-03}FC-03 & DSP algorithms are implemented in C, using CMSIS-DSP routines where applicable to exploit STM32H7 hardware acceleration \\
+        \label{req:FC-03}FC-03 & DSP algorithms implemented to demonstrate realtime capability of the module \\
         \label{req:FC-04}FC-04 & The TLV320AIC3204 codec is configured at startup via a custom I\textsuperscript{2}C driver; audio data is transferred via I\textsuperscript{2}S \\
         \label{req:FC-05}FC-05 & Calibration data may be persisted to internal flash; no external mass storage is required \\
         \bottomrule

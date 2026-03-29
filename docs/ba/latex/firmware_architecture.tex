@@ -128,22 +128,20 @@ paragraph{GPIO and External Interrupts}
 		\midrule
 		PA9  & \texttt{GATE1\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
 		PA8  & \texttt{GATE2\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PC6  & \texttt{GATE3\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
 		PC7  & \texttt{GATE4\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
 		PA10 & \texttt{BUTTON1\_IN} & Falling edge & 10 & UserInterfaceTask \\
 		PA11 & \texttt{BUTTON2\_IN} & Falling edge & 10 & UserInterfaceTask \\
-		\midrule
-		PC9  & \texttt{GATE3\_IN}   & — (polled)   & —  & Polled by GPIO driver \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
 \noindent
-GATE3 (PC9) is configured as a plain digital input without an EXTI line and is
-therefore polled by the GPIO driver rather than interrupt-driven.
-All other gate and button inputs generate falling-edge interrupts at NVIC
-priority~10, which is below \texttt{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY},
-permitting the use of FreeRTOS API calls (specifically
+All Gate and button inputs generate falling-edge interrupts at NVIC
+priority~10, permitting the use of FreeRTOS API calls (specifically
 \texttt{xTaskNotifyFromISR}) inside these handlers.
+
+\texttt{GATE3\_IN} was relocated from PC9 to PC6 via a hardware bodge, as PC9 did not support EXTI interrupts simultaneously with the other assigned interrupt lines.
 
 % ── Serial / audio buses ──────────────────────────────────
 \paragraph{Serial and Audio Interfaces}
@@ -159,19 +157,19 @@ permitting the use of FreeRTOS API calls (specifically
 		\textbf{Peripheral} & \textbf{Pins} & \textbf{Configuration} & \textbf{Function} \\
 		\midrule
 		I2S1 (SPI1) &
-		PA4 WS, PA5 CK, PB4 SDI, PB5 SDO, PC4 MCK &
+		PA4 \texttt{WS}, PA5 \texttt{CK}, PB4 \texttt{SDI}, PB5 \texttt{SDO}, PC4 \texttt{MCK} &
 		Full-duplex master, \SI{48}{\kilo\hertz}, 16-bit &
 		Bidirectional audio data to/from TLV320AIC3204 codec \\
 		\addlinespace
 		I2C1 &
-		PB6 SCL, PB7 SDA &
+		PB6 \texttt{SCL}, PB7 \texttt{SDA} &
 		Timing register \texttt{0x20B0CCFF} &
 		Codec register configuration and readback \\
 		\addlinespace
 		UART4 &
-		PA0 TX, PA1 RX &
+		PA0 \texttt{TX}, PA1 \texttt{RX} &
 		Asynchronous &
-		Debug output (auxiliary to SWO on PB3) \\
+		Debug output (auxiliary to SWO on \texttt{PB3}) \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -256,15 +254,16 @@ ST's application note AN4839 explicitly recommends this approach:
 \textit{``Always better to use non-cacheable regions for DMA buffers''} \cite[pp.~6-7]{stmicroelectronicsLevel1Cache2018}. 
 By marking the DMA region as non-cacheable in the MPU configuration, coherency is guaranteed without requiring explicit \texttt{SCB\_CleanDCache} / \texttt{SCB\_InvalidateDCache} calls around every transfer. \\
 
-Buffer sizes for the tape buffers (Section~\ref{sec:tape_buffer}) and reverb delay lines (Section~\ref{sec:schroeder_memory_allocation}) are tuned to maximise SRAM utilisation: 
+Buffer sizes for the tape buffers (Section~\ref{sec:tapep-buffers}) and reverb delay lines (Section~\ref{sec:schroeder_memory_allocation}) are tuned to maximise SRAM utilisation: 
 larger tape buffers extend the maximum recording time, while larger reverb delay lines allow for a more spacious room size. 
 The GCC linker report (Table~\ref{tab:memory_layout}) confirms that both \texttt{RAM} (93\%) and \texttt{DTCMRAM} (98.5\%) are nearly fully utilised. 
-Flash consumption is modest at under 5\%, leaving ample space for future firmware growth.
+Flash consumption is modest at under 5\% and will probably never be a limiting factor in this project.
 
 \newpage
 \subsubsection{RTOS Task Structure}
 
 The firmware employs FreeRTOS with three concurrent tasks organised by priority.
+A fourth temporary task is spawned during boot routine.
 Figure~\ref{fig:freertos-flow-diagram} illustrates the task structure and signalling flow:
 
 \begin{figure}[H]
@@ -296,11 +295,10 @@ Once calibration completes or is skipped, \texttt{UserInterfaceTask} plays the b
 Animation updates are driven by a hardware timer ISR, which issues a direct-to-task notification on each tick; \texttt{UserInterfaceTask} calls \texttt{ws2812\_run\_step} upon wakeup, keeping animation logic entirely within the task context and the ISR minimal.
 
 \paragraph{Parameter Cache}
-Parameter data propagated from the control and user-interface tasks to \texttt{AudioTask} bypasses FreeRTOS queuing entirely. 
-\texttt{param\_cache} implements a lock-free shared-memory scheme in which lower-priority tasks write individual fields using atomic store operations, while \texttt{AudioTask} reads a consistent snapshot each cycle via
-\texttt{param\_cache\_fetch}. 
-This eliminates all blocking on the time-critical audio path and avoids priority inversion, following the established principle that real-time audio threads should never contend on a mutex~\cite{reinders2021}. 
-Lock-free communication of this kind is well established in the real-time systems literature: Herlihy and Shavit provide a thorough theoretical grounding for wait-free and lock-free data structures~\cite{herlihy2012art}, while Butenhof gives a practical treatment of memory visibility and atomic operations in concurrent C programs~\cite{butenhof1997programming}.
+Parameter data sent from the control and user-interface tasks to \texttt{AudioTask}  bypasses FreeRTOS queuing entirely. 
+\texttt{param\_cache} implements a lock-free shared-memory scheme in which lower-priority tasks write individual fields using atomic store operations, while \texttt{AudioTask} reads a consistent snapshot each (half-buffer) processing cycle via \texttt{param\_cache\_fetch}. 
+Each field has exactly one writer and one reader. On Cortex-M7, aligned 32-bit load/store instructions are atomic by the ARMv7-M architecture guarantee, so no writer can be observed mid-update. This meets the definition of a single-writer atomic register without requiring locks [p.73]\cite{herlihyArtMultiprocessorProgramming2009}. 
+The wait-free property ensures that \texttt{AudioTask} always completes its parameter fetch in a finite number of steps independently of the scheduling state of any writing task.
 
 \paragraph{Non-FreeRTOS Domain}
 Outside the FreeRTOS task hierarchy, several interrupt-driven subsystems operate directly on the hardware. 
@@ -310,18 +308,16 @@ GPIO interrupts notify \texttt{UserInterfaceTask} of button presses and gate-inp
 The custom ADC driver raises ISRs on slide-potentiometer and \mbox{V/Oct} conversion-complete events and notifies the respective tasks when fresh data is available.
 
 \subsubsection{Drivers and Peripherals}
-% TODO: codec driver, ADC driver, CV input handling
 
 \paragraph{Audio Codec Driver}
 
 The \textbf{TI TLV320AIC3204} stereo audio codec handles all analog-to-digital and digital-to-analog conversion. 
-It is a highly configurable device controlled entirely through a register interface, supporting sample rates from 8~kHz to 192~kHz with 
-flexible clock generation, programmable gain stages, and configurable input/output routing \cite{texasinstrumentsTlv320aic3204Datasheet}.
+It is a highly configurable device controlled entirely through a register interface, supporting sample rates from 8~kHz to 192~kHz with flexible clock generation, programmable gain stages, and configurable input/output routing \cite{texasinstrumentsTlv320aic3204Datasheet}.
 
 The codec is configured over I\textsuperscript{2}C using a thin register-access layer built on the STM32 HAL. 
 The \texttt{codec\_init} function executes a fixed register-write sequence: software reset, clock divider configuration, I\textsuperscript{2}S framing, input/output routing, and finally powering up the ADC and DAC at unity gain.
  
-Clock dividers NDAC and MDAC are selected at runtime based on the requested sample rate according to $f_s = f_\text{MCLK} / (N \cdot M \cdot \text{OSR})$, with a \qty{12.288}{MHz} master clock and fixed OSR of 128.
+Clock dividers NDAC and MDAC are selected at runtime based on the requested sample rate according to $f_s = f_\text{MCLK} / (N \cdot M \cdot \text{OSR})$, with a \qty{12.288}{MHz} master clock and fixed OSR of 128. 
 
 \begin{listing}[h]
     \begin{minted}{c}
@@ -333,13 +329,13 @@ Clock dividers NDAC and MDAC are selected at runtime based on the requested samp
             default:               n_val = 1; m_val = 2;  break;
         }
     \end{minted}
-    \caption{TLV320AIC3204 driver -- clock divider configuration}
+    \caption{TLV320AIC3204 driver -- clock divider configuration with configurable samplerate}
     \label{lst:codec_clk}
 \end{listing}
 
 Full register configuration details follow TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557 \cite[pp.~96--128]{TLV320AIC3204ApplicationReference2012}.
 
-\paragraph{WS2812 RGB LED Driver}
+\paragraph{WS2812 RGB LED Driver and Animation System}
 
 The module uses four WS2812 addressable RGB LEDs for visual feedback, driven via a 
 single-wire \qty{800}{kHz} PWM protocol where bit values are encoded as duty cycle 
@@ -357,8 +353,10 @@ at each tick. Looping and one-shot animations are supported, with a single queue
 
 Animation sequences are defined as statically allocated structs in 
 \texttt{ws2812\_animations.c}, requiring no heap allocation. Defined animations include 
-a white breathe (idle), red/blue mode indicators, a boot sequence, a chase pattern, and 
+a white breathe, red/blue mode indicators, a boot sequence, a chase pattern, and 
 green/red flash sequences for confirmation and error feedback.
+
+More animations can be created and included easily in the animation system, in parallel to development of future DSP features.
 
 \subsubsection{Persistent Settings Storage}
 

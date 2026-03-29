@@ -21,24 +21,23 @@ Section~\ref{sec:eurorack-fundamentals}: \qty{10}{HP} (\qty{50.80}{mm}) wide -- 
 
 The panel cutout positions were imported directly from the KiCad PCB layout using the KiCad StepUp workbench plugin for FreeCAD, which imports the KiCad board as a 3D assembly with all component positions preserved. 
 
-Within FreeCAD, \textit{ShapeBinders} \cite{PartDesignShapeBinder2025} were used to reference the imported component geometries directly -- the cutout dimensions and positions in the panel sketch are parametrically constrained to the STL geometry of each component, ensuring that any change to the PCB layout propagates automatically to the panel design.
+Within FreeCAD, \textit{ShapeBinders} \cite{PartDesignShapeBinder2025} were used to reference the imported component geometries directly -- the cutout dimensions and positions in the panel sketch are parametrically constrained to the STL geometry of each component interfering with the frontpanel. 
+
+Figure \ref{fig:panel_freecad} shows the highlighted parts that needed to be cut out in FreeCAD. 
 
 \paragraph{3D Print Verification}
 
-Before committing to a final aluminum panel, the design was verified by 3D 
-printing the panel in PLA. The printed panel fit the components and mounted 
-into the Eurorack rack correctly on the first attempt, confirming that the 
-KiCad StepUp import and ShapeBinder workflow produced accurate dimensions 
-without any manual correction. The 3D printed panel also served as a functional 
-prototype for evaluating the physical layout and ergonomics of the controls 
-before the final panel was produced.
+Before committing to a final aluminum panel, the design was verified by 3D printing the panel. 
+The printed panel fit the components and mounted into the Eurorack rack correctly on the first attempt, confirming that the 
+KiCad StepUp import and ShapeBinder workflow produced accurate dimensions without any manual measurements and correction. 
+The 3D printed panel also served as a functional prototype for evaluating the physical layout and ergonomics of the controls before the final panel is produced.
 
 %TODO insert photo
 
 \paragraph{Graphic Design}
 
-The mechanical outline was exported from FreeCAD as an SVG file, providing an exact 1:1 scale template for the panel artwork. 
-The SVG was imported into Inkscape as a locked base layer, and the panel graphics -- labels, module name, signal flow indicators -- were designed on top. 
+The mechanical outline was exported from FreeCAD as a technical drawing, on form of a .dxf file, providing an exact 1:1 scale template for the panel artwork. 
+The DXF was imported into Inkscape as a locked base layer, and the panel graphics -- labels, module name, signal flow indicators -- were designed on top. 
 Exporting the finished artwork as SVG preserves full vector fidelity, making it suitable for handoff to a graphic designer or direct submission to a panel manufacturer.
 
 \begin{figure}[H]
@@ -68,8 +67,10 @@ Exporting the finished artwork as SVG preserves full vector fidelity, making it 
 \paragraph{3D Rendering}
 
 For product presentation -- including the title page image and the module overview in Section~\ref{sec:high-level-system-overview} -- the panel was rendered in Blender. 
-The FreeCAD model was exported as an OBJ file, which Blender imports natively with all individual parts preserved as separate objects. 
-The finished panel artwork was exported from Inkscape as a high-resolution PNG and applied as a texture on the panel face using Blender's Principled BSDF material. 
+The FreeCAD model was exported as an OBJ file, which Blender imports natively. 
+The finished panel artwork was exported from Inkscape as a high-resolution PNG and applied as a texture on the panel face using Blender's Principled BSDF material.
+
+Tailored materials and light sources were added to show LED colors and improve visual fidelity. 
 The scene was rendered using Cycles with a brushed aluminium material on the panel body.
 
 \begin{figure}[H]
@@ -79,4 +80,4 @@ The scene was rendered using Cycles with a brushed aluminium material on the pan
 	\label{fig:panel_render}
 \end{figure}
 
-This workflow -- mechanical CAD in FreeCAD, graphic design in Inkscape, and photorealistic rendering in Blender -- allowed a complete product design cycle to be carried out using open-source tools, producing both manufacturing-ready files and presentation-quality visuals within the scope of this project.
+This workflow -- mechanical CAD in FreeCAD, graphic design in Inkscape, and photorealistic rendering in Blender -- allowed a complete product design cycle to be carried out using open-source tools while producing both manufacturing-ready files and presentation-quality visuals within the scope of this project.

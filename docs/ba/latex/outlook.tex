@@ -1,0 +1,20 @@
+\subsubsection{Hardware Revisions}
+The pin misassignments identified in this revision will be corrected in a dedicated PCB revision, restoring interrupt-driven edge detection for the Gate 03 input and  enabling PWM-driven LED control for the slide potentiometer indicators. 
+
+Additionally, the fourth WS2812 RGB LED, currently unmapped in firmware, will be assigned and integrated into the LED control scheme.
+An aluminium front panel with UV-printed graphics is planned to replace the current  prototype panel, bringing the module to a finished Eurorack form factor.
+
+\subsubsection{Memory and Buffer Capacity}
+To address the current memory constraints and extend the recording buffer beyond  \qty{2.5}{\second}, an external RAM expansion via QSPI is planned. 
+This would also provide the headroom necessary to accommodate additional DSP algorithms without further pressure on the internal SRAM.
+
+A suitable candidate for this extension is the APS6404L-3SQR-SN \cite{APS6404L_3SQR}, a 64 Mbit (8 MB) PSRAM in an SOP-8 package.
+
+At 8 MB, the chip would increase available RAM by approximately eight times thecurrent internal SRAM, enabling significantly longer recording buffers and providing headroom for future DSP algorithm development.
+
+\subsubsection{DSP Algorithms}
+The current DSP chain will be extended with additional audio processing algorithms. 
+Planned additions include a synced delay effect, filtering, and grain synthesis or sampling functionality, expanding the module's capabilities.
+
+%\subsubsection{Noise Characterisation}
+%A formal noise floor measurement using the swept-sine method described in  Section~\ref{sec:frequency-response} is planned for a subsequent revision, to formally verify the effectiveness of the analogue/digital separation strategy applied during PCB layout.

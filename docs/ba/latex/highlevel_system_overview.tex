@@ -55,10 +55,10 @@
 \subsubsection{Feature Set}
 
 The module is a stereo audio sampler designed for live use in a Eurorack modular synthesizer context. 
-Its core functionality is the recording and playback of audio material with real-time DSP processing and extensive CV and gate control.
+Its core functionality is the recording and playback of audio material with real-time DSP processing and CV and gate control of its recording, playback and effects engine.
 
-The feature set was derived from the project requirements, which state real-time DSP processing, stereo audio input and output, and full external controllability via standard Eurorack signal levels. 
-A real-time sampler architecture was chosen as it naturally satisfies all of these constraints while offering a musically expressive and performable feature set suited to the Eurorack context.
+The feature set was derived from the project requirements. 
+A real-time sampler architecture was chosen as it naturally satisfies all of these constraints while offering a performable feature set suited to the Eurorack context.
 
 \paragraph{Recording and Playback}
 Audio is recorded into an internal RAM buffer via the stereo audio input (H), with InL normalized to InR when only a mono source is connected. 
@@ -66,20 +66,21 @@ Playback is triggered by a gate signal (D) and can be stopped or retriggered at 
 Recording is initiated via a dedicated gate input (E), allowing both functions to be controlled independently from a sequencer or other modulation source.
 
 \paragraph{Slice-Based Playback}
-During recording, slice markers can be inserted at arbitrary points in the buffer via a dedicated gate input (G). Each marker defines a possible playback start position within the recorded material. 
+During recording, slice markers can be inserted at arbitrary points in the buffer via a dedicated gate input (G). 
+Each marker defines a possible playback start position within the recorded material. 
 The active start marker is selected by the Slice Position CV input (B), which steps through the set of recorded markers. 
-On the next play trigger, playback begins from the currently selected marker, allowing precise, CV-driven access to different sections of the buffer.
+On the next play trigger, playback begins from the currently selected marker, allowing CV-driven access to different sections of the buffer.
 If a rhythmic gate signal is applied during recording, the buffer is divided into evenly spaced segments corresponding to that rhythm; for example, a 16th-note clock produces 16th-note segments that can subsequently be addressed and triggered independently.
-
+ a
 \paragraph{Playback Modes}
-Two playback modes can be toggled independently via dedicated buttons (5, 6) and are indicated by the Play Mode LED (3):
+Two playback modes can be toggled via dedicated buttons (5, 6) and are indicated by the Play Mode LED (3):
 \begin{itemize}
     \item \textbf{Cyclic mode} causes playback to loop continuously within
-    the active slice rather than stopping at its end.
+    the active slice rather than stopping at its end (until the amp envelope fades out).
     \item \textbf{Reverse mode} inverts the playback direction of the active
     slice.
 \end{itemize}
-Both modes can be active simultaneously, indicated by the LED displaying purple.
+Both modes can be active simultaneously, which is shown by the purple LED light.
 
 \paragraph{Pitch Control}
 Playback pitch is set by the Base Pitch slider (7) over a range of $\pm24$ semitones relative to the recorded pitch. 
@@ -88,15 +89,14 @@ The V/Oct CV input (A) provides additional pitch modulation following the standa
 \paragraph{Amplitude Envelope}
 An amplitude envelope is applied to each triggered playback event. 
 The attack and release times are set independently via sliders (8, 9), ranging from short percussive shapes to slow fades. 
-This allows the module to produce everything from tight rhythmic hits to sustained, evolving textures without additional external VCA or envelope modules.
+This allows the module to produce everything from tight hits to sustained sounds, without additional external VCA or envelope modules.
 
 \paragraph{Decimation and Reverb Effects}
 The Decimate Amount slider (10) sets the decimation factor applied to the next recording buffer, ranging from clean reproduction to $\times16$ decimation.
-Beyond introducing progressive lo-fi character to the captured material, decimation reduces the effective sample rate and thus the RAM consumption per second, which proportionally extends the maximum recordable buffer duration. At $\times16$ decimation, for example, the buffer can hold sixteen times as much material as at full resolution.
+Besides introducing lo-fi character to the recorded material, decimation also reduces the effective sample rate and therefore the RAM consumption per second -- which means the buffer can hold significantly more material. 
+At $\times16$ decimation for example, sixteen times as much content fits into the buffer compared to full resolution.
 
-The XY Effect CV input (C) controls a reverb effect applied to the output
-signal. 
-The X axis controls both dry/wet mix and feedback amount, while the Y axis controls the room scale. 
+The XY Effect CV input (C) controls the reverb effect added to the output signal. The X axis controls the dry/wet mix and the feedback amount, while the Y axis controls the room scale. At the moment, the XY plane is only connected to the reverb settings, but it's designed to work with other effects as well, with their own parameter mappings, as more effects are added.
 
 \paragraph{Visual Feedback}
 Four WS2812 RGB LEDs provide visual feedback on the current module state. 
@@ -124,8 +124,8 @@ The following three-step procedure will begin:
 	zero-offset capture.
 \end{enumerate}
 
-Each step is acknowledged by a brief confirmation animation. On success, a final confirmation animation plays and the calibration is saved. 
-If the measured values fail a sanity check (e.g.\ the voltage delta between C1 and C3 is out of range), an error animation is shown and the previous calibration is retained.
+On success, a green ascending confirmation animation plays and the calibration is saved. 
+If the measured values fail a sanity check (e.g.\ the voltage delta between C1 and C3 is out of range), an error animation (flashing red LEDs) is shown and the previous calibration is retained.
 
 \paragraph*{Pitch Potentiometer Calibration}
 
@@ -138,12 +138,11 @@ The following three-step procedure will begin:
 	\item Slide the pitch slide potentiometer fully \textbf{up}. Hold both buttons to confirm.
 \end{enumerate}
 
-Each step is acknowledged by a progressive LED animation. 
-On success, a final confirmation animation plays and the calibration is saved. 
+Each step is acknowledged by a progressive LED animation (like during V/Oct calibration). 
+On success, the confirmation animation plays and the calibration is saved. 
 If the three captured values are not strictly ordered (min $<$ center $<$ max), an error animation is shown and the
 previous calibration is retained.
 
 \paragraph*{Normal Boot}
 
-If the buttons are released before either threshold is reached, the device boots
-normally using the existing calibration data.
+If the buttons are released before either threshold is reached, the device boots normally using the existing calibration data.

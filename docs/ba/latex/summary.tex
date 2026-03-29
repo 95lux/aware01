@@ -1,5 +1,21 @@
+The primary objective of this thesis was the development of a fully functional, DSP-capable Eurorack synthesizer module on the STM32H7 platform.
+The resulting system -- hardware, firmware, and two DSP focus points -- was built from scratch over the course of the project and verified against a defined set of functional and electrical requirements.
+
+The hardware implementation delivers a complete Eurorack-compliant signal path: stereo audio input and output at Eurorack levels, CV and V/Oct input conditioning, gate inputs, slide potentiometers, push buttons, and a WS2812 RGB LED interface.
+The analog frontend proved more challenging than anticipated during bring-up; initial attenuator values caused ADC saturation, requiring component changes, and two pin misassignments in the first PCB revision required bodge wires and firmware workarounds.
+These issues are documented and corrected for the next revision.
+
+On the firmware side, the FreeRTOS-based architecture met all real-time requirements with margin to spare.
+End-to-end audio latency was measured at \qty{1.896}{ms} mean -- well within the \qty{5}{ms} target -- and the full DSP chain runs at 60--66\% CPU utilisation at $f_s = \qty{48}{\kilo\hertz}$, leaving meaningful headroom.
+The lock-free parameter cache and DMA-driven audio pipeline both operated correctly under load throughout testing.
+
+The two DSP focus points demonstrated that non-trivial real-time audio algorithms are feasible on this platform.
+The tape-style playback engine with Hermite interpolation produces clean output across the tested pitch range, with substantially lower aliasing than the ZOH baseline at all upsampling ratios.
+The Schroeder reverb implementation covers the full $0.1$--$5.0\,\mathrm{s}$ RT60 range and integrates cleanly into the audio processing chain.
+
+\newpage
 \subsection{Requirements Verification}
-Table~\ref{tab:req-verification} summarises the verification status of all functional 
+Table~\ref{tab:req-verification} summarises the verification status of all functional
 requirements and constraints defined in Section~\ref{sec:system-requirements}.
 \begin{table}[H]
     \centering
@@ -32,36 +48,47 @@ requirements and constraints defined in Section~\ref{sec:system-requirements}.
     \end{tabularx}
 \end{table}
 
+The majority of requirements were fully met. The two partial results (FR-03, FR-04) both stem from the same class of error: incorrect pin assignments during schematic entry, rather than fundamental design problems.
+EC-05 remains pending due to incomplete noise measurements; subjective in-system testing showed no audible noise floor, but formal verification is deferred to a future revision.
+
+\newpage
 \subsection{Discussion of Limitations}
 
 \subsubsection{Hardware Revision Defects}
 Two pin misassignments were identified in this hardware revision that could not 
 be corrected through firmware alone:
 \begin{itemize}
-    \item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support 
-    EXTI interrupts. A polling-based workaround was implemented, but 
-    interrupt-driven edge detection cannot be restored without a PCB revision.
-    \item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels 
-    for the fader LEDs were incorrectly assigned during schematic entry, leaving 
-    the slider LED indicators non-functional in this revision.
+	\item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support 
+	EXTI interrupts simultaneously with the other assigned interrupt lines.
+	A bodge wire was soldered directly between PC9 and PC6 on the MCU pins, 
+	relocating the signal to a pin with full EXTI support, and the firmware was 
+	updated accordingly.
+	A PCB revision with the correct pin assignment is required to eliminate the bodge.
+	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels 
+	for the fader LEDs were incorrectly assigned during schematic entry, leaving 
+	the slider LED indicators non-functional in this revision.
 \end{itemize}
-Both defects are documented and a corrected hardware revision with the appropriate pin reassignments is already in progress in a dedicated feature branch of the 
-project repository.
 
 \subsubsection{Memory Headroom}
-DTCMRAM utilisation stands at 98.5\% and main SRAM at 93\% in the current firmware 
-build. While sufficient for the implemented feature set, this leaves limited headroom 
-for additional DSP algorithms or larger sample buffers. The current recording and 
-playback buffer holds \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, 
-which is adequate for the tape-style use case but restrictive for longer recordings. 
-Extending buffer capacity would require architectural changes such as reducing reverb 
-delay line sizes or migrating to external RAM via QSPI.
+DTCMRAM utilisation stands at 98.5\% and main SRAM at 93\% in the current firmware build.
+While sufficient for the implemented feature set, this leaves limited headroom for additional DSP algorithms or larger sample buffers.
+The current recording and playback buffer holds \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, which is adequate for the tape-style use case but restrictive for longer recordings.
 
 \subsubsection{Noise Characterisation (EC-05)}
-Quantitative noise floor measurements have not been completed for this revision. 
-The analogue/digital separation strategy was applied during layout, but its 
-effectiveness has not been formally verified through measurement. During in-system 
-testing in a Eurorack environment, the noise performance was subjectively sufficient 
-and no audible noise floor was observed. A formal measurement using the swept-sine 
-method described in Section~\ref{sec:frequency-response} is planned for a future 
-revision.
+Quantitative noise floor measurements have not been completed for this revision.
+The analogue/digital separation strategy was applied during layout, but its effectiveness has not been formally verified through measurement.
+During in-system testing in a Eurorack environment, the noise performance was subjectively sufficient and no audible noise floor was observed.
+
+\subsubsection{Fixed-Point Phase Accumulator}
+The playback engine uses a Q48.16 fixed-point phase accumulator, motivated by the concern that floating-point accumulation errors could cause phase drift over long playback durations (Section~\ref{sec:numerical-architecture}).
+In retrospect, this concern does not apply to this system: the sample buffer holds only \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, meaning the playhead wraps within $2.5 \times 48000 = 120{,}000$ samples.
+Floating-point rounding errors are on the order of $\epsilon \approx 10^{-7}$ per accumulation step; over 120,000 steps the accumulated error remains below $0.012$ samples -- well below the resolution of the interpolator.
+Furthermore, the STM32H7 Cortex-M7 core includes a double-precision FPU, which provides 52 bits of mantissa and further reduces this already negligible error.
+A \texttt{double} or \texttt{float} playhead would be fully sufficient and would eliminate the fixed/floating boundary at the interpolator input, improving code readability.
+The fixed-point design is therefore a conservative choice that is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
+
+\subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
+The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.5}{\Hz} calculated from the AC-coupling network ($R_{eq} = \SI{48}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
+This represents a discrepancy of approximately 25$\times$.
+The analog signal path and output AC-coupling stage have been ruled out as sources; the root cause has not been identified within the scope of this project.
+Practically, the measured cutoff remains below the typical lower limit of program material and does not affect audible performance, but the unexplained discrepancy between theory and measurement warrants further investigation in a future revision.

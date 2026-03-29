@@ -1,0 +1,34 @@
+% Related work — covers existing DSP Eurorack platforms, interpolation literature, and reverb lineage
+% Placement: end of Section 2 (Background and Fundamentals), before System Design
+
+\subsection{Related Work}
+\label{sec:related-work}
+
+\subsubsection{Open DSP Eurorack Platforms}
+
+Several open-source and semi-open hardware platforms exist that pursue a similar goal:
+bringing programmable DSP capability to the Eurorack format.
+
+\paragraph{Daisy Seed \cite{ElectroSmithHardware}} (Electro-Smith, 2020) is perhaps the most widely adopted platform in this space.
+It is based on an STM32H750 microcontroller and is sold as a ready-made module core,
+with a C++ DSP library (libDaisy) and a visual patching environment (Max/MSP via RNBO) targeting it.
+% TODO: cite Electro-Smith Daisy documentation
+Its main advantage is its low barrier to entry; a developer can target the platform without
+designing any hardware.
+The trade-off is a fixed form factor and pin mapping, which constrains the possible interface design.
+This thesis takes the opposite approach: the hardware is designed from scratch around the
+application's specific requirements, at the cost of higher initial development effort.
+
+\paragraph{Rebel Technology OWL \cite{Genius2022}} is a further example of a programmable Eurorack DSP module,
+targeting a similar embedded ARM platform.
+
+\paragraph{Mutable Instruments Eurorack Modules}
+The open-source Eurorack modules developed by Mutable Instruments \cite{pichenettesPichenettesEurorack2026} served as an important reference throughout this work.
+In particular, the Clouds texture synthesizer was studied as a design reference for several aspects of this project.
+The CV input stage topology — specifically the use of a \qty{-10}{\volt} bias reference in an inverting summing amplifier to shift bipolar CV signals into a unipolar ADC input range — is directly inspired by the Clouds hardware design.
+The calibration scheme and the phase accumulator approach used in the oscillator and playback engine are likewise informed by the Clouds firmware implementation.
+The Mutable Instruments codebase is published under open-source licences and the hardware under a Creative Commons licence, making it a legitimate and well-documented reference for derivative design work.
+
+None of the above platforms are specifically designed for tape-style sample playback, which is the primary application explored in this thesis.
+Furthermore, all of the above are module products rather than custom hardware designs —
+this work contributes a documented, open hardware platform that can be adapted and extended.

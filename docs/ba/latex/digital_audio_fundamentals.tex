@@ -9,9 +9,42 @@ A continuous-time audio signal $x_c(t)$ is converted to a discrete-time sequence
 x[n] = x_c(nT)
 \]
 
-The \textit{Nyquist--Shannon sampling theorem} states that a bandlimited signal 
-with highest frequency component $f_{\max}$ can be perfectly reconstructed from 
-its samples provided the sample rate satisfies $f_s \geq 2 f_{\max}$ 
-\cite[p.~166]{oppenheimDiscretetimeSignalProcessing2014}\cite[p.~40]{zolzerDAFXDigitalAudio211}.
+The \textit{Nyquist--Shannon sampling theorem} states that a bandlimited signal with highest frequency component $f_{\max}$ can be perfectly reconstructed from its samples provided the sample rate satisfies $f_s \geq 2 f_{\max}$ \cite[p.~166]{oppenheimDiscretetimeSignalProcessing2014}\cite[p.~40]{zolzerDAFXDigitalAudio211}.
 
 This project uses a sample rate of \qty{48}{kHz}, yielding a Nyquist frequency of \qty{24}{kHz}, which covers the full range of human hearing.
+
+\subsubsection{Quantization}
+
+Sampling produces a discrete-time sequence, but each sample value must also be represented with finite precision.
+Quantization maps the continuous amplitude of each sample to the nearest value in a finite set of $2^B$ levels, where $B$ is the bit depth \cite[p.~218]{oppenheimDiscretetimeSignalProcessing2014}.
+The difference between the true sample value and its quantized representation is the \textit{quantization error} $e[n]$:
+
+\[
+e[n] = x_Q[n] - x[n]
+\]
+
+For a uniform $B$-bit quantizer with full-scale range $[-1, 1]$, the step size is $\Delta = 2^{1-B}$ and the error is bounded by $|e[n]| \leq \Delta/2$.
+Treated as additive white noise, the resulting signal-to-noise ratio is well approximated by \cite[p.~226]{oppenheimDiscretetimeSignalProcessing2014}:
+
+\[
+\mathrm{SNR} \approx 6 \cdot B - 1.25 \quad \text{[dB]}
+\]
+
+Each additional bit therefore contributes approximately \qty{6}{dB} of dynamic range. 
+This project uses 16-bit audio throughout, yielding a theoretical SNR of approximately 90 - \qty{96}{dB} — sufficient for the Eurorack context, where the analog signal path typically limits dynamic range well below this figure.
+
+\subsubsection{Block-Based Audio Processing}
+
+In a real-time audio system, the DSP does not process one sample at a time.
+Instead, the audio hardware collects samples into a \textit{buffer} of fixed size $N$
+and notifies the processor when a block is ready.
+The processor must compute $N$ output samples before the hardware finishes filling the
+next block; if it does not, the output buffer underruns and an audible glitch occurs.
+
+This block-based model is the standard operating mode of DMA-driven audio peripherals.
+The DMA engine fills a circular buffer of $2N$ samples continuously; at the halfway point and at the end of each full cycle it raises an interrupt (half-transfer and transfer-complete), giving the CPU a budget of exactly $N / f_s$ seconds to process one block \cite{arm_m7_trm}.
+
+The block size $N$ directly controls the trade-off between latency and CPU efficiency.
+A smaller block reduces the buffering delay contributed by the audio pipeline but increases the interrupt rate and the per-sample overhead of entering and leaving the processing callback.
+A larger block amortises this overhead but adds latency equal to $N / f_s$. 
+This project uses a block size of $N = 128$ samples, yielding a single-block buffering latency of \qty{1}{ms} at $f_s = \qty{48}{kHz}$.
