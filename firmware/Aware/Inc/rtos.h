@@ -1,3 +1,7 @@
+/**
+ * @file rtos.h
+ * @brief FreeRTOS task notification bit definitions and kernel init.
+ */
 #pragma once
 
 /* notification bits */

@@ -1,3 +1,7 @@
+/**
+ * @file exciter.h
+ * @brief IIR biquad-based audio exciter for lo-fi harmonic enhancement.
+ */
 #pragma once
 
 #include "project_config.h"

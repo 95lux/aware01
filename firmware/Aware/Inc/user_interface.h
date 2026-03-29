@@ -1,3 +1,7 @@
+/**
+ * @file user_interface.h
+ * @brief Potentiometer, gate, button, and LED processing.
+ */
 #include "FreeRTOS.h"
 #include "adc.h"
 #include "settings.h"

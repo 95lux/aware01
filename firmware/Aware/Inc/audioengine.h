@@ -1,3 +1,7 @@
+/**
+ * @file audioengine.h
+ * @brief I2S DMA audio engine: init, start, and buffer I/O.
+ */
 #pragma once
 
 #include "FreeRTOS.h"

@@ -1,3 +1,7 @@
+/**
+ * @file audioengine.c
+ * @brief I2S DMA callbacks, audio buffer management, and test signal generation.
+ */
 #include "audioengine.h"
 #include "dma.h"
 #include <stdint.h>
@@ -42,7 +46,7 @@ void audio_write_to_dma_buf(int16_t l, int16_t r, uint32_t sample_idx) {
 }
 
 void audio_get_dma_in_buf(int16_t* buf, uint32_t buf_size) {
-    for (uint8_t n = 0; n < (buf_size) -1; n += 2) {
+    for (uint8_t n = 0; n < (buf_size) -1; n += 2) { // -1: ensures n+1 stays in bounds for stereo pairs
         buf[n] = active_cfg->rx_buf_ptr[n];
         buf[n + 1] = active_cfg->rx_buf_ptr[n + 1];
     }

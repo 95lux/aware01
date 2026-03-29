@@ -1,3 +1,7 @@
+/**
+ * @file ressources.c
+ * @brief LUT data: fade-in curve, IIR coefficients, and Butterworth lowpass coefficients.
+ */
 #include "ressources.h"
 
 int16_t fade_in_lut[FADE_LUT_LEN] = {

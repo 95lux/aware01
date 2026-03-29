@@ -1,3 +1,7 @@
+/**
+ * @file exciter.c
+ * @brief IIR biquad cascade init and block-wise exciter processing.
+ */
 #include "arm_math.h"
 #include <stdint.h>
 #include <string.h>

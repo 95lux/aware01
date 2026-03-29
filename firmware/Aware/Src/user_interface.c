@@ -1,3 +1,7 @@
+/**
+ * @file user_interface.c
+ * @brief Potentiometer calibration, button processing, LED PWM, and mode toggling.
+ */
 #include "user_interface.h"
 
 #include "drivers/ws2812_driver.h"

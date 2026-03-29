@@ -1,3 +1,7 @@
+/**
+ * @file settings.h
+ * @brief Persistent calibration data structures and FLASH read/write API.
+ */
 #pragma once
 
 #include "project_config.h"

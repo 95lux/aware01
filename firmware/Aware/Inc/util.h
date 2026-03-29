@@ -1,3 +1,7 @@
+/**
+ * @file util.h
+ * @brief CPU load statistics and utility functions.
+ */
 #pragma once
 
 #include <stdint.h>

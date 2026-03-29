@@ -1,3 +1,7 @@
+/**
+ * @file tlv320_driver.c
+ * @brief TLV320 codec I2C register initialization, beep test, and status check.
+ */
 
 #include "i2c.h"
 #include "stdio.h"

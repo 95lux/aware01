@@ -1,3 +1,7 @@
+/**
+ * @file gpio_driver.h
+ * @brief GPIO EXTI handling, button debounce, and gate input.
+ */
 #pragma once
 #include "FreeRTOS.h"
 #include "gpio.h"

@@ -1,3 +1,7 @@
+/**
+ * @file ws2812_animations.c
+ * @brief LED animation stage data (colors, durations) for UI feedback patterns.
+ */
 #include "drivers/ws2812_driver.h"
 
 struct ws2812_color white = {255, 255, 255};

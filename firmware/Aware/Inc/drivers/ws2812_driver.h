@@ -1,3 +1,7 @@
+/**
+ * @file ws2812_driver.h
+ * @brief WS2812B RGB LED driver with animation state machine.
+ */
 #pragma once
 
 #include "FreeRTOS.h"

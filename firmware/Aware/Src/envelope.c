@@ -1,3 +1,7 @@
+/**
+ * @file envelope.c
+ * @brief ADSR envelope generator with exponential time mapping.
+ */
 #include "envelope.h"
 
 #include "project_config.h"
@@ -15,6 +19,8 @@ float envelope_process(envelope_t* env) {
 
     case ENV_ATTACK: {
         float remaining = 1.0f - env->value;
+        // Exponential approach: value += rate * (1 - value). Asymptotically converges to 1.0,
+        // giving a natural-sounding convex attack curve (fast initial rise, slow final approach).
         env->value += env->attack_inc * remaining;
 
         if (env->value >= 0.999f) {
@@ -31,6 +37,7 @@ float envelope_process(envelope_t* env) {
         }
         break;
 
+        // Sustain is currently disabled and treated as a fixed level
         // case ENV_SUSTAIN:
         //     // hold value
         //     break;
@@ -65,6 +72,8 @@ float envelope_set_attack_norm(envelope_t* env, float u) {
     if (u > 1.0f)
         u = 1.0f;
 
+    // Exponential mapping: min * (max/min)^u. Maps u=0..1 linearly in log space,
+    // so equal knob increments produce equal perceived time changes.
     float attack_time = ATTACK_MIN_SEC * powf(ATTACK_MAX_SEC / ATTACK_MIN_SEC, u);
     env->attack_inc = 1.0f / (attack_time * AUDIO_SAMPLE_RATE);
     return attack_time;

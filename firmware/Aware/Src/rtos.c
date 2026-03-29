@@ -1,3 +1,7 @@
+/**
+ * @file rtos.c
+ * @brief FreeRTOS task creation, audio/control/UI task implementations, and boot calibration.
+ */
 #include "rtos.h"
 
 #include "FreeRTOS.h"

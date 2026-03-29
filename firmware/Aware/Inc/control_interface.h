@@ -1,3 +1,7 @@
+/**
+ * @file control_interface.h
+ * @brief CV input processing and V/Oct calibration.
+ */
 #pragma once
 
 #include "FreeRTOS.h"

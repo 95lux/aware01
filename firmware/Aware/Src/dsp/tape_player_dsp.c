@@ -1,13 +1,6 @@
 /**
  * @file tape_player_dsp.c
- * @brief Per-sample DSP core for the tape player — interpolation, playhead
- *        advancement, fades, crossfades, and the main audio processing loop.
- *
- * All functions here are called from the audio task on every DMA half-transfer
- * and must complete within one audio block. The tape player state is owned by
- * tape_player.c; this file accesses it via the shared @c tape_player instance.
- *
- * @see tape_player.c  for FSM, init, and public control API.
+ * @brief Per-sample DSP core — interpolation, playhead advance, fades, crossfades.
  */
 #include "tape_player.h"
 
@@ -24,25 +17,13 @@
 #define Q32_UNITY (4294967296.0f)
 #define Q16_UNITY (65536.0f)
 
-/** Shared tape player state, defined and owned by tape_player.c. */
+// Shared tape player state, defined and owned by tape_player.c.
 extern struct tape_player tape_player;
 
-/**
- * @brief Catmull-Rom (Hermite) interpolation from a Q48.16 phase position.
- *
- * Reads four consecutive samples around @p pos and evaluates a cubic Hermite
- * polynomial, giving band-limited sample-rate conversion. The @p reverse flag
- * mirrors the neighbourhood so that the same LUT works during reverse playback.
- *
- * @see https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html
- * @see https://ldesoras.fr/doc/articles/resampler-en.pdf
- *
- * @param pos     Q48.16 playhead position (upper 48 bits = integer index,
- *                lower 16 bits = fractional part).
- * @param buffer  Source sample buffer (must have ≥ 3 guard samples on both sides).
- * @param reverse If true, reads neighbours in the reverse direction.
- * @return        Interpolated floating-point sample value.
- */
+// Catmull-Rom (Hermite) cubic interpolation from a Q48.16 phase position.
+// Reads four consecutive samples around pos and evaluates a cubic Hermite polynomial,
+// giving band-limited sample-rate conversion.
+// ref: https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html
 static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reverse) {
     uint32_t idx = (uint32_t) (pos >> 16);
     uint32_t frac = (uint32_t) (pos & 0xFFFF);
@@ -71,8 +52,14 @@ static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reve
     float m0 = 0.5f * (x1 - xm1); // derivative at x0
     float m1 = 0.5f * (x2 - x0);  // derivative at x1
 
-    // calculate coefficients
-    // Cubic Hermite interpolation (Catmull–Rom spline)
+    // Rearranged cubic Hermite polynomial in Horner form: ((a*t - b)*t + c)*t + d
+    // which evaluates a*t^3 - b*t^2 + c*t + d
+    // Standard coefficients:
+    //   d =  x0
+    //   c =  m0
+    //   a =  2*x0 - 2*x1 + m0 + m1   (t^3 term)
+    //   -b = -3*x0 + 3*x1 - 2*m0 - m1  (t^2 term, sign absorbed into the a*t-b form)
+    // Factored to minimise multiplications via intermediate variables v, w:
     float c = m0;
     float v = x0 - x1;
     float w = c + v;
@@ -80,25 +67,12 @@ static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reve
     float b = w + a;
     float d = x0;
 
-    // cubic polynomial in horner form.
-    // actually a*t^3 + b*t^2 + c*t + d
     return (((a * t - b) * t + c) * t + d);
 }
 
-/**
- * @brief Fetch one stereo sample from a tape buffer at a given Q48.16 position.
- *
- * Selects between Hermite interpolation and zero-order hold based on
- * @c CONFIG_TAPE_PLAYER_ENABLE_HERMITE. When Hermite is enabled the two outputs
- * are blended with the hold sample according to the current grit value, giving
- * a lo-fi texture at high decimation factors.
- *
- * @param pos_q48_16  Playhead position in Q48.16 fixed-point format.
- * @param buf_l       Left channel sample buffer.
- * @param buf_r       Right channel sample buffer.
- * @param[out] out_l  Left channel output sample (saturated to 16 bits).
- * @param[out] out_r  Right channel output sample (saturated to 16 bits).
- */
+// Fetch one stereo sample at pos_q48_16 using Hermite interpolation,
+// blended with a zero-order hold sample according to the current grit value.
+// High grit (heavy decimation) -> more hold -> lo-fi texture.
 static inline void tape_fetch_sample(uint64_t pos_q48_16, int16_t* buf_l, int16_t* buf_r, int16_t* out_l, int16_t* out_r) {
     uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
 
@@ -129,27 +103,10 @@ static inline void tape_fetch_sample(uint64_t pos_q48_16, int16_t* buf_l, int16_
     *out_r = __SSAT((int32_t) out_r_f, 16);
 }
 
-/**
- * @brief Advance the Q48.16 playhead with bounds checking, wrap, and clamp logic.
- *
- * The increment is a Q16.16 value (not Q48.16) for performance: 64-bit addition
- * is fast on Cortex-M7, whereas 128-bit arithmetic would be required for a full
- * Q48.16 increment.
- *
- * **Forward mode**: playhead is incremented each call. On overflow:
- * - Cyclic: wraps back to the beginning using a subtraction loop (avoids 64-bit
- *   division), and forces index ≥ 1 to satisfy Hermite's n−1 requirement.
- * - One-shot: clamps to the last safe sample and calls @c tape_player_stop_play().
- *
- * **Reverse mode**: playhead is decremented each call. On underflow:
- * - Cyclic: wraps to the end of the valid buffer.
- * - One-shot: clamps to 0 and calls @c tape_player_stop_play().
- *
- * @param pos_q48        Pointer to the Q48.16 playhead position (modified in place).
- * @param phase_inc_q16  Q16.16 phase increment per sample (pitch × 65536 / decimation).
- * @param reverse        If true, decrement the playhead (reverse playback).
- * @param cyclic         If true, wrap around at buffer boundaries instead of stopping.
- */
+// Advance the Q48.16 playhead by one phase_inc_q16 step.
+// Forward: wraps (cyclic) or clamps + stops (one-shot) at the buffer end.
+// Reverse: wraps or clamps + stops at the buffer start (index 1, Hermite lower bound).
+// Uses a subtraction loop instead of 64-bit modulo for cyclic wrap — avoids slow division on M7.
 static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q16, bool reverse, bool cyclic) {
     uint32_t valid_samples = tape_player.playback_buf->valid_samples;
     uint64_t wrap_point = (uint64_t) valid_samples << 16;
@@ -185,23 +142,11 @@ static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q1
     }
 }
 
-/**
- * @brief Check whether the playhead will reach the buffer boundary within the
- *        upcoming fade window.
- *
- * Uses a cross-multiplication trick to avoid division:
- * @code
- *   physical_distance_q16 <= fade_len_samples * active_phase_inc_q16
- * @endcode
- * Accounts for both forward and reverse playback directions, and keeps a 4-sample
- * Hermite guard margin at each end of the buffer.
- *
- * @param pos_q48_16           Current Q48.16 playhead position.
- * @param fade_len_samples     Length of the fade window in output samples.
- * @param active_phase_inc_q16 Current Q16.16 phase increment (pitch + decimation).
- * @return                     @c true if the playhead will reach the boundary within
- *                             the fade window, @c false otherwise.
- */
+// Returns true if the playhead will reach the buffer boundary within the next
+// fade_len_samples output samples at the current phase increment.
+// Uses cross-multiplication to avoid division:
+//   (samples_left << 16) <= (fade_len_samples * active_phase_inc_q16)
+// Keeps a 4-sample Hermite guard margin at each end.
 static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samples, uint32_t active_phase_inc_q16) {
     uint32_t buf_size = tape_player.playback_buf->valid_samples;
 
@@ -240,16 +185,8 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
     }
 }
 
-/**
- * @brief Apply the fade-in envelope to one output sample pair.
- *
- * Reads the fade LUT via a Q16.16 accumulator so the fade speed is independent
- * of the current pitch factor. No-ops if the fade is inactive or if a retrigger
- * crossfade is already active (which handles the fade-in itself).
- *
- * @param[in,out] out_l  Left channel sample, attenuated in place.
- * @param[in,out] out_r  Right channel sample, attenuated in place.
- */
+// Apply fade-in to one output sample pair via a fixed-step Q16.16 accumulator into fade_in_lut.
+// Skipped if a retrigger crossfade is active — that crossfade already handles the fade-in.
 static inline void tape_handle_fade_in(int16_t* out_l, int16_t* out_r) {
     // --- Q16 FIXED POINT FADE IN ---
     // dont fade when retrigger crossfade is active, since that means we are already fading in.
@@ -262,6 +199,8 @@ static inline void tape_handle_fade_in(int16_t* out_l, int16_t* out_r) {
         tape_player.fade_in.active = false;
     } else {
         int16_t f = fade_in_lut[lut_idx];
+        // LUT values are Q0.15 (0..32767). Multiply: int16 * Q0.15 -> Q1.15 (32-bit product).
+        // >>15 brings result back to Q0.15 range, then SSAT clamps to 16-bit signed.
         *out_l = __SSAT(((int32_t) (*out_l) * f) >> 15, 16);
         *out_r = __SSAT(((int32_t) (*out_r) * f) >> 15, 16);
 
@@ -270,18 +209,8 @@ static inline void tape_handle_fade_in(int16_t* out_l, int16_t* out_r) {
     }
 }
 
-/**
- * @brief Apply the fade-out envelope to one output sample pair.
- *
- * Reads the fade LUT in reverse via a Q16.16 accumulator. Skips in cyclic mode
- * because loop crossfading handles boundary transitions there. When the LUT is
- * exhausted the output is forced to zero and @c tape_player_stop_play() is called.
- *
- * @param active_phase_inc  Current Q16.16 phase increment (unused here, kept for
- *                          API symmetry with other fade helpers).
- * @param[in,out] out_l     Left channel sample, attenuated in place.
- * @param[in,out] out_r     Right channel sample, attenuated in place.
- */
+// Apply fade-out to one output sample pair. Skipped in cyclic mode — the loop
+// crossfade handles boundary transitions there. Stops playback when LUT is exhausted.
 static inline void tape_handle_fade_out(uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
     if (!tape_player.fade_out.active || tape_player.params.cyclic_mode)
         return;
@@ -304,18 +233,9 @@ static inline void tape_handle_fade_out(uint32_t active_phase_inc, int16_t* out_
     }
 }
 
-/**
- * @brief Process one sample of a crossfade where buffer A is the incoming (new) audio.
- *
- * Used for the retrigger crossfade: the current playback buffer (A) fades in while
- * the old audio stored in @c xfade->buf_b fades out. No position promotion is needed
- * on completion because the main playhead already points to the new buffer.
- *
- * @param xfade            Crossfade state (buf_b holds the OLD audio fading out).
- * @param active_phase_inc Current Q16.16 phase increment used to advance buf_b's position.
- * @param[in,out] new_l    Left channel from the new buffer; blended in place with old audio.
- * @param[in,out] new_r    Right channel from the new buffer; blended in place with old audio.
- */
+// Retrigger crossfade: buffer A (main playhead) is the new audio fading IN,
+// buffer B (xfade->buf_b) is the old audio fading OUT. No position promotion
+// needed on completion — main playhead already points to the new content.
 static inline void tape_handle_crossfade_a_is_new(crossfade_t* xfade, uint32_t active_phase_inc, int16_t* new_l, int16_t* new_r) {
     if (!xfade->active)
         return;
@@ -342,20 +262,9 @@ static inline void tape_handle_crossfade_a_is_new(crossfade_t* xfade, uint32_t a
     }
 }
 
-/**
- * @brief Process one sample of a crossfade where buffer B is the incoming (new) audio.
- *
- * Used for the cyclic loop crossfade: audio from @c xfade->buf_b (the loop start) fades
- * in while the current playback position (A) fades out. On completion the caller
- * must promote @c xfade->pos_q48_16 to the main playhead so playback continues
- * seamlessly from the new position.
- *
- * @param xfade            Crossfade state (buf_b holds the NEW audio fading in).
- * @param active_phase_inc Current Q16.16 phase increment used to advance buf_b's position.
- * @param[in,out] a_l      Left channel from the old playback position; blended in place.
- * @param[in,out] a_r      Right channel from the old playback position; blended in place.
- * @return                 @c true when the crossfade is complete (caller must promote position).
- */
+// Cyclic loop crossfade: buffer B (xfade->buf_b, loop start) is the new audio fading IN,
+// buffer A (main playhead) is fading OUT. Returns true when complete — caller must then
+// promote xfade->pos_q48_16 to the main playhead so playback continues seamlessly.
 static inline bool tape_handle_crossfade_b_is_new(crossfade_t* xfade, uint32_t active_phase_inc, int16_t* a_l, int16_t* a_r) {
     if (!xfade->active)
         return false;
@@ -387,15 +296,8 @@ static inline bool tape_handle_crossfade_b_is_new(crossfade_t* xfade, uint32_t a
     return false;
 }
 
-/**
- * @brief Compute the Q16.16 phase increment for the current block.
- *
- * Converts the floating-point pitch factor to a Q16.16 integer and divides by
- * the active decimation factor, so that pitch-shifted playback stays at the
- * correct speed relative to the decimated sample rate.
- *
- * @return Q16.16 phase increment to pass to @c advance_playhead_q48().
- */
+// Convert pitch_factor to a Q16.16 phase increment, divided by the decimation factor
+// so that playback speed is correct relative to the decimated sample rate.
 static inline uint32_t tape_compute_phase_increment() {
 #ifdef CONFIG_TAPE_PITCH_OVERRIDE
     float target_inc = CONFIG_TAPE_PITCH_OVERRIDE * 65536.0f;
@@ -419,21 +321,9 @@ static inline uint32_t tape_compute_phase_increment() {
     return (tape_player.curr_phase_inc_q16_16 / dec);
 }
 
-/**
- * @brief Process one stereo output frame of tape playback.
- *
- * Called once per sample inside the main DMA loop. Handles, in order:
- * -# Sample fetch with Hermite/hold interpolation
- * -# Fade-in at playback start
- * -# Fade-out trigger and processing near the buffer end (one-shot mode)
- * -# Cyclic crossfade trigger and processing at the loop boundary
- * -# Retrigger crossfade processing
- * -# Main playhead advance
- *
- * @param active_phase_inc  Q16.16 phase increment for this block.
- * @param[out] out_l        Left channel output sample.
- * @param[out] out_r        Right channel output sample.
- */
+// Process one stereo output frame: fetch sample, apply fade-in, trigger/process
+// fade-out (one-shot), trigger/process cyclic loop crossfade, process retrigger
+// crossfade, advance main playhead.
 static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_t* out_l, int16_t* out_r) {
     switch (tape_player.play_state) {
     case PLAY_STOPPED:
@@ -497,16 +387,8 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
     }
 }
 
-/**
- * @brief Record one stereo frame from the DMA input buffer into the record tape buffer.
- *
- * Applies decimation by only writing every Nth stereo frame, where N is the
- * configured decimation factor. Stops recording automatically when the tape buffer
- * is full.
- *
- * @param in_buf  Pointer to the interleaved stereo DMA input buffer.
- * @param n       Current frame byte-offset within @p in_buf (step of 2 for stereo).
- */
+// Write one stereo frame to the record buffer, applying decimation (record every Nth frame).
+// Stops recording automatically when the buffer is full.
 static inline void tape_process_recording_frame(int16_t* in_buf, uint32_t n) {
     if (tape_player.rec_state != REC_RECORDING)
         return;
@@ -527,16 +409,7 @@ static inline void tape_process_recording_frame(int16_t* in_buf, uint32_t n) {
     }
 }
 
-/**
- * @brief Main per-block audio processing entry point.
- *
- * Called from the audio engine ISR/task for every DMA half-transfer. Iterates
- * over all stereo frames in the block, dispatching to @c tape_process_playback_frame()
- * and @c tape_process_recording_frame(), then applies the amplitude envelope.
- *
- * @param in_buf   Interleaved stereo input buffer (from ADC/codec DMA).
- * @param out_buf  Interleaved stereo output buffer (to DAC/codec DMA).
- */
+// Main per-block entry point. Called from the audio engine on every DMA half-transfer.
 void tape_player_process(int16_t* in_buf, int16_t* out_buf) {
     if (!tape_player.playback_buf->ch[0] || !tape_player.playback_buf->ch[1])
         return;

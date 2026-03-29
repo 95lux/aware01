@@ -1,3 +1,7 @@
+/**
+ * @file param_cache.c
+ * @brief Parameter cache setters/getters for multi-source parameter sharing.
+ */
 #include "param_cache.h"
 
 #include "FreeRTOS.h"

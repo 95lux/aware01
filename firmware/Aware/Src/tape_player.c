@@ -1,13 +1,6 @@
 /**
  * @file tape_player.c
  * @brief Tape player — buffer management, FSMs, init, and public control API.
- *
- * Owns the tape buffer memory, the @c tape_player state struct, and the two
- * finite state machines (play FSM, record FSM) that govern state transitions.
- * Per-sample DSP (interpolation, fades, crossfades) lives in tape_player_dsp.c,
- * which accesses @c tape_player via an @c extern declaration.
- *
- * @see tape_player_dsp.c  for the audio-rate processing core.
  */
 #include "tape_player.h"
 
@@ -42,20 +35,9 @@ int16_t xfade_retrig_temp_buf_r[FADE_XFADE_RETRIG_LEN + 3]; // +3 for hermite in
 int16_t xfade_cyclic_temp_buf_l[FADE_XFADE_CYCLIC_LEN + 3];
 int16_t xfade_cyclic_temp_buf_r[FADE_XFADE_CYCLIC_LEN + 3]; // +3 for hermite interpolation safety
 
-/** Shared tape player state — also accessed by tape_player_dsp.c via extern. */
+// Shared tape player state — also accessed by tape_player_dsp.c via extern.
 struct tape_player tape_player;
 
-/**
- * @brief Initialize the tape player engine.
- *
- * Clears both tape buffers, assigns channel pointers, resets the playhead,
- * initialises all crossfade and fade structures, and sets default parameters.
- * Must be called once before any other tape_player function.
- *
- * @param dma_buf_size  Number of samples in the DMA transfer buffer.
- * @param cmd_queue     FreeRTOS queue handle used to receive tape commands.
- * @return              0 on success, -1 if @p dma_buf_size is invalid.
- */
 int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     if (dma_buf_size <= 0)
         return -1;
@@ -136,13 +118,8 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     return 0;
 }
 
-/**
- * @brief Recompute the grit factor from the current playback buffer decimation.
- *
- * Maps decimation (1–16) to a 0–1 grit value on a logarithmic curve so that
- * the lo-fi hold-sample blend is perceptually uniform. The result is stored in
- * @c tape_player.params.grit for use by the DSP exciter.
- */
+// Maps decimation factor (1–16) to a 0–1 grit value on a logarithmic curve,
+// so the lo-fi hold-sample blend feels perceptually uniform across the knob range.
 static void compute_grit() {
     uint8_t dec = tape_player.playback_buf->decimation;
     if (dec < 1)
@@ -155,16 +132,12 @@ static void compute_grit() {
     // power curve - mixes linear and quardratic
     // tape_player.params.grit = g * 0.6f + g * g * 0.4f;
     // logarithmic curve: fast start, slow rise at the end
+    // log10(1 + 9*g): +1 prevents log(0); *9 scales so log10(10)=1 at g=1; dividing by log10(10) converts natural log to base-10
     tape_player.params.grit = logf(1.0f + 9.0f * g) / logf(10.0f); // maps 0..1 -> 0..1
 }
 
-/**
- * @brief Swap the record and playback buffer pointers.
- *
- * Makes the just-recorded buffer the active playback source and recycles the
- * old playback buffer for the next recording pass. Also resets the record head
- * and recomputes the grit factor for the new buffer's decimation setting.
- */
+// Swap record/playback buffer pointers. The just-recorded buffer becomes the
+// active playback source; the old playback buffer is recycled for the next pass.
 static void swap_tape_buffers() {
     // switch recorded buffer to playback buffer
     tape_buffer_t* temp = tape_player.playback_buf;
@@ -179,15 +152,8 @@ static void swap_tape_buffers() {
     compute_grit();
 }
 
-/**
- * @brief Reset all slice markers in a tape buffer.
- *
- * Sets every entry in @c buf->slice_positions to 0 and resets @c buf->num_slices.
- * Called before each new recording pass so stale markers from a previous take
- * cannot be played back.
- *
- * @param buf  Tape buffer whose slice table should be cleared.
- */
+// Clear all slice markers in buf. Called before each new recording pass so stale
+// markers from a previous take cannot be played back.
 static void tape_clear_slices(tape_buffer_t* buf) {
     // clear slice positions and reset slice index
     for (int i = 0; i < MAX_NUM_SLICES; i++) {
@@ -196,18 +162,9 @@ static void tape_clear_slices(tape_buffer_t* buf) {
     buf->num_slices = 0;
 }
 
-/**
- * @brief Resolve the normalized slice parameter to a Q48.16 buffer position.
- *
- * Selects a slice index proportional to @c tape_player.params.slice_pos (0–1)
- * and converts the stored sample offset to a Q48.16 value. Enforces the minimum
- * index of 1 required by the Hermite interpolator and ensures at least 4 samples
- * remain after the slice start.
- *
- * @param[out] out_pos  Q48.16 playhead position corresponding to the chosen slice.
- * @return              0 on success, -1 if the slice is out of range or too close
- *                      to the end of the buffer.
- */
+// Resolve the normalized slice_pos parameter (0–1) to a Q48.16 playhead position.
+// Minimum index 1 is enforced because Hermite reads sample[idx-1..idx+2].
+// Returns -1 if fewer than 4 samples remain after the chosen slice (interpolation guard).
 static int tape_buf_get_slice_start_pos_q48_16(uint64_t* out_pos) {
     uint32_t slice_idx = (uint32_t) (tape_player.params.slice_pos * (tape_player.playback_buf->num_slices - 1));
     uint32_t slice_pos = tape_player.playback_buf->slice_positions[slice_idx];
@@ -225,7 +182,7 @@ static int tape_buf_get_slice_start_pos_q48_16(uint64_t* out_pos) {
         return -1;
     }
 
-    *out_pos = (uint64_t) slice_pos << 16;
+    *out_pos = (uint64_t) slice_pos << 16; // convert integer sample index to Q48.16 (fractional part = 0)
     return 0;
 }
 
@@ -233,21 +190,13 @@ static int tape_buf_get_slice_start_pos_q48_16(uint64_t* out_pos) {
 static void play_fsm_event(tape_event_t evt);
 static void rec_fsm_event(tape_event_t evt);
 
-/**
- * @brief Dispatch an event to the playback finite state machine.
- *
- * States: @c PLAY_STOPPED → @c PLAY_PLAYING → @c PLAY_STOPPED
- *
- * - **STOPPED + PLAY**: swaps buffers if pending, initialises the playhead at
- *   the selected slice (or end of buffer in reverse), arms the fade-in and
- *   envelope, and transitions to @c PLAY_PLAYING.
- * - **PLAYING + PLAY** (retrigger): captures the current playback region into
- *   the crossfade temp buffer, optionally swaps buffers, repositions the main
- *   playhead, and starts a retrigger crossfade so the transition is click-free.
- * - **PLAYING + STOP**: immediately transitions to @c PLAY_STOPPED.
- *
- * @param evt  Event to process (@c TAPE_EVT_PLAY or @c TAPE_EVT_STOP).
- */
+// Playback FSM. States: PLAY_STOPPED <-> PLAY_PLAYING
+//
+// STOPPED + PLAY:  swap buffers if pending, position playhead at selected slice
+//                  (or buffer end for reverse), arm fade-in and envelope, go PLAYING.
+// PLAYING + PLAY:  retrigger — capture current region into crossfade temp buffer,
+//                  optionally swap buffers, reposition playhead, start retrigger xfade.
+// PLAYING + STOP:  immediately go STOPPED.
 static void play_fsm_event(tape_event_t evt) {
     switch (tape_player.play_state) {
     case PLAY_STOPPED:
@@ -360,30 +309,16 @@ static void play_fsm_event(tape_event_t evt) {
     }
 }
 
-/**
- * @brief Finalise the record buffer after recording stops.
- *
- * Saves the current record head position as @c valid_samples, resets the record
- * head, and sets the @c swap_bufs_pending flag so the next play event will
- * promote the new recording to the playback buffer.
- *
- * Called before the buffer swap — must happen while recording has already stopped.
- */
+// Save valid_samples and set swap_bufs_pending. Called while recording has already stopped,
+// before the buffer swap.
 static inline void finalize_rec_buf() {
     tape_player.record_buf->valid_samples = tape_player.tape_recordhead;
     tape_player.tape_recordhead = 0;
     tape_player.swap_bufs_pending = true;
 }
 
-/**
- * @brief Prepare the record buffer for the next recording pass.
- *
- * Sets the decimation factor (from params or fixed compile-time value), clears
- * all slice markers, and seeds the first slice at index 1 (Hermite lower bound).
- *
- * Called after the buffer swap — must happen while the record buffer is idle and
- * not yet written to.
- */
+// Set decimation, clear slices, and seed slice[0]=1 (Hermite lower bound).
+// Called after the buffer swap, while the record buffer is idle.
 static inline void prepare_next_rec_buf() {
     // apply decimation to recording buffer. This will be reach over to playback buffer by buffer swapping
     // prepare next rec buffer
@@ -398,22 +333,14 @@ static inline void prepare_next_rec_buf() {
     tape_player.record_buf->num_slices = 1;
 }
 
-/**
- * @brief Dispatch an event to the recording finite state machine.
- *
- * States: @c REC_IDLE → @c REC_RECORDING → @c REC_DONE → @c REC_IDLE
- *                                        ↘ @c REC_REREC → @c REC_RECORDING
- *
- * - **IDLE + RECORD**: prepares the record buffer and starts recording.
- * - **RECORDING + RECORD** (re-record): finalises the current buffer and enters
- *   @c REC_REREC, waiting for the buffer swap before starting the next pass.
- * - **RECORDING + RECORD_DONE / STOP**: finalises the buffer and moves to
- *   @c REC_DONE, waiting for the swap signal.
- * - **DONE + SWAP_DONE**: swap complete, returns to @c REC_IDLE.
- * - **REREC + SWAP_DONE**: swap complete, prepares the buffer and resumes recording.
- *
- * @param evt  Event to process (see @c tape_event_t).
- */
+// Recording FSM. States: REC_IDLE -> REC_RECORDING -> REC_DONE -> REC_IDLE
+//                                               \-> REC_REREC -> REC_RECORDING
+//
+// IDLE + RECORD:           prepare buffer, start recording.
+// RECORDING + RECORD:      re-record — finalise current buffer, wait for swap (REC_REREC).
+// RECORDING + RECORD_DONE: finalise buffer, wait for swap (REC_DONE).
+// DONE + SWAP_DONE:        swap complete, back to IDLE.
+// REREC + SWAP_DONE:       swap complete, prepare buffer, resume recording.
 static void rec_fsm_event(tape_event_t evt) {
     switch (tape_player.rec_state) {
     case REC_IDLE:
@@ -456,45 +383,26 @@ static void rec_fsm_event(tape_event_t evt) {
 
 /* ----- PUBLIC API ----- */
 
-/** @brief Start or retrigger tape playback. Thread-safe via FSM event dispatch. */
 void tape_player_play(void) {
     play_fsm_event(TAPE_EVT_PLAY);
 }
 
-/** @brief Stop tape playback immediately. */
 void tape_player_stop_play(void) {
     play_fsm_event(TAPE_EVT_STOP);
 }
 
-/** @brief Start recording, or re-record over the current tape if already recording. */
 void tape_player_record(void) {
     rec_fsm_event(TAPE_EVT_RECORD);
 }
 
-/** @brief Stop recording and finalise the tape buffer. */
 void tape_player_stop_record(void) {
     rec_fsm_event(TAPE_EVT_RECORD_DONE);
 }
 
-/**
- * @brief Set the playback pitch factor directly.
- *
- * A value of 1.0 plays at the recorded speed; 0.5 plays at half speed (one octave
- * down); 2.0 plays at double speed (one octave up).
- *
- * @param pitch_factor  Linear speed ratio relative to the recorded sample rate.
- */
 void tape_player_set_pitch(float pitch_factor) {
     tape_player.params.pitch_factor = pitch_factor;
 }
 
-/**
- * @brief Mark the current record head position as a new slice boundary.
- *
- * Has no effect outside the @c REC_RECORDING state or when @c MAX_NUM_SLICES
- * has already been reached. Slices are used to jump playback to sub-regions of
- * the tape via @c tape_player.params.slice_pos.
- */
 void tape_player_set_slice() {
     if (tape_player.rec_state == REC_RECORDING) {
         uint32_t current_rec_pos = tape_player.tape_recordhead;
@@ -506,14 +414,7 @@ void tape_player_set_slice() {
     }
 }
 
-/**
- * @brief Update all tape player parameters from the current UI/CV cache.
- *
- * Called once per audio block before @c tape_player_process(). Combines the UI
- * pitch knob and V/Oct CV input multiplicatively to produce the final pitch factor.
- *
- * @param param_cache  Snapshot of all current parameter values.
- */
+// pitch_ui * pitch_cv: UI knob and V/Oct CV combine multiplicatively.
 void tape_player_set_params(struct param_cache param_cache) {
     tape_player.params.pitch_factor = param_cache.pitch_ui * param_cache.pitch_cv;
     tape_player.params.env_attack = param_cache.env_attack;
@@ -524,22 +425,12 @@ void tape_player_set_params(struct param_cache param_cache) {
     tape_player.params.slice_pos = param_cache.slice_pos;
 }
 
-/** @brief Return the current pitch factor (combined UI knob × V/Oct CV). */
 float tape_player_get_pitch() {
     return tape_player.params.pitch_factor;
 }
 
-/**
- * @brief Return the grit factor for the current playback buffer (0–1).
- *
- * Grit is derived from the buffer's decimation factor via a logarithmic curve
- * (see @c compute_grit()). A value of 0 means full Hermite interpolation
- * (smooth, high-fidelity); a value of 1 blends in zero-order hold maximally,
- * producing a lo-fi, grainy texture that is characteristic of heavily decimated
- * tape.
- *
- * @return  Grit blend factor in the range [0, 1].
- */
+// 0 = full Hermite interpolation (smooth); 1 = maximum zero-order hold blend (lo-fi, grainy).
+// Derived from the buffer's decimation factor via compute_grit().
 float tape_player_get_grit() {
     return tape_player.params.grit;
 }

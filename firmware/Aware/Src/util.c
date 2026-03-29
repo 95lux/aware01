@@ -1,3 +1,7 @@
+/**
+ * @file util.c
+ * @brief CPU load statistics from FreeRTOS task runtime counters.
+ */
 #include "util.h"
 
 #include "FreeRTOS.h"

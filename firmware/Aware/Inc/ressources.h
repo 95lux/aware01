@@ -1,3 +1,7 @@
+/**
+ * @file ressources.h
+ * @brief Pre-computed LUTs and IIR filter coefficients.
+ */
 #include "arm_math.h"
 
 #include "project_config.h"
