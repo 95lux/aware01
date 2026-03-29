@@ -81,11 +81,12 @@ void Error_Handler(void);
 #define FAD_LED2_OUT_GPIO_Port GPIOB
 #define FAD_LED1_OUT_Pin GPIO_PIN_15
 #define FAD_LED1_OUT_GPIO_Port GPIOB
+#define GATE3_IN_Pin GPIO_PIN_6
+#define GATE3_IN_GPIO_Port GPIOC
+#define GATE3_IN_EXTI_IRQn EXTI9_5_IRQn
 #define GATE4_IN_Pin GPIO_PIN_7
 #define GATE4_IN_GPIO_Port GPIOC
 #define GATE4_IN_EXTI_IRQn EXTI9_5_IRQn
-#define GATE3_IN_Pin GPIO_PIN_9
-#define GATE3_IN_GPIO_Port GPIOC
 #define GATE2_IN_Pin GPIO_PIN_8
 #define GATE2_IN_GPIO_Port GPIOA
 #define GATE2_IN_EXTI_IRQn EXTI9_5_IRQn
