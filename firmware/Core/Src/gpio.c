@@ -60,17 +60,11 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(FAD_LED4_OUT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : GATE4_IN_Pin */
-  GPIO_InitStruct.Pin = GATE4_IN_Pin;
+  /*Configure GPIO pins : GATE3_IN_Pin GATE4_IN_Pin */
+  GPIO_InitStruct.Pin = GATE3_IN_Pin|GATE4_IN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GATE4_IN_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : GATE3_IN_Pin */
-  GPIO_InitStruct.Pin = GATE3_IN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GATE3_IN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : GATE2_IN_Pin GATE1_IN_Pin BUTTON1_IN_Pin BUTTON2_IN_Pin */
   GPIO_InitStruct.Pin = GATE2_IN_Pin|GATE1_IN_Pin|BUTTON1_IN_Pin|BUTTON2_IN_Pin;
