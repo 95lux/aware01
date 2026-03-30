@@ -44,20 +44,26 @@ When a new recording is complete, the buffers are swapped atomically, allowing u
 
 % TODO add in figure to show Double Buffer handling
 
-
-
-
 \paragraph{Crossfade System}
 
 Four \texttt{crossfade\_t} instances handle different transition scenarios: a retrigger crossfade (\texttt{xfade\_retrig}), a cyclic loop crossfade (\texttt{xfade\_cyclic}), and simple fade-in/fade-out envelopes at the start and end of playback. 
 
 Each crossfade maintains its own secondary playhead position (\texttt{pos\_q48\_16}) and a fade accumulator (\texttt{fade\_acc\_q16}) that advances independently of the main playhead. 
-This independence is important at low pitch factors: when the main playhead advances by only a fraction of a sample per output step, tying the fade curve to the playhead position would cause the crossfade to progress extremely slowly and produce audible stepping. 
-By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed time regardless of pitch.
+This independence is important at low pitch factors: when the main playhead advances by only a fraction of a sample per output step, tying the fade curve to the playhead position would cause the crossfade to progress extremely slowly. 
+By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed time regardless of pitch. \\
 
 The fade curve shape is a quarter period of a sine function, stored as a pre-computed lookup table (LUT). 
 A raised cosine / quarter-sine fade produces a perceptually smooth gain transition — the slope starts at zero, rises through the midpoint, and flattens again at unity — avoiding the abrupt onset and offset that a linear ramp would produce at the boundaries. 
+
+A linear crossfade produces a $-3\,\text{dB}$ power dip at its midpoint,
+since $(0.5)^2 + (0.5)^2 = 0.5$.
+A raised cosine fade avoids this by satisfying
+$\sin^2\!\left(\tfrac{\pi}{2}t\right) + \cos^2\!\left(\tfrac{\pi}{2}t\right) = 1$
+for all $t$, maintaining constant output power through the transition. \\
+
 The fade accumulator (\texttt{fade\_acc\_q16}) is a Q16.16 fixed-point phase that indexes into the LUT, advancing by \texttt{step\_q16} each sample. 
+
+
 The step size is calculated from the desired fade length and the LUT size, so the LUT is traversed exactly once over the duration of the crossfade:
 
 \[
@@ -69,37 +75,83 @@ The two signals are blended using complementary fade-in and fade-out curves deri
 
 \paragraph{Playback Trigger Modes}
 
-%TODO Figures for Fades!
+Two crossfade strategies cover three distinct trigger scenarios handled by the play FSM.
 
-Three distinct trigger scenarios are handled by the play FSM, each requiring a 
-different crossfade strategy:
+\subparagraph{Trigger from idle}
+Figure \ref{fig:fade-in-out} shows the simplest case.
+The playhead is positioned at the selected slice start and a fade-in is armed.
+No crossfade is needed since there is no outgoing audio to blend with.
 
-\begin{description}
-	\item[Trigger from idle] The simplest case. The playhead is positioned at the 
-	selected slice start and a fade-in is armed. No crossfade is needed since 
-	there is no outgoing audio to blend with.
-	
-	\item[Retrigger --- same buffer] When a play event arrives while the same 
-	buffer is already playing, the \texttt{xfade\_retrig} secondary playhead is 
-	pointed directly at the current position in the playback buffer — no copy is 
-	needed — and the main playhead jumps to the new slice start. The outgoing tail 
-	fades out while the new start fades in, producing a click-free retrigger.
-	
-	\item[Retrigger --- new buffer pending] When a new recording is waiting to be 
-	promoted (\texttt{swap\_bufs\_pending}), the outgoing tail samples are first 
-	copied into a static temporary buffer (\texttt{xfade\_retrig\_temp\_buf}) 
-	before the swap, since after the swap the old playback buffer becomes the 
-	record buffer and its contents may be overwritten. The buffers are then 
-	swapped, and the crossfade fades from the saved temporary buffer into the 
-	beginning of the new playback buffer, ensuring a seamless transition across 
-	the buffer switch.
-\end{description}
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=0.5\textwidth]{../images/tape_player/fade_in_out.drawio.pdf}
+	}
+	\caption{Fade in/out -- on full buffer (a) playback}
+	\label{fig:fade-in-out}
+\end{figure}
 
-In all retrigger cases, the available sample count between the current playhead 
-and the end of valid data is checked before arming the crossfade. If fewer samples 
-are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is 
-clamped accordingly to prevent out-of-bounds reads at the buffer and LUT 
-boundaries.
+
+\subparagraph{Retrigger}
+When a play event arrives while audio is already playing, the \texttt{xfade\_retrig} secondary playhead is pointed directly at the current position in the playback buffer and the main playhead jumps to the new slice start.
+The outgoing tail fades out while the new start fades in, producing a click-free retrigger.
+
+\begin{figure}[H]
+	\centering
+	\vspace{-1.5em}
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=0.6\textwidth]{../images/tape_player/xfade_retrigger.drawio.pdf}
+	}
+	\caption{Retrigger Crossfade -- play trigger with no pending record buffer while buffer (a) is playing}
+	\label{fig:xfade-retrigger}
+\end{figure}
+
+When no buffer swap is pending, no special attention to the crossfade region is needed --- the secondary playhead points directly into the active playback buffer.
+
+When a new recording is waiting to be promoted (\texttt{swap\_bufs\_pending}), the same strategy applies, but requires additional care:
+
+
+\begin{figure}[H]
+	\centering
+	\vspace{-1.5em}
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=0.6\textwidth]{../images/tape_player/xfade_retrigger_pending_swap.drawio.pdf}
+	}
+	\caption{Retrigger Crossfade -- play trigger with pending record buffer (b) while current playback buffer (a) is playing}
+	\label{fig:xfade-retrigger-swap-pending}
+\end{figure}
+
+The secondary playhead is saved into the old playback buffer before the swap is performed.
+After the swap, the old playback buffer becomes the record buffer and on a record trigger, the record head begins writing from index zero.
+The crossfade reads forward from \texttt{start\_idx\_xfade}, consuming at most \texttt{xfade\_len} samples.
+Since the record head must travel \texttt{start\_idx\_xfade} samples before it can reach the crossfade region, and since \texttt{start\_idx\_xfade} is always greater than \texttt{xfade\_len} --- the playhead must have advanced at least that far into the buffer before a retrigger can occur --- the record head cannot overwrite samples still needed by the crossfade.
+This holds regardless of playback speed: above $1\times$ the crossfade read head moves faster than the record head and cannot be caught; below $1\times$ the crossfade consumes fewer buffer samples, reducing rather than increasing the hazard.
+The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified at swap time with a debug assertion.
+
+
+In all retrigger cases, the available sample count between the current playhead and the end of valid data is checked before arming the crossfade.
+If fewer samples are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is clamped accordingly to prevent out-of-bounds reads at both the buffer and \ac{LUT} boundaries.
+
+\subparagraph{Cyclic Loop Crossfade}
+In cyclic mode, the playhead wraps from the buffer end back to the beginning on each loop.
+\begin{figure}[H]
+	\centering
+	\vspace{-1.5em}
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=0.8\textwidth]{../images/tape_player/xfade_cyclic.drawio.pdf}
+	}
+	\caption{Cyclic Crossfade -- buffer loops if cyclic mode is enabled}
+	\label{fig:xfade-cyclic}
+\end{figure}
+
+To avoid a click at the loop point, a crossfade is initiated when the playhead comes within \texttt{FADE\_XFADE\_CYCLIC\_LEN} samples of the buffer boundary, as detected by \texttt{playhead\_near\_end}.
+At that point, the current playhead position is saved as the outgoing pointer (\texttt{buf\_b\_ptr}), and the main playhead is immediately jumped to the loop start.
+The outgoing tail fades out while the loop start fades in, using the same \texttt{tape\_handle\_crossfade\_a\_is\_new} mechanism as the retrigger crossfade.
+Since the main playhead is promoted to the loop start at arm time rather than at crossfade completion, no promotion step is needed on finishing --- the crossfade simply blends the transition and the main playhead is already in the correct position.
+
+If the current phase increment exceeds the crossfade length --- meaning the playhead would traverse the entire crossfade region in fewer output samples than the fade accumulator needs to complete --- a hard switch to the loop start is performed instead, since a crossfade would result in illegal buffer access.
+
+A known limitation of the current implementation is that the crossfade length is a fixed compile-time constant; the implications and a suggested fix are discussed in Section~\ref{sec:outlook}.
 
 \paragraph{Playhead and Pitch}
 

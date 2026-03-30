@@ -47,7 +47,7 @@ On the input path, an opamp attenuation stage scales the incoming signal to code
 On the output path, the codec signal is amplified by an opamp stage back to Eurorack level. 
 The codec performs all analogue-to-digital and digital-to-analogue conversion, 
 exchanging audio data with the STM32H7 over I\textsuperscript{2}S.
-Configuration of the codec is done via I\textsuperscript{2}S.
+Configuration of the codec is done via I\textsuperscript{2}C.
 
 %The STM32H7 generates a master clock (MCLK) of \qty{12.288}{MHz} 
 %($256 \times \qty{48}{kHz}$) via PLL2, which the TLV320AIC3204 uses as its reference to derive BCLK and LRCK internally, operating as an 

@@ -119,9 +119,9 @@ the Catmull-Rom cubic Hermite interpolation used in this project (3), and an ide
 Hermite interpolation with exact derivatives (4) are compared.
 The test signal is a sum of three sinusoids, simulating a complex audio signal:
 
-\begin{equation}
+\[
 	x(t) = 0.8\sin(2t) + 0.6\sin(t) + 0.4\sin(2.7t)
-\end{equation}
+\]
 
 \begin{figure}[H]
 	\centering
@@ -163,9 +163,9 @@ This produces abrupt changes in slope at every sample boundary, which are especi
 
 Since the test signal is analytically defined, its derivative is known exactly at every sample point:
 
-\begin{equation}
+\[
 	x'(t) = 1.6\cos(2t) + 0.6\cos(t) + 1.08\cos(2.7t)
-\end{equation}
+\]
 
 The resulting curve closely follows the original continuous signal throughout, including at the peaks and troughs where linear interpolation struggles most. This represents the theoretical upper bound of Hermite interpolation quality.
 

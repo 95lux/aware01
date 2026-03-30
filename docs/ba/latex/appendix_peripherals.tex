@@ -1,0 +1,138 @@
+\newpage
+\section{Peripheral Resource Allocation}
+\label{app:peripherals}
+
+The following tables document the complete hardware resource allocation of the
+\mbox{STM32H7A3RITx} as configured in the firmware.
+All timer frequencies are derived from the \SI{280}{\mega\hertz} CPU clock,
+with APB2 running at \SI{140}{\mega\hertz} (timer clock \SI{280}{\mega\hertz} after the ×2 multiplier).
+
+
+\begin{table}[H]
+	\centering
+	\caption{Hardware timer allocation}
+	\label{tab:timers}
+	\small
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{llllll}
+			\toprule
+			\textbf{Timer} & \textbf{Channel} & \textbf{PSC / ARR} & \textbf{Frequency} & \textbf{Function} & \textbf{Notifies} \\
+			\midrule
+			TIM7   & —      & kernel default  & \SI{1}{\kilo\hertz}  & FreeRTOS timebase (SysTick alt.) & Kernel \\
+			TIM13  & —      & 27999 / 499     & \SI{10}{\hertz}      & GPIO interface tick A (OPM)       & ControlIF, UserIF \\
+			TIM14  & —      & 27999 / 199     & \SI{25}{\hertz}      & GPIO interface tick B (OPM)       & ControlIF, UserIF \\
+			TIM15  & CH1    & — / 349         & \(\approx\)\SI{800}{\kilo\hertz} bit & WS2812 PWM bitstream & DMA1 Stream 4 \\
+			TIM17  & —      & 2332 / 999      & \(\approx\)\SI{120}{\hertz}         & WS2812 animation tick             & UserInterfaceTask \\
+			\bottomrule
+	\end{tabular}}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\caption{DMA1 stream allocation}
+	\label{tab:dma}
+	\small
+	\begin{tabular}{lllllll}
+		\toprule
+		\textbf{Stream} & \textbf{Request} & \textbf{Direction} & \textbf{Mode} & \textbf{Width} & \textbf{NVIC priority} & \textbf{Function} \\
+		\midrule
+		Stream 0 & SPI1\_RX & P $\to$ M & Circular & 16-bit & 5 & I2S RX (codec $\to$ MCU) \\
+		Stream 1 & SPI1\_TX & M $\to$ P & Circular & 16-bit & 5 & I2S TX (MCU $\to$ codec) \\
+		Stream 2 & ADC1     & P $\to$ M & Circular & 16-bit & 7 & Potentiometer sampling \\
+		Stream 3 & ADC2     & P $\to$ M & Circular & 16-bit & 8 & CV input sampling \\
+		Stream 4 & TIM15\_CH1 & M $\to$ P & Normal & 16-bit & 5 & WS2812 PWM \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\caption{ADC channel assignment}
+	\label{tab:adc}
+	\small
+	\begin{tabular}{lllll}
+		\toprule
+		\textbf{Instance} & \textbf{Channel} & \textbf{Pin} & \textbf{Label} & \textbf{Consumer} \\
+		\midrule
+		ADC1 & IN7  & PA7 & \texttt{FADER1\_IN} & UserInterfaceTask \\
+		ADC1 & IN8  & PC5 & \texttt{FADER2\_IN} & UserInterfaceTask \\
+		ADC1 & IN9  & PB0 & \texttt{FADER3\_IN} & UserInterfaceTask \\
+		ADC1 & IN5  & PB1 & \texttt{FADER4\_IN} & UserInterfaceTask \\
+		\midrule
+		ADC2 & IN10 & PC0 & \texttt{V/OCT\_IN}  & ControlInterfaceTask \\
+		ADC2 & IN11 & PC1 & \texttt{CV1\_IN}    & ControlInterfaceTask \\
+		ADC2 & IN12 & PC2 & \texttt{CV2\_IN}    & ControlInterfaceTask \\
+		ADC2 & IN13 & PC3 & \texttt{CV3\_IN}    & ControlInterfaceTask \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\caption{GPIO interrupt (EXTI) assignment}
+	\label{tab:exti}
+	\small
+	\begin{tabular}{lllll}
+		\toprule
+		\textbf{Pin} & \textbf{Label} & \textbf{Trigger} & \textbf{NVIC priority} & \textbf{Notifies} \\
+		\midrule
+		PA9  & \texttt{GATE1\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PA8  & \texttt{GATE2\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PC6  & \texttt{GATE3\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PC7  & \texttt{GATE4\_IN}   & Falling edge & 10 & UserInterfaceTask, ControlInterfaceTask \\
+		PA10 & \texttt{BUTTON1\_IN} & Falling edge & 10 & UserInterfaceTask \\
+		PA11 & \texttt{BUTTON2\_IN} & Falling edge & 10 & UserInterfaceTask \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\caption{Serial and audio bus assignment}
+	\label{tab:serial}
+	\small
+	\begin{tabular}{lp{3.5cm}p{3.5cm}p{5cm}}
+		\toprule
+		\textbf{Peripheral} & \textbf{Pins} & \textbf{Configuration} & \textbf{Function} \\
+		\midrule
+		I2S1 (SPI1) &
+		PA4 \texttt{WS}, PA5 \texttt{CK}, PB4 \texttt{SDI}, PB5 \texttt{SDO}, PC4 \texttt{MCK} &
+		Full-duplex master, \SI{48}{\kilo\hertz}, 16-bit &
+		Bidirectional audio data to/from TLV320AIC3204 codec \\
+		\addlinespace
+		I2C1 &
+		PB6 \texttt{SCL}, PB7 \texttt{SDA} &
+		Timing register \texttt{0x20B0CCFF} &
+		Codec register configuration and readback \\
+		\addlinespace
+		UART4 &
+		PA0 \texttt{TX}, PA1 \texttt{RX} &
+		Asynchronous &
+		Debug output (auxiliary to SWO on \texttt{PB3}) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\caption{Key derived clock frequencies}
+	\label{tab:clocks}
+	\small
+	\begin{tabular}{lll}
+		\toprule
+		\textbf{Domain} & \textbf{Source} & \textbf{Frequency} \\
+		\midrule
+		CPU / AHB        & PLL1-P & \SI{280}{\mega\hertz} \\
+		APB1 / APB2      & AHB / 2 & \SI{140}{\mega\hertz} \\
+		Timer clock (APB×2) & — & \SI{280}{\mega\hertz} \\
+		I2S / SPI123     & PLL2-P & \SI{12.288}{\mega\hertz} \\
+		ADC              & PLL3-R / 4 & \SI{6}{\mega\hertz} \\
+		HSE oscillator   & PH0/PH1 & \SI{24}{\mega\hertz} (external crystal) \\
+		\bottomrule
+	\end{tabular}
+\end{table}

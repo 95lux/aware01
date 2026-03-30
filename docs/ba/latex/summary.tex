@@ -6,7 +6,7 @@ The analog frontend proved more challenging than anticipated during bring-up; in
 These issues are documented and corrected for the next revision.
 
 On the firmware side, the FreeRTOS-based architecture met all real-time requirements with margin to spare.
-End-to-end audio latency was measured at \qty{1.896}{ms} mean -- well within the \qty{5}{ms} target -- and the full DSP chain runs at 60--66\% CPU utilisation at $f_s = \qty{48}{\kilo\hertz}$, leaving meaningful headroom.
+End-to-end audio latency was measured at \qty{1.896}{ms} mean -- well within the \qty{5}{ms} target -- and the full DSP chain runs at 60--66\% CPU utilisation at $f_s = \qty{48}{\kilo\hertz}$, leaving sufficient headroom.
 The lock-free parameter cache and DMA-driven audio pipeline both operated correctly under load throughout testing.
 
 The two DSP focus points demonstrated that non-trivial real-time audio algorithms are feasible on this platform.
@@ -88,7 +88,9 @@ A \texttt{double} or \texttt{float} playhead would be fully sufficient and would
 The fixed-point design is therefore a conservative choice that is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
 
 \subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
-The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.5}{\Hz} calculated from the AC-coupling network ($R_{eq} = \SI{48}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
-This represents a discrepancy of approximately 25$\times$.
-The analog signal path and output AC-coupling stage have been ruled out as sources; the root cause has not been identified within the scope of this project.
-Practically, the measured cutoff remains below the typical lower limit of program material and does not affect audible performance, but the unexplained discrepancy between theory and measurement warrants further investigation in a future revision.
+The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.8}{\Hz} calculated from the AC-coupling network ($R_{in} = \SI{40}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
+
+The root cause has not been identified within the scope of this project, as only an end-to-end frequency response measurement was conducted.
+To isolate the source, individual frequency response measurements of the input and output stages should be performed separately in a future revision.
+Practically, the measured cutoff is reaching into the audible low frequency end, as sub-bass frequencies do reach the lower \qty{30}{Hz}.
+Still this rolloff is marginally a and the device is usable for musical applications.

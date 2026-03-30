@@ -16,5 +16,13 @@ At 8 MB, the chip would increase available RAM by approximately eight times thec
 The current DSP chain will be extended with additional audio processing algorithms. 
 Planned additions include a synced delay effect, filtering, and grain synthesis or sampling functionality, expanding the module's capabilities.
 
+\subsubsection{Tape Player DSP}
+The cyclic loop crossfade length is currently a fixed compile-time constant (\texttt{FADE\_XFADE\_CYCLIC\_LEN}).
+Exposing the crossfade length as a CV-controllable parameter could enable deliberate blurring of the loop boundary, allowing the audio material to gradually dissolve into itself at the loop point as an expressive effect.
+
+Additionally the crossfade trigger lookahead is currently evaluated using the instantaneous phase increment, meaning rapid pitch changes during an active crossfade may cause the secondary playhead to overshoot the predicted buffer region.
+A more robust implementation would either evaluate the lookahead using a conservative worst-case phase increment, or reduce the evaluation interval to minimise prediction error.
+This requires a more in-depth examination of the crossfading system though, which was not feasible in the time-scope of the project.
+
 %\subsubsection{Noise Characterisation}
 %A formal noise floor measurement using the swept-sine method described in  Section~\ref{sec:frequency-response} is planned for a subsequent revision, to formally verify the effectiveness of the analogue/digital separation strategy applied during PCB layout.

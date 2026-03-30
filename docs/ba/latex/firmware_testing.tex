@@ -99,9 +99,9 @@ The DWT counter is enabled during system initialization and mapped to the FreeRT
 A delta-based windowed measurement is used rather than lifetime cumulative averages. 
 At each measurement interval, \texttt{uxTaskGetSystemState()} is called and per-task utilization is computed as:
 
-\begin{equation}
+\[
 	U_i = \frac{\Delta C_i}{\Delta C_{\text{total}}} \times 100\%
-\end{equation}
+\]
 
 where $\Delta C_i$ is the change in cycle count for task $i$ since the previous 
 measurement, and $\Delta C_{\text{total}}$ is the change in total runtime over the 

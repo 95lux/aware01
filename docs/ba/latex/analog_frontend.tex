@@ -198,9 +198,10 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{2.84}{\hertz} and fl
 
 \subparagraph{Design Rationale}
 
-The CV input stages use an inverting summing amplifier topology, which differs from the audio input stage in two key ways.
+The CV input stages use an inverting summing amplifier topology, which differs from the audio input stage in two ways.
 First, no AC coupling is used, as CV signals carry DC information that must be preserved.
 Second, a bias resistor connected to a \qty{-10}{\volt} reference rail is summed at the inverting input to shift the output into the STM32H7 ADC input range of \qtyrange{0}{3.3}{\volt}.
+This topology is derived from the CV input stage design used in the Mutable Instruments Clouds module \cite{pichenettesPichenettesEurorack2026}.
 
 The general CV input accepts signals in the range of \qty{\pm 5}{\volt}, while the V/Oct input accepts \qty{-1.5}{\volt} to \qty{5}{\volt}.
 Both circuits share the same topology with \(R_{in} = \qty{100}{\kilo\ohm}\), differing only in the bias and feedback resistor values to match their respective input ranges.
