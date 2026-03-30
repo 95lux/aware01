@@ -108,7 +108,9 @@ void control_interface_process() {
     xy_mapper_update(norm_x, norm_y);
 }
 
-// calibration procedure
+// 2-point V/Oct calibration routine.
+// Inspired by the calibration approach observed in the Mutable Instruments Clouds firmware
+// (https://github.com/pichenettes/eurorack), though this is a standard ADC 2-point calibration technique.
 // C1 should be 1V
 // returns normalized C1 value (0..1) to be used as reference for C3 calibration and pitch calculations
 float calibrate_C1() {

@@ -27,14 +27,6 @@ static int16_t tape_play_buf_r[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1
 static int16_t tape_rec_buf_l[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1"))) = {0};
 static int16_t tape_rec_buf_r[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1"))) = {0};
 
-// +3 for hermite interpolation safety
-// TODO: make sure this is long enough once configurable!
-int16_t xfade_retrig_temp_buf_l[FADE_XFADE_RETRIG_LEN + 3];
-int16_t xfade_retrig_temp_buf_r[FADE_XFADE_RETRIG_LEN + 3]; // +3 for hermite interpolation safety
-
-int16_t xfade_cyclic_temp_buf_l[FADE_XFADE_CYCLIC_LEN + 3];
-int16_t xfade_cyclic_temp_buf_r[FADE_XFADE_CYCLIC_LEN + 3]; // +3 for hermite interpolation safety
-
 // Shared tape player state — also accessed by tape_player_dsp.c via extern.
 struct tape_player tape_player;
 
@@ -67,16 +59,16 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
     tape_player.pos_q48_16 = 1 << 16; // start at sample 1 for interpolation
     tape_player.swap_bufs_pending = false;
 
-    tape_player.xfade_retrig.buf_b_ptr_l = xfade_retrig_temp_buf_l;
-    tape_player.xfade_retrig.buf_b_ptr_r = xfade_retrig_temp_buf_r;
+    tape_player.xfade_retrig.buf_b_ptr_l = NULL;
+    tape_player.xfade_retrig.buf_b_ptr_r = NULL;
     tape_player.xfade_retrig.len = FADE_XFADE_RETRIG_LEN; // crossfade length in samples TODO: make configurable via MACRO
     tape_player.xfade_retrig.active = false;
     tape_player.xfade_retrig.temp_buf_valid_samples = 0;
     tape_player.xfade_retrig.pos_q48_16 = 1 << 16; // start at sample 1 for interpolation
     tape_player.xfade_retrig.step_q16 = FADE_XFADE_RETRIG_STEP_Q16;
 
-    tape_player.xfade_cyclic.buf_b_ptr_l = xfade_cyclic_temp_buf_l;
-    tape_player.xfade_cyclic.buf_b_ptr_r = xfade_cyclic_temp_buf_r;
+    tape_player.xfade_cyclic.buf_b_ptr_l = NULL;
+    tape_player.xfade_cyclic.buf_b_ptr_r = NULL;
     tape_player.xfade_cyclic.len = FADE_XFADE_CYCLIC_LEN; // crossfade length in samples TODO: make configurable via MACRO
     tape_player.xfade_cyclic.active = false;
     tape_player.xfade_cyclic.temp_buf_valid_samples = 0;
@@ -257,24 +249,19 @@ static void play_fsm_event(tape_event_t evt) {
             // if available samples are less than max_needed, we have to adjust crossfade length and fade LUT access accordingly, otherwise we might read out of bounds of the playback buffer (if start_idx + max_needed exceeds valid_samples), or the fade LUT (if we use max_needed as xfade.len for LUT access, but there are not enough valid samples in temp buffer).
             tape_player.xfade_retrig.temp_buf_valid_samples = min_u32(available, max_needed_xfade);
 
-            // switch buffers if pending. This has to happen after after copying the xfade buffer and calculating the available samples for xfade
-            // buf_b_ptr holds the current playback buffer. On xfade it has to start at full volume and fade out.
-            if (tape_player.swap_bufs_pending) { // new record buffer waiting to be switched to playback buffer
-                // use static temp buffer for fade, because playback buffer has now switched
-                // fill up only until temp_buf_valid, but ramp down, so on i = temp_buf_valid, the sample reaches 0
-                tape_player.xfade_retrig.buf_b_ptr_l = xfade_retrig_temp_buf_l;
-                tape_player.xfade_retrig.buf_b_ptr_r = xfade_retrig_temp_buf_r;
-                for (uint32_t i = 0; i < tape_player.xfade_retrig.temp_buf_valid_samples; i++) {
-                    tape_player.xfade_retrig.buf_b_ptr_l[i] = tape_player.playback_buf->ch[0][start_idx_xfade + i];
-                    tape_player.xfade_retrig.buf_b_ptr_r[i] = tape_player.playback_buf->ch[1][start_idx_xfade + i];
-                }
+            // Save a pointer into the current playback buffer at the crossfade start position.
+            // This has to happen before any buffer swap, since swap_tape_buffers() re-assigns playback_buf.
+            // After the swap the old playback buffer becomes the record buffer, but its contents remain valid for the duration of the crossfade
+            int16_t* old_buf_l = &tape_player.playback_buf->ch[0][start_idx_xfade];
+            int16_t* old_buf_r = &tape_player.playback_buf->ch[1][start_idx_xfade];
+
+            if (tape_player.swap_bufs_pending) {
                 swap_tape_buffers();
                 rec_fsm_event(TAPE_EVT_SWAP_DONE);
-            } else {
-                // if no buffer switch pending, we can also just point the xfade buffer to the playback buffer, starting at the current phase. This saves us from copying the xfade buffer every time.
-                tape_player.xfade_retrig.buf_b_ptr_l = &tape_player.playback_buf->ch[0][start_idx_xfade];
-                tape_player.xfade_retrig.buf_b_ptr_r = &tape_player.playback_buf->ch[1][start_idx_xfade];
             }
+
+            tape_player.xfade_retrig.buf_b_ptr_l = old_buf_l;
+            tape_player.xfade_retrig.buf_b_ptr_r = old_buf_r;
 
             if (!tape_player.params.reverse) {
                 // aquire playback starting position depending on current set slice
