@@ -4,11 +4,13 @@
 
 ---
 
-Aarebot is a dynamic realtime sampler built as a Eurorack module. At its core is a stereo tape-style engine with a hot-swapping record/playback buffer - record and play simultaneously, slice on the fly, and process through an onboard effects chain.
+Aarebot is a dynamic realtime sampler built as a Eurorack module. At its core is a stereo tape-style engine with a hot-swapping record/playback buffer - this enables to record and play simultaneously.
+Slicing markers can be added on the fly, and processing through an onboard effects chain.
 
-Samplerate decimation trades fidelity for length, adding lo-fi crunch as a welcome biproduct. A Schroeder reverb blooms into lush endless space or rings into sharp metallic resonance depending on the XY effect mapping.
+Samplerate decimation trades fidelity for length.
+A Schroeder reverb blooms into lush endless space or rings into sharp metallic resonance depending on the XY effect mapping.
 
-More DSP FX and taillred XY mapping is on the way and will turn Aarebot into a IDM LOFI crunsh machine.
+More DSP FX and taillred XY mapping is on the way and will turn Aarebot into a IDM LOFI crunch machine.
 
 ---
 <p align="center">
