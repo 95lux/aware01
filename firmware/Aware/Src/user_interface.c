@@ -35,6 +35,8 @@ struct user_interface_config {
 
     bool cyclic_mode;
     bool reverse_mode;
+    bool last_cyclic_state;
+    bool last_reverse_state;
 };
 
 struct pot_pitch_calibration {
@@ -102,8 +104,6 @@ int user_iface_populate_pot_bufs() {
 // CubeMX: ADC 12-bit + 32x Oversampling + 1-bit Shift = 16-bit output.
 // Smoothing: Hardware handles high-frequency noise; Software IIR handles remaining drift.
 // Calibration: Re-run once to lock in the new high-res values.
-static bool last_cyclic_state;
-static bool last_reverse_state;
 
 void user_iface_process_gates(uint32_t notified) {
     if (notified & GPIO_NOTIFY_GATE1) {
@@ -125,32 +125,41 @@ void user_iface_process_pots(void) {
         user_interface_cfg.pots[i].val = smooth_filter(user_interface_cfg.pots[i].val, v, 0.1f);
     }
 
-    // V/Oct pitch
-    float norm_voct = user_interface_cfg.pots[POT_PITCH].val;
+    // Base Pitch potentiometer
+    float norm_pitch = user_interface_cfg.pots[POT_PITCH].val;
     struct calibration_data* cal = user_interface_cfg.calibration_data;
 
-    float t;
-    if (norm_voct <= cal->pitchpot_mid) {
-        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
-    } else {
-        t = (norm_voct - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
-    }
-    if (fabsf(t) < DEADZONE) {
-        t = 0.0f;
-    } else if (t > 0.0f) {
-        t = (t - DEADZONE) * INV_RANGE;
-    } else {
-        t = (t + DEADZONE) * INV_RANGE;
-    }
-    t = fmaxf(-1.0f, fminf(t, 1.0f));
+#ifdef CONFIG_ENABLE_PITCH_SLIDE_POT
+    float pitch_bipolar;
 
-    param_cache_set_pitch_ui(powf(2.0f, t * UI_PITCH_MAX_SEMITONE_RANGE / 12.0f));
+    // peacewise mapping of normalized value
+    if (norm_pitch <= cal->pitchpot_mid) {
+        pitch_bipolar = (norm_pitch - cal->pitchpot_mid) / (cal->pitchpot_mid - cal->pitchpot_min);
+    } else {
+        pitch_bipolar = (norm_pitch - cal->pitchpot_mid) / (cal->pitchpot_max - cal->pitchpot_mid);
+    }
+
+    // deadzoning around center detent
+    if (fabsf(pitch_bipolar) < DEADZONE) {
+        pitch_bipolar = 0.0f;
+    } else if (pitch_bipolar > 0.0f) {
+        pitch_bipolar = (pitch_bipolar - DEADZONE) * INV_RANGE;
+    } else {
+        pitch_bipolar = (pitch_bipolar + DEADZONE) * INV_RANGE;
+    }
+    // clamp
+    pitch_bipolar = fmaxf(-1.0f, fminf(pitch_bipolar, 1.0f));
+
+    param_cache_set_pitch_ui(powf(2.0f, pitch_bipolar * UI_PITCH_MAX_SEMITONE_RANGE / 12.0f));
+#else
+    param_cache_set_pitch_ui(1.0f); // bypass pitch slide pot
+#endif
 
     param_cache_set_env_attack(user_interface_cfg.pots[POT_PARAM2].val);
     param_cache_set_env_decay(user_interface_cfg.pots[POT_PARAM3].val);
 
     // TODO: for now just use power of 2 for decimation. Other values cause pitch issues. Resolve later
-    uint8_t pow = (uint8_t)(user_interface_cfg.pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
+    uint8_t pow = (uint8_t) (user_interface_cfg.pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
     if (pow > MAX_DECIMATION_POW)
         pow = MAX_DECIMATION_POW;
     param_cache_set_decimation(1u << pow);
@@ -171,7 +180,7 @@ void user_iface_process_buttons(uint32_t notified) {
     bool cyclic_mode = user_interface_cfg.cyclic_mode;
     bool reverse_mode = user_interface_cfg.reverse_mode;
 
-    if (cyclic_mode != last_cyclic_state || reverse_mode != last_reverse_state) {
+    if (cyclic_mode != user_interface_cfg.last_cyclic_state || reverse_mode != user_interface_cfg.last_reverse_state) {
         if (cyclic_mode && reverse_mode) {
             ws2812_set_static_color(2, (struct ws2812_color){.r = 128, .g = 0, .b = 128});
         } else if (cyclic_mode) {
@@ -181,8 +190,8 @@ void user_iface_process_buttons(uint32_t notified) {
         } else {
             ws2812_set_static_color(2, (struct ws2812_color){.r = 0, .g = 0, .b = 0});
         }
-        last_cyclic_state = cyclic_mode;
-        last_reverse_state = reverse_mode;
+        user_interface_cfg.last_cyclic_state = cyclic_mode;
+        user_interface_cfg.last_reverse_state = reverse_mode;
     }
 }
 
