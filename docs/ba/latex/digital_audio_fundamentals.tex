@@ -48,5 +48,5 @@ The DMA engine operates in double-buffer mode, continuously filling a circular b
 The block size $N$ directly controls the trade-off between latency and CPU efficiency.
 A smaller block reduces the buffering delay contributed by the audio pipeline but increases the interrupt rate and the per-sample overhead of entering and leaving the processing callback.
 A larger block amortises this overhead but adds latency equal to $N / f_s$. 
-This project uses a block size of $N = 128$ samples, yielding a single-block buffering latency of \qty{1}{ms} at $f_s = \qty{48}{kHz}$.
+This project uses a block size of $N = 128$ interleaved stereo samples, equivalent to 64 frames per channel, yielding a single-block buffering latency of $64 / \qty{48}{\kilo\hertz} \approx \qty{1.33}{\milli\second}$.
 %TODO citation
