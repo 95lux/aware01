@@ -311,11 +311,11 @@ static void ControlInterfaceTask(void* argument) {
     }
 }
 
-TickType_t last_print = 0;
-
 /* ===== User interface task ===== */
 static void UserInterfaceTask(void* argument) {
     DWT_Init();
+
+    TickType_t last_print = 0;
 
     // init ws2812 driver
     ws2812_init_t ws2812_init_cfg = {
@@ -334,6 +334,7 @@ static void UserInterfaceTask(void* argument) {
 
     // TODO: rewire to different pin which supports pwm output.
     // user_interface_cfg.pot_leds[0].htim_led = &tim12; // this is wrongly assigned currently :(
+
     // proceed with UI initialization
     user_interface_init_t user_iface_init_cfg = {
         .userIfTaskHandle = userIfTaskHandle,
