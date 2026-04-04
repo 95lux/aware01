@@ -22,7 +22,7 @@ which is well below the \qty{20}{\hertz} lower bound of the audible range.
 
 \subparagraph{ADC Input Range and Attenuation Design}
 
-The TLV320AIC codec is supplied with \SI{3.3}{\volt}, from which its internal LDO generates a regulated \SI{1.8}{\volt} analog supply ((AVDD)). 
+The TLV320AIC codec is supplied with \SI{3.3}{\volt}, from which its internal LDO generates a regulated \SI{1.8}{\volt} analog supply (AVDD). 
 The common-mode voltage was configured to \SI{0.9}{\volt}.
 
 According to the ADC electrical characteristics in the TLV320AIC datasheet \cite[p.~9]{texasinstrumentsTlv320aic3204Datasheet}, the ADC full-scale input range is \(\pm \SI{0.53}{\volt}\) around \(V_\mathrm{CM}\), corresponding to a maximum peak-to-peak voltage of
@@ -52,10 +52,27 @@ For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) ca
 All measurements in Section~\ref{sec:loopback-signal-level-measaurements} and all schematics reflect the revised values.
 
 A BAT54S dual Schottky diode package clamps the attenuated signal to the codec supply rails: one diode clamps to \(AVDD = \SI{1.8}{\volt}\) and the other to \SI{0}{\volt}, ensuring that voltage peaks or malformed signals cannot exceed the absolute maximum input rating of the ADC.
-However, a pin mapping error was introduced during schematic entry due to a mismatch between the simulation model and the actual SOT-23 package pinout of the BAT54S.
+However, a pin mapping error was introduced during schematic entry due to a mismatch between the simulation model and the actual SOT-23 package pinout of the BAT54S (See annotation in Schematic \ref{app:schematic}).
 As a result, the component was placed with reversed orientation on the PCB.
 Since the BAT54S SOT-23 package has its two diode terminals on the outer pins with the common node on the centre pin, the error was corrected by bending the component pins upward and soldering it inverted, effectively swapping the outer pins and restoring the correct diode orientation.
 A corrected footprint assignment is required in the next PCB revision to eliminate the bodge.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/hardware_design/bodges/diode_bodge_01.JPG}
+        \subcaption{D5 -- left channel clamp, lifted and inverted.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../images/hardware_design/bodges/diode_bodge_02.JPG}
+        \subcaption{D4 -- right channel clamp, lifted and inverted.}
+    \end{minipage}
+    \caption{BAT54S bodge: component pins bent upward and soldered inverted to correct the reversed footprint orientation.}
+    \label{fig:diode-bodge}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -87,7 +104,7 @@ A SPICE transient simulation was conducted to verify the input stage operating p
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.55\textwidth}
-		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_audio_in_simulation.png}
+		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_audio_in_simulation_print.png}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.30\textwidth}
@@ -118,7 +135,7 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{1.81}{\hertz} and th
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/bode_audio_in_simulation.png}
+	\includegraphics[width=0.8\textwidth]{../images/hardware_design/simulation/bode_audio_in_simulation_print.png}
 	\caption{Bode plot of the input stage. The high-pass cutoff frequency of \qty{1.81}{\hertz} is well below the audible range, and phase shift remains negligible above \qty{20}{\hertz}.}
 	\label{fig:bode_input_stage}
 \end{figure}
@@ -155,7 +172,7 @@ A SPICE transient simulation was conducted to verify the output stage operating 
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.65\textwidth}
-		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_audio_out_simulation.png}
+		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_audio_out_simulation_print.png}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.30\textwidth}
@@ -188,7 +205,7 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{2.84}{\hertz} and fl
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.75\textwidth]{../images/hardware_design/simulation/bode_audio_out_simulation.png}
+	\includegraphics[width=0.75\textwidth]{../images/hardware_design/simulation/bode_audio_out_simulation_print.png}
 	\caption{Bode plot of the output stage. The high-pass cutoff frequency of \qty{2.84}{\hertz} is well below the audible range, and the frequency response is flat up to \qty{20}{\kilo\hertz}.}
 	\label{fig:bode_output_stage}
 \end{figure}
@@ -248,7 +265,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.55\textwidth}
-		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_cv_simulation.png}
+		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_cv_simulation_print.png}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.30\textwidth}
@@ -278,7 +295,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.55\textwidth}
-		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_v_oct_simulation.png}
+		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_v_oct_simulation_print.png}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.30\textwidth}

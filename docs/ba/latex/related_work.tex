@@ -41,7 +41,9 @@ It now consists of quantisers, sequencers, envelope generators, LFO sources, and
 all selectable at runtime without rebooting the module.
 The hardware is built around a Teensy~3.2 (NXP MK20DX256) microcontroller paired with a precision 16-bit TI DAC.
 Because no audio processing is involved, it achieves a trigger-to-quantised-output latency of under \qty{100}{\micro\second}.
-The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone.
+The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone. \\
 
 Unlike o\_C, however, the platform developed in this thesis is designed specifically for tape-style sample playback and audio-rate DSP,
 requiring a dedicated audio codec, DMA-driven I\textsuperscript{2}S transfers, and a significantly higher computational budget than the Teensy~3.2 can provide.
+
+The design decisions made in this thesis are informed by these existing platforms, taking the custom hardware approach of Mutable Instruments as a reference while targeting a specific application not addressed by any of the above.

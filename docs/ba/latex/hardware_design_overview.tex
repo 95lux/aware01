@@ -13,12 +13,11 @@
 
 
 Figure~\ref{fig:block-diagram} shows the top-level block diagram of the embedded system.
-The design is organised into five functional domains: power delivery, the microcontroller 
-unit (MCU), user interface, control interface, and audio interface.
+The design is organised into five functional domains: power delivery, the \ac{MCU}, user interface, control interface, and audio interface.
 
 \paragraph{Power Delivery}
 The external Eurorack \qty{12}{V} supply feeds a \textit{LMR50410Y5FQDBVRQ1}\cite{Lmr50410q1} buck converter, which steps the voltage down to \qty{5}{V}. 
-A subsequent \textit{LM1117MP-3.3}\cite{Lm1117} LDO regulator provides the \qty{3.3}{V} rail required by the MCU and codec. 
+A subsequent \textit{LM1117MP-3.3}\cite{Lm1117} \ac{LDO} regulator provides the \qty{3.3}{V} rail required by the MCU and codec. 
 The \qty{12}{V} rail is retained for the output and input opamp stages, which require higher voltage headroom for Eurorack-level signals.
 
 \paragraph{Microcontroller}
@@ -27,12 +26,12 @@ subsystems.
 It communicates with the audio codec via I\textsuperscript{2}S for audio 
 data and I\textsuperscript{2}C for configuration. 
 GPIO and ADC peripherals interface with the user controls, and additional ADC inputs handle the control voltage and V/Oct signals. 
-A \qty{1.27}{mm} pitch SWD connector provides debugging and flashing.
+A \qty{1.27}{mm} pitch \ac{SWD} connector provides debugging and flashing.
 
 \paragraph{User Interface}
 Four slide potentiometers (\textit{Bourns PTL30-15R1-103B2}\cite{PTLDatasheet}) are read by the MCU ADC and provide parameter control. 
 Two push buttons (\textit{SameSky TS02} \cite{Ts02Datasheet}) are connected as GPIO inputs. 
-Four WS2812 RGB LEDs, daisy-chained and driven via a PWM signal, provide visual feedback. Because the WS2812 protocol requires \qty{5}{V} logic, a level shifter based on a Schmitt NOT gate (\textit{TI SN74AHCT1G14} \cite{Sn74ahct1g14}) converts (and inverts) the \qty{3.3}{V} MCU output. 
+Four WS2812 RGB LEDs, daisy-chained and driven via a PWM signal, provide visual feedback. Because the WS2812 protocol requires \qty{5}{V} logic, a level shifter based on a Schmitt NOT gate (\textit{TI SN74AHCT1G14}~\cite{Sn74ahct1g14}) converts (and inverts) the \qty{3.3}{V} MCU output. 
 The slide potentiometers also carry individual LEDs driven by PWM. For the current hardware revision these are not usable due to an error in symbol/footprint creation.
 
 \paragraph{Control Interface}

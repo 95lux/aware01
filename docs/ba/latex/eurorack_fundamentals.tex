@@ -1,4 +1,3 @@
-
 \subsubsection{Electrical Signal Standards}
 
 The Eurorack format defines three signal types that connect modules \cite{TechnicalDetailsA100}:
@@ -8,7 +7,7 @@ The Eurorack format defines three signal types that connect modules \cite{Techni
 	Audio signals typically operate at \SI{10}{V_{pp}} ($\pm\qty{5}{V}$).
 	
 	\item[Control voltages (CV)] Produced by modulation sources such as LFOs and envelope generators. 
-	CV signals typically range from \qty{-2.5}{V} to \qty{+2.5}{V} for LFOs, and from \qty{0}{V} to \qty{+8}{V} for envelope generators. 
+	CV signals typically range from \qty{-2.5}{V} to \qty{+2.5}{V} for \ac{LFO}s, and from \qty{0}{V} to \qty{+8}{V} for envelope generators. 
 	The V/Oct pitch standard is a specific CV variant, where each \qty{1}{V} increase corresponds to one octave of pitch change.
 	
 	\item[Gate and trigger signals] Pulse-shaped signals used to start or trigger events. 
@@ -44,6 +43,6 @@ Many manufacturers mark this on the PCB as a white silkscreen stripe.
 
 The Eurorack format defines mechanical constraints for all module panels.
 Panel height is fixed at \qty{128.5}{mm}, derived from the 3U rack standard ($3 \times \qty{44.45}{mm} = \qty{133.4}{mm}$) minus the clearance required for the mounting rails. 
-Panel width is measured in HP (horizontal pitch), where $1\,\text{HP} = \qty{5.08}{mm}$. 
-Modules are mounted using M3 screws(DIN\,7985). 
+Panel width is measured in \ac{HP}, where $1\,\text{HP} = \qty{5.08}{mm}$. 
+Modules are mounted using M3 screws (DIN\,7985). 
 These mechanical dimensions were established by Doepfer with the introduction of the A-100 system and have been adopted as the standard across the modular synthesis industry \cite{ConstructionDetailsA100}.

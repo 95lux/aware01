@@ -1,0 +1,45 @@
+\subsubsection{Hardware Revision Defects}
+Three hardware defects were identified in this revision:
+\begin{itemize}
+	\item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support
+	EXTI interrupts simultaneously with the other assigned interrupt lines.
+	A bodge wire was soldered directly between PC9 and PC6 on the MCU pins,
+	relocating the signal to a pin with full EXTI support, and the firmware was
+	updated accordingly (Figure~\ref{fig:gpio-bodge}).
+	A PCB revision with the correct pin assignment is required to eliminate the bodge.
+	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels
+	for the fader LEDs were incorrectly assigned during schematic entry, leaving
+	the slider LED indicators non-functional in this revision.
+	\item \textbf{BAT54S audio input clamp (EC-03):} A mismatch between the SPICE
+	simulation model and the actual SOT-23 package pinout of the BAT54S dual Schottky
+	diode caused the component to be placed with reversed orientation on the PCB.
+	The error was corrected by bending the component pins upward and soldering it
+	inverted, restoring the correct diode orientation (Figure~\ref{fig:diode-bodge}).
+	A corrected footprint assignment is required in the next PCB revision.
+\end{itemize}
+
+\subsubsection{Memory Headroom}
+DTCMRAM utilisation stands at 98.5\% and main SRAM at 93\% in the current firmware build.
+While sufficient for the implemented feature set, this leaves limited headroom for additional DSP algorithms or larger sample buffers.
+The current recording and playback buffer holds \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, which is adequate for the tape-style use case but restrictive for longer recordings.
+
+\subsubsection{Noise Characterisation (EC-05)}
+Quantitative noise floor measurements have not been completed for this revision.
+The analogue/digital separation strategy was applied during layout, but its effectiveness has not been formally verified through measurement.
+During in-system testing in a Eurorack environment, the noise performance was subjectively sufficient and no audible noise floor was observed.
+
+\subsubsection{Fixed-Point Phase Accumulator}
+The playback engine uses a Q48.16 fixed-point phase accumulator, motivated by the concern that floating-point accumulation errors could cause phase drift over long playback durations (Section~\ref{sec:numerical-architecture}).
+In retrospect, this concern does not apply to this system: the sample buffer holds only \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, meaning the playhead wraps within $2.5 \times 48000 = 120{,}000$ samples.
+Floating-point rounding errors are on the order of $\epsilon \approx 10^{-7}$ per accumulation step; over 120,000 steps the accumulated error remains below $0.012$ samples -- well below the resolution of the interpolator.
+Furthermore, the STM32H7 Cortex-M7 core includes a double-precision FPU, which provides 52 bits of mantissa and further reduces this already negligible error.
+A \texttt{double} or \texttt{float} playhead would be fully sufficient and would eliminate the fixed/floating boundary at the interpolator input, improving code readability.
+The fixed-point design is therefore a conservative choice that is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
+
+\subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
+The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.8}{\Hz} calculated from the AC-coupling network ($R_{in} = \SI{40}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
+
+The root cause has not been identified within the scope of this project, as only an end-to-end frequency response measurement was conducted.
+To isolate the source, individual frequency response measurements of the input and output stages should be performed separately in a future revision.
+Practically, the measured cutoff is reaching into the audible low frequency end, as sub-bass frequencies do reach the lower \qty{30}{Hz}.
+Still, this rolloff is marginal and the device is usable for musical applications.

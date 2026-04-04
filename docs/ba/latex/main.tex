@@ -22,7 +22,8 @@
 \usepackage{booktabs}
 \usepackage{subcaption}
 \usepackage{enumitem}
-\usepackage[nohyperlinks]{acronym}
+%\usepackage[nohyperlinks,footnote,withpage]{acronym}
+\usepackage{acro}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{pdfpages}
@@ -41,6 +42,8 @@
 \title{Development of an Embedded DSP Eurorack Synthesizer Module}
 \author{Jonas Lux}
 \date{15.04.2026}
+
+\input{acronyms_defs.tex}
 
 \begin{document}
 
@@ -100,6 +103,7 @@
 \tableofcontents
 \newpage
 \listoffigures
+
 \newpage
 \pagestyle{plain}
 \pagenumbering{arabic}       % main content starts at 1
@@ -112,6 +116,7 @@
 
 \newpage
 \section{Background and Fundamentals}
+	This section covers the Eurorack format, its signal conventions, and the digital signal processing foundations that underlie the system developed in this thesis.
 	\subsection{Modular Synthesizers and Eurorack}
     \label{sec:eurorack-fundamentals}
 	\input{eurorack_fundamentals.tex}
@@ -171,7 +176,7 @@
 
 % -----------------------------------------------------------------------
 \newpage
-\section{Schröder Reverb}
+\section{Schroeder Reverb}
 \input{schroeder_reverb.tex}
 
 \newpage
@@ -184,16 +189,26 @@ This section documents the verification of the hardware and firmware against the
 \input{firmware_testing.tex}
 
 \newpage
+\subsection{Requirements Verification}
+\input{requirements_verification.tex}
+
+\newpage
+\subsection{Discussion of Limitations}
+\input{discussion_of_limitations.tex}
+
+\newpage
+\subsection{Outlook}
+\label{sec:outlook}
+\input{outlook.tex}
+
+\newpage
 \section{Summary}
 \input{summary.tex}
 
-\subsection{Outlook}
-\input{outlook.tex}
-\label{sec:outlook}
-
 \newpage
-\input{acronyms_overview.tex}
-
+\section*{List of Acronyms}
+\addcontentsline{toc}{section}{List of Acronyms}
+\printacronyms[heading=none]
 
 \newpage
 \addcontentsline{toc}{section}{References}

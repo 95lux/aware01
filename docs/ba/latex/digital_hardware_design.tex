@@ -2,7 +2,7 @@
 \paragraph{MCU Selection}
 The \textbf{STM32H7A3RITx} was selected as the central processing unit for this project. 
 Prior experience with the STM32 platform, including peripheral configuration, pin assignment, and clock tree setup via STM32CubeMX, was a significant factor in this decision,as it reduced the required familiarisation time and allowed development to focus on the DSP implementation rather than the platform itself. 
-The STM32 HAL further accelerates development by providing a well-documented abstraction layer for peripheral initialisation and data transfer.
+The STM32 \ac{HAL} further accelerates development by providing a well-documented abstraction layer for peripheral initialisation and data transfer.
 
 The Cortex-M7 core running at up to \qty{280}{\mega\hertz} provides sufficient headroom for real-time DSP at \qty{48}{\kilo\hertz}.  
 The device integrates all peripherals required by this project: 
@@ -11,7 +11,7 @@ Multiple independent DMA streams allow audio buffer transfers, ADC acquisition, 
 
 \paragraph{Crystal}
 
-The \textit{NDK NX2520SA-24.000000\,MHz} \cite{Ndk_08142018_NX2520SA24000000MHzB8} crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in \cite{HowSelectCompatible2025}. 
+The \textit{NDK NX2520SA-24.000000\,MHz} \cite{Ndk_08142018_NX2520SA24000000MHzB8} crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in ST's guide on \textit{"How to select a compatible crystal and load capacitors for STM32"}\cite{HowSelectCompatible2025}. 
 Crystal compatibility requires a gain margin of at least 5, defined as:
 
 \[
@@ -40,7 +40,7 @@ The primary selection criterion was compatibility with the STM32H7 I\textsupersc
 Beyond the interface compatibility, the device was well suited to the project requirements for the following reasons:
 
 \begin{itemize}
-    \item A programmable gain amplifier (PGA) on both the ADC input and DAC output 
+    \item A \ac{PGA} on both the ADC input and \ac{DAC} output 
     paths allows software-controlled level adjustment without external components
     \item Configurable input impedance up to \qty{40}{\kilo\ohm} allows the 
     AC-coupling high-pass cutoff frequency to be pushed well below \qty{20}{\hertz}
@@ -51,6 +51,6 @@ Beyond the interface compatibility, the device was well suited to the project re
     management via an I\textsuperscript{2}C register interface
 \end{itemize}
 
-The main limitation encountered during its system integration was the complexity of the register map and the large number of interdependent configuration pages, which required careful sequencing during initialisation. 
-TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557 \cite{TLV320AIC3204ApplicationReference2012} was the primary reference for register-level configuration. 
-The \textit{TI E2E community forums} \cite{TIE2ESupport} proved additionally valuable, providing access to example initialisation sequences from other developers and direct answers to individual configuration questions.
+The main limitation encountered during its system integration was the complexity of the register map and the large number of interdependent configuration pages, which required careful sequencing during initialisation.
+TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557 \cite{TLV320AIC3204ApplicationReference2012} was the primary reference for register-level configuration.\footnote{The TI E2E community forums \cite{TIE2ESupport} proved additionally valuable, providing access to example initialisation sequences from other developers and direct answers to individual configuration questions.}
+The complete codec initialisation sequence is documented in the firmware source.

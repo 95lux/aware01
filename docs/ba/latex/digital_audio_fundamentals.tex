@@ -42,7 +42,7 @@ The processor must compute $N$ output samples before the hardware finishes filli
 next block; if it does not, the output buffer underruns and an audible glitch occurs.
 %TODO citation
 
-This block-based model is the standard operating mode of DMA-driven audio peripherals.
+This block-based model is the standard operating mode of \ac{DMA}-driven audio peripherals.
 The DMA engine operates in double-buffer mode, continuously filling a circular buffer of $2N$ samples; at each end of transaction it swaps memory pointers and raises an interrupt, giving the CPU a budget of exactly $N / f_s$ seconds to process one block \cite[Section~15.3.11]{stmicroelectronicsRM0433ReferenceManual2023}.
 
 The block size $N$ directly controls the trade-off between latency and CPU efficiency.

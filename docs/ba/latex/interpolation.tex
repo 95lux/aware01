@@ -47,7 +47,7 @@ The quality of this interpolation determines the spectral fidelity of the pitch-
 
 \subsubsection{Naive Approach: ZOH and Linear Interpolation}
 
-The simplest possible strategy is \textbf{zero-order hold (ZOH)}: the output simply 
+The simplest possible strategy is \textbf{zero-order hold (ZOH)}: the output simply
 repeats the last known sample value until the playhead reaches the next integer position.
 \[
 y_{\text{ZOH}}(t) = x_0, \quad t \in [0, 1)
@@ -80,7 +80,7 @@ At playback speeds above unity, the playhead advances by more than one sample pe
 The interpolator is still invoked for each output sample, but the fractional offset $\Delta t$ between consecutive output samples varies less and the slope discontinuities at sample boundaries are smaller. Aliasing artefacts are therefore less prominent in the downsampling regime.
 
 %As a concrete example, consider a \qty{100}{Hz} sawtooth stored at \qty{48}{kHz}, played back at $0.25\times$ pitch. The playhead advances by $0.25$ samples per output step, meaning three out of every four output samples are fully interpolated. 
-With linear interpolation, the piecewise-linear reconstruction introduces slope discontinuities at every sample boundary, producing harmonic artefacts between the signal's spectral lines that are clearly visible in an FFT of the output.
+With linear interpolation, the piecewise-linear reconstruction introduces slope discontinuities at every sample boundary, producing harmonic artefacts between the signal's spectral lines that are clearly visible in an \ac{FFT} of the output.
 
 Therefore a higher-quality interpolation scheme is desirable, whose output is at least $C^1$ 
 continuous, i.e.\ one where the slope is smooth across sample boundaries.
@@ -126,7 +126,7 @@ The test signal is a sum of three sinusoids, simulating a complex audio signal:
 \begin{figure}[H]
 	\centering
 	\makebox[\textwidth][c]{%
-		\includegraphics[width=0.9\textwidth]{../images/interpolation/fig_interpolation_comparison.pdf}
+		\includegraphics[width=1.0\textwidth]{../images/interpolation/fig_interpolation_comparison.pdf}
 	}
 	\caption{Interpolation method comparison}
 	\label{fig:interpolation_comparison}
@@ -283,77 +283,4 @@ H(t) = at^3 + bt^2 +ct +d, \quad t \in [0,1]
 
 but requires fewer arithmetic operations and is therefore preferred in DSP and CPU implementations.
 
-\subsection{Evaluation}
-\subsubsection{Measurement Setup}
-
-To evaluate interpolation quality, a \qty{100}{Hz} sawtooth wave was loaded into the 
-tape buffer. A sawtooth was chosen as the test signal because it contains both even and 
-odd harmonics, maximising the number of spectral components visible in the FFT output.
-
-The two interpolation methods under comparison were ZOH and the 4-point cubic Hermite 
-with Catmull-Rom tangents. Each method was recorded separately at the following playback 
-speeds: $0.25\times$ ($-2$ octaves), $0.33\times$, $0.5\times$ ($-1$ octave), 
-$0.75\times$, $1.0\times$ (unity), $1.5\times$, $2.0\times$ ($+1$ octave), and 
-$4.0\times$ ($+2$ octaves).
-
-To eliminate possible parameter jitter and value inaccuracy from the ADC, the playback speed was fixed at compile 
-time via a macro in \texttt{project\_config.h}, bypassing the control interface entirely:
-
-\begin{minted}[linenos]{c}
-	#define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
-\end{minted}
-
-The output was captured at $f_s = \qty{48}{kHz}$ as 24-bit \texttt{.wav} files 
-using a professional RME Fireface UFX\,II audio interface.
-
-\newpage
-\subsubsection{Results}
-
-Figure~\ref{fig:interpolation_linear_vs_zoh_fft} shows the FFT magnitude spectra of 
-the recorded signals for each playback speed. 
-
-\begin{figure}[H]
-	\centering
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1.0\textwidth]{../images/interpolation/fig_interpolation_fft.pdf}
-	}
-	\caption{FFT of 100Hz Saw signal - interpolated via Hermite and ZOH with different playback speeds}
-	\label{fig:interpolation_linear_vs_zoh_fft}
-\end{figure}
-\newpage
-At unity playback ($1.0\times$), both methods produce nearly identical spectra: the 
-harmonic series of the sawtooth is clearly visible with no significant aliasing, as no 
-interpolation is required when the playhead advances at exactly one sample per output step.
-
-As the playback speed decreases below $1.0\times$, the effective upsampling ratio 
-increases and the interpolator is called more frequently, making its quality increasingly 
-audible. At $0.5\times$ and below, ZOH shows clearly visible aliasing humps between the 
-signal harmonics — folded spectral energy from above Nyquist. At $0.25\times$, a second 
-aliasing hump appears, consistent with the broad sidelobe structure predicted by the ZOH 
-frequency response in Section~\ref{sec:interpolation-comparision-frequency-response}.
-
-The Hermite interpolator shows substantially lower aliasing across all upsampling 
-ratios. Even at $0.25\times$, where ZOH produces prominent aliasing humps, the Hermite 
-output retains only a small residual artefact — consistent with the suppressed sidelobe 
-structure of the Catmull-Rom kernel discussed in 
-Section~\ref{sec:interpolation-comparision-frequency-response}.
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{lp{3.5cm}p{4.5cm}}
-		\toprule
-		\textbf{Playback Speed} & \textbf{ZOH} & \textbf{Hermite (Catmull-Rom)} \\
-		\midrule
-		$4.0\times$ ($+2$ oct)   & Clean & Clean \\
-		$2.0\times$ ($+1$ oct)   & Clean & Clean \\
-		$1.5\times$              & Clean & Clean \\
-		$1.0\times$ (unity)      & Clean & Clean \\
-		$0.75\times$             & Minor aliasing & Clean \\
-		$0.5\times$  ($-1$ oct)  & Visible aliasing humps & Minor aliasing \\
-		$0.33\times$             & Strong aliasing & Minor aliasing \\
-		$0.25\times$ ($-2$ oct)  & Strong aliasing, double hump & Residual artefact only \\
-		\bottomrule
-	\end{tabular}
-	\caption{Qualitative comparison of aliasing artefacts at each playback speed.}
-	\label{tab:interpolation_aliasing_comparison}
-\end{table}
+The second DSP focus point of this thesis, the Schroeder reverb algorithm, is examined in the following section.

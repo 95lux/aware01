@@ -46,9 +46,16 @@ A \qty{1.27}{\milli\meter} pitch SWD header is placed on the back of the board, 
 Two hardware errors were identified during bring-up of the first PCB revision.
 
 The first concerns the gate input stage.
-One GPIO pin assigned to a gate input was found to be unavailable on the STM32H7 EXTI interrupt lines simultaneous to the other GPIO EXTI interrupts, making edge detection impossible in firmware for that channel.
+One GPIO pin assigned to a gate input was found to be unavailable on the STM32H7 \ac{EXTI} interrupt lines simultaneous to the other GPIO EXTI interrupts, making edge detection impossible in firmware for that channel.
 To make the pin work with interrupts, the original pin is set up as floating in the firmware. A bodge wire connects the gate signal to an alternative GPIO that has EXTI capability.
 This will be corrected in the next PCB revision by assigning the correct pin during schematic entry.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../images/hardware_design/bodges/gpio_wire_bodge.JPG}
+    \caption{Bodge wire connecting the Gate 03 signal from PC9 to PC6 directly on the MCU pins.}
+    \label{fig:gpio-bodge}
+\end{figure}
 
 The second error concerns the slide potentiometer LED indicators.
 The KiCad component symbol for the slide potentiometers was created incorrectly based on a misreading of the datasheet pin assignment.

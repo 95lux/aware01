@@ -89,13 +89,14 @@ The V/Oct CV input (A) provides additional pitch modulation following the standa
 \paragraph{Amplitude Envelope}
 An amplitude envelope is applied to each triggered playback event. 
 The attack and release times are set independently via sliders (8, 9), ranging from short percussive shapes to slow fades. 
-This allows the module to produce everything from tight hits to sustained sounds, without additional external VCA or envelope modules.
+This allows the module to produce everything from tight hits to sustained sounds, without additional external \ac{VCA} or envelope modules.
 
 \paragraph{Decimation and Reverb Effects}
 The Decimate Amount slider (10) sets the decimation factor applied to the next recording buffer, ranging from clean reproduction to $\times16$ decimation.
 Besides introducing lo-fi character to the recorded material, decimation also reduces the effective sample rate and therefore the RAM consumption per second -- which means the buffer can hold significantly more material. 
 At $\times16$ decimation for example, sixteen times as much content fits into the buffer compared to full resolution.
 
+\paragraph{XY Effect Plane}
 The XY Effect CV input (C) controls the reverb effect added to the output signal. The X axis controls the dry/wet mix and the feedback amount, while the Y axis controls the room scale. At the moment, the XY plane is only connected to the reverb settings, but it's designed to work with other effects as well, with their own parameter mappings, as more effects are added.
 
 \paragraph{Visual Feedback}
@@ -103,6 +104,8 @@ Four WS2812 RGB LEDs provide visual feedback on the current module state.
 The Play State LED (1) blinks green on each play trigger, and the Record State LED (2) blinks red on each record trigger. 
 The Play Mode LED (3) reflects the current combination of cyclic and reverse modes through its color. 
 The fourth LED (4) is currently unassigned and available for future functionality.
+
+A possible application of the 4th LED could be the visualization of the decimation by a glitchy/noisy animation/corresponding to play.
 
 \subsubsection{Calibration}
 

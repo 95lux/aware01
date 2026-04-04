@@ -1,10 +1,60 @@
-\subsubsection{Power and safety tests}
+\subsubsection{Power and Safety Tests}
 
+\paragraph{Rail Voltage Verification}
 
-\subsubsection{ADC Input Range and Signal Levels}
-As detailed in the analog frontend design (Section~\ref{sec:input-attenuator-changes}), 
-the input attenuator was revised to prevent ADC saturation on full-scale Eurorack signals. 
-This section verifies the corrected design under measurement conditions.
+All power rails were measured under normal operating conditions using an OWON XDM1241 multimeter.
+Table~\ref{tab:rail-voltages} summarises the measured values against their expected levels.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llll}
+        \toprule
+        \textbf{Rail} & \textbf{Source} & \textbf{Expected} & \textbf{Measured} \\
+        \midrule
+        $+\SI{5}{\volt}$   & Buck converter from $+\SI{12}{\volt}$ bus & $\SI{5.00}{\volt}$ & $\SI{5.00}{\volt}$ \\
+        $+\SI{3.3}{\volt}$ & LDO from $+\SI{5}{\volt}$                 & $\SI{3.30}{\volt}$ & $\SI{3.29}{\volt}$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Derived power rail voltages measured under normal operating conditions.}
+    \label{tab:rail-voltages}
+\end{table}
+
+Both derived rails are in close deviation of their target values, confirming correct operation of the buck converter and LDO.
+The Eurorack bus rails ($+\SI{12}{\volt}$ and $-\SI{12}{\volt}$) were supplied by a linear lab power supply with current readings. The power behaviour in a host case with its own power supply were not independently measured.
+
+\paragraph{Current Consumption}
+
+The firmware executes the full DSP chain --- tape player, exciter, and Schroeder reverb --- unconditionally on every audio block at \qty{48}{\kilo\hertz}, regardless of whether audio is recorded in the buffer.
+There is therefore no meaningful idle state; the current figures below represent steady-state operation.
+
+Current draw was measured on the $+\SI{12}{\volt}$ and $-\SI{12}{\volt}$ Eurorack bus rails using the current display of an QJ3005E III bench supply, under two LED conditions.
+The $+\SI{12}{\volt}$ rail supplies the LDO (\qty{3.3}{\volt} for MCU and analog circuitry) and the buck converter (\qty{5}{\volt} for WS2812 LEDs); the $-\SI{12}{\volt}$ rail supplies the op-amp negative rails exclusively.
+The firmware caps WS2812 brightness at 170 out of 255 (\qty{67}{\percent}) because maximum brightness was too harsh too look at.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Condition} & \textbf{$+\SI{12}{\volt}$ (mA)} & \textbf{$-\SI{12}{\volt}$ (mA)} \\
+        \midrule
+        DSP active, LEDs off                                   & 80  & 20 \\
+        DSP active, all 4 LEDs white at firmware max (170/255) & 120 & 20 \\
+        Estimated worst case (all LEDs white at 255/255)       & $\approx 140$ & 20 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Current consumption on Eurorack bus rails. Worst-case estimate scales the measured LED contribution linearly: $\Delta I_\text{LED} = \SI{40}{\milli\ampere} \times \frac{255}{170} \approx \SI{60}{\milli\ampere}$.}
+    \label{tab:power-consumption}
+\end{table}
+
+The $-\SI{12}{\volt}$ draw is constant across both conditions, as expected, since the op-amp stages are unaffected by LED state.
+The LED contribution of \qty{40}{\milli\ampere} at firmware maximum brightness is consistent with four WS2812 LEDs at partial drive (\qty{10}{\milli\ampere} per LED).
+
+\paragraph{Input Protection}
+
+Input overvoltage protection is verified by design and confirmed through in-system testing at full Eurorack signal levels.
+Gate inputs are clamped via transistor stages (EC-02); CV inputs use rail-guarded op-amp stages that limit the voltage presented to the STM32H7 ADC (EC-01, EC-02); audio inputs are attenuated by a passive resistor divider and clamped by a BAT54S dual Schottky diode to the codec supply rails (EC-03).
+No input damage or anomalous behaviour was observed during extended operation with Eurorack-level signals.
+The audio input protection is further verified by the loopback measurements in Section~\ref{sec:loopback-signal-level-measaurements}, which confirm correct ADC signal levels at \SI{10}{\volt_{pp}} input.
 
 \subsubsection{Loopback and Signal Level Measurements}
 \label{sec:loopback-signal-level-measaurements}
@@ -20,31 +70,26 @@ To characterise the digital headroom, the DMA RX and TX buffers were read out vi
 \paragraph{Results}
 
 Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input (yellow) and output (blue) for a \SI{10}{V_{pp}} sine wave at \qty{100}{Hz} and \qty{1}{kHz}.
-Note that these measurements were taken with an incorrectly configured input impedance of \SI{20}{\kilo\ohm} instead of \SI{40}{\kilo\ohm}, which raises the high-pass cutoff frequency. 
-Nevertheless, signal integrity can still be evaluated from these measurements.
-
-%TODO Make these new with 40k input impedance!!
 
 \begin{figure}[H]
-
 	\centering
 	\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[width=\textwidth]{../images/signal_tests/codec_loopback/scope_loopback_fw-gain-1_10Vpp_sine_100Hz.png}
-			\subcaption{\qty{100}{Hz}}
+			\subcaption{\qty{100}{Hz} -- output \qty{7.20}{V_{pp}}}
 		\end{minipage}
 	\begin{minipage}{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{../images/signal_tests/codec_loopback/scope_loopback_fw-gain-1_10Vpp_sine_1kHz.png}
-		\subcaption{\qty{1}{kHz}}
+		\subcaption{\qty{1}{kHz} -- output \qty{7.68}{V_{pp}}}
 	\end{minipage}
 	\hfill
 
-	\caption{Oscilloscope captures -- \SI{10}{V_{pp}} sine wave loopback.}
+	\caption{Oscilloscope captures -- \SI{10}{V_{pp}} sine wave loopback at \SI{40}{\kilo\ohm} codec input impedance.}
 	\label{fig:loopback_scope}
 \end{figure}
 
-Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer 
+Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer
 contents at \qty{1}{kHz} test signal.
 
 \begin{figure}[H]
@@ -54,15 +99,19 @@ contents at \qty{1}{kHz} test signal.
 	\label{fig:loopback_buf}
 \end{figure}
 
-Both frequencies pass through the signal chain without observable distortion. 
+Both frequencies pass through the signal chain without observable distortion.
+The output amplitude at \qty{1}{kHz} is \qty{7.68}{V_{pp}} versus \qty{7.20}{V_{pp}} at \qty{100}{Hz}, a difference of $20 \log_{10}(7.20 / 7.68) \approx \qty{-0.56}{dB}$.
+This attenuation at \qty{100}{Hz} is consistent with the low-frequency rolloff identified in the frequency response measurement (Section~\ref{sec:frequency-response}, Figure~\ref{fig:frequency_response}).
+
 The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirming \qty{3.2}{dB} of digital headroom at \SI{10}{V_{pp}} input -- the maximum standard Eurorack audio signal level (Section~\ref{sec:eurorack-fundamentals}).
 
-The available headroom of \qty{3.2}{dB} is sufficient for the current implementation. 
-For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level. 
-Since scaling up a signal in the digital domain is always possible — at the cost of increased 
+The available headroom of \qty{3.2}{dB} is sufficient for the current implementation.
+For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level.
+Since scaling up a signal in the digital domain is always possible — at the cost of increased
 quantisation noise floor — a more conservative analog gain setting would give greater flexibility in the DSP processing chain.
 
 \subsubsection{Frequency Response}
+\label{sec:frequency-response}
 
 \paragraph{Measurement Setup}
 

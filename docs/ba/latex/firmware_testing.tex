@@ -1,4 +1,149 @@
-\subsubsection{Driver verification}
+\subsubsection{Pitch Interpolation Evaluation}
+\paragraph{Measurement Setup}
+
+To evaluate interpolation quality (implementation details in Section \ref{sec:focus-1-pitch-interpolation}), a \qty{100}{Hz} sawtooth wave was loaded into the tape record buffer. 
+A sawtooth was chosen as the test signal because it contains both even and odd harmonics, maximising the number of spectral components visible in the FFT output.
+
+The two interpolation methods under comparison were ZOH and the 4-point cubic Hermite 
+with Catmull-Rom tangents. Each method was recorded separately at the following playback 
+speeds: $0.25\times$ ($-2$ octaves), $0.33\times$, $0.5\times$ ($-1$ octave), 
+$0.75\times$, $1.0\times$ (unity), $1.5\times$, $2.0\times$ ($+1$ octave), and 
+$4.0\times$ ($+2$ octaves).
+
+To eliminate possible parameter jitter and value inaccuracy from the ADC, the playback speed was fixed at compile 
+time via a macro in \texttt{project\_config.h}, bypassing the control interface entirely:
+
+\begin{minted}[linenos]{c}
+	#define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
+\end{minted}
+
+The output was captured at $f_s = \qty{48}{kHz}$ as 24-bit \texttt{.wav} files 
+using a professional RME Fireface UFX\,II audio interface.
+
+\paragraph{Results}
+
+Figure~\ref{fig:interpolation_linear_vs_zoh_fft} shows the FFT magnitude spectra of 
+the recorded signals for each playback speed. 
+
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.0\textwidth]{../images/interpolation/fig_interpolation_fft.pdf}
+	}
+	\caption{FFT of 100Hz Saw signal - interpolated via Hermite and ZOH with different playback speeds}
+	\label{fig:interpolation_linear_vs_zoh_fft}
+\end{figure}
+
+At unity playback ($1.0\times$), both methods produce nearly identical spectra: the 
+harmonic series of the sawtooth is clearly visible with no significant aliasing, as no 
+interpolation is required when the playhead advances at exactly one sample per output step.
+
+As the playback speed decreases below $1.0\times$, the effective upsampling ratio 
+increases and the interpolator is called more frequently, making its quality increasingly 
+audible. At $0.5\times$ and below, ZOH shows clearly visible aliasing humps between the 
+signal harmonics — folded spectral energy from above Nyquist. At $0.25\times$, a second 
+aliasing hump appears, consistent with the broad sidelobe structure predicted by the ZOH 
+frequency response in Section~\ref{sec:interpolation-comparision-frequency-response}.
+
+The Hermite interpolator shows substantially lower aliasing across all upsampling 
+ratios. Even at $0.25\times$, where ZOH produces prominent aliasing humps, the Hermite 
+output retains only a small residual artefact — consistent with the suppressed sidelobe 
+structure of the Catmull-Rom kernel discussed in 
+Section~\ref{sec:interpolation-comparision-frequency-response}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lp{3.5cm}p{4.5cm}}
+		\toprule
+		\textbf{Playback Speed} & \textbf{ZOH} & \textbf{Hermite (Catmull-Rom)} \\
+		\midrule
+		$4.0\times$ ($+2$ oct)   & Clean & Clean \\
+		$2.0\times$ ($+1$ oct)   & Clean & Clean \\
+		$1.5\times$              & Clean & Clean \\
+		$1.0\times$ (unity)      & Clean & Clean \\
+		$0.75\times$             & Minor aliasing & Clean \\
+		$0.5\times$  ($-1$ oct)  & Visible aliasing humps & Minor aliasing \\
+		$0.33\times$             & Strong aliasing & Minor aliasing \\
+		$0.25\times$ ($-2$ oct)  & Strong aliasing, double hump & Residual artefact only \\
+		\bottomrule
+	\end{tabular}
+	\caption{Qualitative comparison of aliasing artefacts at each playback speed.}
+	\label{tab:interpolation_aliasing_comparison}
+\end{table}
+
+\subsubsection{Schroeder Reverb Evaluation}
+
+\paragraph{Impulse Response Decay}
+
+Figure~\ref{fig:schroeder_env_decay_measurement} shows the measured envelope decay 
+of the reverb unit under varying feedback and room size parameters. Each curve 
+represents the smoothed amplitude envelope of a 20\,ms white noise burst passed 
+through the reverb and plotted until the signal 
+reaches $-60$\,dB.
+
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_envelope.pdf}
+	}
+	\caption{Reverb Decay Times of a \qty{20}{ms} White Noise Burst}
+	\label{fig:schroeder_env_decay_measurement}
+\end{figure}
+
+\paragraph{Feedback and Room Size} As expected, higher feedback coefficients result in longer decay times. 
+At maximum feedback ($fb = 0.975$), the reverb tail extends significantly longer than at minimum feedback ($fb = 0.442$), which decays rapidly toward the noise floor. 
+The most important validation is the stability at maximum feedback, on both maximum and minimum room sizes.
+
+The room size parameter scales the delay line lengths of 
+the comb filters. At maximum room size, the decay is smoother and more diffuse, 
+while at minimum room size the shorter delay lines produce a denser, more colored 
+decay. \\
+
+
+The parameter boundaries were determined empirically during testing, chosen to represent the range that produces the most musically useful results --- long, dense decay at the upper end, and short, subtle  ambience at the lower end --- while ensuring the filters remain stable throughout.
+\paragraph{RT60} The \qty{-60}{dB} decay time (RT60) can be read directly from the 
+x-axis. At maximum feedback and room size, the RT60 is approximately \qty{5}{s}, while at minimum feedback it falls below \qty{0.5}{s}. 
+Notably, at minimum room size the RT60 reaches only approximately \qty{3.25}{s} even at maximum feedback --- significantly shorter than the \qty{5}{s} observed at maximum room size. 
+During testing, it became clear that feedback scaling (described in Section~\ref{sec:schroeder_parameter_coupling}) alone cannot fully compensate 
+for the shorter decay at smaller room sizes --- increasing feedback further risks 
+instability before the RT60 of larger room sizes can be matched.
+
+\paragraph{Spectrogram}
+
+Figure~\ref{fig:schroeder_env_spectrogram} shows the spectrogram of the reverb tail 
+at maximum feedback ($fb = 0.975$, size $= 1.0$), comparing the comb filter lowpass 
+enabled and disabled. The input is a \qty{20}{ms} white noise burst, plotted over 
+\qty{5}{s} of decay.
+
+
+\begin{figure}[H]
+	\centering
+	\makebox[\textwidth][c]{%
+		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_spectrogram.png}
+	}
+	\caption{Reverb Tail Spectrogram at comb lowpass filter on feedback settings}
+	\label{fig:schroeder_env_spectrogram}
+\end{figure}
+
+\subparagraph{LP enabled} With the lowpass active ($d = 0.4$), high-frequency energy 
+decays significantly faster than low-frequency content. The rolloff is clearly visible 
+as the bright energy concentrates toward the lower frequencies over time, producing 
+the characteristic warm, darkening tail associated with natural room acoustics.
+
+\subparagraph{LP disabled} Without lowpass damping, energy is distributed more evenly 
+across the frequency spectrum throughout the decay, resulting in a brighter and more 
+unnatural sounding tail.
+
+\subparagraph{Summary} Both variants have usable applications in music production. 
+Engaging the lowpass produces a more natural sounding reverb tail, modelling the 
+frequency-dependent absorption of a natural acoustic space, where high frequencies 
+are absorbed more rapidly than low frequencies.\\
+
+An interesting observation is that the frequency content of the reverb tail extends 
+almost to the Nyquist limit of $f_s / 2$ (\qty{24}{kHz}), confirming that neither 
+the used audio interface (RME Fireface UFX\,II interface \cite{FirefaceUFXII}) nor the embedded system 
+introduce any significant bandlimiting, and the observed high-frequency content 
+reflects the true output of the reverb algorithm.
 
 \subsubsection{Timing and Latency Analysis}
 
@@ -11,8 +156,8 @@ To provide sharp signal edges suitable for precise timing measurement, the fade-
 fade-out, and amplitude envelope were disabled for the duration of the measurement by commenting out the implemented feature-enable macros in \texttt{project\_config.h}:
 
 \begin{minted}{c}
-	// #define CONFIG_ENABLE_ENVELOPE
-	// #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
+// #define CONFIG_ENABLE_ENVELOPE
+// #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
 \end{minted}
 
 The measurement captures the full latency chain: gate detection, FreeRTOS task 
@@ -83,16 +228,14 @@ Table~\ref{tab:latency_results}:
 \end{table}
 
 The measured latency ranges from \qty{1.640}{ms} to \qty{2.100}{ms} across all $n = 19$ measurements, with a mean of \qty{1.896}{ms} and a standard deviation of \qty{0.144}{ms}. 
-The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms}, confirming that command latency is dominated by the block-based processing architecture as expected.
-
-All measurements fall comfortably within the \qty{5}{ms} latency requirement (Section~\ref{sec:system-requirements}), with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
-The tight standard deviation indicates consistent and predictable timing behaviour across repeated triggers.
-
+The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms}, confirming that command latency is dominated by the block-based processing architecture as expected. 
+All measurements fall comfortably within both the \qty{5}{ms} system latency requirement (Section~\ref{sec:system-requirements}) and the \qty{10}{ms} perceptual upper bound for gesture-to-audio latency in  live performance~\cite[p.~13]{davidwesselProblemsProspectsIntimate2002}, with the theoretical worst-case of \qty{4.0}{ms} never approached in practice. 
+The standard deviation of \qty{0.144}{ms} also falls well within the \qty{1}{ms} jitter tolerance identified by Wessel and Wright~\cite[p.~13]{davidwesselProblemsProspectsIntimate2002}, indicating consistent and predictable timing behaviour across repeated triggers.
 
 \subsubsection{CPU Utilization Measurement}
 
 CPU utilization is measured using the FreeRTOS runtime statistics API in combination 
-with the ARM Cortex-M7 DWT cycle counter, which increments at the CPU core frequency 
+with the ARM Cortex-M7 \ac{DWT} cycle counter, which increments at the CPU core frequency 
 of 280~MHz and serves as the time base for task scheduling measurements. \cite{RunTimeStatistics}
 The DWT counter is enabled during system initialization and mapped to the FreeRTOS \texttt{portGET\_RUN\_TIME\_COUNTER\_VALUE} macro, allowing the scheduler to sample elapsed cycles on every context switch.
 
@@ -171,7 +314,6 @@ Given the perceptually diffuse nature of reverb tails, the resulting reduction i
 
 The gained performance can be used to implement more DSP features, like grain-synthesis or experimental filtering.
 
-\newpage
 \subsubsection{Calibration Accuracy}
 
 To verify that the V/Oct input and digital processing chain correctly map CV signals to pitch, a calibration routine has been implemented (see Section~\ref{sec:calibration-and-pitch-tracking}).
@@ -193,6 +335,7 @@ The full signal chain -- from CV input through ADC digitization to pitch-control
 Reference voltages were generated with an EA-PS 3016-05 power supply and measured with an OWON XDM1241 multimeter~\cite{owonXDM1000SeriesDatasheet}.
 On the \SI{5}{V} range the multimeter accuracy is $\pm(0.05\%+5\,\text{LSB})$, giving a worst-case uncertainty of $\pm\SI{2}{mV}$ at \SI{3}{V}.
 The supply ripple and stability are both $<\SI{1}{mV}$~\cite{elektro-automatikPOWERSUPPLIESSERIES}, well below the multimeter uncertainty.
+
 In V/Oct terms, a \SI{2}{mV} error corresponds to $2\,\text{mV} / \SI[per-mode=symbol]{1000}{\milli\volt\per\octave} = 0.002\,\text{octaves} = 2.4\,\text{cents}$\footnote{One cent = $\frac{1}{100}$ semitone = $\frac{1}{1200}$ octave.} , negligible for this application.
 Output frequency was measured using the trigger frequency counter of a Tektronix TBS2000B oscilloscope at $\pm\SI{25}{ppm}$~\cite{TBS2000BSpecificationVerification_077153803_RevD}, corresponding to $\pm\SI{0.025}{Hz}$ at \SI{1}{kHz} --- negligible relative to the deviations under investigation.
 

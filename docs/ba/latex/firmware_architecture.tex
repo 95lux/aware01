@@ -10,9 +10,9 @@ Full pin assignments and register-level parameters for all peripherals are liste
 \paragraph{Timers}
 Five hardware timers are used (see Table~\ref{tab:timers}).
 TIM7 serves as the FreeRTOS timebase.
-TIM13 and TIM14 operate in one-pulse mode (OPM), generating a single pulse per trigger event rather than running continuously.
+TIM13 and TIM14 operate in \ac{OPM}, generating a single pulse per trigger event rather than running continuously.
 TIM15 is clocked such that its PWM duty cycle encodes WS2812 bit values; the DMA transfer loads successive compare values into the capture/compare register without CPU involvement.
-TIM17's period-elapsed ISR issues a direct-to-task notification to \texttt{UserInterfaceTask}, keeping all animation logic within the task context.
+TIM17's period-elapsed \ac{ISR} issues a direct-to-task notification to \texttt{UserInterfaceTask}, keeping all animation logic within the task context.
 
 \paragraph{DMA}
 Five DMA1 streams are allocated (see Table~\ref{tab:dma}), all operating without CPU involvement once initiated.
@@ -26,12 +26,12 @@ ADC1 samples the four slide potentiometers; ADC2 samples the four CV inputs incl
 Both use an asynchronous clock of \SI{6}{\mega\hertz} derived from PLL3-R, yielding an effective per-channel conversion rate of approximately \SI{610}{\hertz} — sufficient for slowly varying potentiometer and CV inputs, but not for audio-rate CV tracking.
 
 \paragraph{GPIO and External Interrupts}
-All gate and button inputs generate falling-edge interrupts at NVIC priority~10 (see Table~\ref{tab:exti}), permitting FreeRTOS API calls (\texttt{xTaskNotifyFromISR}) directly inside these handlers.
+All gate and button inputs generate falling-edge interrupts at \ac{NVIC} priority~10 (see Table~\ref{tab:exti}), permitting FreeRTOS API calls (\texttt{xTaskNotifyFromISR}) directly inside these handlers.
 \texttt{GATE3\_IN} was relocated from PC9 to PC6 via a hardware bodge, as PC9 did not support EXTI interrupts simultaneously with the other assigned lines.
 
 \paragraph{Serial and Audio Interfaces}
 I2S1, I2C1, and UART4 are used for audio data, codec configuration, and debug output respectively (see Table~\ref{tab:serial}).
-The I2S master clock (MCK) on PC4 is driven by PLL2-P at \SI{12.288}{\mega\hertz}, exactly $256 \times f_s$ at \SI{48}{\kilo\hertz}, allowing the codec to derive all internal clocks from this single external reference without its own PLL.
+The I2S master clock (\ac{MCK}) on PC4 is driven by PLL2-P at \SI{12.288}{\mega\hertz}, exactly $256 \times f_s$ at \SI{48}{\kilo\hertz}, allowing the codec to derive all internal clocks from this single external reference without its own \ac{PLL}.
 
 \paragraph{Clocks}
 The STM32H7A3 uses three independent PLLs to derive the required clock domains (see Table~\ref{tab:clocks}).
@@ -54,7 +54,7 @@ The linker script assigns each region a specific role based on access speed and 
 		\texttt{DTCMRAM}             & \qty{128}{kB}  & \texttt{.data}, \texttt{.bss}, stack, heap, FreeRTOS stack & \qty{129.2}{kB} & 98.5\% \\
 		\texttt{RAM}                 & \qty{1008}{kB} & Large static buffers (\texttt{.sram1}): audio sample buffers and reverb delay lines & \qty{960}{kB} & 93.0\% \\
 		\texttt{RAM\_NONCACHEABLE}   & \qty{16}{kB}   & DMA buffers (\texttt{.dma\_buffer}) & \qty{1.1}{kB} & 6.8\% \\
-		\texttt{ITCMRAM}             & \qty{64}{kB}   & Instruction TCM, reserved for latency-critical code & \qty{0}{kB} & 0\% \\
+		\texttt{ITCMRAM}             & \qty{64}{kB}   & Instruction \ac{TCM}, reserved for latency-critical code & \qty{0}{kB} & 0\% \\
 		\bottomrule
 	\end{tabular}
 	\caption{Memory region assignment and utilisation at build time.}
@@ -83,13 +83,13 @@ ST's application note AN4839 explicitly recommends this approach:
 \textit{``Always better to use non-cacheable regions for DMA buffers''} \cite[pp.~6-7]{stmicroelectronicsLevel1Cache2018}. 
 By marking the DMA region as non-cacheable in the MPU configuration, coherency is guaranteed without requiring explicit \texttt{SCB\_CleanDCache} / \texttt{SCB\_InvalidateDCache} calls around every transfer. \\
 
-Buffer sizes for the tape buffers (Section~\ref{sec:tapep-buffers}) and reverb delay lines (Section~\ref{sec:schroeder_memory_allocation}) are tuned to maximise SRAM utilisation: 
+Buffer sizes for the tape buffers (Section~\ref{sec:tapep-buffers}) and reverb delay lines (Section~\ref{sec:schroeder_memory_allocation}) are tuned to maximise \ac{SRAM} utilisation: 
 larger tape buffers extend the maximum recording time, while larger reverb delay lines allow for a more spacious room size. 
-The GCC linker report (Table~\ref{tab:memory_layout}) confirms that both \texttt{RAM} (93\%) and \texttt{DTCMRAM} (98.5\%) are nearly fully utilised. 
+The \ac{GCC} linker report (Table~\ref{tab:memory_layout}) confirms that both \texttt{RAM} (93\%) and \texttt{DTCMRAM} (98.5\%) are nearly fully utilised. 
 Flash consumption is modest at under 5\% and will probably never be a limiting factor in this project.
 
 \newpage
-\subsubsection{RTOS Task Structure}
+\subsubsection{\ac{RTOS} Task Structure}
 
 The firmware employs FreeRTOS with three concurrent tasks organised by priority.
 A fourth temporary task is spawned during boot routine.
@@ -106,9 +106,9 @@ Figure~\ref{fig:freertos-flow-diagram} illustrates the task structure and signal
 
 \paragraph{AudioTask}
 The highest-priority \texttt{AudioTask} is responsible for all real-time audio processing.
-The AudioTask initialises the codec and audio engine, then enters a perpetual processing loop. 
+It initialises the codec and audio engine, then enters a perpetual processing loop. 
 The whole DSP processing chain is being worked on sequentially in this task, per DMA half-buffer. 
-Each iteration blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt; upon wakeup, it fetches a consistent parameter snapshot via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages in sequence, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from \texttt{tape\_cmd\_q} before yielding.
+Each iteration blocks on a direct-to-task notification issued by the DMA transfer-complete interrupt (which sends-- and receives the I2S data from-- and to the audio codec); upon wakeup, it fetches a consistent parameter snapshot via \texttt{param\_cache\_fetch}, processes one half-block of audio through the tape-player, exciter, and Schroeder reverb stages in sequence, writes the result back to the DMA output buffer, and drains any pending tape-transport commands from \texttt{tape\_cmd\_q} before yielding.
 
 
 \paragraph{ControlInterfaceTask}
@@ -146,7 +146,7 @@ It is a highly configurable device controlled entirely through a register interf
 The codec is configured over I\textsuperscript{2}C using a thin register-access layer built on the STM32 HAL. 
 The \texttt{codec\_init} function executes a fixed register-write sequence: software reset, clock divider configuration, I\textsuperscript{2}S framing, input/output routing, and finally powering up the ADC and DAC at unity gain.
  
-Clock dividers NDAC and MDAC are selected at runtime based on the requested sample rate according to $f_s = f_\text{MCLK} / (N \cdot M \cdot \text{OSR})$, with a \qty{12.288}{MHz} master clock and fixed OSR of 128. 
+Clock dividers NDAC and MDAC are selected at runtime based on the requested sample rate according to $f_s = f_\text{MCLK} / (N \cdot M \cdot \text{OSR})$, with a \qty{12.288}{MHz} master clock and fixed \ac{OSR} of 128. 
 
 \begin{listing}[h]
     \begin{minted}{c}
@@ -228,7 +228,9 @@ per-channel CV offsets, and the potentiometer range endpoints — all floating-p
 values determined during the factory calibration procedure and required at boot before 
 the audio engine starts.
 
-Reading invalidates the DCache before accessing Flash 
-(\texttt{SCB\_InvalidateDCache}), ensuring the CPU does not return a cached copy of 
-previously read Flash contents after a write cycle. The Flash address is accessed via 
+Reading invalidates the DCache before accessing Flash
+(\texttt{SCB\_InvalidateDCache}), ensuring the CPU does not return a cached copy of
+previously read Flash contents after a write cycle. The Flash address is accessed via
 a \texttt{volatile} pointer to prevent the compiler from optimising away the reads.
+
+Together, these mechanisms provide a complete firmware infrastructure for real-time audio processing, parameter management, and persistent configuration storage.

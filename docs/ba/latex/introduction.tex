@@ -2,15 +2,12 @@
 The popularity of modular synthesizers has grown continuously over the past decade, with the Eurorack format becoming the standard in the consumer electronic music industry.
 The ModularGrid database, a community-maintained catalogue of Eurorack modules, lists over 11,700 distinct modules from manufacturers ranging from large commercial companies to small community projects. 
 Over 9,400 of these modules remain in active production today \cite{ModulesModularGrid}.
-Despite the scale of this ecosystem, commercially available modules are often closed-source, expensive, and offer limited flexibility for experimentation with custom DSP algorithms.
+Despite the scale of this ecosystem, commercially available modules are often closed-source, expensive, and offer limited flexibility for experimentation with custom \ac{DSP} algorithms.
 
 The STM32H7 platform is well-suited to embedded audio applications. 
-With its Cortex-M7 core running at up to 280 MHz and hardware floating-point support, it provides sufficient computational headroom for the DSP workloads explored in this thesis.
+With its Cortex-M7 core running at up to 280 MHz and hardware floating-point support, it provides sufficient computational headroom for the DSP workloads explored in this thesis. //
 
-\subsubsection{What is Eurorack?}
-%TODO Image of patched Eurorack synth
-%TODO Sources
-Eurorack is a modular synthesizer format that dates back to 1995, when Dieter Doepfer introduced his A-100 system, making it the very first modular synthesizer built around what is now known as the Eurorack standard. \cite{ZeittabelleDeutschEnglisch}.
+Eurorack is a modular synthesizer format that dates back to 1995, when Dieter Doepfer introduced his A-100 system, making it the very first modular synthesizer built around what is now known as the Eurorack standard. \cite{ZeittabelleDeutschEnglisch}
 
 \begin{wrapfigure}{r}{0.44\textwidth}
     \centering
@@ -18,7 +15,7 @@ Eurorack is a modular synthesizer format that dates back to 1995, when Dieter Do
     \includegraphics[width=0.4\textwidth]{../images/eurorack_fundamentals/Doepfer_A-100.jpg}
     \vspace{-0.9em}
     \caption{Doepfer A-100 System Variant}
-    \vspace{-1.6em}
+    \vspace{-1.0em}
     \label{fig:a-100}
 \end{wrapfigure}
 
@@ -42,7 +39,7 @@ The primary objective of this thesis is the development of a fully functional, D
 This will include the following::
 
 \begin{itemize}
-	\item Design and implementation of a Eurorack-compliant analog frontend, including CV input conditioning, V/Oct pitch tracking, and audio codec interfacing
+	\item Design and implementation of a Eurorack-compliant analog frontend, including \ac{CV} input conditioning, Volt per Octave (V/Oct) pitch tracking, and audio codec interfacing
 	\item Development of a real-time firmware architecture on the STM32H7 platform using FreeRTOS, meeting the latency and stability requirements of a live performance instrument
 	\item Implementation of a tape-style playback engine with pitch shifting, supporting real-time CV control
 	\item Investigation of pitch interpolation algorithms suitable for embedded real-time audio

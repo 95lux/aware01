@@ -1,3 +1,7 @@
+Throughout the codebase, \texttt{// TODO:} comments mark optimization proposals, notes, and future feature ideas that arose during development.
+These are not indicators of incomplete or non-functional project features; all requirements defined in Section~\ref{sec:system-requirements} are implemented and verified.
+The comments serve as notes for potential improvements for continued development beyond the scope of this thesis.
+
 \subsubsection{Hardware Revisions}
 The pin misassignments identified in this revision will be corrected in a dedicated PCB revision, restoring interrupt-driven edge detection for the Gate 03 input and  enabling PWM-driven LED control for the slide potentiometer indicators. 
 
@@ -10,7 +14,7 @@ This would also provide the headroom necessary to accommodate additional DSP alg
 
 A suitable candidate for this extension is the APS6404L-3SQR-SN \cite{APS6404L_3SQR}, a 64 Mbit (8 MB) PSRAM in an SOP-8 package.
 
-At 8 MB, the chip would increase available RAM by approximately eight times thecurrent internal SRAM, enabling significantly longer recording buffers and providing headroom for future DSP algorithm development.
+At 8 MB, the chip would increase available RAM by approximately eight times the current internal SRAM, enabling significantly longer recording buffers and providing headroom for future DSP algorithm development.
 
 \subsubsection{DSP Algorithms}
 The current DSP chain will be extended with additional audio processing algorithms. 

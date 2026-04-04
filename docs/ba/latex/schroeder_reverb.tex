@@ -12,12 +12,12 @@ Room simulation can become very complex when attempting to physically model the 
 
 All of these are relevant considerations, but implementing each in depth is out of scope for this project, as the reverb is merely the DSP component of a larger system. 
 The goal is a straightforward implementation that demonstrates the real-time capabilities of the hardware while producing aesthetically interesting spatial effects. 
-For this reason, one of the earliest concepts of artificial reverberation based on discrete-time signal processing was chosen -- constructed by Schröder in the early 1960s and known as the \textit{Schröder Reverberator}.
+For this reason, one of the earliest concepts of artificial reverberation based on discrete-time signal processing was chosen -- constructed by Schroeder in the early 1960s and known as the \textit{Schroeder Reverberator}.
 
-\subsection{Theory of the Schröder Reverb}
+\subsection{Theory of the Schroeder Reverb}
 % Schroeder structure, why prime delays, what RT60 is.
 
-Schröders original proposal is a combination of \textit{comb} and \textit{allpass} filters. \cite{m.r.schroederJournalAudioEngineering1962}[pp.~219-223]
+Schroeders original proposal is a combination of \textit{comb} and \textit{allpass} filters. \cite{m.r.schroederJournalAudioEngineering1962}[pp.~219-223]
 The implementation structure used in this project includes a bank of parallel comb filters, combining into a series of allpass filters.
 The variant used here -- including lowpass-feedback comb filters -- is also known as the \textbf{Moore} variant of the reverberator.
 
@@ -43,7 +43,7 @@ Together, the structure achieves both a perceptually convincing decay envelope a
 \subsubsection{Feedback Comb Filter}
 \label{sec:comb_filter}
 
-At the basis of the \textit{Schröder Reverberator} is a structure of parallel comb filters.
+At the basis of the \textit{Schroeder Reverberator} is a structure of parallel comb filters.
 Comb filters are fundamental building blocks for digital audio effects. 
 Its most obvious example is a simple echo implementation \cite[p.~57]{juliuso.smithPhysicalSignalProcessing}.
 
@@ -74,9 +74,9 @@ walls. For this reason, feedback comb filters are preferred in reverb design,
 offering a more natural decay while remaining computationally 
 efficient. \cite[p.~98]{juliuso.smithPhysicalSignalProcessing}
 
-\begin{wrapfigure}{r}{0.54\textwidth}
+\begin{wrapfigure}{r}{0.57\textwidth}
 	\centering
-	\includegraphics[width=0.52\textwidth]{../images/schroeder_reverb/fig_comb_filter_response.pdf}
+	\includegraphics[width=0.54\textwidth]{../images/schroeder_reverb/fig_comb_filter_response.pdf}
 	\caption{Impulse and Frequency Response of Feedback Comb Filter with different feedback gain $\alpha$}
 	\label{fig:schroeder_comb_filter_response}
 \end{wrapfigure}
@@ -99,7 +99,7 @@ the new input, and they reinforce each other. At the troughs, the input signal i
 
 \paragraph{Lowpass-Feedback Comb Filter}
 
-Instead of using a standard feedback comb filter, this project employs a \textit{lowpass-feedback} comb filter (LBCF), which places a filter $H_f(z)$ in the feedback path alongside the feedback gain $\alpha$.
+Instead of using a standard feedback comb filter, this project employs a \textit{lowpass-feedback} comb filter (\ac{LBCF}), which places a filter $H_f(z)$ in the feedback path alongside the feedback gain $\alpha$.
 
 \begin{figure}[H]
 	\centering
@@ -135,10 +135,10 @@ The effect of the lowpass in the feedback path causes high frequencies to decay 
 Adding a low-pass filter in the feedback loop can effectively recreate the losses that happen when a signal travels back and forth between two places, as happens in real rooms. \cite[p.~62]{juliuso.smithPhysicalSignalProcessing}
 
 
-\begin{wrapfigure}{r}{0.50\textwidth}
+\begin{wrapfigure}{r}{0.57\textwidth}
 	\centering
 	\vspace{-2.0em}
-	\includegraphics[width=0.53\textwidth]{../images/schroeder_reverb/fig_comb_filter_lp_feedback_response.pdf}
+	\includegraphics[width=0.55\textwidth]{../images/schroeder_reverb/fig_comb_filter_lp_feedback_response.pdf}
 	\caption{Impulse and Frequency Response of Lowpass Feedback Comb Filter with different feedback gain $\alpha$ and filter coefficient $d=0.2$}
 	\label{fig:schroeder_comb_filter_lp_feedback_response}
 \end{wrapfigure}
@@ -156,7 +156,7 @@ In the frequency response, the comb peaks are attenuated at higher frequencies, 
 The allpass filter passes all frequencies at equal gain. 
 Unlike lowpass or highpass filters, it does not attenuate any frequency band. 
 Instead, it affects only the \textit{phase} of the signal, introducing frequency-dependent delays while leaving the magnitude response flat at unity gain across all frequencies. 
-In the context of the Schröder reverberator, allpass filters are used as \textit{diffusers}: they increase the echo density of the late reverberation without coloring the sound, complementing the tonal decay provided by the comb filter bank. \cite{juliuso.smithPhysicalSignalProcessing}
+In the context of the Schroeder reverberator, allpass filters are used as \textit{diffusers}: they increase the echo density of the late reverberation without coloring the sound, complementing the tonal decay provided by the comb filter bank. \cite{juliuso.smithPhysicalSignalProcessing}
 
 \begin{figure}[H]
 	\centering
@@ -175,14 +175,14 @@ When inspecting the transfer function:
 	H(z) = \frac{\alpha + z^{-D}}{1 + \alpha z^{-D}}
 \]
 
-It becomes clear, how the Schröder allpass works. The numerator and denominator of $H(z)$ are mirror images of each other. 
+It becomes clear, how the Schroeder allpass works. The numerator and denominator of $H(z)$ are mirror images of each other. 
 
 \vspace{2.0em}
 
-\begin{wrapfigure}{r}{0.54\textwidth}
+\begin{wrapfigure}{r}{0.57\textwidth}
 	\centering
 	\vspace{-2.0em}
-	\includegraphics[width=0.52\textwidth]{../images/schroeder_reverb/fig_allpass_response.pdf}
+	\includegraphics[width=0.55\textwidth]{../images/schroeder_reverb/fig_allpass_response.pdf}
 	\caption{Impulse and Frequency Response of Allpass Filter}
 	\label{fig:schroeder_allpass_filter_response}
 \end{wrapfigure}
@@ -196,7 +196,7 @@ Note the similar impulse response to the feedback comb filter \ref{fig:schroeder
 \subsection{Design and Implementation}
 % 4-comb + 2-allpass, LP damping in comb feedback path, prime stereo decorrelation.
 
-The implemented reverberator follows a simplified variant of the \textit{Freeverb} \cite{freeverb-github} variant of the Schröder structure -- a public-domain C++ program, used extensively in the free-software community -- adapted here for embedded C on a microcontroller target. 
+The implemented reverberator follows a simplified variant of the \textit{Freeverb} \cite{freeverb-github} variant of the Schroeder structure -- a public-domain C++ program, used extensively in the free-software community -- adapted here for embedded C on a microcontroller target. 
 
 It consists of four parallel lowpass-feedback comb filters summing into two series allpass filters, per channel \cite[p.~101]{juliuso.smithPhysicalSignalProcessing}. The full z-domain block diagram is shown in Figure~\ref{fig:schroeder_block_detailed}.
 
@@ -204,7 +204,7 @@ It consists of four parallel lowpass-feedback comb filters summing into two seri
 	\centering
 	\vspace{-1.1em}
 	\makebox[\textwidth][c]{
-		\includegraphics[width=0.9\textwidth]{../images/schroeder_reverb/schroeder_reverb_block_detailed.drawio.pdf}	
+		\includegraphics[width=1.1\textwidth]{../images/schroeder_reverb/schroeder_reverb_block_detailed.drawio.pdf}	
 		}
 	\vspace{-2.0em}
 	\caption{Schroeder Reverb Block Diagram}
@@ -306,27 +306,30 @@ The current values were chosen to provide an aesthetically pleasing maximum room
 When delay lengths share common factors, their resonant frequencies align, causing certain frequencies to be disproportionately reinforced. By choosing mutually prime lengths, the resonances are maximally spread across the spectrum, resulting in a evenly decay envelope.
 The delay lengths were selected empirically by ear from prime numbers, starting from a base set and scaled by a room size parameter. The chosen base delay lengths are:
 
-\begin{center}
-	\begin{tabular}{lcccc}
-		\hline
-		& \multicolumn{4}{c}{Comb Filter Delays (samples)} \\
-		& 1 & 2 & 3 & 4 \\
-		\hline
-		Left  & 1553 & 1613 & 1499 & 1427 \\
-		Right & 1567 & 1601 & 1487 & 1433 \\
-		\hline
-	\end{tabular}
-	\hspace{2em}
-	\begin{tabular}{lcc}
-		\hline
-		& \multicolumn{2}{c}{Allpass Delays (samples)} \\
-		& 1 & 2 \\
-		\hline
-		Left  & 223 & 557 \\
-		Right & 229 & 563 \\
-		\hline
-	\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcccc}
+        \hline
+        & \multicolumn{4}{c}{Comb Filter Delays (samples)} \\
+        & 1 & 2 & 3 & 4 \\
+        \hline
+        Left  & 1553 & 1613 & 1499 & 1427 \\
+        Right & 1567 & 1601 & 1487 & 1433 \\
+        \hline
+    \end{tabular}
+    \hspace{2em}
+    \begin{tabular}{lcc}
+        \hline
+        & \multicolumn{2}{c}{Allpass Delays (samples)} \\
+        & 1 & 2 \\
+        \hline
+        Left  & 223 & 557 \\
+        Right & 229 & 563 \\
+        \hline
+    \end{tabular}
+    \caption{Base delay line lengths for comb and allpass filters (in samples at \qty{48}{\kilo\hertz}).}
+    \label{tab:delay-lengths}
+\end{table}
 
 The slight asymmetry between left and right channels provides stereo decorrelation, widening the perceived sound field without additional processing.
 
@@ -358,78 +361,3 @@ The feedback gain and room size parameters are implicitly coupled through the st
 	float comb_fb = feedback * COMB_FEEDBACK(rev->size);
 \end{minted}
 This means that calling public API function \texttt{schroeder\_rev\_set\_size} alone changes the effective feedback range, even without a subsequent call to \texttt{schroeder\_rev\_set\_feedback}.
-
-\subsection{Evaluation}
-
-\subsubsection{Impulse Response Decay}
-
-Figure~\ref{fig:schroeder_env_decay_measurement} shows the measured envelope decay 
-of the reverb unit under varying feedback and room size parameters. Each curve 
-represents the smoothed amplitude envelope of a 20\,ms white noise burst passed 
-through the reverb and plotted until the signal 
-reaches $-60$\,dB.
-
-\begin{figure}[H]
-	\centering
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_envelope.pdf}
-	}
-	\caption{Reverb Decay Times of a \qty{20}{ms} White Noise Burst}
-	\label{fig:schroeder_env_decay_measurement}
-\end{figure}
-
-\paragraph{Feedback and Room Size} As expected, higher feedback coefficients result in longer decay times. 
-At maximum feedback ($fb = 0.975$), the reverb tail extends significantly longer than at minimum feedback ($fb = 0.442$), which decays rapidly toward the noise floor. 
-The most important validation is the stability at maximum feedback, on both maximum and minimum room sizes.
-
-The room size parameter scales the delay line lengths of 
-the comb filters. At maximum room size, the decay is smoother and more diffuse, 
-while at minimum room size the shorter delay lines produce a denser, more colored 
-decay. \\
-
-
-The parameter boundaries were determined empirically during testing, chosen to represent the range that produces the most musically useful results --- long, dense decay at the upper end, and short, subtle  ambience at the lower end --- while ensuring the filters remain stable throughout.
-\paragraph{RT60} The \qty{-60}{dB} decay time (RT60) can be read directly from the 
-x-axis. At maximum feedback and room size, the RT60 is approximately \qty{5}{s}, while at minimum feedback it falls below \qty{0.5}{s}. 
-Notably, at minimum room size the RT60 reaches only approximately \qty{3.25}{s} even at maximum feedback --- significantly shorter than the \qty{5}{s} observed at maximum room size. 
-During testing, it became clear that feedback scaling (described in Section~\ref{sec:schroeder_parameter_coupling}) alone cannot fully compensate 
-for the shorter decay at smaller room sizes --- increasing feedback further risks 
-instability before the RT60 of larger room sizes can be matched.
-
-\newpage
-\subsubsection{Spectrogram}
-
-Figure~\ref{fig:schroeder_env_spectrogram} shows the spectrogram of the reverb tail 
-at maximum feedback ($fb = 0.975$, size $= 1.0$), comparing the comb filter lowpass 
-enabled and disabled. The input is a \qty{20}{ms} white noise burst, plotted over 
-\qty{5}{s} of decay.
-
-
-\begin{figure}[H]
-	\centering
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1.0\textwidth]{../images/schroeder_reverb/fig_reverb_spectrogram.png}
-	}
-	\caption{Reverb Tail Spectrogram at comb lowpass filter on feedback settings}
-	\label{fig:schroeder_env_spectrogram}
-\end{figure}
-
-\paragraph{LP enabled} With the lowpass active ($d = 0.4$), high-frequency energy 
-decays significantly faster than low-frequency content. The rolloff is clearly visible 
-as the bright energy concentrates toward the lower frequencies over time, producing 
-the characteristic warm, darkening tail associated with natural room acoustics.
-
-\paragraph{LP disabled} Without lowpass damping, energy is distributed more evenly 
-across the frequency spectrum throughout the decay, resulting in a brighter and more 
-unnatural sounding tail.
-
-\paragraph{Summary} Both variants have usable applications in music production. 
-Engaging the lowpass produces a more natural sounding reverb tail, modelling the 
-frequency-dependent absorption of a natural acoustic space, where high frequencies 
-are absorbed more rapidly than low frequencies.\\
-
-An interesting observation is that the frequency content of the reverb tail extends 
-almost to the Nyquist limit of $f_s / 2$ (\qty{24}{kHz}), confirming that neither 
-the used audio interface (RME Fireface UFX\,II interface \cite{FirefaceUFXII}) nor the embedded system 
-introduce any significant bandlimiting, and the observed high-frequency content 
-reflects the true output of the reverb algorithm.

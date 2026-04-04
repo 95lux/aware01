@@ -2,7 +2,7 @@ The playback engine uses a mix of fixed-point and floating-point numbers. This d
 
 \paragraph{Fixed-Point Phase Accumulation}
 
-Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, following the convention established in Direct Digital Synthesis (DDS) systems \cite{lyons_dsp, smith_pasp}. The playback position is represented as an unsigned integer with fractional resolution in Q48.16 format (\texttt{uint64\_t}), updated according to
+Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, following the convention established in Direct Digital Synthesis (\ac{DDS}) systems \cite{lyons_dsp, smith_pasp}. The playback position is represented as an unsigned integer with fractional resolution in Q48.16 format (\texttt{uint64\_t}), updated according to
 
 \[
 	\phi[n+1] = \phi[n] + \Delta \phi ,
@@ -58,7 +58,7 @@ This cross-multiplication is exact in 64-bit unsigned arithmetic and avoids both
 While the phase domain is handled using fixed-point arithmetic, all audio-domain processing is performed in double-precision floating-point. This includes mixing, biquad filtering, and reverberation.
 
 The target platform is based on an ARM Cortex-M7 microcontroller with hardware support for double-precision floating-point operations. 
-The processor provides a pipelined FPU capable of efficient multiply and accumulate operations, making floating-point digital signal processing computationally practical in real-time audio applications \cite{arm_m7_trm}.
+The processor provides a pipelined \ac{FPU} capable of efficient multiply and accumulate operations, making floating-point digital signal processing computationally practical in real-time audio applications \cite{arm_m7_trm}.
 
 Floating-point arithmetic offers several important advantages for recursive and feedback-based structures such as IIR filters and reverberation networks. 
 The wide dynamic range reduces the risk of overflow and eliminates the need for manual scaling strategies that are typically required in fixed-point implementations. 

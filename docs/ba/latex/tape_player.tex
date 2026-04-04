@@ -5,7 +5,7 @@ It manages recording of incoming audio into a ping-pong buffer pair, and plays b
 
 \paragraph{State Machines}
 
-The tape player uses two independent FSMs (see below Figure \ref{fig:tape-player-fsms}): one for playback state (\texttt{play\_state\_t}: \texttt{STOPPED} / \texttt{PLAYING}) and one for 
+The tape player uses two independent \ac{FSM}s (see below Figure \ref{fig:tape-player-fsms}): one for playback state (\texttt{play\_state\_t}: \texttt{STOPPED} / \texttt{PLAYING}) and one for 
 recording state (\texttt{rec\_state\_t}: \texttt{IDLE} / \texttt{RECORDING} / 
 \texttt{REREC} / \texttt{DONE}). 
 Commands are delivered via a FreeRTOS queue 
@@ -52,7 +52,7 @@ Each crossfade maintains its own secondary playhead position (\texttt{pos\_q48\_
 This independence is important at low pitch factors: when the main playhead advances by only a fraction of a sample per output step, tying the fade curve to the playhead position would cause the crossfade to progress extremely slowly. 
 By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed time regardless of pitch. \\
 
-The fade curve shape is a quarter period of a sine function, stored as a pre-computed lookup table (LUT). 
+The fade curve shape is a quarter period of a sine function, stored as a pre-computed lookup table (\ac{LUT}). 
 A raised cosine / quarter-sine fade produces a perceptually smooth gain transition — the slope starts at zero, rises through the midpoint, and flattens again at unity — avoiding the abrupt onset and offset that a linear ramp would produce at the boundaries. 
 
 A linear crossfade produces a $-3\,\text{dB}$ power dip at its midpoint,
@@ -132,6 +132,7 @@ The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified 
 In all retrigger cases, the available sample count between the current playhead and the end of valid data is checked before arming the crossfade.
 If fewer samples are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is clamped accordingly to prevent out-of-bounds reads at both the buffer and \ac{LUT} boundaries.
 
+\newpage
 \subparagraph{Cyclic Loop Crossfade}
 In cyclic mode, the playhead wraps from the buffer end back to the beginning on each loop.
 \begin{figure}[H]
@@ -164,4 +165,5 @@ The pitch interpolation system is examined in detail in Focus Point 1
 
 A configurable decimation factor reduces the effective sample rate during recording and playback, extending the maximum recording time at the cost of audio bandwidth. 
 The \texttt{grit} parameter is derived from the decimation factor and controls the blend between Hermite and ZOH interpolation, introducing intentional degradation as an aesthetic effect.
-%TODO more detailed view into this?
+
+The interpolation algorithm underlying the pitch-shifted playback engine is examined in detail in the following section.
