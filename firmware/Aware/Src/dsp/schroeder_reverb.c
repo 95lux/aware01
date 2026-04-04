@@ -57,6 +57,8 @@ static float l_a2[MAX_AP_LEN];
 static float r_a1[MAX_AP_LEN];
 static float r_a2[MAX_AP_LEN];
 
+#define SR_MAX_FEEDBACK 0.999f /* upper clamp: keeps all-pole filters stable */
+
 /* ---- Processing ---- */
 
 /** @brief Lowpass-comb filter: feedback with one-pole LP damping. */
@@ -113,28 +115,25 @@ void schroeder_rev_init(schroeder_stereo_t* rev) {
     float ap_fb = 0.7f;
 
     /* Left */
-    rev->left.combs[0] = (sr_delay_t) {comb_fb, l_c1, comb_base[0][0], 0};
-    rev->left.combs[1] = (sr_delay_t) {comb_fb, l_c2, comb_base[0][1], 0};
-    rev->left.combs[2] = (sr_delay_t) {comb_fb, l_c3, comb_base[0][2], 0};
-    rev->left.combs[3] = (sr_delay_t) {comb_fb, l_c4, comb_base[0][3], 0};
+    rev->left.combs[0] = (sr_delay_t){comb_fb, l_c1, comb_base[0][0], 0};
+    rev->left.combs[1] = (sr_delay_t){comb_fb, l_c2, comb_base[0][1], 0};
+    rev->left.combs[2] = (sr_delay_t){comb_fb, l_c3, comb_base[0][2], 0};
+    rev->left.combs[3] = (sr_delay_t){comb_fb, l_c4, comb_base[0][3], 0};
 
-    rev->left.allpasses[0] = (sr_delay_t) {ap_fb, l_a1, allpass_base[0][0], 0};
-    rev->left.allpasses[1] = (sr_delay_t) {ap_fb, l_a2, allpass_base[0][1], 0};
+    rev->left.allpasses[0] = (sr_delay_t){ap_fb, l_a1, allpass_base[0][0], 0};
+    rev->left.allpasses[1] = (sr_delay_t){ap_fb, l_a2, allpass_base[0][1], 0};
 
     /* Right */
-    rev->right.combs[0] = (sr_delay_t) {comb_fb, r_c1, comb_base[1][0], 0};
-    rev->right.combs[1] = (sr_delay_t) {comb_fb, r_c2, comb_base[1][1], 0};
-    rev->right.combs[2] = (sr_delay_t) {comb_fb, r_c3, comb_base[1][2], 0};
-    rev->right.combs[3] = (sr_delay_t) {comb_fb, r_c4, comb_base[1][3], 0};
+    rev->right.combs[0] = (sr_delay_t){comb_fb, r_c1, comb_base[1][0], 0};
+    rev->right.combs[1] = (sr_delay_t){comb_fb, r_c2, comb_base[1][1], 0};
+    rev->right.combs[2] = (sr_delay_t){comb_fb, r_c3, comb_base[1][2], 0};
+    rev->right.combs[3] = (sr_delay_t){comb_fb, r_c4, comb_base[1][3], 0};
 
-    rev->right.allpasses[0] = (sr_delay_t) {ap_fb, r_a1, allpass_base[1][0], 0};
-    rev->right.allpasses[1] = (sr_delay_t) {ap_fb, r_a2, allpass_base[1][1], 0};
+    rev->right.allpasses[0] = (sr_delay_t){ap_fb, r_a1, allpass_base[1][0], 0};
+    rev->right.allpasses[1] = (sr_delay_t){ap_fb, r_a2, allpass_base[1][1], 0};
 
     rev->wet = 0.3f;
     rev->dry = 0.7f;
-
-    // arm_biquad_cascade_df2T_init_f32(&rev->left.iir_lp_instance, lp_fc2k_but_NUM_STAGES, lp_fc2k_but_coeffs, rev->left.iir_lp_state);
-    // arm_biquad_cascade_df2T_init_f32(&rev->right.iir_lp_instance, lp_fc2k_but_NUM_STAGES, lp_fc2k_but_coeffs, rev->right.iir_lp_state);
 }
 
 /** @brief Run one sample through the parallel combs then series allpasses. */
@@ -145,7 +144,7 @@ static float process_channel(sr_channel_t* ch, float in) {
         sum += comb_process(&ch->combs[i], in);
     }
 
-    sum *= 0.25f;
+    sum *= (1.0f / SR_COMBS);
 
     float y = sum;
     for (int i = 0; i < SR_ALLPASSES; i++)
@@ -167,20 +166,20 @@ void schroeder_rev_process(schroeder_stereo_t* rev, float in_l, float in_r, floa
 void schroeder_rev_set_feedback(schroeder_stereo_t* rev, float feedback) {
     if (feedback < 0.f)
         feedback = 0.f;
-    if (feedback > 0.999f)
-        feedback = 0.999f;
+    if (feedback > SR_MAX_FEEDBACK)
+        feedback = SR_MAX_FEEDBACK;
 
     // float comb_fb = feedback * COMB_FEEDBACK(rev->size);
     // float ap_fb = feedback * ALLPASS_FEEDBACK(rev->size);
     float comb_fb = feedback * COMB_FEEDBACK(rev->size);
     float ap_fb = feedback * ALLPASS_FEEDBACK(rev->size);
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < SR_COMBS; i++) {
         rev->left.combs[i].feedback = comb_fb;
         rev->right.combs[i].feedback = comb_fb;
     }
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < SR_ALLPASSES; i++) {
         rev->left.allpasses[i].feedback = ap_fb;
         rev->right.allpasses[i].feedback = ap_fb;
     }

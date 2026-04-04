@@ -193,17 +193,19 @@ static void AudioTask(void* argument) {
             // schroeder_rev_set_wet(&reverb, 1.0);
             schroeder_rev_set_lp_alpha(&reverb, reverb_lp_alpha);
 
+            // +1 because int16 range is asymmetric [-32768, 32767]: dividing by 32768 maps
+            // -32768 -> -1.0 exactly; dividing by INT16_MAX would push -32768 to -1.000030.
             for (uint32_t i = 0; i < AUDIO_HALF_BLOCK_SIZE; i += 2) {
-                float inL = (float) processed[i] / 32768.0f;
-                float inR = (float) processed[i + 1] / 32768.0f;
+                float inL = (float) processed[i] / (INT16_MAX + 1);
+                float inR = (float) processed[i + 1] / (INT16_MAX + 1);
 
                 float outL, outR;
 
                 schroeder_rev_process(&reverb, inL, inR, &outL, &outR);
 
                 /* back to int16 */
-                int32_t sL = (int32_t) (outL * 32768.0f);
-                int32_t sR = (int32_t) (outR * 32768.0f);
+                int32_t sL = (int32_t) (outL * (INT16_MAX + 1));
+                int32_t sR = (int32_t) (outR * (INT16_MAX + 1));
 
                 processed[i] = __SSAT(sL, 16);
                 processed[i + 1] = __SSAT(sR, 16);
@@ -242,6 +244,10 @@ static void boot_calibration_cleanup(void) {
     xSemaphoreGive(audioReadySemaphore);
 }
 
+// Boot calibration mode is selected by how long both buttons are held at power-on:
+//   >= CV_CALIB_HOLD_MS  and released -> V/Oct CV calibration
+//   >= POT_CALIB_HOLD_MS             -> pitch pot calibration (waits for release internally)
+// Audio and control tasks are suspended for the duration.
 static void BootCalibTask(void* argument) {
     (void) argument;
 
@@ -252,19 +258,23 @@ static void BootCalibTask(void* argument) {
     vTaskSuspend(audioTaskHandle);
     vTaskSuspend(controlIfTaskHandle);
 
+    // Poll while both buttons remain held, accumulating hold time and giving LED feedback at each threshold.
     while (are_both_buttons_pushed()) {
         vTaskDelay(pdMS_TO_TICKS(10));
         hold_time += 10;
 
+        // Step 1: CV calib threshold reached, still holding — signal user with slow blue breathe.
         if (!cv_feedback_given && hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
             ws2812_change_animation_all(&anim_breathe_blue);
             cv_feedback_given = true;
         }
 
+        // Step 2: Pot calib threshold reached — signal with fast breathe, then run pot calibration.
         if (!pot_feedback_given && hold_time >= POT_CALIB_HOLD_MS) {
             ws2812_change_animation_all(&anim_breathe_blue_fast);
             pot_feedback_given = true;
 
+            // Step 2a: Wait for release. Timeout = error.
             if (!wait_for_both_buttons_released()) {
                 ws2812_change_animation_all(&anim_setting_error);
                 boot_calibration_cleanup();
@@ -272,6 +282,7 @@ static void BootCalibTask(void* argument) {
                 return;
             }
 
+            // Step 2b: Run pot calibration and persist result.
             if (user_iface_calibrate_pitch_pot(&settings_data_ram.calibration_data) == 0)
                 write_settings_data(&settings_data_ram);
             else
@@ -283,6 +294,7 @@ static void BootCalibTask(void* argument) {
         }
     }
 
+    // Step 3: Buttons released in the CV calib window — run V/Oct calibration.
     if (hold_time >= CV_CALIB_HOLD_MS && hold_time < POT_CALIB_HOLD_MS) {
         if (control_interface_calibrate_voct(&settings_data_ram.calibration_data) == 0)
             write_settings_data(&settings_data_ram);

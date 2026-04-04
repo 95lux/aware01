@@ -13,14 +13,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-// TODO: change every use of int16_t to tape_sample_t for better readability and easier bit depth changes in the future
-// --- Derived Constants ---
-#if (APP_BIT_DEPTH == 8)
-typedef int8_t tape_sample_t;
-#else
-typedef int16_t tape_sample_t;
-#endif
-
 #define MAX_NUM_SLICES 128
 
 typedef struct {
@@ -103,8 +95,7 @@ struct tape_player {
     bool swap_bufs_pending;
     bool switch_bufs_done;
 
-    uint32_t curr_phase_inc_q16_16;   // The increment actually being used
-    uint32_t target_phase_inc_q16_16; // The increment we want to reach, used for smooth pitch transitions
+    uint32_t curr_phase_inc_q16_16; // The increment actually being used
 
     // states
     play_state_t play_state;

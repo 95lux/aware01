@@ -8,7 +8,7 @@
 #include "atomic.h"
 #include "task.h"
 
-static struct param_cache cache;
+static volatile struct param_cache cache;
 
 /* ===== Writers ===== */
 void param_cache_set_pitch_cv(float v) {

@@ -70,10 +70,6 @@ uint32_t flash_write_words(uint32_t* src_ptr, uint32_t dest_addr, uint16_t numbe
         }
     }
 
-    // // TODO: maybe cache maintenance is not needed.
-    // SCB_CleanDCache();
-    // SCB_InvalidateDCache();
-
     HAL_FLASH_Lock();
     return err;
 }
