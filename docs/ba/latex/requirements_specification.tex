@@ -1,61 +1,52 @@
 \subsection{System Requirements}
 \label{sec:system-requirements}
-
-
-
 \begin{table}[ht]
-    \centering
-    \caption{Functional requirements}
-    \label{tab:req-functional}
-    \begin{tabularx}{\linewidth}{@{} l X @{}}
-        \toprule
-        \textbf{ID} & \textbf{Requirement} \\
-        \midrule
-        \label{req:FR-01}FR-01 & Stereo audio input and output via \qty{3.5}{mm} mono jack sockets \\
-        \label{req:FR-02}FR-02 & Real-time DSP processing with deterministic latency, suitable for live performance \\
-        \label{req:FR-03}FR-03 & Three CV inputs, one V/Oct pitch input, and four gate inputs for Eurorack-compatible modulation via \qty{3.5}{mm} sockets \\
-        \label{req:FR-04}FR-04 & Four slide potentiometers and two push buttons for direct user control of DSP parameters and playback modes \\
-        \label{req:FR-05}FR-05 & Four WS2812 RGB LEDs for visual feedback \\
-        \label{req:FR-06}FR-06 & Concurrent handling of audio processing and control interface updates without mutual interference \\
-        \bottomrule
-    \end{tabularx}
+	\centering
+	\caption{Functional requirements}
+	\label{tab:req-functional}
+	\begin{tabularx}{\linewidth}{@{} l X @{}}
+		\toprule
+		\textbf{ID} & \textbf{Requirement} \\
+		\midrule
+		\label{req:FR-01}FR-01 & Accept and produce stereo audio signals compatible with standard line-level equipment \\
+		\label{req:FR-02}FR-02 & Process audio in real time with sufficiently low and deterministic latency for live performance use \\
+		\label{req:FR-03}FR-03 & Accept continuous control voltages and discrete gate signals conforming to the Eurorack modulation standard \\
+		\label{req:FR-04}FR-04 & Provide direct physical controls for adjustment of DSP parameters and operational modes \\
+		\label{req:FR-05}FR-05 & Provide visual feedback reflecting the current state of the module \\
+		\label{req:FR-06}FR-06 & Audio processing and user interface tasks must not interfere with one another during concurrent operation \\
+		\bottomrule
+	\end{tabularx}
 \end{table}
-
-
-
 \begin{table}[ht]
-    \centering
-    \caption{Electrical constraints}
-    \label{tab:req-electrical}
-    \begin{tabularx}{\linewidth}{@{} l X @{}}
-        \toprule
-        \textbf{ID} & \textbf{Constraint} \\
-        \midrule
-        \label{req:EC-01}EC-01 & All inputs must tolerate the full Eurorack signal range ($-10$\,V to $+10$\,V) without damage to downstream circuitry \\
-        \label{req:EC-02}EC-02 & Gate inputs are protected via transistor clamping; CV inputs use rail-guarded opamp stages to prevent ADC overvoltage \\
-        \label{req:EC-03}EC-03 & Audio inputs are attenuated, diode-protected, and AC-coupled to safeguard the codec analogue front end \\
-        \label{req:EC-04}EC-04 & Power is derived from the Eurorack bus; a \qty{5}{V} buck converter supplies the WS2812 LEDs; a \qty{3.3}{V} LDO supplies the MCU and analogue circuitry \\
-        \label{req:EC-05}EC-05 & PCB layout must minimise noise coupling between digital and analogue signal paths \\
-        \label{req:EC-06}EC-06 & Mechanical dimensions conform to the Eurorack 3U standard per \textbf{IEC~60297} / \textbf{DIN~41494} \\
-        \bottomrule
-    \end{tabularx}
+	\centering
+	\caption{Electrical constraints}
+	\label{tab:req-electrical}
+	\begin{tabularx}{\linewidth}{@{} l X @{}}
+		\toprule
+		\textbf{ID} & \textbf{Constraint} \\
+		\midrule
+		\label{req:EC-01}EC-01 & All signal inputs must tolerate the full Eurorack voltage range without damage to the system \\
+		\label{req:EC-02}EC-02 & The analogue-to-digital conversion stage must be protected against input voltages exceeding its operating range \\
+		\label{req:EC-03}EC-03 & The audio signal path must be protected against voltages and signal conditions outside the operating range of the audio front end \\
+		\label{req:EC-04}EC-04 & The module must derive all operating power from the Eurorack bus and supply appropriate voltages to all subsystems \\
+		\label{req:EC-05}EC-05 & The PCB layout must achieve adequate isolation between digital and analogue signal paths to meet audio performance requirements \\
+		\label{req:EC-06}EC-06 & Mechanical dimensions must conform to the Eurorack 3U standard \\
+		\bottomrule
+	\end{tabularx}
 \end{table}
-
-
-
 \begin{table}[ht]
-    \centering
-    \caption{Firmware constraints}
-    \label{tab:req-firmware}
-    \begin{tabularx}{\linewidth}{@{} l X @{}}
-        \toprule
-        \textbf{ID} & \textbf{Constraint} \\
-        \midrule
-        \label{req:FC-01}FC-01 & Audio acquisition and output are driven by DMA transfers to ensure uninterrupted data flow independent of task scheduling \\
-        \label{req:FC-02}FC-02 & FreeRTOS provides preemptive task scheduling; high-priority audio tasks are strictly separated from lower-priority control and interface tasks \\
-        \label{req:FC-03}FC-03 & DSP algorithms implemented to demonstrate realtime capability of the module \\
-        \label{req:FC-04}FC-04 & The TLV320AIC3204 codec is configured at startup via a custom I\textsuperscript{2}C driver; audio data is transferred via I\textsuperscript{2}S \\
-        \label{req:FC-05}FC-05 & Calibration data may be persisted to internal flash; no external mass storage is required \\
-        \bottomrule
-    \end{tabularx}
+	\centering
+	\caption{Firmware constraints}
+	\label{tab:req-firmware}
+	\begin{tabularx}{\linewidth}{@{} l X @{}}
+		\toprule
+		\textbf{ID} & \textbf{Constraint} \\
+		\midrule
+		\label{req:FC-01}FC-01 & Audio data transfer must not be interrupted by other system activity \\
+		\label{req:FC-02}FC-02 & The firmware must guarantee that time-critical audio processing is not delayed by lower-priority tasks \\
+		\label{req:FC-03}FC-03 & The system must demonstrate real-time DSP capability through at least one implemented algorithm \\
+		\label{req:FC-04}FC-04 & The audio codec must be configurable at runtime via the MCU \\
+		\label{req:FC-05}FC-05 & User calibration data must be retained across power cycles without reliance on external storage \\
+		\bottomrule
+	\end{tabularx}
 \end{table}
