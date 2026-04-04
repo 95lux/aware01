@@ -111,7 +111,7 @@ static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q1
     uint32_t valid_samples = tape_player.playback_buf->valid_samples;
     uint64_t wrap_point = (uint64_t) valid_samples << 16;
 
-    // TODO: Reverse logic is super buggy atm.
+    // TODO: Reverse logic is buggy atm.
     if (reverse) {
         if (*pos_q48 < phase_inc_q16) {
             *pos_q48 = cyclic ? (wrap_point + *pos_q48 - phase_inc_q16) : 0;
@@ -234,12 +234,9 @@ static inline void tape_handle_fade_out(uint32_t active_phase_inc, int16_t* out_
 }
 
 // Retrigger crossfade: buffer A (main playhead) is the new audio fading IN,
-// buffer B (xfade->buf_b) is the old audio fading OUT. No position promotion
-// needed on completion — main playhead already points to the new content.
+// buffer B (xfade->buf_b) is the old audio fading OUT
+// main playhead already points to the new content.
 static inline void tape_handle_crossfade(crossfade_t* xfade, uint32_t active_phase_inc, int16_t* new_l, int16_t* new_r) {
-    if (!xfade->active)
-        return;
-
     int16_t old_l, old_r;
     tape_fetch_sample(xfade->pos_q48_16, xfade->buf_b_ptr_l, xfade->buf_b_ptr_r, &old_l, &old_r);
 
@@ -248,7 +245,7 @@ static inline void tape_handle_crossfade(crossfade_t* xfade, uint32_t active_pha
         lut_i = FADE_LUT_LEN - 1;
 
     int16_t mix_new = fade_in_lut[lut_i];
-    int16_t mix_old = 32767 - mix_new;
+    int16_t mix_old = INT16_MAX - mix_new;
 
     *new_l = (int16_t) ((((int32_t) (*new_l) * mix_new) + ((int32_t) old_l * mix_old)) >> 15);
     *new_r = (int16_t) ((((int32_t) (*new_r) * mix_new) + ((int32_t) old_r * mix_old)) >> 15);
@@ -271,19 +268,13 @@ static inline uint32_t tape_compute_phase_increment() {
     float target_inc = tape_player.params.pitch_factor * 65536.0f;
 #endif
 
-    //TODO: is filtering pitch per block necessary? Evaluate if zipper noise is occuring without it. Was heavier before, seems gone now.
-    // // 0.01f = 1% move per sample.
-    // // Increase to 0.005f for smoother/slower, 0.05f for snappier.
-    // const float alpha = 0.01f;
-    // //--- The "Default" Stable IIR ---
-    // // current = current + alpha * (target - current)
-    // // This form is much more stable than the (target * coeff) version
-    // tape_player.current_phase_inc += alpha * (target_inc - tape_player.current_phase_inc);
-
     tape_player.curr_phase_inc_q16_16 = target_inc;
 
     uint32_t dec = tape_player.playback_buf->decimation > 0 ? tape_player.playback_buf->decimation : 1;
     // This result is now a Q16.16 increment
+    // TODO: since decimation is always a power of 2, we could do this division via bit shift instead of actual division, which should be faster.
+    // Compiler probably does NOT optimize this, since decimation is a runtime variable.
+    // To change this from division to bit shift and gain performance, on param_cache needs to hold the shift value instead of the decimation factor.
     return (tape_player.curr_phase_inc_q16_16 / dec);
 }
 
@@ -328,11 +319,9 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
                 tape_player.xfade_cyclic.fade_acc_q16 = 0;
 
                 // save current tail as outgoing (buf_b fades out)
-                uint32_t current_idx = (uint32_t) (tape_player.pos_q48_16 >> 16);
-                tape_player.xfade_cyclic.buf_b_ptr_l = &tape_player.playback_buf->ch[0][current_idx];
-                tape_player.xfade_cyclic.buf_b_ptr_r = &tape_player.playback_buf->ch[1][current_idx];
-                tape_player.xfade_cyclic.pos_q48_16 = tape_player.pos_q48_16; // outgoing reads from here
-
+                tape_player.xfade_cyclic.buf_b_ptr_l = &tape_player.playback_buf->ch[0][0];
+                tape_player.xfade_cyclic.buf_b_ptr_r = &tape_player.playback_buf->ch[1][0];
+                tape_player.xfade_cyclic.pos_q48_16 = tape_player.pos_q48_16;
                 // jump main playhead to loop start immediately
                 tape_player.pos_q48_16 = 1ULL << 16;
             } else {
@@ -341,10 +330,12 @@ static inline void tape_process_playback_frame(uint32_t active_phase_inc, int16_
         }
 
         // handle cyclic crossfade
-        tape_handle_crossfade(&tape_player.xfade_cyclic, active_phase_inc, out_l, out_r);
+        if (tape_player.xfade_cyclic.active)
+            tape_handle_crossfade(&tape_player.xfade_cyclic, active_phase_inc, out_l, out_r);
 
         // handle retrig crossfade
-        tape_handle_crossfade(&tape_player.xfade_retrig, active_phase_inc, out_l, out_r);
+        if (tape_player.xfade_retrig.active)
+            tape_handle_crossfade(&tape_player.xfade_retrig, active_phase_inc, out_l, out_r);
 
         // advance main playhead
         advance_playhead_q48(&tape_player.pos_q48_16, active_phase_inc, tape_player.params.reverse, tape_player.params.cyclic_mode);
@@ -382,7 +373,7 @@ void tape_player_process(int16_t* in_buf, int16_t* out_buf) {
     uint32_t active_phase_inc = tape_compute_phase_increment();
 
     // n represents the sample index within the current DMA buffer (interleaved stereo, so step by 2)
-    for (uint32_t n = 0; n < (AUDIO_BLOCK_SIZE / 2); n += 2) {
+    for (uint32_t n = 0; n < AUDIO_HALF_BLOCK_SIZE; n += 2) {
         int16_t out_l = 0;
         int16_t out_r = 0;
 

@@ -159,12 +159,16 @@ void user_iface_process_pots(void) {
     param_cache_set_env_decay(user_interface_cfg.pots[POT_PARAM3].val);
 
     // TODO: for now just use power of 2 for decimation. Other values cause pitch issues. Resolve later
+    // For continous decimation degradation, this have to be a continuous parameter.
+    // For decimaton degradation of power of 2s, this can be optimized by bitshifting.
+    // Have to decide which route to go and implement accordingly in both param_cache and tape_player_dsp.
     uint8_t pow = (uint8_t) (user_interface_cfg.pots[POT_PARAM4].val * (MAX_DECIMATION_POW + 1));
     if (pow > MAX_DECIMATION_POW)
         pow = MAX_DECIMATION_POW;
     param_cache_set_decimation(1u << pow);
 
     // TODO: single LED animation that flickers and glitches the more decimation is set.
+    // Maybe reacting on current playback sample values as well. Lots of options here to explore!
 }
 
 void user_iface_process_buttons(uint32_t notified) {
