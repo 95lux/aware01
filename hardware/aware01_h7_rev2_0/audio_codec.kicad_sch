@@ -4072,8 +4072,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "73caf48f-c2f4-41c4-93d0-95a21afec440")
-		(property "Reference" "TP2"
-			(at 79.248 89.408 0)
+		(property "Reference" "TP_SDO"
+			(at 75.438 89.408 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4134,7 +4134,7 @@
 		(instances
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "TP2")
+					(reference "TP_SDO")
 					(unit 1)
 				)
 			)
@@ -4229,10 +4229,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "86ec72bc-a2ab-45e8-8d8b-78b2cde90903")
 		(property "Reference" "C39"
-			(at 129.54 124.46 90)
+			(at 129.54 125.222 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4242,7 +4241,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 129.54 127 90)
+			(at 129.54 127.762 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4421,8 +4420,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "abb5841f-ffa3-495f-88c1-32f2add1280c")
-		(property "Reference" "TP4"
-			(at 85.344 79.248 0)
+		(property "Reference" "TP_CK"
+			(at 83.312 79.248 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4483,7 +4482,7 @@
 		(instances
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "TP4")
+					(reference "TP_CK")
 					(unit 1)
 				)
 			)
@@ -4500,8 +4499,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ae93f41c-ab17-4616-a4bb-30fb6a143ec1")
-		(property "Reference" "TP1"
-			(at 76.454 95.758 0)
+		(property "Reference" "TP_SDI"
+			(at 73.66 95.758 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4562,7 +4561,7 @@
 		(instances
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "TP1")
+					(reference "TP_SDI")
 					(unit 1)
 				)
 			)
@@ -4771,8 +4770,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "de346b8d-2f25-418d-9498-efbd6f71c598")
-		(property "Reference" "TP5"
-			(at 89.154 74.422 0)
+		(property "Reference" "TP_MCK"
+			(at 85.598 74.168 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4833,7 +4832,7 @@
 		(instances
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "TP5")
+					(reference "TP_MCK")
 					(unit 1)
 				)
 			)
@@ -4929,8 +4928,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f2852955-cd4d-4aba-a5de-fff3cce961f5")
-		(property "Reference" "TP3"
-			(at 81.534 84.582 0)
+		(property "Reference" "TP_WS"
+			(at 79.248 84.328 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4991,7 +4990,7 @@
 		(instances
 			(project "aware01_h7_rev2_0"
 				(path "/efd43d7c-3c18-45dd-8fa5-4bf32165850f/50dd69da-5058-483c-924f-252f04b072bd"
-					(reference "TP3")
+					(reference "TP_WS")
 					(unit 1)
 				)
 			)
