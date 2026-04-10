@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+# KiCad
+*.history
+*-backups/
+_autosave-*
+fp-info-cache
