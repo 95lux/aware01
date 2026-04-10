@@ -3,7 +3,7 @@
  * @brief Stereo Schroeder reverb: 4 parallel lowpass-comb filters into 2 series allpass filters per channel.
  */
 #include "dsp/schroeder_reverb.h"
-#include "arm_math.h"
+
 #include <string.h>
 /* ---- Prime delays (~48kHz) ---- */
 // Base comb & allpass lengths (primes for stereo)

@@ -3,9 +3,8 @@
  * @brief I2S DMA callbacks, audio buffer management, and test signal generation.
  */
 #include "audioengine.h"
-#include "dma.h"
-#include <stdint.h>
 
+#include <stdint.h>
 // local DMA buffers for audio I/O - will be allocated in DMA-capable memory, not in FREERTOS task stack!
 DMA_BUFFER static int16_t tx_buf[AUDIO_BLOCK_SIZE] = {0};
 DMA_BUFFER static int16_t rx_buf[AUDIO_BLOCK_SIZE] = {0};
