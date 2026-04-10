@@ -26,7 +26,11 @@ Exposing the crossfade length as a CV-controllable parameter could enable delibe
 
 Additionally the crossfade trigger lookahead is currently evaluated using the instantaneous phase increment, meaning rapid pitch changes during an active crossfade may cause the secondary playhead to overshoot the predicted buffer region.
 A more robust implementation would either evaluate the lookahead using a conservative worst-case phase increment, or reduce the evaluation interval to minimise prediction error.
-This requires a more in-depth examination of the crossfading system though, which was not feasible in the time-scope of the project.
+This requires a more in-depth examination of the crossfading system though, which was not feasible in the time-scope of the project. \\
+
+Throughout the codebase, decimation (as described in Section \ref{sec:tape-player-decimation}) is stored as a factor rather than a shift value.
+Since the decimation factor is always a power of two, the division in \texttt{tape\_compute\_phase\_increment} could be replaced by a right shift, reducing a multi-cycle divide to a single-cycle operation on the Cortex-M7.
+This would require storing the binary logarithm of the decimation factor in the parameter cache and \texttt{tape\_buffer\_t} struct instead of the factor itself.
 
 %\subsubsection{Noise Characterisation}
 %A formal noise floor measurement using the swept-sine method described in  Section~\ref{sec:frequency-response} is planned for a subsequent revision, to formally verify the effectiveness of the analogue/digital separation strategy applied during PCB layout.

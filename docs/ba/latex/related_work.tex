@@ -23,8 +23,7 @@ application's specific requirements, at the cost of higher initial development e
 targeting a similar embedded ARM platform.
 
 None of the above platforms are specifically designed for tape-style sample playback, which is the primary application explored in this thesis.
-Furthermore, all of the above are module products rather than custom hardware designs —
-this work contributes a documented, open hardware platform that can be adapted and extended.
+Furthermore, all of the above are module products rather than custom hardware designs, while this work contributes a documented, open hardware platform that can be adapted and extended.
 
 \paragraph{Mutable Instruments Eurorack Modules \cite{pichenettesPichenettesEurorack2026}}
 The open-source Eurorack modules developed by Mutable Instruments  served as an important reference throughout this work.
@@ -37,8 +36,7 @@ The Mutable Instruments codebase is published under open-source licences and the
 \paragraph{Ornament \& Crime \cite{OrnamentCrime}}
 is a popular open-source Eurorack module that demonstrates the potential of a polymorphic approach to CV processing on the teensy embedded platform.
 Originally designed by mxmxmx as a quantising analogue shift register emulation, the firmware was extended collaboratively into a multi-application platform.
-It now consists of quantisers, sequencers, envelope generators, LFO sources, and chaotic attractor generators ---
-all selectable at runtime without rebooting the module.
+It now consists of quantisers, sequencers, envelope generators, LFO sources, and chaotic attractor generators, all selectable at runtime without rebooting the module.
 The hardware is built around a Teensy~3.2 (NXP MK20DX256) microcontroller paired with a precision 16-bit TI DAC.
 Because no audio processing is involved, it achieves a trigger-to-quantised-output latency of under \qty{100}{\micro\second}.
 The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone. \\

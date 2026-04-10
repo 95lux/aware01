@@ -26,7 +26,7 @@ files = {
 }
 
 fig, axes = plt.subplots(len(rates), 1, figsize=(12, 2 * len(rates)), 
-                         gridspec_kw={'hspace': 0.6})
+                         gridspec_kw={'hspace': 0.52})
 
 for row, rate in enumerate(rates):
     ax = axes[row]

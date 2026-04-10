@@ -1,9 +1,48 @@
-The tape player is the central audio component of the module. 
-It manages recording of incoming audio into a ping-pong buffer pair, and plays back the recorded content at a variable pitch determined by the V/oct CV input and the pitch slide potentiometer.
+The tape player is the central audio component of the module.
+It manages recording of incoming audio into a ping-pong buffer pair and plays back the recorded content at a variable pitch determined by the V/oct CV input and the pitch slide potentiometer.
+The tape player runs entirely within \texttt{AudioTask} (Section~\ref{sec:rtos-task-structure}) and is controlled through a public API.
 
-%TODO: visualization of Double Buffer in State machine
+\subsubsection{Public API}
+\label{sec:tape-player-api}
 
-\paragraph{State Machines}
+\begin{listing}[H]
+\begin{minted}{c}
+/* Initialisation */
+int  init_tape_player(size_t dma_buf_size);
+
+/* Audio processing entry point */
+void tape_player_process(int16_t *in_buf, int16_t *out_buf);
+
+/* Transport control */
+void tape_player_play(void);
+void tape_player_stop_play(void);
+void tape_player_record(void);
+void tape_player_stop_record(void);
+
+/* Parameter and state */
+void  tape_player_set_params(struct param_cache param_cache);
+void  tape_player_set_slice(void);
+float tape_player_get_grit(void);
+float tape_player_get_pitch(void);
+\end{minted}
+\caption{Tape player public API (\texttt{tape\_player.h})}
+\label{lst:tape-player-api}
+\end{listing}
+
+\texttt{init\_tape\_player} prepares the component for use: it clears all buffers, resets the crossfade and amplitude-envelope state, resets the FSM, and initialises internal pointers. 
+It must be called once before any other tape player function.
+
+The four transport functions --- \texttt{tape\_player\_play}, \texttt{tape\_player\_stop\_play}, \texttt{tape\_player\_record}, and \texttt{tape\_player\_stop\_record} --- drive the play/record finite-state machine described in Section~\ref{sec:tape-player-fsm}.
+
+\texttt{tape\_player\_set\_slice} marks a slice position in the tape buffer during recording, allowing the recorded content to be segmented for later playback control.
+
+Parameter updates arrive through the shared-memory parameter cache (Section~\ref{sec:param-cache}) via \texttt{tape\_player\_set\_params}, which accepts a \texttt{param\_cache} snapshot written atomically by the lower-priority control tasks. 
+\texttt{tape\_player\_get\_grit} and \texttt{tape\_player\_get\_pitch} expose read-only state for use by other systems, such as further DSP and UI.
+
+\texttt{tape\_player\_process} is the audio processing entry point, called once per DMA half-buffer by \texttt{AudioTask}. 
+It reads incoming audio from \texttt{in\_buf}, applies the tape recording and playback logic --- including pitch-shifted readback and crossfading --- and writes the processed output to \texttt{out\_buf}.
+
+\subsection{State Machines}
 
 The tape player uses two independent \ac{FSM}s (see below Figure \ref{fig:tape-player-fsms}): one for playback state (\texttt{play\_state\_t}: \texttt{STOPPED} / \texttt{PLAYING}) and one for 
 recording state (\texttt{rec\_state\_t}: \texttt{IDLE} / \texttt{RECORDING} / 
@@ -23,7 +62,7 @@ path.
 
 
 
-\paragraph{Double Buffering and Buffer Structure}
+\subsection{Double Buffering and Buffer Structure}
 \label{sec:tapep-buffers}
 
 Audio is stored in a \texttt{tape\_buffer\_t} struct, which holds two 16-bit sample buffers -- one per stereo channel -- along with metadata:
@@ -39,12 +78,12 @@ typedef struct {
 } tape_buffer_t;
 \end{minted}
 
-Two \texttt{tape\_buffer\_t} instances are maintained at all times — one for active playback and one for recording. 
+Two \texttt{tape\_buffer\_t} instances are maintained at all times: one for active playback and one for recording. 
 When a new recording is complete, the buffers are swapped atomically, allowing uninterrupted playback during re-recording.
 
 % TODO add in figure to show Double Buffer handling
 
-\paragraph{Crossfade System}
+\subsection{Crossfade System}
 
 Four \texttt{crossfade\_t} instances handle different transition scenarios: a retrigger crossfade (\texttt{xfade\_retrig}), a cyclic loop crossfade (\texttt{xfade\_cyclic}), and simple fade-in/fade-out envelopes at the start and end of playback. 
 
@@ -53,7 +92,7 @@ This independence is important at low pitch factors: when the main playhead adva
 By decoupling the fade accumulator from the playhead, the crossfade always completes in a fixed time regardless of pitch. \\
 
 The fade curve shape is a quarter period of a sine function, stored as a pre-computed lookup table (\ac{LUT}). 
-A raised cosine / quarter-sine fade produces a perceptually smooth gain transition — the slope starts at zero, rises through the midpoint, and flattens again at unity — avoiding the abrupt onset and offset that a linear ramp would produce at the boundaries. 
+A raised cosine / quarter-sine fade produces a perceptually smooth gain transition, where the slope starts at zero, rises through the midpoint, and flattens again at unity, avoiding the abrupt onset and offset that a linear ramp would produce at the boundaries. 
 
 A linear crossfade produces a $-3\,\text{dB}$ power dip at its midpoint,
 since $(0.5)^2 + (0.5)^2 = 0.5$.
@@ -73,11 +112,11 @@ The step size is calculated from the desired fade length and the LUT size, so th
 For crossfades between two buffer regions (retrigger and cyclic), a second buffer pointer (\texttt{buf\_b\_ptr\_l}, \texttt{buf\_b\_ptr\_r}) tracks the outgoing audio segment, while the main playhead reads the incoming segment. 
 The two signals are blended using complementary fade-in and fade-out curves derived from the same LUT, ensuring a constant-power crossfade.
 
-\paragraph{Playback Trigger Modes}
+\subsubsection{Playback Trigger Modes}
 
 Two crossfade strategies cover three distinct trigger scenarios handled by the play FSM.
 
-\subparagraph{Trigger from idle}
+\paragraph{Trigger from idle}
 Figure \ref{fig:fade-in-out} shows the simplest case.
 The playhead is positioned at the selected slice start and a fade-in is armed.
 No crossfade is needed since there is no outgoing audio to blend with.
@@ -92,7 +131,7 @@ No crossfade is needed since there is no outgoing audio to blend with.
 \end{figure}
 
 
-\subparagraph{Retrigger}
+\paragraph{Retrigger Crossfade}
 When a play event arrives while audio is already playing, the \texttt{xfade\_retrig} secondary playhead is pointed directly at the current position in the playback buffer and the main playhead jumps to the new slice start.
 The outgoing tail fades out while the new start fades in, producing a click-free retrigger.
 
@@ -106,7 +145,7 @@ The outgoing tail fades out while the new start fades in, producing a click-free
 	\label{fig:xfade-retrigger}
 \end{figure}
 
-When no buffer swap is pending, no special attention to the crossfade region is needed --- the secondary playhead points directly into the active playback buffer.
+When no buffer swap is pending, no special attention to the crossfade region is needed, as the secondary playhead points directly into the active playback buffer.
 
 When a new recording is waiting to be promoted (\texttt{swap\_bufs\_pending}), the same strategy applies, but requires additional care:
 
@@ -124,7 +163,7 @@ When a new recording is waiting to be promoted (\texttt{swap\_bufs\_pending}), t
 The secondary playhead is saved into the old playback buffer before the swap is performed.
 After the swap, the old playback buffer becomes the record buffer and on a record trigger, the record head begins writing from index zero.
 The crossfade reads forward from \texttt{start\_idx\_xfade}, consuming at most \texttt{xfade\_len} samples.
-Since the record head must travel \texttt{start\_idx\_xfade} samples before it can reach the crossfade region, and since \texttt{start\_idx\_xfade} is always greater than \texttt{xfade\_len} --- the playhead must have advanced at least that far into the buffer before a retrigger can occur --- the record head cannot overwrite samples still needed by the crossfade.
+Since the record head must travel \texttt{start\_idx\_xfade} samples before it can reach the crossfade region, and since \texttt{start\_idx\_xfade} is always greater than \texttt{xfade\_len} (the playhead must have advanced at least that far into the buffer before a retrigger can occur), the record head cannot overwrite samples still needed by the crossfade.
 This holds regardless of playback speed: above $1\times$ the crossfade read head moves faster than the record head and cannot be caught; below $1\times$ the crossfade consumes fewer buffer samples, reducing rather than increasing the hazard.
 The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified at swap time with a debug assertion.
 
@@ -132,8 +171,7 @@ The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified 
 In all retrigger cases, the available sample count between the current playhead and the end of valid data is checked before arming the crossfade.
 If fewer samples are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is clamped accordingly to prevent out-of-bounds reads at both the buffer and \ac{LUT} boundaries.
 
-\newpage
-\subparagraph{Cyclic Loop Crossfade}
+\paragraph{Cyclic Loop Crossfade}
 In cyclic mode, the playhead wraps from the buffer end back to the beginning on each loop.
 \begin{figure}[H]
 	\centering
@@ -148,22 +186,66 @@ In cyclic mode, the playhead wraps from the buffer end back to the beginning on 
 To avoid a click at the loop point, a crossfade is initiated when the playhead comes within \texttt{FADE\_XFADE\_CYCLIC\_LEN} samples of the buffer boundary, as detected by \texttt{playhead\_near\_end}.
 At that point, the current playhead position is saved as the outgoing pointer (\texttt{buf\_b\_ptr}), and the main playhead is immediately jumped to the loop start.
 The outgoing tail fades out while the loop start fades in, using the same \texttt{tape\_handle\_crossfade\_a\_is\_new} mechanism as the retrigger crossfade.
-Since the main playhead is promoted to the loop start at arm time rather than at crossfade completion, no promotion step is needed on finishing --- the crossfade simply blends the transition and the main playhead is already in the correct position.
+Since the main playhead is promoted to the loop start at arm time rather than at crossfade completion, no promotion step is needed on finishing, as the crossfade simply blends the transition and the main playhead is already in the correct position.
 
-If the current phase increment exceeds the crossfade length --- meaning the playhead would traverse the entire crossfade region in fewer output samples than the fade accumulator needs to complete --- a hard switch to the loop start is performed instead, since a crossfade would result in illegal buffer access.
+If the current phase increment exceeds the crossfade length, meaning the playhead would traverse the entire crossfade region in fewer output samples than the fade accumulator needs to complete, a hard switch to the loop start is performed instead, since a crossfade would result in illegal buffer access.
 
 A known limitation of the current implementation is that the crossfade length is a fixed compile-time constant; the implications and a suggested fix are discussed in Section~\ref{sec:outlook}.
 
-\paragraph{Playhead and Pitch}
+\subsection{Playhead and Pitch}
 
-The playhead position is tracked as a Q48.16 fixed-point number (\texttt{pos\_q48\_16}): the upper 48 bits index into the sample buffer and the lower 16 bits carry the fractional offset used by the Hermite interpolator (Section~\ref{sec:numerical-architecture}). 
-A separate \texttt{curr\_phase\_inc} and \texttt{target\_phase\_inc} allow smooth pitch transitions by slewing the increment toward the target value each block. 
-The pitch interpolation system is examined in detail in Focus Point 1 
-(Section~\ref{sec:focus-1-pitch-interpolation}).
+The playhead position is tracked as a Q48.16 fixed-point number (\texttt{pos\_q48\_16}): the upper 48 bits index into the sample buffer and the lower 16 bits carry the fractional offset used by the Hermite interpolator (Section~\ref{sec:numerical-architecture}).
+Each block, \texttt{tape\_compute\_phase\_increment} converts the linear pitch factor to a Q16.16 integer increment and divides by the decimation factor of the active playback buffer, so that playback speed remains correct regardless of the recorded sample rate.
+The pitch interpolation system is examined in detail in Focus Point 1 (Section~\ref{sec:focus-1-pitch-interpolation}).
 
-\paragraph{Decimation}
+The linear pitch factor, before conversion to the phase increment domain, is the product of two independent sources: \texttt{pitch\_ui}, set by the pitch slide potentiometer, and \texttt{pitch\_cv}, derived from the V/oct CV input:
 
-A configurable decimation factor reduces the effective sample rate during recording and playback, extending the maximum recording time at the cost of audio bandwidth. 
-The \texttt{grit} parameter is derived from the decimation factor and controls the blend between Hermite and ZOH interpolation, introducing intentional degradation as an aesthetic effect.
+\begin{minted}{c}
+void tape_player_set_params(struct param_cache param_cache) {
+	tape_player.params.pitch_factor = param_cache.pitch_ui * param_cache.pitch_cv;
+	...
+\end{minted}
 
-The interpolation algorithm underlying the pitch-shifted playback engine is examined in detail in the following section.
+The potentiometer sets the base playback speed, and the V/oct input scales it
+further --- This enables melodic pitch control via the V/Oct modulation while the potentiometer acts as a coarse tuning offset.
+
+
+\subsection{Decimation}
+\label{sec:tape-player-decimation}
+A configurable decimation factor reduces the effective sample rate during recording,
+extending the maximum recording time at the cost of audio bandwidth.
+Decimation is applied at \emph{record time}: only every $N$th incoming stereo frame
+is written to the tape buffer, where $N$ is the decimation factor drawn from the
+parameter cache at the moment recording begins.
+The tape buffer therefore holds a permanently downsampled signal at an effective
+sample rate of $f_s / N$; the original full-rate audio is discarded and cannot be
+recovered.
+This is a deliberate architectural choice: storing downsampled audio reduces memory
+footprint proportionally, allowing longer recording times at the cost of bandwidth.
+
+A consequence of record-time decimation is that playback speed must be corrected
+accordingly.
+
+\texttt{tape\_compute\_phase\_increment} divides the phase increment by the
+decimation factor of the active playback buffer before applying it to the playhead:
+
+\begin{minted}{c}
+	return (tape_player.curr_phase_inc_q16_16 / dec);
+\end{minted}
+
+Without this correction, a buffer recorded at decimation factor $N$ would play back
+at $1/N$ of the intended speed.
+The decimation factor is stored in the \texttt{tape\_buffer\_t} struct alongside the
+audio data, so the correct divisor always travels with the buffer through the
+ping-pong swap. \\
+
+The \texttt{grit} value is derived \emph{from} the decimation factor of the active
+playback buffer via a logarithmic mapping, and controls the blend between Hermite
+and ZOH interpolation.
+Higher decimation produces higher grit, introducing aliasing artefacts as an
+intentional aesthetic effect.
+This emulates the sonic character of early digital sampling hardware, where low
+sample rates and simple interpolation produced spectral artefacts that have since
+become aesthetically valued in electronic music production.
+The interpolation algorithm underlying the pitch-shifted playback engine is examined
+in detail in the following section.

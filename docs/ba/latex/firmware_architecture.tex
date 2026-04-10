@@ -23,7 +23,7 @@ The WS2812 stream uses normal (non-circular) mode and is re-armed by the driver 
 Both ADC instances run in continuous conversion mode with DMA circular transfer, so fresh conversion results are always available in memory without CPU polling.
 Hardware oversampling (32$\times$ with a 5-bit right shift) raises the effective resolution and reduces noise on all analogue inputs.
 ADC1 samples the four slide potentiometers; ADC2 samples the four CV inputs including the V/Oct pitch input (see Table~\ref{tab:adc}).
-Both use an asynchronous clock of \SI{6}{\mega\hertz} derived from PLL3-R, yielding an effective per-channel conversion rate of approximately \SI{610}{\hertz} — sufficient for slowly varying potentiometer and CV inputs, but not for audio-rate CV tracking.
+Both use an asynchronous clock of \SI{6}{\mega\hertz} derived from PLL3-R, yielding an effective per-channel conversion rate of approximately \SI{610}{\hertz}, which is sufficient for slowly varying potentiometer and CV inputs but not for audio-rate CV tracking.
 
 \paragraph{GPIO and External Interrupts}
 All gate and button inputs generate falling-edge interrupts at \ac{NVIC} priority~10 (see Table~\ref{tab:exti}), permitting FreeRTOS API calls (\texttt{xTaskNotifyFromISR}) directly inside these handlers.
@@ -90,6 +90,7 @@ Flash consumption is modest at under 5\% and will probably never be a limiting f
 
 \newpage
 \subsubsection{\ac{RTOS} Task Structure}
+\label{sec:rtos-task-structure}
 
 The firmware employs FreeRTOS with three concurrent tasks organised by priority.
 A fourth temporary task is spawned during boot routine.
@@ -149,17 +150,17 @@ The \texttt{codec\_init} function executes a fixed register-write sequence: soft
 Clock dividers NDAC and MDAC are selected at runtime based on the requested sample rate according to $f_s = f_\text{MCLK} / (N \cdot M \cdot \text{OSR})$, with a \qty{12.288}{MHz} master clock and fixed \ac{OSR} of 128. 
 
 \begin{listing}[h]
-    \begin{minted}{c}
-        /* sample-rate-dependent dividers: fs = MCLK / (N * M * OSR) */
-        switch (rate) {
-            case SAMPLERATE_48KHZ: n_val = 1; m_val = 2;  break;
-            case SAMPLERATE_24KHZ: n_val = 1; m_val = 4;  break;
-            case SAMPLERATE_8KHZ:  n_val = 1; m_val = 12; break;
-            default:               n_val = 1; m_val = 2;  break;
-        }
-    \end{minted}
-    \caption{TLV320AIC3204 driver -- clock divider configuration with configurable samplerate}
-    \label{lst:codec_clk}
+\begin{minted}{c}
+/* sample-rate-dependent dividers: fs = MCLK / (N * M * OSR) */
+switch (rate) {
+    case SAMPLERATE_48KHZ: n_val = 1; m_val = 2;  break;
+    case SAMPLERATE_24KHZ: n_val = 1; m_val = 4;  break;
+    case SAMPLERATE_8KHZ:  n_val = 1; m_val = 12; break;
+    default:               n_val = 1; m_val = 2;  break;
+}
+\end{minted}
+\caption{TLV320AIC3204 driver -- clock divider configuration with configurable samplerate}
+\label{lst:codec_clk}
 \end{listing}
 
 Full register configuration details follow TI's \textit{TLV320AIC3204 Application Reference Guide} SLAA557 \cite[pp.~96--128]{TLV320AIC3204ApplicationReference2012}.
@@ -197,7 +198,7 @@ operations: \texttt{flash\_write\_words} and \texttt{flash\_read\_words}.
 Writing requires an erase-before-write cycle, as Flash sectors cannot be partially 
 overwritten. The driver computes the affected sector range from the destination address, 
 erases those sectors via \texttt{HAL\_FLASHEx\_Erase}, then programs the data in 
-16-byte \textit{flashword} chunks — the minimum write granularity of the STM32H7 
+16-byte \textit{flashword} chunks, the minimum write granularity of the STM32H7
 Flash interface:
 
 \begin{minted}{c}
@@ -219,13 +220,13 @@ struct SettingsData {
 
 The fixed size ensures the struct always occupies exactly four flashwords, making the 
 sector erase and write loop deterministic. The \texttt{magic} field at the end of the 
-struct is written last and checked on startup — if it does not match 
-\texttt{MAGIC\_NUMBER}, the application falls back to default calibration values, 
+struct is written last and checked on startup; if it does not match
+\texttt{MAGIC\_NUMBER}, the application falls back to default calibration values,
 protecting against partially written or uninitialised Flash contents.
 
 The calibration data itself stores the V/oct pitch scale and offset coefficients, 
-per-channel CV offsets, and the potentiometer range endpoints — all floating-point 
-values determined during the factory calibration procedure and required at boot before 
+per-channel CV offsets, and the potentiometer range endpoints, all stored as floating-point
+values determined during the factory calibration procedure and required at boot before
 the audio engine starts.
 
 Reading invalidates the DCache before accessing Flash

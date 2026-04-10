@@ -15,7 +15,7 @@ y[n] = \sum_{k=0}^{M} b_k \, x[n-k]
 Because there is no feedback, FIR filters are unconditionally stable and can achieve a \textit{linear phase} response, which preserves the waveshape of the filtered signal.
 Their main disadvantage is computational cost: achieving a steep roll-off requires a large number of coefficients \cite[p.~293]{oppenheimDiscretetimeSignalProcessing2014}.
 
-An \ac{IIR} filter adds feedback terms --- past output values --- to the computation:
+An \ac{IIR} filter adds feedback terms, i.e. past output values, to the computation:
 
 \[
 y[n] = \sum_{k=0}^{M} b_k \, x[n-k] \;-\; \sum_{k=1}^{N} a_k \, y[n-k]

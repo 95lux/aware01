@@ -20,7 +20,7 @@ x_d[n] = x[nM] = x_c(nMT)
 However, directly subsampling without prefiltering causes aliasing if the signal contains energy above the new Nyquist limit $\pi/M$. 
 To avoid this, a discrete-time lowpass filter with cutoff $\pi/M$ must be applied before compression. \cite[p.~186]{oppenheimDiscretetimeSignalProcessing2014} 
 
-In the context of faster-than-unity playback, the playhead advances by more than one sample per output step, which is analogous to decimation --- some input samples are skipped entirely.
+In the context of faster-than-unity playback, the playhead advances by more than one sample per output step, which is analogous to decimation, where some input samples are skipped entirely.
 
 \subsubsection{Upsampling}
 The inverse operation is \textbf{upsampling}: increasing the sampling rate by an integer factor $L$. 
@@ -35,8 +35,7 @@ The zero-insertion creates spectral images of the original signal at multiples o
 \subsubsection{Non-Integer Rate Conversion}
 In practice, the playback speed of an audio sampler is not constrained to integer multiples of the original rate. 
 A pitch shift of a perfect fifth corresponds to a factor of $1.5\times$; an arbitrary detuning may produce any irrational ratio. 
-The classical integer-factor approach — upsample by $L$, filter, then downsample by $
-M$ — can approximate any rational ratio $L/M$, but requires a different filter for each ratio and cannot smoothly vary over time \cite[p.~197]{oppenheimDiscretetimeSignalProcessing2014}.
+The classical integer-factor approach of upsampling by $L$, filtering, then downsampling by $M$ can approximate any rational ratio $L/M$, but requires a different filter for each ratio and cannot smoothly vary over time \cite[p.~197]{oppenheimDiscretetimeSignalProcessing2014}.
 
 A more practical approach for real-time audio is to treat sample-rate conversion as a continuous interpolation problem: given the discrete samples $x[n]$, evaluate the signal at an arbitrary fractional position $t \in R$. 
 
@@ -71,7 +70,7 @@ the discontinuities of ZOH, it remains only $C^0$ continuous
 
 Despite its computational simplicity, linear interpolation has a fundamental spectral limitation: it is only $C^0$ continuous. 
 The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary. 
-Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses --- a signal inherently rich in high-frequency harmonic content.
+Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses, which is inherently rich in high-frequency harmonic content.
 
 The aliasing problem is most severe during \textbf{upsampling}, i.e.\ at playback speeds below $1.0\times$, where the playhead advances by less than one sample per output step and the interpolator must synthesise the majority of output samples from scratch. At $0.5\times$ the interpolator is called for every other output sample; at $0.25\times$ it is called three times for every input sample consumed. 
 The accumulated interpolation error produces aliasing artefacts that worsen monotonically as the playback speed decreases.
@@ -156,7 +155,7 @@ At the same time, the staircase discontinuities introduce new high-frequency har
 
 \paragraph{(2) Linear Interpolation}
 
-Linear interpolation has no knowledge of the signal's history or trajectory — it connects each pair of samples with a straight line. 
+Linear interpolation connects each pair of samples with a straight line, with no knowledge of the signal's history or trajectory. 
 This produces abrupt changes in slope at every sample boundary, which are especially visible near the peaks and troughs of the waveform, where the curvature of the underlying signal is greatest.
 
 \paragraph{(3) Cubic Hermite with Exact Derivatives}

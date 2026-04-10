@@ -18,6 +18,9 @@ Three hardware defects were identified in this revision:
 	A corrected footprint assignment is required in the next PCB revision.
 \end{itemize}
 
+\subsubsection{Slice Selection in Reverse Playback}
+Slice boundary handling during reverse playback is not fully implemented; when reverse mode is active, slice selection is ignored and the full buffer is played back in reverse instead.
+
 \subsubsection{Memory Headroom}
 DTCMRAM utilisation stands at 98.5\% and main SRAM at 93\% in the current firmware build.
 While sufficient for the implemented feature set, this leaves limited headroom for additional DSP algorithms or larger sample buffers.
@@ -31,10 +34,9 @@ During in-system testing in a Eurorack environment, the noise performance was su
 \subsubsection{Fixed-Point Phase Accumulator}
 The playback engine uses a Q48.16 fixed-point phase accumulator, motivated by the concern that floating-point accumulation errors could cause phase drift over long playback durations (Section~\ref{sec:numerical-architecture}).
 In retrospect, this concern does not apply to this system: the sample buffer holds only \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, meaning the playhead wraps within $2.5 \times 48000 = 120{,}000$ samples.
-Floating-point rounding errors are on the order of $\epsilon \approx 10^{-7}$ per accumulation step; over 120,000 steps the accumulated error remains below $0.012$ samples -- well below the resolution of the interpolator.
-Furthermore, the STM32H7 Cortex-M7 core includes a double-precision FPU, which provides 52 bits of mantissa and further reduces this already negligible error.
-A \texttt{double} or \texttt{float} playhead would be fully sufficient and would eliminate the fixed/floating boundary at the interpolator input, improving code readability.
-The fixed-point design is therefore a conservative choice that is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
+Floating-point rounding errors are on the order of $\epsilon_{\text{mach}} = 2^{-23} \approx 1.19 \times 10^{-7}$ per accumulation step for IEEE~754 single-precision arithmetic \cite[Table~3.5]{IEEEStandardFloatingPoint2019}; over the maximum 120\,000 steps before buffer wrap, the accumulated error remains below $0.012$ samples, well below the resolution of the interpolator.
+A \texttt{float} playhead would be fully sufficient and would eliminate the fixed/floating boundary at the interpolator input, improving code readability. 
+The fixed-point design is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
 
 \subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
 The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.8}{\Hz} calculated from the AC-coupling network ($R_{in} = \SI{40}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).

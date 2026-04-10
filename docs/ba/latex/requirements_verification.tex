@@ -10,7 +10,7 @@ requirements and constraints defined in Section~\ref{sec:system-requirements}.
 		\textbf{ID} & \textbf{Verification} & \textbf{Status} \\
 		\midrule
 		FR-01 & Stereo audio input and output verified via oscilloscope loopback measurements with $\qty{10}{V_{pp}}$ Eurorack-level signals. Frequency response measured and good performance in audible range confirmed. & Pass \\
-		FR-02 & End-to-end latency measured at \qty{1.896}{ms} mean, \qty{2.100}{ms} maximum -- well within the \qty{5}{ms} real-time requirement. & Pass \\
+		FR-02 & End-to-end latency measured at \qty{1.896}{ms} mean, \qty{2.100}{ms} maximum -- well within the 5-10 ms real-time requirement. & Pass \\
 		FR-03 & Gate, CV, and V/Oct inputs mostly implemented and verified via driver tests and signal path measurements. \textit{Gate 03 input non-functional due to pin misassignment in this hardware revision.} & Partial \\
 		FR-04 & Slide potentiometers and push buttons operational; verified via firmware driver tests. \textit{Slide potentiometer LEDs non-functional due to pin misassignment in this hardware revision.} & Partial \\
 		FR-05 & WS2812 RGB LEDs functional via level-shifted PWM output. & Pass \\

@@ -24,11 +24,11 @@ The Eurorack bus rails ($+\SI{12}{\volt}$ and $-\SI{12}{\volt}$) were supplied b
 
 \paragraph{Current Consumption}
 
-The firmware executes the full DSP chain --- tape player, exciter, and Schroeder reverb --- unconditionally on every audio block at \qty{48}{\kilo\hertz}, regardless of whether audio is recorded in the buffer.
+The firmware executes the full DSP chain (tape player, exciter, and Schroeder reverb) unconditionally on every audio block at \qty{48}{\kilo\hertz}, regardless of whether audio is recorded in the buffer or played back.
 There is therefore no meaningful idle state; the current figures below represent steady-state operation.
 
 Current draw was measured on the $+\SI{12}{\volt}$ and $-\SI{12}{\volt}$ Eurorack bus rails using the current display of an QJ3005E III bench supply, under two LED conditions.
-The $+\SI{12}{\volt}$ rail supplies the LDO (\qty{3.3}{\volt} for MCU and analog circuitry) and the buck converter (\qty{5}{\volt} for WS2812 LEDs); the $-\SI{12}{\volt}$ rail supplies the op-amp negative rails exclusively.
+The $+\SI{12}{\volt}$ rail supplies the buck converter (\qty{5}{\volt} for WS2812 LEDs) and the buck converter supplies the LDO (\qty{3.3}{\volt} for MCU and analog circuitry); the $-\SI{12}{\volt}$ rail supplies the op-amp negative rails exclusively -- for the bipolar audio and CV signals.
 The firmware caps WS2812 brightness at 170 out of 255 (\qty{67}{\percent}) because maximum brightness was too harsh too look at.
 
 \begin{table}[H]
@@ -52,7 +52,7 @@ The LED contribution of \qty{40}{\milli\ampere} at firmware maximum brightness i
 \paragraph{Input Protection}
 
 Input overvoltage protection is verified by design and confirmed through in-system testing at full Eurorack signal levels.
-Gate inputs are clamped via transistor stages (EC-02); CV inputs use rail-guarded op-amp stages that limit the voltage presented to the STM32H7 ADC (EC-01, EC-02); audio inputs are attenuated by a passive resistor divider and clamped by a BAT54S dual Schottky diode to the codec supply rails (EC-03).
+Gate inputs are clamped via transistor stages (EC-02); CV inputs use rail-guarded op-amp stages that limit the voltage presented to the STM32H7 ADC (EC-01, EC-02); audio inputs are attenuated by a passive resistor divider and clamped by a BAT54S dual Schottky diode to the codec AVDD reference (EC-03).
 No input damage or anomalous behaviour was observed during extended operation with Eurorack-level signals.
 The audio input protection is further verified by the loopback measurements in Section~\ref{sec:loopback-signal-level-measaurements}, which confirm correct ADC signal levels at \SI{10}{\volt_{pp}} input.
 
@@ -62,8 +62,7 @@ The audio input protection is further verified by the loopback measurements in S
 \paragraph{Measurement Setup}
 
 To evaluate the audio signal path including analog frontents and AD/DA conversion, a sine was applied to 
-the analog input at frequencies of \SI{100}{Hz}, \SI{1}{kHz}, and 
-\qty{10}{kHz}. All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
+the analog input at frequencies of \SI{100}{Hz} and \SI{1}{kHz}. All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
 Input and output signals were captured simultaneously on a two-channel oscilloscope to verify signal integrity through the analog frontend and codec stages. 
 To characterise the digital headroom, the DMA RX and TX buffers were read out via SWD during signal playback and plotted alongside the oscilloscope captures.
 
@@ -90,7 +89,7 @@ Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input 
 \end{figure}
 
 Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer
-contents at \qty{1}{kHz} test signal.
+contents at \qty{1}{kHz} test signal during loopback, which were read out via a python script, using SWD on OCD. 
 
 \begin{figure}[H]
 	\centering
@@ -107,8 +106,8 @@ The peak sample value at \qty{1}{kHz} corresponds to \qty{-3.2}{dBFS}, confirmin
 
 The available headroom of \qty{3.2}{dB} is sufficient for the current implementation.
 For future revisions, reducing the analog input gain would increase the digital headroom at the cost of a lower input signal level.
-Since scaling up a signal in the digital domain is always possible — at the cost of increased
-quantisation noise floor — a more conservative analog gain setting would give greater flexibility in the DSP processing chain.
+Since scaling up a signal in the digital domain is always possible at the cost of an increased quantisation noise floor. 
+A more conservative analog gain setting would give greater flexibility in the DSP processing chain.
 
 \subsubsection{Frequency Response}
 \label{sec:frequency-response}
@@ -118,7 +117,7 @@ quantisation noise floor — a more conservative analog gain setting would give 
 The frequency response of the analog signal path was measured using a logarithmic sine sweep from \qty{20}{Hz} to \qty{20}{kHz} generated in software and played back through the RME Fireface UFX\,II audio interface. 
 The swept sine method was chosen as it provides a high signal-to-noise ratio across the full audio band and is robust against nonlinear distortion \cite[p.20]{massaraniTransferFunctionMeasurementSweeps2001}.
 
-To remove the frequency response of the measurement chain itself — including the RME output and input stages, cables, and impedance interactions — a reference measurement was taken with the RME output connected directly to the RME input via a loopback cable. 
+To remove the frequency response of the measurement chain itself (including the RME output and input stages, cables, and impedance interactions), a reference measurement was taken with the RME output connected directly to the RME input via a loopback cable. 
 This reference response was then subtracted from the DUT measurement in the logarithmic domain, yielding the frequency response of the device under test alone:
 
 \[
@@ -131,42 +130,18 @@ output stage. The firmware was configured in loopback mode with unity gain and a
 DSP processing disabled.
 
 Both measurements were performed at $f_s = \qty{48}{kHz}$ with a sweep duration 
-of \qty{5}{s}, giving a frequency resolution of \qty{0.2}{Hz}. The resulting 
-transfer function was smoothed with a simple moving average filter 
+of \qty{5}{s}, giving a sweep duration sufficient for sub-Hz frequency resolution 
+in the low-frequency range. 
+The resulting transfer function was smoothed with a simple moving average filter 
 before plotting.
 
 \paragraph{Results}
 
 
 
-The high-pass filter at the ADC input is formed by the AC-coupling capacitor $C_3$ and 
-the effective input impedance $R_{eq}$ of the TLV320AIC3204. In single-ended input mode, 
-$R_{eq}$ depends on the programmed input resistor $R_{in}$ and the analog PGA gain $g$ 
-(in linear terms) \cite{FAQTLV320AICCODECs2019}:
-
-\[
-R_{eq} = R_{in} \cdot \frac{1 + 2g}{1 + g}, \qquad
-g = \frac{10000 \cdot 2^{\lfloor G/6 \rfloor}}{R_{in}}
-\]
-
-With $R_{in} = \SI{40}{\kilo\ohm}$ and a programmed PGA gain of $G = \SI{0}{\decibel}$, 
-the linear gain evaluates to $g = 0.25$, giving:
-
-\[
-R_{eq} = \SI{40}{\kilo\ohm} \cdot \frac{1 + 0.5}{1 + 0.25} = \SI{48}{\kilo\ohm}
-\]
-
-The theoretical cutoff frequency is therefore:
-
-\[
-f_c = \frac{1}{2\pi \cdot R_{eq} \cdot C_3} 
-= \frac{1}{2\pi \cdot \SI{48}{\kilo\ohm} \cdot \SI{2.2}{\micro\farad}} 
-\approx \SI{1.5}{\Hz}
-\]
-
-This is well below the audible range.
-However, the measured frequency response in Figure~\ref{fig:frequency_response} shows 
-a high-pass rolloff with a \SI{-3}{\decibel} cutoff frequency of approximately \SI{37.6}{\Hz}.
+The analytically calculated cutoff frequencies of the input AC coupling stage ($f_c \approx \qty{1.5}{\hertz}$, Section~\ref{sec:input-ac-coupling}) and the output AC coupling stage ($f_c \approx \qty{2.84}{\hertz}$, Section~\ref{sec:output-ac-coupling}) are both well below the audible range.
+Respective SPICE simulations of the input and output stages confirm their calculated cutoff frequency.
+Neither the analytically calculated values nor the SPICE-simulated result are consistent with the measured \SI{-3}{\decibel} cutoff frequency of approximately \SI{37.6}{\Hz} visible in Figure~\ref{fig:frequency_response}.
 The cause of this discrepancy has not yet been identified.
 To isolate the source, individual frequency response measurements of the input and output stages should be conducted separately in a future revision.
 
@@ -180,7 +155,7 @@ To isolate the source, individual frequency response measurements of the input a
 
 The measured passband shows a broadband attenuation of approximately \SI{-3.2}{\decibel}, 
 which is expected given that the input stage attenuation exceeds the output stage gain. 
-This offset can be compensated in software via PGA or digital gain adjustment
+This offset can be compensated in software via PGA or digital gain adjustment.
 
 %\subsubsection{Noise and distortion measurements}
 %

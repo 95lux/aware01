@@ -37,7 +37,7 @@ Cursive parameters, such as filter coefficient \textit{alpha}, the \textit{feedb
 
 The combination of parallel comb filters feeding into series allpass filters is a psychoacoustically motivated design. 
 The comb filters produce the characteristic frequency-domain coloration and exponential decay of a reverberant space, but their echo density is too sparse on its own. 
-The allpass filters — also called \textit{diffusers} — increase the echo density without adding frequency coloration, since their magnitude response is flat across all frequencies. 
+The allpass filters, also called \textit{diffusers}, increase the echo density without adding frequency coloration, since their magnitude response is flat across all frequencies. 
 Together, the structure achieves both a perceptually convincing decay envelope and a sufficiently dense late reverberation tail. \cite[p.~97]{juliuso.smithPhysicalSignalProcessing}
 
 \subsubsection{Feedback Comb Filter}
@@ -148,7 +148,7 @@ In Figure~\ref{fig:schroeder_comb_filter_lp_feedback_response}, the effect of th
 
 Compared to the pure feedback comb filter in Figure \ref{fig:schroeder_comb_filter_response}, the impulse response shows non-zero samples between the echo peaks, caused by the smearing effect of the one-pole IIR filter.
 
-In the frequency response, the comb peaks are attenuated at higher frequencies, as the lowpass reduces the feedback gain progressively with frequency — resulting in shorter decay times for high frequencies than for low frequencies.
+In the frequency response, the comb peaks are attenuated at higher frequencies, as the lowpass reduces the feedback gain progressively with frequency, resulting in shorter decay times for high frequencies than for low frequencies.
 
 \clearpage
 \subsubsection{Allpass Filter}
@@ -213,7 +213,7 @@ It consists of four parallel lowpass-feedback comb filters summing into two seri
 
 \vspace{-2.0em}
 
-\paragraph{Delay Line Structure} Each filter — comb or allpass — is backed by a statically allocated circular float buffer that holds the sample history required by the delay line. 
+\paragraph{Delay Line Structure} Each filter (comb or allpass) is backed by a statically allocated circular float buffer that holds the sample history required by the delay line. 
 Both filters share the same \texttt{sr\_delay\_t} struct, which stores the buffer pointer, its maximum allocated \texttt{size}, the currently active \texttt{length}, and a write index \texttt{idx}. 
 Separating \texttt{size} from \texttt{length} allows the active delay time to be changed at runtime without reallocating memory. 
 The struct also carries filter-specific state: \texttt{feedback} gain and \texttt{lp\_state} for the comb filter's damped feedback path.
@@ -274,7 +274,6 @@ static float allpass_process(sr_delay_t* d, float in) {
 	
 	return y;
 }
-
 \end{minted}
 \vspace{-2.0em}
 \caption{process functions of comb and allpass filters}
@@ -302,7 +301,7 @@ The buffer size and thus the maximum delay lengths are directly correlated to th
 Increasing the base delay lengths would produce a larger perceived space at \texttt{size = 1}, at the cost of higher memory consumption. 
 The current values were chosen to provide an aesthetically pleasing maximum room size while maintaining a conservative memory footprint, preserving available RAM for the sample playback buffers in the system.
 
-\paragraph{Delay Length Selection} Using mutually prime delay line lengths — values sharing no common factors — helps avoid spectral clustering and unnatural resonances in the frequency response. 
+\paragraph{Delay Length Selection} Using mutually prime delay line lengths, i.e. values sharing no common factors, helps avoid spectral clustering and unnatural resonances in the frequency response. 
 When delay lengths share common factors, their resonant frequencies align, causing certain frequencies to be disproportionately reinforced. By choosing mutually prime lengths, the resonances are maximally spread across the spectrum, resulting in a evenly decay envelope.
 The delay lengths were selected empirically by ear from prime numbers, starting from a base set and scaled by a room size parameter. The chosen base delay lengths are:
 

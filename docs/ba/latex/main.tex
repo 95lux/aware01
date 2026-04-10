@@ -27,11 +27,12 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{pdfpages}
+\usepackage[font=small, labelfont=bf]{caption}
 
 \setminted{
 	breaklines,
 	breakanywhere=false,
-	linenos=false,
+%	linenos=false,
 	xleftmargin=20pt
 }
 
@@ -50,10 +51,11 @@
 \begin{titlepage}
 	\pagenumbering{alph}
 	\centering
-	\vspace*{0.1cm}
+	\vspace*{-1.7cm}
 	
+	\includegraphics[width=0.2\textwidth]{../images/th_koeln_logo.png}\\[0.45cm]
 	{\Large Technische Hochschule Köln}\\[0.5cm]
-	{\large Computer Science and Systems-Engineering}
+	{\large B.Sc. Technische Informatik/Computer Engineering}
 	
 	\vspace{1.5cm}
 	
@@ -62,7 +64,7 @@
 	{\large Implementation on the STM32H7 Platform}\\[0.2cm]
 	\rule{\textwidth}{0.4pt}
 	
-	\vspace{0.5cm}
+	\vspace{0.1cm}
 	
 	\begin{center}
 		\includegraphics[width=0.25\textwidth]{../../../hardware/panel_design/blender_render/aarebot_render_topdown_20260316.png}
@@ -85,7 +87,7 @@
 		Prof. Dr. Harald Elders-Boll
 	\end{minipage}
 	
-	\vspace{1.5cm}
+	\vspace{1.3cm}
 	
 	\rule{\textwidth}{0.4pt}\\[0.2cm]
 	{\large Bachelorarbeit}\\[0.2cm]
@@ -98,11 +100,15 @@
 
 \pagestyle{empty}
 \pagenumbering{roman}        % front matter gets i, ii, iii...
+
 \newpage
 \addtocontents{toc}{\protect}
 \tableofcontents
+
 \newpage
 \listoffigures
+
+
 
 \newpage
 \pagestyle{plain}
@@ -160,8 +166,8 @@
 		\subsubsection{Calibration and Pitch Tracking}
 		\input{pitch_tracking.tex}
 		
-		\subsubsection{Tape Player Component}
-		\input{tape_player.tex}
+\section{Tape Player Component}
+\input{tape_player.tex}
 
 %\newpage
 %\section{Phase Increment}
@@ -177,6 +183,7 @@
 % -----------------------------------------------------------------------
 \newpage
 \section{Schroeder Reverb}
+\label{sec:schroeder-reverb}
 \input{schroeder_reverb.tex}
 
 \newpage
@@ -185,6 +192,7 @@ This section documents the verification of the hardware and firmware against the
 \subsection{Hardware Testing}
 \input{hardware_testing.tex}
 
+\newpage
 \subsection{Firmware Testing}
 \input{firmware_testing.tex}
 
