@@ -201,7 +201,7 @@ void user_iface_process_buttons(uint32_t notified) {
 
 // Example: set LED brightness 0..100%
 void user_iface_set_led_brightness(uint8_t led_index, uint8_t percent) {
-    if (led_index >= NUM_POT_LEDS && led_index < 0)
+    if (led_index >= NUM_POT_LEDS || led_index < 0)
         return;
 
     struct fader_led led = user_interface_cfg.pot_leds[led_index];

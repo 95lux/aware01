@@ -103,8 +103,6 @@ struct tape_player {
 
     envelope_t env;
 
-    QueueHandle_t tape_cmd_q; // command queue handle
-
     struct parameters params;
 };
 
@@ -114,7 +112,8 @@ typedef struct {
     tape_cmd_t cmd;
 } tape_cmd_msg_t;
 
-int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue);
+// Public API
+int init_tape_player(size_t dma_buf_size);
 
 // entry point for tape player audio processing. The whole implementation is inside tape_player_dsp.c
 void tape_player_process(int16_t* in_buf, int16_t* out_buf);
@@ -123,7 +122,6 @@ void tape_player_play();
 void tape_player_stop_play();
 void tape_player_record();
 void tape_player_stop_record(void);
-void tape_player_set_pitch(float pitch_factor);
 void tape_player_set_params(struct param_cache param_cache);
 void tape_player_set_slice();
 

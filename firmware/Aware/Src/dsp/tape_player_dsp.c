@@ -4,15 +4,13 @@
  */
 #include "tape_player.h"
 
-#include "audioengine.h"
-#include "envelope.h"
-#include "project_config.h"
 #include <arm_math.h>
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "envelope.h"
+#include "project_config.h"
 #include "ressources.h"
-#include "util.h"
 
 #define Q32_UNITY (4294967296.0f)
 #define Q16_UNITY (65536.0f)

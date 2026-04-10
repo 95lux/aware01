@@ -2,13 +2,11 @@
  * @file exciter.c
  * @brief IIR biquad cascade init and block-wise exciter processing.
  */
+#include "dsp/exciter.h"
+
 #include "arm_math.h"
 #include <stdint.h>
 #include <string.h>
-
-#include "project_config.h"
-
-#include "dsp/exciter.h"
 
 float alpha = 0.8f;
 

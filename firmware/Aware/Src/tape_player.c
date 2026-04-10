@@ -4,15 +4,14 @@
  */
 #include "tape_player.h"
 
-#include "envelope.h"
-#include "project_config.h"
-#include "string.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
-#include "drivers/swo_log.h"
+#include "envelope.h"
 #include "param_cache.h"
+#include "project_config.h"
 #include "ressources.h"
 #include "util.h"
 
@@ -30,7 +29,7 @@ static int16_t tape_rec_buf_r[TAPE_SIZE_CHANNEL] __attribute__((section(".sram1"
 // Shared tape player state — also accessed by tape_player_dsp.c via extern.
 struct tape_player tape_player;
 
-int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
+int init_tape_player(size_t dma_buf_size) {
     if (dma_buf_size <= 0)
         return -1;
 
@@ -103,9 +102,6 @@ int init_tape_player(size_t dma_buf_size, QueueHandle_t cmd_queue) {
 
     tape_player.params.reverse = false;     // default to forward playback
     tape_player.params.cyclic_mode = false; // default to oneshot mode
-
-    // init cmd
-    tape_player.tape_cmd_q = cmd_queue;
 
     return 0;
 }
@@ -384,10 +380,6 @@ void tape_player_record(void) {
 
 void tape_player_stop_record(void) {
     rec_fsm_event(TAPE_EVT_RECORD_DONE);
-}
-
-void tape_player_set_pitch(float pitch_factor) {
-    tape_player.params.pitch_factor = pitch_factor;
 }
 
 void tape_player_set_slice() {

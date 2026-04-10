@@ -2,8 +2,6 @@
  * @file control_interface.c
  * @brief CV input processing, V/Oct pitch scaling, and XY effect parameter routing.
  */
-#include "main.h"
-#include "stm32h7xx_hal.h"
 #include "string.h"
 #include <FreeRTOS.h>
 #include <queue.h>
@@ -17,8 +15,6 @@
 #include "project_config.h"
 #include "ws2812_animations.h"
 #include "xy_mapper.h"
-
-#include "tape_player.h"
 
 struct control_interface_config {
     uint16_t adc_cv_working_buf[NUM_CV_CHANNELS];
@@ -68,7 +64,7 @@ void control_interface_process() {
     float pitch_offset = control_interface_cfg.calib_data->voct_pitch_offset;
 
     float semitones = v_oct_normalized * pitch_scale + pitch_offset; // apply offset and scale from calibration
-    float pitch_factor_new = powf(2.0f, semitones / 12.0f);          // equal temperament: 2^(n/12) doubles frequency each octave (12 semitones)
+    float pitch_factor_new = powf(2.0f, semitones / 12.0f); // equal temperament: 2^(n/12) doubles frequency each octave (12 semitones)
     param_cache_set_pitch_cv(pitch_factor_new);
 
     /* ----- Slice Position CV In ----- */

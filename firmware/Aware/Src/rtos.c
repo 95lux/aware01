@@ -5,11 +5,8 @@
 #include "rtos.h"
 
 #include "FreeRTOS.h"
-#include "drivers/ws2812_driver.h"
-#include "project_config.h"
 #include "queue.h"
 #include "settings.h"
-#include "stm32h7xx_hal.h"
 #include "task.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -22,10 +19,11 @@
 #include "drivers/gpio_driver.h"
 #include "drivers/swo_log.h"
 #include "drivers/tlv320_driver.h"
+#include "drivers/ws2812_driver.h"
 #include "dsp/exciter.h"
 #include "dsp/schroeder_reverb.h"
-#include "main.h"
 #include "param_cache.h"
+#include "project_config.h"
 #include "tape_player.h"
 #include "tim.h"
 #include "user_interface.h"
@@ -124,7 +122,7 @@ static void AudioTask(void* argument) {
     if (xSemaphoreTake(audioReadySemaphore, portMAX_DELAY) == pdTRUE) {
         /* initialize audio engine */
         init_audioengine(&audioengine_cfg);
-        init_tape_player(audioengine_cfg.buffer_size, tape_cmd_q);
+        init_tape_player(audioengine_cfg.buffer_size);
 
         excite_init(&exciter);
         schroeder_rev_init(&reverb);
