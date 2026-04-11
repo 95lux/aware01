@@ -171,6 +171,7 @@ The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified 
 In all retrigger cases, the available sample count between the current playhead and the end of valid data is checked before arming the crossfade.
 If fewer samples are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is clamped accordingly to prevent out-of-bounds reads at both the buffer and \ac{LUT} boundaries.
 
+\newpage
 \paragraph{Cyclic Loop Crossfade}
 In cyclic mode, the playhead wraps from the buffer end back to the beginning on each loop.
 \begin{figure}[H]

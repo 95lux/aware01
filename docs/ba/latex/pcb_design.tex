@@ -32,7 +32,7 @@ A LM4040DIM3X-10 shunt voltage reference provides a stable \qty{-10}{\volt} refe
 
 \paragraph{Signal Integrity Considerations}
 
-The board is divided into two functional regions: the analog frontend occupies the bottom portion of the PCB near the input and output jacks, while the digital domain , including the MCU and supporting circuitry, is placed in the top portion.
+The board is divided into two functional regions: the analog frontend occupies the bottom portion of the PCB near the input and output jacks, while the digital domain, including the MCU and supporting circuitry, is placed in the top portion.
 The codec is positioned between the two regions. 
 This minimizes both the analog signal path length to the frontend and the I2S and SPI trace lengths to the MCU.
 
@@ -62,3 +62,5 @@ The KiCad component symbol for the slide potentiometers was created incorrectly 
 As a result, the LED anode is routed to a no-connect pin rather than the correct pad, leaving the LED indicators non-functional in this revision.
 The potentiometer position readout is unaffected and functions correctly.
 Both errors are documented and scheduled for correction in the next revision.
+
+% TODO images of assembled PCB!

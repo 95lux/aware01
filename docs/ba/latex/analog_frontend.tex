@@ -29,8 +29,6 @@ f_c = \frac{1}{2\pi \cdot \SI{48}{\kilo\ohm} \cdot \qty{2.2}{\micro\farad}}
 \approx \qty{1.5}{\hertz},
 \]
 which is well below the \qty{20}{\hertz} lower bound of the audible range.
-The SPICE simulation, which models the input impedance as the nominal $R_{in} = \qty{40}{\kilo\ohm}$, confirms a cutoff of \qty{1.81}{\hertz}.
-
 
 \subparagraph{ADC Input Range and Attenuation Design}
 
@@ -64,7 +62,7 @@ For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) ca
 All measurements in Section~\ref{sec:loopback-signal-level-measaurements} and all schematics reflect the revised values.
 
 A BAT54S dual Schottky diode package clamps the attenuated signal to the codec supply rails: one diode clamps to \(AVDD = \SI{1.8}{\volt}\) and the other to \SI{0}{\volt}, ensuring that voltage peaks or malformed signals cannot exceed the absolute maximum input rating of the ADC.
-However, a pin mapping error was introduced during schematic entry due to a mismatch between the simulation model and the actual SOT-23 package pinout of the BAT54S (See annotation in Schematic \ref{app:schematic}).
+However, a pin mapping error was introduced during schematic entry due to a mismatch between the simulation model and the actual SOT-23 package pinout of the BAT54S (See annotation in Schematic \ref{app:schematic} on Components D5, D6).
 As a result, the component was placed with reversed orientation on the PCB.
 Since the BAT54S SOT-23 package has its two diode terminals on the outer pins with the common node on the centre pin, the error was corrected by bending the component pins upward and soldering it inverted, effectively swapping the outer pins and restoring the correct diode orientation.
 A corrected footprint assignment is required in the next PCB revision to eliminate the bodge.
@@ -266,7 +264,7 @@ The bias and feedback resistors are adjusted to \(R_9 = \qty{180}{\kilo\ohm}\) a
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.65\textwidth]{../images/hardware_design/simulation/schem_voct_simulation.pdf}
+	\includegraphics[width=0.60\textwidth]{../images/hardware_design/simulation/schem_voct_simulation.pdf}
 	\caption{V/Oct input stage schematic: inverting summing amplifier with \qty{-10}{\volt} bias reference, dimensioned for the V/Oct input range.}
 	\label{fig:schem_voct_input}
 \end{figure}
@@ -277,7 +275,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 
 \begin{figure}[H]
 	\centering
-	\begin{minipage}{0.55\textwidth}
+	\begin{minipage}{0.50\textwidth}
 		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_cv_simulation_print.png}
 	\end{minipage}
 	\hfill
@@ -307,7 +305,7 @@ Transient simulations were conducted for both CV input channels to verify correc
 
 \begin{figure}[H]
 	\centering
-	\begin{minipage}{0.55\textwidth}
+	\begin{minipage}{0.50\textwidth}
 		\includegraphics[width=\textwidth]{../images/hardware_design/simulation/trans_v_oct_simulation_print.png}
 	\end{minipage}
 	\hfill

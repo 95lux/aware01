@@ -1,0 +1,1762 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{FAQTLV320AICCODECs2019}{online}{}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{17}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{shorttitle}{[{{FAQ}}] {{TLV320AIC CODECs}}}
+      \field{title}{[{{FAQ}}] {{TLV320AIC CODECs}}: {{How}} Do {{I}} Calculate the Input Impedance of an {{TLV320AIC}} Device? - {{Audio}} Forum - {{Audio}} - {{TI E2E}} Support Forums}
+      \field{urlday}{22}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/TC73NLYU/faq-tlv320aic-codecs-how-do-i-calculate-the-input-impedance-of-an-tlv320aic-device.html
+      \endverb
+      \verb{urlraw}
+      \verb https://e2e.ti.com/support/audio-group/audio/f/audio-forum/773059/faq-tlv320aic-codecs-how-do-i-calculate-the-input-impedance-of-an-tlv320aic-device
+      \endverb
+      \verb{url}
+      \verb https://e2e.ti.com/support/audio-group/audio/f/audio-forum/773059/faq-tlv320aic-codecs-how-do-i-calculate-the-input-impedance-of-an-tlv320aic-device
+      \endverb
+    \endentry
+    \entry{APS6404L_3SQR}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=25d2ae8d52544fc0e62b9f1537e7993e}{%
+           family={{apmemory}},
+           familyi={a\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {apmemory}%
+      }
+      \strng{namehash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{fullhash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{fullhashraw}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{bibnamehash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{authorbibnamehash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{authornamehash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{authorfullhash}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \strng{authorfullhashraw}{25d2ae8d52544fc0e62b9f1537e7993e}
+      \field{sortinit}{a}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{APS6404L}}\_{{3SQR}}}
+      \field{type}{Datasheet}
+      \field{urlday}{29}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/IYJTV5NZ/APS6404L_3SQR.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mouser.de/datasheet/3/4815/1/APS6404L_3SQR.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.mouser.de/datasheet/3/4815/1/APS6404L_3SQR.pdf
+      \endverb
+    \endentry
+    \entry{ArmCortexM7Processor}{online}{}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{title}{Arm {{Cortex-M7 Processor Technical Reference Manual}} R1p2}
+      \field{urlday}{27}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/T8RTSZHE/l1-caches.html
+      \endverb
+      \verb{urlraw}
+      \verb https://developer.arm.com/documentation/ddi0489/f/memory-system/l1-caches
+      \endverb
+      \verb{url}
+      \verb https://developer.arm.com/documentation/ddi0489/f/memory-system/l1-caches
+      \endverb
+    \endentry
+    \entry{PTLDatasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=bac02fa12c54ec8e9f6e68b357676f14}{%
+           family={{Bourns}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Bourns}%
+      }
+      \strng{namehash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{fullhash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{fullhashraw}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{bibnamehash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{authorbibnamehash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{authornamehash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{authorfullhash}{bac02fa12c54ec8e9f6e68b357676f14}
+      \strng{authorfullhashraw}{bac02fa12c54ec8e9f6e68b357676f14}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{PTLDatasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/I2L26Z9S/PTL.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.bourns.com/docs/Product-Datasheets/PTL.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.bourns.com/docs/Product-Datasheets/PTL.pdf
+      \endverb
+    \endentry
+    \entry{burrusHornersMethodEvaluating}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=55ede681fd87d305b3161d1dfc73dd06}{%
+           family={Burrus},
+           familyi={B\bibinitperiod},
+           given={C\bibnamedelima Sidney},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=20ea4a73c3defee2445bb30cb9670667}{%
+           family={Fox},
+           familyi={F\bibinitperiod},
+           given={James\bibnamedelima W},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=b9931a1f4615e835f037ba753b36938c}{%
+           family={Sitton},
+           familyi={S\bibinitperiod},
+           given={Gary\bibnamedelima A},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=a874a16df38c9f8f40011b5e2c5c23ca}{%
+           family={Treitel},
+           familyi={T\bibinitperiod},
+           given={Sven},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{69fabdb39591dd10be247f9bbf501862}
+      \strng{fullhash}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \strng{fullhashraw}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \strng{bibnamehash}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \strng{authorbibnamehash}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \strng{authornamehash}{69fabdb39591dd10be247f9bbf501862}
+      \strng{authorfullhash}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \strng{authorfullhashraw}{8c1762bfd7a3bad415c2cc9342869dbc}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Horner’s method is a standard minimum arithmetic method for evaluating and deflating polynomials. It can also efficiently evaluate various order derivatives of a polynomial, therefore is often used as part of Newton’s method. This note tries to develop the various techniques called Horner’s method, nested evaluation, and synthetic division in a common framework using a recursive structure and difference equations. There is a similarity to Goertzel’s algorithm for the DFT, Z-transform inversion by division, and Pade´’s and Prony’s methods. This approach also allows a straight forward explanation of “stability” or numerical errors of the algorithms. Matlab implementations are given.}
+      \field{langid}{english}
+      \field{title}{Horner’s {{Method}} for {{Evaluating}} and {{Deﬂating Polynomials}}}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/ERTA3MPE/Burrus et al. - Horner’s Method for Evaluating and Deﬂating Polynomials.pdf
+      \endverb
+    \endentry
+    \entry{ConstructionDetailsA100}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeltitlesource}{title}
+      \field{title}{Construction {{Details A-100}}}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/7YXCYPIX/a100m_e.html
+      \endverb
+      \verb{urlraw}
+      \verb https://doepfer.de/a100_man/a100m_e.htm
+      \endverb
+      \verb{url}
+      \verb https://doepfer.de/a100_man/a100m_e.htm
+      \endverb
+    \endentry
+    \entry{davidwesselProblemsProspectsIntimate2002}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=0d6449d129d69acd2c7153a492ec6d0d}{%
+           family={{David Wessel}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {University of California, Berkeley}%
+      }
+      \strng{namehash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{fullhash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{fullhashraw}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{bibnamehash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{authorbibnamehash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{authornamehash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{authorfullhash}{0d6449d129d69acd2c7153a492ec6d0d}
+      \strng{authorfullhashraw}{0d6449d129d69acd2c7153a492ec6d0d}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Problems and {{Prospects}} for {{Intimate Musical Control}} of {{Computers}}}
+      \field{year}{2002}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/2WC3FUP6/David Wessel - 2002 - Problems and Prospects for Intimate Musical Control of Computers.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://cnmat.berkeley.edu/sites/default/files/attachments/2002_problems-and-prospects-for-intimate-musical-control-of-computers.pdf
+      \endverb
+      \verb{url}
+      \verb https://cnmat.berkeley.edu/sites/default/files/attachments/2002_problems-and-prospects-for-intimate-musical-control-of-computers.pdf
+      \endverb
+    \endentry
+    \entry{DeedAttributionShareAlike30}{online}{}{}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labeltitlesource}{title}
+      \field{title}{Deed - {{Attribution-ShareAlike}} 3.0 {{Unported}} - {{Creative Commons}}}
+      \field{urlday}{11}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/RMYPU86M/deed.html
+      \endverb
+      \verb{urlraw}
+      \verb https://creativecommons.org/licenses/by-sa/3.0/deed.en
+      \endverb
+      \verb{url}
+      \verb https://creativecommons.org/licenses/by-sa/3.0/deed.en
+      \endverb
+    \endentry
+    \entry{douglasAreModularSynths2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=e8f6a7135917cb61973b5bf55a532130}{%
+           family={Douglas},
+           familyi={D\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Attack Magazine}%
+      }
+      \strng{namehash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{fullhash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{fullhashraw}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{bibnamehash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{authorbibnamehash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{authornamehash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{authorfullhash}{e8f6a7135917cb61973b5bf55a532130}
+      \strng{authorfullhashraw}{e8f6a7135917cb61973b5bf55a532130}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{There’s a narrative that Eurorack is wallet-gaugingly expensive but is this justified? We spoke with Noise Engineering and other manufacturers to understand the costs involved}
+      \field{day}{26}
+      \field{hour}{10}
+      \field{langid}{american}
+      \field{minute}{47}
+      \field{month}{6}
+      \field{second}{6}
+      \field{shorttitle}{Are {{Modular Synths Too Expensive}}?}
+      \field{timezone}{Z}
+      \field{title}{Are {{Modular Synths Too Expensive}}? {{And What Is}} "{{Too Expensive}}" {{Anyway}}?}
+      \field{urlday}{27}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/S6SP3SJ9/are-modular-synths-too-expensive-and-what-is-too-expensive-anyway.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.attackmagazine.com/features/long-read/are-modular-synths-too-expensive-and-what-is-too-expensive-anyway/
+      \endverb
+      \verb{url}
+      \verb https://www.attackmagazine.com/features/long-read/are-modular-synths-too-expensive-and-what-is-too-expensive-anyway/
+      \endverb
+    \endentry
+    \entry{electrosmithDaisyHardware}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=e18b7232171ebbfdf7f4496e6ba9772c}{%
+           family={{Electrosmith}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Electrosmith}%
+      }
+      \strng{namehash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{fullhash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{fullhashraw}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{bibnamehash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{authorbibnamehash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{authornamehash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{authorfullhash}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \strng{authorfullhashraw}{e18b7232171ebbfdf7f4496e6ba9772c}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Manufacturer of Daisy, and embedded platform for music. DFM solutions. Evaluation Kits. DSP platform. Let's teach computers how to sing!}
+      \field{langid}{english}
+      \field{title}{Daisy {{Hardware}}}
+      \field{urlday}{29}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/GCEMWREK/hardware.html
+      \endverb
+      \verb{urlraw}
+      \verb https://electro-smith.com/pages/hardware
+      \endverb
+      \verb{url}
+      \verb https://electro-smith.com/pages/hardware
+      \endverb
+    \endentry
+    \entry{2N3904MMBT3904PZT39042002a}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=99de9c1f4bdabcd271cc11b56686e9a7}{%
+           family={{Fairchild Semiconductor}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Fairchild Semiconductor}%
+      }
+      \strng{namehash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{fullhash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{fullhashraw}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{bibnamehash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{authorbibnamehash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{authornamehash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{authorfullhash}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \strng{authorfullhashraw}{99de9c1f4bdabcd271cc11b56686e9a7}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{{2N3904 MMBT3904 PZT3904}} - {{NPN General-Purpose Amplifier}}}
+      \field{type}{Datasheet}
+      \field{year}{2002}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/RZBRTHCX/2002 - 2N3904 MMBT3904 PZT3904 - NPN General-Purpose Amplifier.pdf
+      \endverb
+    \endentry
+    \entry{FirefaceUFXII}{online}{}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labeltitlesource}{title}
+      \field{abstract}{RME Audio Professional Live, Studio, Recording and Broadcast Solutions. Unrivalled Quality, Performance \& Stability MADI Interfaces, Converters \& Preamps.}
+      \field{langid}{english}
+      \field{title}{Fireface {{UFX II}} | {{High-end USB Audio Interface}} - Rme-Usa.Com}
+      \field{urlday}{12}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/5FW6XVUQ/fireface-ufx-ii.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.rme-usa.com/fireface-ufx-ii.html
+      \endverb
+      \verb{url}
+      \verb https://www.rme-usa.com/fireface-ufx-ii.html
+      \endverb
+    \endentry
+    \entry{FrontPanelExpressa}{online}{}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labeltitlesource}{title}
+      \field{title}{Front~{{Panel~Express Products}}}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/Y5JAEHQJ/products.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.frontpanelexpress.com/products#printing
+      \endverb
+      \verb{url}
+      \verb https://www.frontpanelexpress.com/products#printing
+      \endverb
+    \endentry
+    \entry{Genius2022}{online}{}{}
+      \list{organization}{1}{%
+        {Rebel Technology}%
+      }
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Genius is an advanced digital signal processor and programmable USB audio interface. We like to think of it as our favourite DSP playground! Genius is currently available exclusively from our websh…}
+      \field{day}{28}
+      \field{hour}{12}
+      \field{langid}{british}
+      \field{minute}{32}
+      \field{month}{2}
+      \field{second}{53}
+      \field{timezone}{Z}
+      \field{title}{Genius}
+      \field{urlday}{29}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/NU5Z5ALH/genius.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.rebeltech.org/product/genius/
+      \endverb
+      \verb{url}
+      \verb https://www.rebeltech.org/product/genius/
+      \endverb
+    \endentry
+    \entry{georgearfkenMathematicalMethodsPhysicists1985}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=ab090f48775ccda6c8c05a2a244c6ffc}{%
+           family={{GEORGE ARFKEN}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{fullhash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{fullhashraw}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{bibnamehash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{authorbibnamehash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{authornamehash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{authorfullhash}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \strng{authorfullhashraw}{ab090f48775ccda6c8c05a2a244c6ffc}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-12-059820-5}
+      \field{title}{Mathematical {{Methods}} for {{Physicists}} ({{Third Edition}})}
+      \field{urlday}{9}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{1985}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/TFK98X38/Fourier Series.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://williamsgj.people.charleston.edu/Fourier%20Series.pdf
+      \endverb
+      \verb{url}
+      \verb https://williamsgj.people.charleston.edu/Fourier%20Series.pdf
+      \endverb
+    \endentry
+    \entry{herlihyArtMultiprocessorProgramming2009}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=dec3948f0497f5447bae5c2365b87e8f}{%
+           family={Herlihy},
+           familyi={H\bibinitperiod},
+           given={Maurice},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3e2aee6574e3dcbdbc582166218008cb}{%
+           family={Shavit},
+           familyi={S\bibinitperiod},
+           given={Nir},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Amsterdam Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{fullhash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{fullhashraw}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{bibnamehash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{authorbibnamehash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{authornamehash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{authorfullhash}{7d85b068d0a7584e6818b95a7c1976f6}
+      \strng{authorfullhashraw}{7d85b068d0a7584e6818b95a7c1976f6}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{Nachdr.}
+      \field{isbn}{978-0-12-370591-4}
+      \field{langid}{english}
+      \field{pagetotal}{508}
+      \field{title}{The Art of Multiprocessor Programming}
+      \field{year}{2009}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/BNJEHMYW/Herlihy and Shavit - 2009 - The art of multiprocessor programming.pdf
+      \endverb
+    \endentry
+    \entry{HowSelectCompatible2025}{online}{}{}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Introduction As with many microcontrollers, STM32 MCUs could be clocked by an external source like crystals (XTAL) or crystal oscillators (XO). This is in addition to internal clocks such as LSI, HSI, MSI, CSI etc. For crystals, a preliminary calculation is needed to determine if it is suitable for ...}
+      \field{day}{17}
+      \field{hour}{13}
+      \field{langid}{english}
+      \field{minute}{0}
+      \field{month}{4}
+      \field{second}{0}
+      \field{title}{How to Select a Compatible Crystal and Load Capacitors for {{STM32}} with Layout Guidelines}
+      \field{urlday}{29}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/3Q7AVHF9/780236.html
+      \endverb
+      \verb{urlraw}
+      \verb https://community.st.com/t5/stm32-mcus/how-to-select-a-compatible-crystal-and-load-capacitors-for-stm32/ta-p/780236
+      \endverb
+      \verb{url}
+      \verb https://community.st.com/t5/stm32-mcus/how-to-select-a-compatible-crystal-and-load-capacitors-for-stm32/ta-p/780236
+      \endverb
+    \endentry
+    \entry{freeverb-github}{software}{}{}
+      \name{author}{1}{}{%
+        {{hash=5aa44ed779982717683410701f4d545a}{%
+           family={{Jezar}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Dreampoint}%
+      }
+      \strng{namehash}{5aa44ed779982717683410701f4d545a}
+      \strng{fullhash}{5aa44ed779982717683410701f4d545a}
+      \strng{fullhashraw}{5aa44ed779982717683410701f4d545a}
+      \strng{bibnamehash}{5aa44ed779982717683410701f4d545a}
+      \strng{authorbibnamehash}{5aa44ed779982717683410701f4d545a}
+      \strng{authornamehash}{5aa44ed779982717683410701f4d545a}
+      \strng{authorfullhash}{5aa44ed779982717683410701f4d545a}
+      \strng{authorfullhashraw}{5aa44ed779982717683410701f4d545a}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Freeverb}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/sinshu/freeverb
+      \endverb
+      \verb{url}
+      \verb https://github.com/sinshu/freeverb
+      \endverb
+    \endentry
+    \entry{juliuso.smithInterpolatedDelayLines2022}{unpublished}{}{}
+      \name{author}{1}{}{%
+        {{hash=852c1bdb5e9ac8eeb2e190827d86eca1}{%
+           family={{Julius O. Smith}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{fullhash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{fullhashraw}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{bibnamehash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{authorbibnamehash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{authornamehash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{authorfullhash}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \strng{authorfullhashraw}{852c1bdb5e9ac8eeb2e190827d86eca1}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{MUS420 Lecture 4A}
+      \field{title}{Interpolated {{Delay Lines}}, {{Ideal Bandlimited Interpolation}}, and {{Fractional Delay Filter Design}}}
+      \field{urlday}{13}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/RVPDJYF2/Julius O. Smith - Interpolated Delay Lines, Ideal Bandlimited Interpolation, and Fractional Delay Filter Design.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://ccrma.stanford.edu/~jos/Interpolation/Interpolation.pdf
+      \endverb
+      \verb{url}
+      \verb https://ccrma.stanford.edu/~jos/Interpolation/Interpolation.pdf
+      \endverb
+    \endentry
+    \entry{juliuso.smithPhysicalSignalProcessing}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=15a8ad899d9b8402cbaadfb1e05bec2e}{%
+           family={{Julius O. Smith III}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {W3K Publishing}%
+      }
+      \strng{namehash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{fullhash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{fullhashraw}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{bibnamehash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{authorbibnamehash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{authornamehash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{authorfullhash}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \strng{authorfullhashraw}{15a8ad899d9b8402cbaadfb1e05bec2e}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-9745607-2-4}
+      \field{title}{Physical {{Audio Signal Processing}} for {{Virtual Musical Instruments}} and {{Audio Effects}}}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/2EI4CM8G/Julius O. Smith III - 2010 - Physical Audio Signal Processing for Virtual Musical Instruments and Audio Effects.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://ccrma.stanford.edu/~jos/pasp/
+      \endverb
+      \verb{url}
+      \verb https://ccrma.stanford.edu/~jos/pasp/
+      \endverb
+    \endentry
+    \entry{m.r.schroederJournalAudioEngineering1962}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=ccdda98217423b8ec5ec29f432c8f725}{%
+           family={{M. R. Schroeder}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{fullhash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{fullhashraw}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{bibnamehash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{authorbibnamehash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{authornamehash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{authorfullhash}{ccdda98217423b8ec5ec29f432c8f725}
+      \strng{authorfullhashraw}{ccdda98217423b8ec5ec29f432c8f725}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Journal of the {{Audio Engineering Society}}}
+      \field{volume}{10}
+      \field{year}{1962}
+      \field{dateera}{ce}
+    \endentry
+    \entry{massaraniTransferFunctionMeasurementSweeps2001}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=8073065db9c62dc2bce4bcc5ccc58ff1}{%
+           family={Massarani},
+           familyi={M\bibinitperiod},
+           given={Paulo},
+           giveni={P\bibinitperiod}}}%
+        {{hash=b74d1bdf1947716624e02728ec6decd0}{%
+           family={Müller},
+           familyi={M\bibinitperiod},
+           given={Sven},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{fullhash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{fullhashraw}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{bibnamehash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{authorbibnamehash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{authornamehash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{authorfullhash}{edfc5ace92d14ac399d5530cbc05b63e}
+      \strng{authorfullhashraw}{edfc5ace92d14ac399d5530cbc05b63e}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Compared to using pseudo-noise signals, transfer function measurements using sweeps as excitation signal show significantly higher immunity against distortion and time variance. Capturing binaural room impulse responses for high-quality auralization purposes requires a signal -to-noise ratio of {$>$}90 dB which is unattainable with MLS- measurements due to loudspeaker non-linearity but fairly easy to reach with sweeps due to the possibility of completely rejecting harmonic distortion. Before investigating the differences and practical problems of measurements with MLS and sweeps and arguing why sweeps are the preferable choice for the majority of measurement tasks, the existing methods of obtaining transfer functions are reviewed. The continual need to use pre-emphasized excitation signals in acoustical measurements will also be addressed. A new method to create sweeps with arbitrary spectral contents, but constant or prescribed frequency-dependent temporal envelope is presented. Finally, the possibility of simultaneously analysing transfer function and harmonics is investigated.}
+      \field{title}{Transfer-{{Function Measurement}} with {{Sweeps}}}
+      \field{year}{2001}
+      \field{dateera}{ce}
+    \endentry
+    \entry{ModulesModularGrid}{online}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{Modules on {{ModularGrid}}}
+      \field{urlday}{27}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/YD2F4GSD/browser.html
+      \endverb
+      \verb{urlraw}
+      \verb https://modulargrid.net/e/modules/browser?SearchName=&SearchVendor=&SearchFunction=&SearchSecondaryfunction=&SearchSecondaryfunctionexcl=0&SearchHeight=&SearchTe=&SearchTemethod=max&SearchBuildtype=&SearchLifecycle=available&SearchSet=all&SearchMarketplace=&SearchIsmodeled=0&SearchShowothers=0&SearchShowpanel=0&order=newest&direction=asc
+      \endverb
+      \verb{url}
+      \verb https://modulargrid.net/e/modules/browser?SearchName=&SearchVendor=&SearchFunction=&SearchSecondaryfunction=&SearchSecondaryfunctionexcl=0&SearchHeight=&SearchTe=&SearchTemethod=max&SearchBuildtype=&SearchLifecycle=available&SearchSet=all&SearchMarketplace=&SearchIsmodeled=0&SearchShowothers=0&SearchShowpanel=0&order=newest&direction=asc
+      \endverb
+    \endentry
+    \entry{moirRudimentsSignalProcessing2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=15a2a8fef92d1010eb10dfe0b96a9add}{%
+           family={Moir},
+           familyi={M\bibinitperiod},
+           given={Tom\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{fullhash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{fullhashraw}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{bibnamehash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{authorbibnamehash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{authornamehash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{authorfullhash}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \strng{authorfullhashraw}{15a2a8fef92d1010eb10dfe0b96a9add}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-030-76946-8 978-3-030-76947-5}
+      \field{langid}{english}
+      \field{title}{Rudiments of {{Signal Processing}} and {{Systems}}}
+      \field{urlday}{13}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-3-030-76947-5
+      \endverb
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/AQR8AKF9/Moir - 2022 - Rudiments of Signal Processing and Systems.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/10.1007/978-3-030-76947-5
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/10.1007/978-3-030-76947-5
+      \endverb
+    \endentry
+    \entry{Ndk_08142018_NX2520SA24000000MHzB8}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a781e0468f15d9a9776aa0ec03389053}{%
+           family={{NDK}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {NDK}%
+      }
+      \strng{namehash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{fullhash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{fullhashraw}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{bibnamehash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{authorbibnamehash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{authornamehash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{authorfullhash}{a781e0468f15d9a9776aa0ec03389053}
+      \strng{authorfullhashraw}{a781e0468f15d9a9776aa0ec03389053}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{ndk\_08142018\_{{NX2520SA-24}}.{{000000MHz-B8}}}
+      \field{type}{Datasheet}
+      \field{urlday}{29}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/2EVBGII2/ndk_08142018_NX2520SA-24.000000MHz-B8.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mouser.com/catalog/specsheets/ndk_08142018_NX2520SA-24.000000MHz-B8.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.mouser.com/catalog/specsheets/ndk_08142018_NX2520SA-24.000000MHz-B8.pdf
+      \endverb
+    \endentry
+    \entry{olliniemitaloPolynomialInterpolatorsHighQuality2001}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4482f1b4ebcce52c8505f9437564cfff}{%
+           family={{Olli Niemitalo}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{fullhash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{fullhashraw}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{bibnamehash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{authorbibnamehash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{authornamehash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{authorfullhash}{4482f1b4ebcce52c8505f9437564cfff}
+      \strng{authorfullhashraw}{4482f1b4ebcce52c8505f9437564cfff}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Polynomial {{Interpolators}} for {{High-Quality Resampling}} of {{Oversampled Audio}}}
+      \field{urlday}{18}
+      \field{urlmonth}{1}
+      \field{urlyear}{2026}
+      \field{year}{2001}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/FAEPZNYZ/deip.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://yehar.com/blog/wp-content/uploads/2009/08/deip.pdf
+      \endverb
+      \verb{url}
+      \verb https://yehar.com/blog/wp-content/uploads/2009/08/deip.pdf
+      \endverb
+    \endentry
+    \entry{oppenheimDiscretetimeSignalProcessing2014}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=3d2d1d8687de3baa625d3d62a7e0e464}{%
+           family={Oppenheim},
+           familyi={O\bibinitperiod},
+           given={Alan\bibnamedelima V.},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=008f6a52ae547533c260758af95fa7bf}{%
+           family={Schafer},
+           familyi={S\bibinitperiod},
+           given={Roland\bibnamedelima W.},
+           giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Harlow}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{fullhash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{fullhashraw}{f4eed6759eafd8048089de3adf249edf}
+      \strng{bibnamehash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{authorbibnamehash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{authornamehash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{authorfullhash}{f4eed6759eafd8048089de3adf249edf}
+      \strng{authorfullhashraw}{f4eed6759eafd8048089de3adf249edf}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{Third edition, Pearson New international edition}
+      \field{isbn}{978-1-292-02572-8 978-1-292-03815-5}
+      \field{langid}{english}
+      \field{pagetotal}{1}
+      \field{series}{Always Learning}
+      \field{title}{Discrete-Time Signal Processing}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/BX9VGSXP/Oppenheim and Schafer - 2014 - Discrete-time signal processing.pdf
+      \endverb
+    \endentry
+    \entry{owonXDM1000SeriesDatasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=d2c6f828e38bdeaa481fcac049f5daf9}{%
+           family={{Owon}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Owon}%
+      }
+      \strng{namehash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{fullhash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{fullhashraw}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{bibnamehash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{authorbibnamehash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{authornamehash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{authorfullhash}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \strng{authorfullhashraw}{d2c6f828e38bdeaa481fcac049f5daf9}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{XDM1000 Series Datasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{2}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/IYKCA96X/bda38760fa440f151b576acc096b4a7fe2b3766f3ec67c0890d1bfb28da90fac_optim.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://manuals.plus/m/bda38760fa440f151b576acc096b4a7fe2b3766f3ec67c0890d1bfb28da90fac_optim.pdf
+      \endverb
+      \verb{url}
+      \verb https://manuals.plus/m/bda38760fa440f151b576acc096b4a7fe2b3766f3ec67c0890d1bfb28da90fac_optim.pdf
+      \endverb
+    \endentry
+    \entry{PartDesignShapeBinder2025}{online}{}{}
+      \list{organization}{1}{%
+        {FreeCAD Documentation}%
+      }
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labeltitlesource}{title}
+      \field{abstract}{.}
+      \field{day}{20}
+      \field{hour}{22}
+      \field{langid}{english}
+      \field{minute}{39}
+      \field{month}{12}
+      \field{second}{57}
+      \field{timezone}{Z}
+      \field{title}{{{PartDesign ShapeBinder}}}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/A28JI6V6/PartDesign_ShapeBinder.html
+      \endverb
+      \verb{urlraw}
+      \verb http://wiki.freecad.org/PartDesign_ShapeBinder
+      \endverb
+      \verb{url}
+      \verb http://wiki.freecad.org/PartDesign_ShapeBinder
+      \endverb
+    \endentry
+    \entry{OrnamentCrime}{online}{}{}
+      \name{author}{3}{}{%
+        {{hash=ba8b838d382144af97b778e28f7fbe31}{%
+           family={{Patrick Dowling}},
+           familyi={P\bibinitperiod}}}%
+        {{hash=2f6142cb19fb7232e98a1937cd3dae36}{%
+           family={{mxmxmx}},
+           familyi={m\bibinitperiod}}}%
+        {{hash=2319832201a8e8e521e85374c88f7476}{%
+           family={{Tim Churches}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{52356eaed3df2e12db6fdc0c77eaef78}
+      \strng{fullhash}{0a8d19e88d0c0988e295df535863a239}
+      \strng{fullhashraw}{0a8d19e88d0c0988e295df535863a239}
+      \strng{bibnamehash}{0a8d19e88d0c0988e295df535863a239}
+      \strng{authorbibnamehash}{0a8d19e88d0c0988e295df535863a239}
+      \strng{authornamehash}{52356eaed3df2e12db6fdc0c77eaef78}
+      \strng{authorfullhash}{0a8d19e88d0c0988e295df535863a239}
+      \strng{authorfullhashraw}{0a8d19e88d0c0988e295df535863a239}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ornament \& Crime}
+      \field{urlday}{30}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/M23VNPJQ/user-manual-v1_3.html
+      \endverb
+      \verb{urlraw}
+      \verb https://ornament-and-cri.me/user-manual-v1_3/#overview
+      \endverb
+      \verb{url}
+      \verb https://ornament-and-cri.me/user-manual-v1_3/#overview
+      \endverb
+    \endentry
+    \entry{pichenettesPichenettesEurorack2026}{software}{}{}
+      \name{author}{1}{}{%
+        {{hash=ad68c7009770dd3b67dcc3c18e6916dd}{%
+           family={{pichenettes}},
+           familyi={p\bibinitperiod}}}%
+      }
+      \strng{namehash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{fullhash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{fullhashraw}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{bibnamehash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{authorbibnamehash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{authornamehash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{authorfullhash}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \strng{authorfullhashraw}{ad68c7009770dd3b67dcc3c18e6916dd}
+      \field{sortinit}{p}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Eurorack modules}
+      \field{day}{29}
+      \field{hour}{6}
+      \field{minute}{37}
+      \field{month}{3}
+      \field{origday}{26}
+      \field{orighour}{15}
+      \field{origminute}{53}
+      \field{origmonth}{8}
+      \field{origsecond}{40}
+      \field{origtimezone}{Z}
+      \field{origyear}{2013}
+      \field{second}{26}
+      \field{timezone}{Z}
+      \field{title}{Pichenettes/Eurorack}
+      \field{urlday}{29}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{origdateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/pichenettes/eurorack
+      \endverb
+      \verb{url}
+      \verb https://github.com/pichenettes/eurorack
+      \endverb
+    \endentry
+    \entry{35mmJackVertical}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=586f8afefd037020a9775909eb7e6cc8}{%
+           family={{QingPu}},
+           familyi={Q\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {QingPu}%
+      }
+      \strng{namehash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{fullhash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{fullhashraw}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{bibnamehash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{authorbibnamehash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{authornamehash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{authorfullhash}{586f8afefd037020a9775909eb7e6cc8}
+      \strng{authorfullhashraw}{586f8afefd037020a9775909eb7e6cc8}
+      \field{sortinit}{Q}
+      \field{sortinithash}{ce69a400a872ddd02ee7fdb3b38c6abd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{3.5mm {{Jack Vertical PCB Mount}} - {{WQP-WQP518MA}} / {{WQP-PJ398SM}}}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/4D2AS8JA/WQP-PJ398SM-362.html
+      \endverb
+      \verb{urlraw}
+      \verb http://qingpu-electronics.com/en/products/WQP-PJ398SM-362.html
+      \endverb
+      \verb{url}
+      \verb http://qingpu-electronics.com/en/products/WQP-PJ398SM-362.html
+      \endverb
+    \endentry
+    \entry{RunTimeStatistics}{online}{}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Introduction on the power saving state}
+      \field{title}{Run {{Time Statistics}} - {{FreeRTOS}}™}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/3ENZMJ46/08-Run-time-statistics.html
+      \endverb
+      \verb{urlraw}
+      \verb https://freertos.org/Documentation/02-Kernel/02-Kernel-features/08-Run-time-statistics
+      \endverb
+      \verb{url}
+      \verb https://freertos.org/Documentation/02-Kernel/02-Kernel-features/08-Run-time-statistics
+      \endverb
+    \endentry
+    \entry{Ts02Datasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=968ef28c0b3c60399a1988cf709db515}{%
+           family={{Same Sky}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Same Sky}%
+      }
+      \strng{namehash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{fullhash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{fullhashraw}{968ef28c0b3c60399a1988cf709db515}
+      \strng{bibnamehash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{authorbibnamehash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{authornamehash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{authorfullhash}{968ef28c0b3c60399a1988cf709db515}
+      \strng{authorfullhashraw}{968ef28c0b3c60399a1988cf709db515}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{ts02Datasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/I9ZQJ77D/ts02.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mouser.de/datasheet/3/6118/1/ts02.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.mouser.de/datasheet/3/6118/1/ts02.pdf
+      \endverb
+    \endentry
+    \entry{smithjuliuso.DigitalAudioResampling}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=eacafed4579986a0a246f8b23186cda0}{%
+           family={{Smith, Julius O.}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{fullhash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{fullhashraw}{eacafed4579986a0a246f8b23186cda0}
+      \strng{bibnamehash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{authorbibnamehash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{authornamehash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{authorfullhash}{eacafed4579986a0a246f8b23186cda0}
+      \strng{authorfullhashraw}{eacafed4579986a0a246f8b23186cda0}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{annotation}{Center for Computer Research in Music and Acoustics (CCRMA), \\ Stanford University}
+      \field{title}{Digital {{Audio Resampling Home Page}}}
+      \field{type}{Center for Computer Research in Music and Acoustics (CCRMA)}
+      \field{urlday}{16}
+      \field{urlmonth}{1}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/U2HSAUZ6/resample.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://ccrma.stanford.edu/~jos/resample/resample.pdf
+      \endverb
+      \verb{url}
+      \verb https://ccrma.stanford.edu/~jos/resample/resample.pdf
+      \endverb
+    \endentry
+    \entry{stmicroelectronicsLevel1Cache2018}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {STMicroelectronics}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhashraw}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhashraw}{c38884ab3cf908c2798725960369391b}
+      \field{extraname}{1}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{langid}{english}
+      \field{shorttitle}{{{AN4839}}}
+      \field{title}{Level 1 Cache on {{STM32F7 Series}} and {{STM32H7 Series}}}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/NCVVKAMM/STMicroelectronics - 2018 - Level 1 cache on STM32F7 Series and STM32H7 Series.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.st.com/content/ccc/resource/technical/document/application_note/group0/08/dd/25/9c/4d/83/43/12/DM00272913/files/DM00272913.pdf/jcr:content/translations/en.DM00272913.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.st.com/content/ccc/resource/technical/document/application_note/group0/08/dd/25/9c/4d/83/43/12/DM00272913/files/DM00272913.pdf/jcr:content/translations/en.DM00272913.pdf
+      \endverb
+    \endentry
+    \entry{stmicroelectronicsRM0433ReferenceManual2023}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhashraw}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhashraw}{c38884ab3cf908c2798725960369391b}
+      \field{extraname}{2}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{RM0433}} {{Reference}} Manual {{STM32H742}}, {{STM32H743}}/753 and {{STM32H750}}}
+      \field{type}{Reference Manual}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/7AJIXI6R/STMicroelectronics - 2023 - RM0433 Reference manual STM32H742, STM32H743753 and STM32H750.pdf
+      \endverb
+    \endentry
+    \entry{stmicroelectronicsStm32h7a3riDatasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {STMicroelectronics}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhashraw}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhashraw}{c38884ab3cf908c2798725960369391b}
+      \field{extraname}{3}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Stm32h7a3ri {{Datasheet}}}
+      \field{type}{Datasheet}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/ICB3UQWN/stm32h7a3ri.pdf
+      \endverb
+    \endentry
+    \entry{TechnicalDetailsA100}{online}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{Technical {{Details A-100}}}
+      \field{urlday}{5}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/4TEKWSKV/a100t_e.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.doepfer.de/a100_man/a100t_e.htm
+      \endverb
+      \verb{url}
+      \verb https://www.doepfer.de/a100_man/a100t_e.htm
+      \endverb
+    \endentry
+    \entry{TBS2000BSpecificationVerification_077153803_RevD}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=5b7cebd92f48f197e31d10ea605e9ba4}{%
+           family={{Tektronix}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{fullhash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{fullhashraw}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{bibnamehash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{authorbibnamehash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{authornamehash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{authorfullhash}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \strng{authorfullhashraw}{5b7cebd92f48f197e31d10ea605e9ba4}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{TBS2000B-Specification-Verification}}\_077153803\_{{RevD}}}
+      \field{urlday}{2}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{Specification}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/TCHN9I8Z/TBS2000B-Specification-Verification_077153803_RevD.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://download.tek.com/manual/TBS2000B-Specification-Verification_077153803_RevD.pdf
+      \endverb
+      \verb{url}
+      \verb https://download.tek.com/manual/TBS2000B-Specification-Verification_077153803_RevD.pdf
+      \endverb
+    \endentry
+    \entry{texasinstrumentsGeneralADCCalibration}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{1}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{american}
+      \field{title}{General {{ADC Calibration}}}
+      \field{urlday}{31}
+      \field{urlmonth}{1}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/N29VDZ2G/3364.General-ADC-calibration.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://e2e.ti.com/cfs-file/__key/CommunityServer-Discussions-Components-Files/156/3364.General-ADC-calibration.pdf
+      \endverb
+      \verb{url}
+      \verb https://e2e.ti.com/cfs-file/__key/CommunityServer-Discussions-Components-Files/156/3364.General-ADC-calibration.pdf
+      \endverb
+    \endentry
+    \entry{Lm1117}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{2}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Lm1117}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/HWQXRDZU/Texas Instruments - lm1117.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ti.com/lit/ds/symlink/lm1117.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.ti.com/lit/ds/symlink/lm1117.pdf
+      \endverb
+    \endentry
+    \entry{Lmr50410q1}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{3}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Lmr50410-Q1}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/UC99DI5P/lmr50410-q1.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ti.com/lit/ds/symlink/lmr50410-q1.pdf?ts=1762395938401&ref_url=https%253A%252F%252Fwww.mouser.com%252F
+      \endverb
+      \verb{url}
+      \verb https://www.ti.com/lit/ds/symlink/lmr50410-q1.pdf?ts=1762395938401&ref_url=https%253A%252F%252Fwww.mouser.com%252F
+      \endverb
+    \endentry
+    \entry{Opa2322}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{4}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{opa2322Datasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/9SX9RUGB/opa2322.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584
+      \endverb
+      \verb{url}
+      \verb https://www.ti.com/lit/ds/symlink/opa2322.pdf?ts=1763625919584
+      \endverb
+    \endentry
+    \entry{Sn74ahct1g14}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{5}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Sn74ahct1g14}
+      \field{type}{Datasheet}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/QFGRFCD3/Texas Instruments - sn74ahct1g14.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ti.com/lit/ds/symlink/sn74ahct1g14.pdf?ts=1766254262190&ref_url=https%253A%252F%252Fwww.mouser.de%252F
+      \endverb
+      \verb{url}
+      \verb https://www.ti.com/lit/ds/symlink/sn74ahct1g14.pdf?ts=1766254262190&ref_url=https%253A%252F%252Fwww.mouser.de%252F
+      \endverb
+    \endentry
+    \entry{texasinstrumentsTlv320aic3204Datasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Texas Instruments}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{extraname}{6}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Tlv320aic3204 {{Datasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{12}
+      \field{urlmonth}{8}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/7NAVDEHH/tlv320aic3204.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ti.com/lit/ds/symlink/tlv320aic3204.pdf?ts=1720871960400
+      \endverb
+      \verb{url}
+      \verb https://www.ti.com/lit/ds/symlink/tlv320aic3204.pdf?ts=1720871960400
+      \endverb
+    \endentry
+    \entry{SOSGuideChoosing}{online}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{The {{SOS Guide To Choosing A Modular Synth}}}
+      \field{urlday}{27}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/LNHTD82T/sos-guide-choosing-modular-synth.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.soundonsound.com/techniques/sos-guide-choosing-modular-synth
+      \endverb
+      \verb{url}
+      \verb https://www.soundonsound.com/techniques/sos-guide-choosing-modular-synth
+      \endverb
+    \endentry
+    \entry{TIE2ESupport}{online}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{{{TI E2E}} Support Forums}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/BFDI2P4H/e2e.ti.com.html
+      \endverb
+      \verb{urlraw}
+      \verb https://e2e.ti.com/
+      \endverb
+      \verb{url}
+      \verb https://e2e.ti.com/
+      \endverb
+    \endentry
+    \entry{TLV320AIC3204ApplicationReference2012}{article}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{{TLV320AIC3204 Application Reference Guide}}}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/JRDLBE9E/2012 - TLV320AIC3204 Application Reference Guide.pdf
+      \endverb
+    \endentry
+    \entry{weissteinSmoothFunction}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=819197bfeff32a3f58d49b2a3eb0a580}{%
+           family={Weisstein},
+           familyi={W\bibinitperiod},
+           given={Eric\bibnamedelima W.},
+           giveni={E\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wolfram Research, Inc.}%
+      }
+      \strng{namehash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{fullhash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{fullhashraw}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{bibnamehash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{authorbibnamehash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{authornamehash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{authorfullhash}{819197bfeff32a3f58d49b2a3eb0a580}
+      \strng{authorfullhashraw}{819197bfeff32a3f58d49b2a3eb0a580}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A smooth function is a function that has continuous derivatives up to some desired order over some domain. A function can therefore be said to be smooth over a restricted interval such as (a,b) or [a,b]. The number of continuous derivatives necessary for a function to be considered smooth depends on the problem at hand, and may vary from two to infinity. A function for which all orders of derivatives are continuous is called a C-infty-function.}
+      \field{langid}{english}
+      \field{title}{Smooth {{Function}}}
+      \field{type}{Text}
+      \field{urlday}{13}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/NKDJ92QL/SmoothFunction.html
+      \endverb
+      \verb{urlraw}
+      \verb https://mathworld.wolfram.com/SmoothFunction.html
+      \endverb
+      \verb{url}
+      \verb https://mathworld.wolfram.com/SmoothFunction.html
+      \endverb
+    \endentry
+    \entry{wheelerScienceSound2014}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=a8f6a0485a2b17e1ef28c91359e0b753}{%
+           family={Wheeler},
+           familyi={W\bibinitperiod}}}%
+        {{hash=3f84183918bbcce913eecb6fd74a27d0}{%
+           family={Moore},
+           familyi={M\bibinitperiod}}}%
+        {{hash=f34bc3e48ba4e85ecc896e144b4e480e}{%
+           family={Rossing},
+           familyi={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Education Limited}%
+      }
+      \strng{namehash}{0da61248305d15dcee929e0ae84e20a2}
+      \strng{fullhash}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \strng{fullhashraw}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \strng{bibnamehash}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \strng{authorbibnamehash}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \strng{authornamehash}{0da61248305d15dcee929e0ae84e20a2}
+      \strng{authorfullhash}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \strng{authorfullhashraw}{7ac3aad5a671bd6fdb23e14eaf185508}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{isbn}{1-292-03957-4}
+      \field{langid}{english}
+      \field{title}{The {{Science}} of {{Sound}}}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/SLAWA7VL/Wheeler - Pearson New International Edition.pdf
+      \endverb
+    \endentry
+    \entry{WS2812Bdatasheet}{misc}{}{}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labeltitlesource}{title}
+      \field{title}{{{WS2812B-datasheet}}}
+      \field{type}{Datasheet}
+      \field{urlday}{30}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/PQHQSNWI/WS2812B-datasheet.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ledyilighting.com/wp-content/uploads/2025/02/WS2812B-datasheet.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.ledyilighting.com/wp-content/uploads/2025/02/WS2812B-datasheet.pdf
+      \endverb
+    \endentry
+    \entry{ZeittabelleDeutschEnglisch}{article}{}{}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labeltitlesource}{title}
+      \field{entrysubtype}{magazine}
+      \field{journaltitle}{Keys}
+      \field{number}{12/97}
+      \field{title}{Zeittabelle Deutsch/Englisch}
+      \field{urlday}{27}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/NCSCARHY/time.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.doepfer.de/time.htm
+      \endverb
+      \verb{url}
+      \verb https://www.doepfer.de/time.htm
+      \endverb
+    \endentry
+    \entry{zolzerDAFXDigitalAudio211}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=2d212434aedd0bef9aa91caa75f5b777}{%
+           family={Zölzer},
+           familyi={Z\bibinitperiod},
+           given={Udo},
+           giveni={U\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{fullhash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{fullhashraw}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{bibnamehash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{authorbibnamehash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{authornamehash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{authorfullhash}{2d212434aedd0bef9aa91caa75f5b777}
+      \strng{authorfullhashraw}{2d212434aedd0bef9aa91caa75f5b777}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-470-66599-2}
+      \field{langid}{english}
+      \field{title}{{{DAFX}}: {{Digital Audio Effects}}, {{Second Edition}}}
+      \field{year}{211}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /home/jonas/Zotero/storage/W6G3L7ZF/Wiley - Helmut Schmidt University – University of the Federal Armed Forces, Hamburg, Germany.pdf
+      \endverb
+    \endentry
+  \enddatalist
+  \missing{arm_m7_trm}
+  \missing{lyons_dsp}
+  \missing{smith_pasp}
+  \missing{zoelzer_dafx}
+\endrefsection
+\endinput
+

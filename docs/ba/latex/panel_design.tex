@@ -18,9 +18,9 @@ The following section briefly describes the process from CAD modelling and proto
 
 The physical front panel was designed in FreeCAD, modelling the mechanical constraints of the Eurorack format, described in 
 
-Section~\ref{sec:eurorack-fundamentals}: \qty{10}{HP} (\qty{50.80}{mm}) wide -- to fit the underlying PCB width a width of \qty{46}{mm} -- and \qty{128.5}{mm} tall, with 4 M3 mounting holes in the corners.
+Section~\ref{sec:eurorack-fundamentals}: \qty{10}{HP} (\qty{50.80}{mm}) wide, to fit the underlying PCB width a width of \qty{46}{mm} -- and \qty{128.5}{mm} tall, with 4 M3 mounting holes in the corners.
 
-The panel cutout positions were imported directly from the KiCad PCB layout using the KiCad StepUp workbench plugin for FreeCAD, which imports the KiCad board as a 3D assembly with all component positions preserved. 
+The panel cutout positions were imported directly from the KiCad PCB layout using the KiCad StepUp workbench plugin for FreeCAD, which imports the KiCad board as a 3D assembly with all component positions preserved. This of course requires the component 3D models to be correctly assigned and aligned in the KiCad project.
 
 Within FreeCAD, \textit{ShapeBinders} \cite{PartDesignShapeBinder2025} were used to reference the imported component geometries directly -- the cutout dimensions and positions in the panel sketch are parametrically constrained to the STL geometry of each component interfering with the frontpanel. Figure \ref{fig:panel_freecad} shows the highlighted parts that needed to be cut out in FreeCAD. \\
 
@@ -75,7 +75,7 @@ Exporting the finished artwork as SVG preserves full vector fidelity, making it 
 
 For product presentation -- including the title page image and the module overview in Section~\ref{sec:high-level-system-overview} -- the panel was rendered in Blender. 
 The FreeCAD model was exported as an OBJ file, which Blender imports natively. 
-The finished panel artwork was exported from Inkscape as a high-resolution PNG and applied as a texture on the panel face using Blender's Principled BSDF material.
+The finished panel artwork including the text, was exported from Inkscape as a high-resolution PNG and applied as a texture on the panel face using Blender's Principled BSDF material.
 
 Tailored materials and light sources were added to show LED colors and improve visual fidelity. 
 The scene was rendered using Cycles with a brushed aluminium material on the panel body.

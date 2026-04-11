@@ -1,9 +1,10 @@
+%\documentclass[draft]{article}
 \documentclass{article}
 \usepackage[a4paper,left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
 \usepackage[english]{babel}  % Language support
 \usepackage[utf8]{inputenc}   %Eingabecodierung
 
-\usepackage[backend=biber,style=ieee,sorting=nyt]{biblatex}
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
 \addbibresource{literature.bib}
 
 \usepackage{fvextra}
@@ -129,8 +130,9 @@
 	\input{eurorack_fundamentals.tex}
 	\input{audio_cv_fundamentals.tex}
 	\input{digital_audio_fundamentals.tex}
-	\input{digital_filters.tex}
+%	\input{digital_filters.tex}
 	% \input{i2s_protocol.tex}
+    \newpage
 	\input{related_work.tex}
 
 \newpage

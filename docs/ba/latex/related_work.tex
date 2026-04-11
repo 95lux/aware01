@@ -23,14 +23,15 @@ application's specific requirements, at the cost of higher initial development e
 targeting a similar embedded ARM platform.
 
 None of the above platforms are specifically designed for tape-style sample playback, which is the primary application explored in this thesis.
-Furthermore, all of the above are module products rather than custom hardware designs, while this work contributes a documented, open hardware platform that can be adapted and extended.
 
 \paragraph{Mutable Instruments Eurorack Modules \cite{pichenettesPichenettesEurorack2026}}
-The open-source Eurorack modules developed by Mutable Instruments  served as an important reference throughout this work.
+The open-source Eurorack modules developed by Mutable Instruments served as an important reference throughout this work.
 In particular, the Clouds texture synthesizer was studied as a design reference for several aspects of this project.
 The CV input stage topology -- specifically the use of a \qty{-10}{\volt} bias reference in an inverting summing amplifier to shift bipolar CV signals into a unipolar ADC input range -- is directly inspired by the Clouds hardware design.
 The calibration scheme and the phase accumulator approach used in the oscillator and playback engine are likewise informed by the Clouds firmware implementation.
-The Mutable Instruments codebase is published under open-source licences and the hardware under a Creative Commons licence, making it a legitimate and well-documented reference for derivative design work.
+The Clouds firmware is released under the MIT licence and the hardware schematics under CC BY-SA 3.0, permitting derivative use with attribution \cite{DeedAttributionShareAlike30}; however, as the BOM and PCB layout are not publicly available, the hardware developed in this thesis is an independent design informed by, rather than derived from, the Clouds implementation.
+
+The licence details are now precise (MIT for the STM32-based Clouds firmware, CC BY-SA 3.0 for hardware), which matters for a thesis context where accuracy about licensing is important.
 
 
 \paragraph{Ornament \& Crime \cite{OrnamentCrime}}
@@ -42,6 +43,7 @@ Because no audio processing is involved, it achieves a trigger-to-quantised-outp
 The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone. \\
 
 Unlike o\_C, however, the platform developed in this thesis is designed specifically for tape-style sample playback and audio-rate DSP,
-requiring a dedicated audio codec, DMA-driven I\textsuperscript{2}S transfers, and a significantly higher computational budget than the Teensy~3.2 can provide.
+requiring a dedicated audio codec, DMA-driven I\textsuperscript{2}S transfers, and a significantly higher computational budget than the Teensy~3.2 can provide. \\
 
-The design decisions made in this thesis are informed by these existing platforms, taking the custom hardware approach of Mutable Instruments as a reference while targeting a specific application not addressed by any of the above.
+While the platforms surveyed above all demonstrate that STM32-class hardware is viable for Eurorack DSP and that open firmware can support a broad range of applications, none simultaneously provides an STM32H7-class compute budget, a purpose-built tape-style playback interface, and an open hardware design. 
+This thesis addresses that gap by developing a custom module from first back to front, contributing both a working instrument and a reproducible hardware platform with a fully documented firmware architecture.

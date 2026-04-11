@@ -236,11 +236,11 @@ typedef struct {
 \label{lst:schroeder-delayline-struct}
 \end{listing}
 
-
+\vspace{-2.5mm}	
 The functionality of both, the comb- and allpass filters are implemented in the respective \texttt{*\_process} functions:
 
 \begin{listing}[H]
-\vspace{5mm}	
+\vspace{-2.5mm}	
 \begin{minted}[linenos]{c}
 static float comb_process(sr_delay_t* d, float in) {
 	// calculate read index with wraparound depending on set .length parameter
@@ -281,13 +281,9 @@ static float allpass_process(sr_delay_t* d, float in) {
 \end{listing}
 
 
-Both underlying \texttt{sr\_delay\_t} data structures advance with a write index \texttt{idx} that advances by one sample each tick and wraps modulo size. 
-The delay tap is read from position \mintinline{c}|(idx + size - length) % size| (line 3 for comb, 21 for allpass), placing it exactly \texttt{length} samples behind the write head. 
-This avoids any branch on the read side and keeps both operations O(1). 
+Both underlying \texttt{sr\_delay\_t} structures share the same ring buffer mechanics: \texttt{idx} advances by one each tick, and the delay tap is read from \mintinline{c}|(idx + size - length) % size|, placing it exactly \texttt{length} samples behind the write head in O(1) without branching.
 
-For the comb filter, the fed-back sample passes through a one-pole lowpass (line 9) before being added to the input and written into the buffer (line 10), implementing the damped feedback loop in-place. 
-
-The allpass filter uses the same ring structure but applies the Schroeder allpass topology directly (lines 22--23): the delayed sample \texttt{buf} is summed with the negated input for the output, while the write combines the input with the unfiltered delayed sample scaled by \texttt{feedback}, preserving the all-pass magnitude response while dispersing phase.
+The comb filter runs the feedback sample through a one-pole lowpass (line 9) before writing it back with the input (line 10), implementing damped feedback in-place. The allpass uses the same ring structure but applies the Schroeder topology (lines 22--23) directly, yielding flat magnitude response with phase dispersion.
 
 \paragraph{Static Memory Allocation} 
 \label{sec:schroeder_memory_allocation}
@@ -299,7 +295,7 @@ Twelve buffers are allocated in total: eight comb buffers of \texttt{MAX\_COMB\_
 
 The buffer size and thus the maximum delay lengths are directly correlated to the maximum room size of the algorithm. 
 Increasing the base delay lengths would produce a larger perceived space at \texttt{size = 1}, at the cost of higher memory consumption. 
-The current values were chosen to provide an aesthetically pleasing maximum room size while maintaining a conservative memory footprint, preserving available RAM for the sample playback buffers in the system.
+%The current values were chosen to provide an aesthetically pleasing maximum room size while maintaining a conservative memory footprint, preserving available RAM for the sample playback buffers in the system.
 
 \paragraph{Delay Length Selection} Using mutually prime delay line lengths, i.e. values sharing no common factors, helps avoid spectral clustering and unnatural resonances in the frequency response. 
 When delay lengths share common factors, their resonant frequencies align, causing certain frequencies to be disproportionately reinforced. By choosing mutually prime lengths, the resonances are maximally spread across the spectrum, resulting in a evenly decay envelope.
@@ -344,19 +340,24 @@ The macros compensate by slightly increasing the base feedback value as size dec
 The feedback value passed in by the user is additionally clamped to $[0,0.999]$ before being applied, ensuring the filter never reaches the instability threshold of $\alpha = 1$. 
 A minimum room size of 0.30 is enforced to prevent the delay lines from becoming so short that the filter becomes difficult to stabilise.
 
-\paragraph{Controllable Parameters} The reverb exposes four parameters via a public API:
-
-\begin{description}
-	\item[\texttt{wet}] Controls the dry/wet balance, with $\texttt{dry} = 1 - \texttt{wet}$ enforced automatically.
-	\item[\texttt{feedback} $(\alpha)$] Scales the RT60 decay time, routed through the stability macros to compensate for room size.
-	\item[\texttt{size}] Uniformly scales all delay lengths while preserving their prime relationships. 
-	\item[\texttt{lp\_alpha} $(d)$] Controls the cutoff of the one-pole IIR filter in each comb feedback path, attenuating high frequencies and producing a more natural, air-absorbed decay.
-\end{description}
+\paragraph{Controllable Parameters}
+\begin{center}
+    \small
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Parameter} & \textbf{Description} \\
+        \midrule
+        \texttt{wet}            & Dry/wet balance; $\texttt{dry} = 1 - \texttt{wet}$ enforced automatically. \\
+        \texttt{feedback} $(\alpha)$ & RT60 decay time; routed through stability macros to compensate for room size. \\
+        \texttt{size}           & Uniformly scales all delay lengths, preserving prime relationships. \\
+        \texttt{lp\_alpha} $(d)$  & One-pole IIR cutoff in each comb path; attenuates highs for natural decay. \\
+        \bottomrule
+    \end{tabular}
+\end{center}
 
 \paragraph{Parameter Coupling}
 \label{sec:schroeder_parameter_coupling}
-The feedback gain and room size parameters are implicitly coupled through the stability macros. The \texttt{size} scalar is stored in the \texttt{schroeder\_stereo\_t} struct so that \texttt{schroeder\_rev\_set\_feedback} can reference it when computing the scaled feedback values:
+The feedback gain and room size parameters are implicitly coupled through the stability macros. The \texttt{size} scalar is stored in the \texttt{schroeder\_stereo\_t} struct so that \\ \texttt{schroeder\_rev\_set\_feedback} can reference it when computing the scaled feedback values:
 \begin{minted}{c}
 	float comb_fb = feedback * COMB_FEEDBACK(rev->size);
 \end{minted}
-This means that calling public API function \texttt{schroeder\_rev\_set\_size} alone changes the effective feedback range, even without a subsequent call to \texttt{schroeder\_rev\_set\_feedback}.

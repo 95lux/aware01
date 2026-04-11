@@ -336,14 +336,10 @@ The full signal chain -- from CV input through ADC digitization to pitch-control
     \item Verify that $+\SI{1}{V}$ produces a doubling of output frequency, per the V/Oct standard.
 \end{enumerate}
 
-\paragraph{Equipment and Accuracy}
+\paragraph{Equipment}
 
-Reference voltages were generated with an EA-PS 3016-05 power supply and measured with an OWON XDM1241 multimeter~\cite{owonXDM1000SeriesDatasheet}.
-On the \SI{5}{V} range the multimeter accuracy is $\pm(0.05\%+5\,\text{LSB})$, giving a worst-case uncertainty of $\pm\SI{2}{mV}$ at \SI{3}{V}.
-The supply ripple and stability are both $<\SI{1}{mV}$~\cite{elektro-automatikPOWERSUPPLIESSERIES}, well below the multimeter uncertainty.
-
-In V/Oct terms, a \SI{2}{mV} error corresponds to $2\,\text{mV} / \SI[per-mode=symbol]{1000}{\milli\volt\per\octave} = 0.002\,\text{octaves} = 2.4\,\text{cents}$\footnote{One cent = $\frac{1}{100}$ semitone = $\frac{1}{1200}$ octave.} , negligible for this application.
-Output frequency was measured using the trigger frequency counter of a Tektronix TBS2000B oscilloscope at $\pm\SI{25}{ppm}$~\cite{TBS2000BSpecificationVerification_077153803_RevD}, corresponding to $\pm\SI{0.025}{Hz}$ at \SI{1}{kHz}, which is negligible relative to the deviations under investigation.
+Reference voltages were generated with an EA-PS 3016-05 power supply and measured with an OWON XDM1241 multimeter~\cite{owonXDM1000SeriesDatasheet}; output frequency was measured with a Tektronix TBS2000B oscilloscope~\cite{TBS2000BSpecificationVerification_077153803_RevD}.
+The combined measurement uncertainty is negligible relative to the deviations under investigation.
 
 \paragraph{Results}
 

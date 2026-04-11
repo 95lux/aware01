@@ -33,15 +33,11 @@ During in-system testing in a Eurorack environment, the noise performance was su
 
 \subsubsection{Fixed-Point Phase Accumulator}
 The playback engine uses a Q48.16 fixed-point phase accumulator, motivated by the concern that floating-point accumulation errors could cause phase drift over long playback durations (Section~\ref{sec:numerical-architecture}).
-In retrospect, this concern does not apply to this system: the sample buffer holds only \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, meaning the playhead wraps within $2.5 \times 48000 = 120{,}000$ samples.
-Floating-point rounding errors are on the order of $\epsilon_{\text{mach}} = 2^{-23} \approx 1.19 \times 10^{-7}$ per accumulation step for IEEE~754 single-precision arithmetic \cite[Table~3.5]{IEEEStandardFloatingPoint2019}; over the maximum 120\,000 steps before buffer wrap, the accumulated error remains below $0.012$ samples, well below the resolution of the interpolator.
-A \texttt{float} playhead would be fully sufficient and would eliminate the fixed/floating boundary at the interpolator input, improving code readability. 
-The fixed-point design is correct but unnecessary for this buffer size, and could be simplified in a future refactor.
+In retrospect, a \texttt{float} accumulator would accumulate less than $0.012$ samples of error before the playhead wraps on a \qty{2.5}{\second} buffer, well below the resolution of the interpolator and fully sufficient for this use case.
 
 \subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
 The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.8}{\Hz} calculated from the AC-coupling network ($R_{in} = \SI{40}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
 
 The root cause has not been identified within the scope of this project, as only an end-to-end frequency response measurement was conducted.
 To isolate the source, individual frequency response measurements of the input and output stages should be performed separately in a future revision.
-Practically, the measured cutoff is reaching into the audible low frequency end, as sub-bass frequencies do reach the lower \qty{30}{Hz}.
-Still, this rolloff is marginal and the device is usable for musical applications.
+Practically, the measured cutoff reaches into the audible low-frequency end; sub-bass content below \qty{30}{\Hz} is attenuated, though no impact was observed during in-system testing.
