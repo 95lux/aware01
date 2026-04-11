@@ -43,6 +43,7 @@ Parameter updates arrive through the shared-memory parameter cache (Section~\ref
 It reads incoming audio from \texttt{in\_buf}, applies the tape recording and playback logic --- including pitch-shifted readback and crossfading --- and writes the processed output to \texttt{out\_buf}.
 
 \subsection{State Machines}
+\label{sec:tape-player-fsm}
 
 The tape player uses two independent \ac{FSM}s (see below Figure \ref{fig:tape-player-fsms}): one for playback state (\texttt{play\_state\_t}: \texttt{STOPPED} / \texttt{PLAYING}) and one for 
 recording state (\texttt{rec\_state\_t}: \texttt{IDLE} / \texttt{RECORDING} / 
@@ -171,7 +172,6 @@ The invariant $\texttt{start\_idx\_xfade} \geq \texttt{xfade\_len}$ is verified 
 In all retrigger cases, the available sample count between the current playhead and the end of valid data is checked before arming the crossfade.
 If fewer samples are available than the full crossfade length, \texttt{temp\_buf\_valid\_samples} is clamped accordingly to prevent out-of-bounds reads at both the buffer and \ac{LUT} boundaries.
 
-\newpage
 \paragraph{Cyclic Loop Crossfade}
 In cyclic mode, the playhead wraps from the buffer end back to the beginning on each loop.
 \begin{figure}[H]

@@ -28,7 +28,10 @@ None of the above platforms are specifically designed for tape-style sample play
 The open-source Eurorack modules developed by Mutable Instruments served as an important reference throughout this work.
 In particular, the Clouds texture synthesizer was studied as a design reference for several aspects of this project.
 The CV input stage topology -- specifically the use of a \qty{-10}{\volt} bias reference in an inverting summing amplifier to shift bipolar CV signals into a unipolar ADC input range -- is directly inspired by the Clouds hardware design.
-The calibration scheme and the phase accumulator approach used in the oscillator and playback engine are likewise informed by the Clouds firmware implementation.
+The calibration scheme is likewise informed by the Clouds firmware implementation.
+Most directly, the fixed-point phase accumulator pattern used in the playback engine -- an integer phase updated by integer addition each sample -- was adopted from the Clouds firmware, where the same pattern drives sample playback position.
+This separation of integer phase accumulation from floating-point signal processing was carried forward as a core architectural principle in this project (Section~\ref{sec:numerical-architecture}).
+
 The Clouds firmware is released under the MIT licence and the hardware schematics under CC BY-SA 3.0, permitting derivative use with attribution \cite{DeedAttributionShareAlike30}; however, as the BOM and PCB layout are not publicly available, the hardware developed in this thesis is an independent design informed by, rather than derived from, the Clouds implementation.
 
 The licence details are now precise (MIT for the STM32-based Clouds firmware, CC BY-SA 3.0 for hardware), which matters for a thesis context where accuracy about licensing is important.
@@ -40,7 +43,7 @@ Originally designed by mxmxmx as a quantising analogue shift register emulation,
 It now consists of quantisers, sequencers, envelope generators, LFO sources, and chaotic attractor generators, all selectable at runtime without rebooting the module.
 The hardware is built around a Teensy~3.2 (NXP MK20DX256) microcontroller paired with a precision 16-bit TI DAC.
 Because no audio processing is involved, it achieves a trigger-to-quantised-output latency of under \qty{100}{\micro\second}.
-The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone. \\
+The o\_C project demonstrates that a single fixed hardware platform can support a broad range of CV processing tasks through firmware alone.
 
 Unlike o\_C, however, the platform developed in this thesis is designed specifically for tape-style sample playback and audio-rate DSP,
 requiring a dedicated audio codec, DMA-driven I\textsuperscript{2}S transfers, and a significantly higher computational budget than the Teensy~3.2 can provide. \\

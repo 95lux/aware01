@@ -125,6 +125,7 @@ Once calibration completes or is skipped, \texttt{UserInterfaceTask} plays the b
 Animation updates are driven by a hardware timer ISR, which issues a direct-to-task notification on each tick; \texttt{UserInterfaceTask} calls \texttt{ws2812\_run\_step} upon wakeup, keeping animation logic entirely within the task context and the ISR minimal.
 
 \paragraph{Parameter Cache}
+\label{sec:param-cache}
 Parameter data sent from the control and user-interface tasks to \texttt{AudioTask}  bypasses FreeRTOS queuing entirely. 
 \texttt{param\_cache} implements a lock-free shared-memory scheme in which lower-priority tasks write individual fields using atomic store operations, while \texttt{AudioTask} reads a consistent snapshot each (half-buffer) processing cycle via \texttt{param\_cache\_fetch}. 
 
