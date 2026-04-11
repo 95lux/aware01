@@ -1,0 +1,106 @@
+\newpage
+\section{TLV320AIC3204 Register Configuration}
+\label{app:codec-regs}
+
+The following tables document the complete I\textsuperscript{2}C register write sequence executed by \texttt{codec\_init} in \texttt{tlv320\_driver.c}.
+Registers are listed in write order, grouped by the three phases of the initialisation sequence.
+The TLV320AIC3204 uses a paged register map; a write to register 0x00 selects the active page for all subsequent accesses.
+Register numbers refer to the active page at the time of the write.
+
+NDAC, MDAC, NADC, and MADC are rate-dependent: the power-enable bit (MSB) is OR-ed with the divider value at runtime.
+Table~\ref{tab:codec-rate-dividers} lists the values for each supported sample rate.
+
+\begin{table}[H]
+    \centering
+    \caption{Rate-dependent clock divider values (Page~0)}
+    \label{tab:codec-rate-dividers}
+    \small
+    \begin{tabular}{lllll}
+        \toprule
+        \textbf{Sample rate} & \textbf{NDAC (R11)} & \textbf{MDAC (R12)} & \textbf{NADC (R18)} & \textbf{MADC (R19)} \\
+        \midrule
+        \SI{48}{\kilo\hertz} & 0x81 & 0x82 & 0x81 & 0x82 \\
+        \SI{24}{\kilo\hertz} & 0x81 & 0x84 & 0x81 & 0x84 \\
+        \SI{12}{\kilo\hertz} & 0x81 & 0x88 & 0x81 & 0x88 \\
+        \SI{8}{\kilo\hertz}  & 0x81 & 0x8C & 0x81 & 0x8C \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Phase 1 — Clock, interface, and signal processing (Page~0)}
+    \label{tab:codec-regs-p0-init}
+    \small
+    \begin{tabular}{llp{9cm}}
+        \toprule
+        \textbf{Reg} & \textbf{Value} & \textbf{Function} \\
+        \midrule
+        0x00 & 0x00 & Select Page~0 \\
+        0x01 & 0x01 & Software reset \\
+        0x0B & \textit{rate} & NDAC divider, powered on (MSB = 1) \\
+        0x0C & \textit{rate} & MDAC divider, powered on \\
+        0x12 & \textit{rate} & NADC divider, powered on \\
+        0x13 & \textit{rate} & MADC divider, powered on \\
+        0x0D & 0x00 & DAC OSR (MSB) = 0 \\
+        0x0E & 0x80 & DAC OSR (LSB) = 128 \\
+        0x14 & 0x80 & ADC OSR = 128 \\
+        0x3D & 0x01 & ADC processing block PRB\_R1 \\
+        0x3C & 0x01 & DAC processing block PRB\_P1 \\
+        0x1B & 0x00 & I\textsuperscript{2}S mode, 16-bit word length, codec slave \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Phase 2 — Power supplies and signal routing (Page~1)}
+    \label{tab:codec-regs-p1}
+    \small
+    \begin{tabular}{llp{9cm}}
+        \toprule
+        \textbf{Reg} & \textbf{Value} & \textbf{Function} \\
+        \midrule
+        0x00 & 0x01 & Select Page~1 \\
+        0x01 & 0x08 & Disable weak AVDD–DVDD link \\
+        0x02 & 0x01 & Power up AVDD LDO \\
+        0x14 & 0x25 & Headphone output soft-step enable \\
+        0x0A & 0x4B & LDOIN reference configuration \\
+        0x3D & 0x00 & MicPGA performance mode PTM\_R4 \\
+        0x47 & 0x32 & MicPGA startup delay \\
+        0x7B & 0x01 & Reference charge time = 40\,ms \\
+        \midrule
+        0x0E & 0x08 & DAC\_L output routed to LOL mixer \\
+        0x0F & 0x08 & DAC\_R output routed to LOR mixer \\
+        0x34 & 0xC0 & IN1L to MicPGA+ at \SI{40}{\kilo\ohm} input resistance \\
+        0x36 & 0x0C & CM2L to MicPGA$-$ at \SI{40}{\kilo\ohm} input resistance \\
+        0x37 & 0xC0 & IN1R to MicPGA+ at \SI{40}{\kilo\ohm} input resistance \\
+        0x39 & 0x0C & CM2R to MicPGA$-$ at \SI{40}{\kilo\ohm} input resistance \\
+        0x12 & 0x00 & Line output volume = 0\,dB \\
+        0x13 & 0x00 & Unmute LOL and LOR \\
+        0x3B & 0x18 & Left MicPGA gain = 0\,dB (0x18 offsets $-$12\,dB base at \SI{40}{\kilo\ohm}) \\
+        0x3C & 0x18 & Right MicPGA gain = 0\,dB \\
+        0x09 & 0x3C & Power up LOL and LOR output drivers \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Phase 3 — DAC and ADC power-up (Page~0)}
+    \label{tab:codec-regs-p0-powerup}
+    \small
+    \begin{tabular}{llp{9cm}}
+        \toprule
+        \textbf{Reg} & \textbf{Value} & \textbf{Function} \\
+        \midrule
+        0x00 & 0x00 & Select Page~0 \\
+        0x41 & 0x00 & DAC\_L digital volume = 0\,dB \\
+        0x42 & 0x00 & DAC\_R digital volume = 0\,dB \\
+        0x3F & 0xD5 & Power up DAC\_L and DAC\_R, route to line out \\
+        0x40 & 0x00 & Unmute DAC \\
+        0x51 & 0xC0 & Power up ADC\_L and ADC\_R \\
+        0x52 & 0x00 & Unmute ADC \\
+        \bottomrule
+    \end{tabular}
+\end{table}

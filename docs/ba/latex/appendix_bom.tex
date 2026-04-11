@@ -1,0 +1,30 @@
+\newpage
+\section{Bill of Materials}
+\label{app:bom}
+
+The following table lists all components of the \mbox{aware01\_h7\_rev2} PCB, exported from the KiCad schematic.
+Component values and signal functions can be cross-referenced with the schematic in Appendix~\ref{app:schematic}.
+
+\small
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\begin{longtable}{@{} p{4.2cm} r p{4.0cm} p{3.6cm} @{}}
+    \toprule
+    \textbf{Reference} & \textbf{Qty} & \textbf{Manufacturer Part No.} & \textbf{Mouser Part No.} \\
+    \midrule
+    \endfirsthead
+    \multicolumn{4}{@{}l}{\small\textit{(continued)}} \\[2pt]
+    \toprule
+    \textbf{Reference} & \textbf{Qty} & \textbf{Manufacturer Part No.} & \textbf{Mouser Part No.} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+\csvreader[
+late after line = \\,
+]{../../../hardware/aware01_h7_rev2_0/fabrication_files/aware01_h7_rev2_bom.csv}{
+}{%
+	\csvcoli & \csvcolii & \csvcoliii & \csvcoliv%
+}
+\end{longtable}
+\normalsize

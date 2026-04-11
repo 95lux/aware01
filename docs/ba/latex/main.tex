@@ -27,6 +27,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{pdfpages}
+\usepackage{longtable}
 \usepackage[font=small, labelfont=bf]{caption}
 
 \setminted{
@@ -224,7 +225,9 @@ This section documents the verification of the hardware and firmware against the
 
 
 \appendix
+\addcontentsline{toc}{section}{Appendix}
 \input{appendix_peripherals.tex}
+\input{appendix_codec_registers.tex}
 
 \section{Schematics and PCB Layout}
 \label{app:schematic}
