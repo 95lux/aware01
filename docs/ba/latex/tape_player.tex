@@ -1,4 +1,4 @@
-The tape player is the central audio component of the module.
+The tape player is the primary DSP component of this thesis, covering the full sampling engine: audio recording, pitch-shifted playback, slice management, and the crossfading system that keeps transitions click-free.
 It manages recording of incoming audio into a ping-pong buffer pair and plays back the recorded content at a variable pitch determined by the V/oct CV input and the pitch slide potentiometer.
 The tape player runs entirely within \texttt{AudioTask} (Section~\ref{sec:rtos-task-structure}) and is controlled through a public API.
 
@@ -84,6 +84,7 @@ When a new recording is complete, the buffers are swapped atomically, allowing u
 
 % TODO add in figure to show Double Buffer handling
 
+\newpage
 \subsection{Crossfade System}
 
 Four \texttt{crossfade\_t} instances handle different transition scenarios: a retrigger crossfade (\texttt{xfade\_retrig}), a cyclic loop crossfade (\texttt{xfade\_cyclic}), and simple fade-in/fade-out envelopes at the start and end of playback. 

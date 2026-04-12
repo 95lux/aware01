@@ -7,10 +7,10 @@
 Aarebot is a dynamic realtime sampler built as a Eurorack module. At its core is a stereo tape-style engine with a hot-swapping record/playback buffer - this enables to record and play simultaneously.
 Slicing markers can be added on the fly, and processing through an onboard effects chain.
 
-Samplerate decimation trades fidelity for length.
-A Schroeder reverb blooms into lush endless space or rings into sharp metallic resonance depending on the XY effect mapping.
+Samplerate decimation trades fidelity for buffer length.
+A Schroeder reverb implementation reaching from spacious room to sharp metallic resonance ringing depending on the XY effect mapping.
 
-More DSP FX and taillred XY mapping is on the way and will turn Aarebot into a IDM LOFI crunch machine.
+More DSP FX and taillred XY mapping is on the way and will turn Aarebot into an IDM LOFI crunch machine.
 
 ---
 <p align="center">
@@ -90,3 +90,37 @@ cmake --build build/Debug
 ## Hardware
 
 Designed in KiCad. The hardware directory contains the full schematic, PCB layout, and SPICE simulations for the analog input and output conditioning stages.
+
+---
+
+## Specifications
+
+### Audio
+| Parameter | Value |
+|-----------|-------|
+| Sample rate | 48 kHz |
+| Bit depth | 16-bit |
+| Recording buffer | 2.5 s (stereo) |
+| End-to-end latency | ~1.9 ms |
+| Audio codec | TLV320AIC3204 |
+
+### Hardware
+| Parameter | Value |
+|-----------|-------|
+| MCU | STM32H7A3RITx (Cortex-M7, 280 MHz) |
+| Form factor | 10 HP, 3U Eurorack |
+| Audio I/O levels | ±5 V |
+| CV input range | ±10 V |
+| V/Oct range | −1.5 V to +5 V |
+| Power (+12V) | ~80 mA idle, ~140 mA peak |
+| Power (−12V) | ~20 mA |
+
+---
+
+## License
+
+| Component | License |
+|-----------|---------|
+| Firmware / software | [GPL-3.0](LICENSE) |
+| Hardware (schematics, PCB, SPICE) | [CERN OHL-S v2](LICENSE-CERN-OHL-S) |
+| Thesis / documentation | [CC BY 4.0](LICENSE-CC-BY) |

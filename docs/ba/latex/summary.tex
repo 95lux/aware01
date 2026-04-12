@@ -11,4 +11,8 @@ The lock-free parameter cache and DMA-driven audio pipeline both operated correc
 
 The two DSP focus points demonstrated that non-trivial real-time audio algorithms are feasible on this platform.
 The tape-style playback engine with Hermite interpolation produces clean output across the tested pitch range, with substantially lower aliasing than the ZOH baseline at all upsampling ratios.
-The Schroeder reverb implementation covers the full $0.1$--$5.0\,\mathrm{s}$ RT60 range and integrates cleanly into the audio processing chain.
+The Schroeder reverb implementation covers the full $0.1$--$5.0\,\mathrm{s}$ RT60 range and integrates cleanly into the audio processing chain. \\
+
+The resulting module, consisting of: hardware schematics, firmware, and DSP implementations, is published as open-source, offering a concrete, documented entry point into the Eurorack ecosystem outside the commercial supply chain.
+
+Development will continue beyond the scope of this thesis; the published repository serves as a foundation for future contributors and a documented reference for embedded DSP in the Eurorack format.
