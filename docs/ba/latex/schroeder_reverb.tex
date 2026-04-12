@@ -63,9 +63,9 @@ reverb with many reflections.~\cite[p.~85]{juliuso.smithPhysicalSignalProcessing
 
 
 Where the \textit{feedforward} comb filter implements an FIR filter, the \textit{feedback} comb filter (Figure \ref{fig:schroeder_comb}) takes the delayed output and feeds it back to the input. This filter type is also known as an IIR (Infinite Impulse Response) or \textit{recursive} filter, and is described by the difference equation:
-\[
+\begin{equation}
 y[n] = x[n] + \alpha \cdot y[n - D]
-\]
+\end{equation}
 where $\alpha$ is the feedback gain and $D$ the delay in samples.
 
 The feedback comb filter can be understood as a physical model of a series of 
@@ -114,22 +114,22 @@ Instead of using a standard feedback comb filter, this project employs a \textit
 
 The transfer function in the $z$-domain is given by:
 
-\[
+\begin{equation}
 	H_{LBCF}(z) = \frac{z^{-D}}{1 - \alpha \cdot H_{f}(z) \cdot  z^{-D}}
-\]
+\end{equation}
 
 Note that the transfer function is given here with the output taken after the delay, differing slightly from the notation in \cite{juliuso.smithPhysicalSignalProcessing}.
  
 Using a first-order lowpass $H_f(z) = H_{lp}(z)$ with a damping coefficient $d$:
-\[
+\begin{equation}
 	H_{lp}(z) = \frac{1 - d}{1 - d \cdot z^{-1}}
-\]
+\end{equation}
 
 the full transfer function becomes:
 
-\[
+\begin{equation}
 H_{LBCF}(z) = \frac{z^{-D}}{1 - \alpha \frac{1 - d}{1 - d \cdot z^{-1}}  z^{-D}}
-\]
+\end{equation}
 
 The effect of the lowpass in the feedback path causes high frequencies to decay faster than low frequencies, producing a more natural reverb tail. 
 Adding a low-pass filter in the feedback loop can effectively recreate the losses that happen when a signal travels back and forth between two places, as happens in real rooms. \cite[p.~62]{juliuso.smithPhysicalSignalProcessing}
@@ -171,9 +171,9 @@ The allpass filter can be constructed by cascading a \textit{feedforward} and \t
  \\
 
 When inspecting the transfer function:
-\[
+\begin{equation}
 	H(z) = \frac{\alpha + z^{-D}}{1 + \alpha z^{-D}}
-\]
+\end{equation}
 
 It becomes clear, how the Schroeder allpass works. The numerator and denominator of $H(z)$ are mirror images of each other. 
 
@@ -289,9 +289,9 @@ The comb filter runs the feedback sample through a one-pole lowpass (line 9) bef
 \label{sec:schroeder_memory_allocation}
 
 Twelve buffers are allocated in total: eight comb buffers of \texttt{MAX\_COMB\_LEN}~=~1620 samples and four allpass buffers of \texttt{MAX\_AP\_LEN} = 600 samples. At 32-bit float precision (4 bytes per sample), the total static memory footprint is:
-\[
+\begin{equation}
 (8 \times 1620 + 4 \times 600) \times 4\ \text{bytes} = 61.4\ \text{kB}
-\]
+\end{equation}
 
 The buffer size and thus the maximum delay lengths are directly correlated to the maximum room size of the algorithm. 
 Increasing the base delay lengths would produce a larger perceived space at \texttt{size = 1}, at the cost of higher memory consumption. 
@@ -299,7 +299,9 @@ Increasing the base delay lengths would produce a larger perceived space at \tex
 
 \paragraph{Delay Length Selection} Using mutually prime delay line lengths, i.e. values sharing no common factors, helps avoid spectral clustering and unnatural resonances in the frequency response. 
 When delay lengths share common factors, their resonant frequencies align, causing certain frequencies to be disproportionately reinforced. By choosing mutually prime lengths, the resonances are maximally spread across the spectrum, resulting in a evenly decay envelope.
-The delay lengths were selected empirically by ear from prime numbers, starting from a base set and scaled by a room size parameter. The chosen base delay lengths are:
+The delay lengths were selected empirically by ear from prime numbers, starting from a base set and scaled by a room size parameter. 
+The comb delays (30--34\,ms) target the late reverberation tail, while the allpass delays are kept short (5--12\,ms) to increase echo density without introducing perceivable discrete echoes. 
+The chosen base delay lengths are:
 
 \begin{table}[H]
     \centering

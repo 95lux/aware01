@@ -1,13 +1,15 @@
 \subsection{Digital Audio Fundamentals}
 \label{sec:digital-audio-fundamentals}
 
+Bringing audio into the digital domain introduces a set of fundamental concepts that shape every decision in the signal path, from sample rate and bit depth to latency and buffer design.
+
 \subsubsection{Sampling}
 
 A continuous-time audio signal $x_c(t)$ is converted to a discrete-time sequence by sampling it at regular intervals of period $T = 1/f_s$ \cite[p.~160]{oppenheimDiscretetimeSignalProcessing2014}:
 
-\[
+\begin{equation}
 x[n] = x_c(nT)
-\]
+\end{equation}
 
 The \textit{Nyquist--Shannon sampling theorem} states that a bandlimited signal with highest frequency component $f_{\max}$ can be perfectly reconstructed from its samples provided the sample rate satisfies $f_s \geq 2 f_{\max}$ \cite[p.~166]{oppenheimDiscretetimeSignalProcessing2014}\cite[p.~40]{zolzerDAFXDigitalAudio211}.
 
@@ -19,16 +21,16 @@ Sampling produces a discrete-time sequence, but each sample value must also be r
 Quantization maps the continuous amplitude of each sample to the nearest value in a finite set of $2^B$ levels, where $B$ is the bit depth \cite[p.~218]{oppenheimDiscretetimeSignalProcessing2014}.
 The difference between the true sample value and its quantized representation is the \textit{quantization error} $e[n]$:
 
-\[
+\begin{equation}
 e[n] = x_Q[n] - x[n]
-\]
+\end{equation}
 
 For a uniform $B$-bit quantizer with full-scale range $[-1, 1]$, the step size is $\Delta = 2^{1-B}$ and the error is bounded by $|e[n]| \leq \Delta/2$.
 Treated as additive white noise, the resulting signal-to-noise ratio is well approximated by \cite[p.~226]{oppenheimDiscretetimeSignalProcessing2014}:
 
-\[
+\begin{equation}
 \mathrm{SNR} \approx 6 \cdot B - 1.25 \quad \text{[dB]}
-\]
+\end{equation}
 
 Each additional bit therefore contributes approximately \qty{6}{dB} of dynamic range. 
 This project uses 16-bit audio throughout, yielding a theoretical SNR of approximately 90--\qty{96}{dB}, which is sufficient for the Eurorack context, where the analog signal path typically limits dynamic range well below this figure.

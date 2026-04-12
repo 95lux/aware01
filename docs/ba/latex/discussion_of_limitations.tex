@@ -1,17 +1,13 @@
+\vspace{-0.3cm}
 \subsubsection{Hardware Revision Defects}
 Three hardware defects were identified in this revision:
 \begin{itemize}
-	\item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support
-	EXTI interrupts simultaneously with the other assigned interrupt lines.
-	A bodge wire was soldered directly between PC9 and PC6 on the MCU pins. 
-	This relocates the signal to a pin with full EXTI support; the firmware was updated accordingly (Figure~\ref{fig:gpio-bodge}).
-	A PCB revision with the correct pin assignment is required to eliminate the bodge.
-	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels for the fader LEDs were incorrectly assigned during schematic entry. This leave the slider LED indicators non-functional in this revision.
-	\item \textbf{BAT54S audio input clamp (EC-03):} A mismatch between the SPICE simulation model and the actual SOT-23 package pinout of the BAT54S dual Schottky diode caused the component to be placed with reversed orientation on the PCB.
-	The error was corrected by bending the component pins upward and soldering it inverted. This restores the correct diode orientation (Figure~\ref{fig:diode-bodge}).
-	A corrected footprint assignment is required in the next PCB revision.
+	\item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support EXTI interrupts simultaneously with the other assigned interrupt lines. A bodge wire was soldered between PC9 and PC6 to relocate the signal to a pin with full EXTI support, and the firmware was updated accordingly (Figure~\ref{fig:gpio-bodge}). A PCB revision with the correct pin assignment is required to eliminate the bodge.
+	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels for the fader LEDs were incorrectly assigned during schematic entry, leaving the slider LED indicators non-functional in this revision.
+	\item \textbf{BAT54S audio input clamp (EC-03):} A mismatch between the SPICE simulation model and the actual SOT-23 package pinout caused the BAT54S diode to be placed with reversed orientation. The error was corrected by soldering the component inverted (Figure~\ref{fig:diode-bodge}), and a corrected footprint assignment is required in the next PCB revision.
 \end{itemize}
 
+\vspace{-0.1cm}
 \subsubsection{Slice Selection in Reverse Playback}
 Slice boundary handling during reverse playback is not fully implemented: when reverse mode is active, slice selection is ignored and the full buffer is played back in reverse instead.
 

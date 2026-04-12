@@ -10,24 +10,24 @@ To achieve the lowest possible high-pass cutoff frequency with a given coupling 
 
 
 The AC-coupling capacitor together with the input impedance of the codec ADC forms a simple RC high-pass filter, whose cutoff frequency is given by:
-\[
+\begin{equation}
 f_c = \frac{1}{2 \pi R_\text{eq} C_c}
-\]
+\end{equation}
 The cutoff frequency should be below the audible range to avoid attenuation or phase shift of low-frequency audio content.
 In single-ended input mode, the effective input impedance $R_\text{eq}$ of the TLV320AIC3204 depends on the programmed input resistor $R_{in}$ and the analog \ac{PGA} gain $g$ (in linear terms) \cite{FAQTLV320AICCODECs2019}:
-\[
+\begin{equation}
 R_\text{eq} = R_{in} \cdot \frac{1 + 2g}{1 + g}, \qquad
 g = \frac{10000 \cdot 2^{\lfloor G/6 \rfloor}}{R_{in}}
-\]
+\end{equation}
 With $R_{in} = \SI{40}{\kilo\ohm}$ and a programmed \ac{PGA} gain of $G = \SI{0}{\decibel}$, the linear gain evaluates to $g = 0.25$, giving:
-\[
+\begin{equation}
 R_\text{eq} = \SI{40}{\kilo\ohm} \cdot \frac{1 + 0.5}{1 + 0.25} = \SI{48}{\kilo\ohm}
-\]
+\end{equation}
 With a coupling capacitor of $C_c = \qty{2.2}{\micro\farad}$, the cutoff frequency is therefore:
-\[
+\begin{equation}
 f_c = \frac{1}{2\pi \cdot \SI{48}{\kilo\ohm} \cdot \qty{2.2}{\micro\farad}}
 \approx \qty{1.5}{\hertz},
-\]
+\end{equation}
 which is well below the \qty{20}{\hertz} lower bound of the audible range.
 
 \subparagraph{ADC Input Range and Attenuation Design}
@@ -45,18 +45,18 @@ The absolute maximum rating specifies that input pins must remain within \(\qty{
 This distinction was overlooked during the design phase.
 
 Based on this incorrect reference value, the resistor divider was designed with \(R_{14} = \qty{12}{\kilo\ohm}\) and \(R_{16} = \qty{1.8}{\kilo\ohm}\), yielding an attenuation factor of
-\[
+\begin{equation}
 a = \frac{R_{16}}{R_{14} + R_{16}} = \frac{1.8}{13.8} \approx 0.130.
-\]
+\end{equation}
 For a \SI{10}{\volt_{pp}} Eurorack signal, this produces an attenuated amplitude of approximately \SI{1.30}{\volt_{pp}}, which is within the absolute maximum rating but exceeds the functional ADC input range of \SI{1.06}{\volt_{pp}}.
 
 \subparagraph{Input Attenuator Revision}
 \label{sec:input-attenuator-changes}
 
 \(R_{16}\) was revised to \qty{1}{\kilo\ohm} to achieve greater attenuation, yielding
-\[
+\begin{equation}
 a = \frac{1.0}{13.0} \approx 0.077,
-\]
+\end{equation}
 which reduces \SI{10}{\volt_{pp}} to approximately \SI{0.77}{\volt_{pp}}, safely within the ADC input range.
 For lower-amplitude inputs, the TLV320AIC's programmable gain amplifier (PGA) can be used to boost the signal, thereby utilising the full resolution of the ADC.
 All measurements in Section~\ref{sec:loopback-signal-level-measaurements} and all schematics reflect the revised values.
@@ -96,15 +96,15 @@ A corrected footprint assignment is required in the next PCB revision to elimina
 The chosen signal-conditioning approach uses a unity-gain buffer followed by a passive resistor divider.
 An inverting amplifier topology is unsuitable because its input impedance is fixed by the input resistor, making it impossible to simultaneously achieve the required high input impedance and the necessary attenuation without impractically large resistor values.
 A non-inverting amplifier is unsuitable because its closed-loop gain
-\[
+\begin{equation}
 A_\text{v} = 1 + \frac{R_\text{f}}{R_\text{g}} \geq 1
-\]
+\end{equation}
 cannot be less than unity, and therefore cannot attenuate the incoming signal.
 The buffer followed by a passive divider avoids both limitations: the buffer presents a high impedance to the source, while the passive divider freely realises any attenuation factor below unity.
 The divider consists of \(R_{1} = \qty{12}{\kilo\ohm}\) and \(R_\text{2} = \qty{1}{\kilo\ohm}\), giving an attenuation factor of
-\[
+\begin{equation}
 a = \frac{R_\text{2}}{R_\text{1} + R_\text{2}} = \frac{1}{12} \approx 0.0833.
-\]
+\end{equation}
 
 
 \subparagraph{Input Stage Simulation}
@@ -158,14 +158,14 @@ A Bode plot confirms the high-pass cutoff frequency of \qty{1.81}{\hertz} and th
 
 The DAC output signal is centered at a common-mode voltage of \(V_\mathrm{CM} = \SI{0.9}{\volt}\) with a maximum amplitude of \qty{0.7}{\volt}, which must be scaled up to the Eurorack line level of \qty{\pm 5}{\volt}.
 An inverting op-amp topology is used, with \(R_8 = \qty{5.6}{\kilo\ohm}\) as the input resistor and \(R_9 = \qty{39}{\kilo\ohm}\) as the feedback resistor, yielding a closed-loop gain of
-\[
+\begin{equation}
 A_v = -\frac{R_9}{R_8} = -\frac{39}{5.6} \approx -6.96.
-\]
+\end{equation}
 A coupling capacitor \(C_4 = \qty{10}{\micro\farad}\) is placed before \(R_8\) to strip the \qty{0.9}{\volt} DC offset from the DAC output.
 Together with \(R_8\), this forms a high-pass filter with a cutoff frequency of
-\[
+\begin{equation}
 f_c = \frac{1}{2\pi \cdot \qty{5.6}{\kilo\ohm} \cdot \qty{10}{\micro\farad}} \approx \qty{2.84}{\hertz},
-\]
+\end{equation}
 which is well below the audible range.
 A \qty{1}{\kilo\ohm} series resistor at the op-amp output limits short-circuit current and isolates the amplifier from capacitive loads at the output jack.
 
@@ -241,14 +241,14 @@ A \qty{1}{\nano\farad} capacitor in parallel with the feedback resistor acts as 
 For the general CV input, the bias resistor \(R_5 = \qty{200}{\kilo\ohm}\) is exactly twice the input resistor \(R_6 = \qty{100}{\kilo\ohm}\).
 This means the \qty{-10}{\volt} reference contributes exactly half the weight of the input signal at the summing node, centering the output within the ADC range.
 With feedback resistor \(R_7 = \qty{33}{\kilo\ohm}\), the output voltage is given by:
-\[
+\begin{equation}
 V_{out} = -R_7 \left(\frac{V_{in}}{R_6} + \frac{\qty{-10}{\volt}}{R_5}\right)
 = -33k \left(\frac{V_{in}}{100k} + \frac{-10}{200k}\right)
-\]
+\end{equation}
 At the input extremes:
-\[
+\begin{equation}
 V_{out}(+5\,\text{V}) = \qty{0}{\volt}, \qquad V_{out}(-5\,\text{V}) = \qty{3.3}{\volt}
-\]
+\end{equation}
 mapping the full \qty{\pm 5}{\volt} CV range onto the \qtyrange{0}{3.3}{\volt} ADC input range.
 
 \begin{figure}[H]

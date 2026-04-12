@@ -9,17 +9,17 @@ This established pattern was adopted here, following the phase accumulator conve
 The playback position is represented as an unsigned integer with fractional 
 resolution in Q48.16 format (\texttt{uint64\_t}), updated according to
 
-\[
+\begin{equation}
 	\phi[n+1] = \phi[n] + \Delta \phi ,
-\]
+\end{equation}
 
 where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback rate.
 
 The Q48.16 (48-bit fixed-point, 16-bit fractional) format was chosen over the more common Q16.16 because the integer part must be capable of addressing the full recording buffer.
 At $f_s = \qty{48}{\kilo\hertz}$ and a buffer length of \qty{2.5}{\second}, the maximum playback index reaches
-\[
+\begin{equation}
     48000 \times 2.5 = 120{,}000 \text{ samples,}
-\]
+\end{equation}
 which exceeds the 16-bit integer range of $2^{16} - 1 = 65{,}535$, making a 48-bit integer part necessary.
 
 Beyond addressing range, the fixed-point representation was chosen for the coherence it provides across the playback engine. The Q48.16 format naturally unifies phase accumulation, sub-sample interpolation, and crossfade distance comparison into a single numeric domain, avoiding explicit casts and \texttt{floor} operations at the boundaries between these subsystems.
@@ -56,16 +56,16 @@ All conversions between the fixed-point domain and ordinary integer indices or f
 
 A representative use of both operations appears in the \texttt{playhead\_near\_end} predicate, which decides whether to arm the end-of-buffer crossfade.
 The condition to test is whether the remaining samples in the buffer are fewer than the distance the playhead will traverse during the fade:
-\[
+\begin{equation}
 \texttt{samples\_left} \leq \texttt{fade\_len} \times \frac{\Delta\phi}{2^{16}}
-\]
+\end{equation}
 Dividing by $2^{16}$ would require an integer division, which is both computationally expensive and introduces truncation. 
 Instead, both sides are multiplied by $2^{16}$, yielding an equivalent integer comparison:
-\[
+\begin{equation}
 \underbrace{\texttt{samples\_left} \ll 16}_{\texttt{distance\_to\_end\_q16}}
 \;\leq\;
 \underbrace{\texttt{fade\_len} \times \Delta\phi}_{\texttt{distance\_during\_fade\_q16}}
-\]
+\end{equation}
 This cross-multiplication is exact in 64-bit unsigned arithmetic and avoids division on the time-critical audio path.
 
 \paragraph{Floating-Point Signal Processing}

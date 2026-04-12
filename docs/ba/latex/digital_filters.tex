@@ -8,18 +8,18 @@ Two fundamental classes are distinguished by whether feedback is present.
 
 A \ac{FIR} filter computes $y[n]$ as a weighted sum of the $M$ most recent input samples only:
 
-\[
+\begin{equation}
 y[n] = \sum_{k=0}^{M} b_k \, x[n-k]
-\]
+\end{equation}
 
 Because there is no feedback, FIR filters are unconditionally stable and can achieve a \textit{linear phase} response, which preserves the waveshape of the filtered signal.
 Their main disadvantage is computational cost: achieving a steep roll-off requires a large number of coefficients \cite[p.~293]{oppenheimDiscretetimeSignalProcessing2014}.
 
 An \ac{IIR} filter adds feedback terms, i.e. past output values, to the computation:
 
-\[
+\begin{equation}
 y[n] = \sum_{k=0}^{M} b_k \, x[n-k] \;-\; \sum_{k=1}^{N} a_k \, y[n-k]
-\]
+\end{equation}
 
 The recursive structure allows sharp frequency responses with far fewer coefficients than an equivalent FIR filter, making IIR filters well suited to resource-constrained embedded systems.
 The trade-off is that stability is not guaranteed: if the poles of the transfer function lie outside the unit circle in the $z$-plane, the filter becomes unstable \cite[p.~371]{oppenheimDiscretetimeSignalProcessing2014}.

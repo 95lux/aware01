@@ -247,9 +247,9 @@ The DWT counter is enabled during system initialization and mapped to the FreeRT
 A delta-based windowed measurement is used rather than lifetime cumulative averages. 
 At each measurement interval, \texttt{uxTaskGetSystemState()} is called and per-task utilization is computed as:
 
-\[
+\begin{equation}
 	U_i = \frac{\Delta C_i}{\Delta C_{\text{total}}} \times 100\%
-\]
+\end{equation}
 
 where $\Delta C_i$ is the change in cycle count for task $i$ since the previous 
 measurement, and $\Delta C_{\text{total}}$ is the change in total runtime over the 
@@ -383,9 +383,9 @@ V/Oct tracking accuracy was assessed across the operating range with eight frequ
 
 The expected frequency is derived from:
 
-\[
+\begin{equation}
 f_\text{exp}(U) = 1000 \cdot 2^{U}
-\]
+\end{equation}
 
 Across \SIrange{-1}{+3}{V}, deviations remain within $\pm3\,\text{cents}$, well below the just-noticeable difference for pitch, which is approximately one-twelfth of a semitone ($\approx \qty{8}{cent}$) at the frequencies under investigation~\cite[p.~123]{wheelerScienceSound2014}.
 At \SI{4}{V} the deviation rises to $5.70\,\text{cents}$, consistent with degraded interpolation accuracy at the boundary of the calibrated range.

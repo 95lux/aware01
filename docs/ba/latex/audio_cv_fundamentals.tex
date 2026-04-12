@@ -2,6 +2,8 @@
 \subsection{Audio and CV fundamentals}
 \label{sec:audio-cv-fundamentals}
 
+Eurorack modules operate simultaneously in two signal domains: audio signals that carry sound and control voltages that shape it, both of which are rooted in the physics of musical pitch.
+
 \subsubsection{Pitch and Scales}
 \label{sec:pitch-and-scales}
 
@@ -32,15 +34,15 @@ This is an accepted compromise, as the unified frequency ratios lead to slight d
 Twelve equal semitones make up one octave, so the frequency ratio of one semitone is the twelfth root of two 
 \cite[pp.~181-182]{wheelerScienceSound2014}:
 
-\[
+\begin{equation}
 r = 2^{1/12} \approx 1.05946
-\]
+\end{equation}
 
 A pitch $n$ semitones above a reference frequency $f_0$ is therefore:
 
-\[
+\begin{equation}
 f = f_0 \cdot 2^{n/12}
-\]
+\end{equation}
 
 This exponential relationship between semitone distance and frequency is the mathematical basis for the V/Oct pitch tracking implementation described in Section~\ref{sec:calibration-and-pitch-tracking}.
 
@@ -55,9 +57,9 @@ This convention is known as the \textit{Volt per Octave} (V/Oct) standard \cite{
 Because the relationship between frequency and pitch is exponential, a linear voltage change on the CV input produces an exponential change in frequency. 
 To recover the corresponding playback speed factor from a V/Oct input voltage $V$, the linear voltage must be exponentiated:
 
-\[
+\begin{equation}
 \text{playback\_speed} = 2^{V}
-\]
+\end{equation}
 
 This maps directly onto the equal temperament frequency relationship established above: equal voltage steps always correspond to equal musical intervals, regardless of the absolute pitch.
 

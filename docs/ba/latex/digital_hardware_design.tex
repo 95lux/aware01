@@ -14,23 +14,23 @@ Multiple independent DMA streams allow audio buffer transfers, ADC acquisition, 
 The \textit{NDK NX2520SA-24.000000\,MHz} \cite{Ndk_08142018_NX2520SA24000000MHzB8} crystal was selected and verified for compatibility with the STM32H7 oscillator circuit following the procedure described in ST's guide on \textit{"How to select a compatible crystal and load capacitors for STM32"}\cite{HowSelectCompatible2025}. 
 Crystal compatibility requires a gain margin of at least 5, defined as:
 
-\[
+\begin{equation}
 \text{Gain Margin} = \frac{g_{m,\mathrm{crit,max}} \cdot 5}{g_{m,\mathrm{crit}}} \geq 5
-\]
+\end{equation}
 
 where the critical transconductance $g_{m,\mathrm{crit}}$ is calculated from the crystal parameters as:
 
-\[
+\begin{equation}
 g_{m,\mathrm{crit}} = 4 \cdot ESR \cdot (2\pi F)^2 \cdot (C_0 + C_L)^2
-\]
+\end{equation}
 
 With $ESR = 100~\Omega$, $F = 24~\text{MHz}$, $C_0 = 7~\text{pF}$, $C_L = 10~\text{pF}$, and $g_{m,\mathrm{crit,max}} = 1.5~\mathrm{mA/V}$ for the STM32H7 \cite[p.~107]{stmicroelectronicsStm32h7a3riDatasheet}, the resulting gain margin is $7.31$, confirming crystal compatibility.
 
 The external load capacitors were calculated as:
 
-\[
+\begin{equation}
 C_{L1} = C_{L2} = 2 \cdot (C_L - C_s) = 2 \cdot (10~\text{pF} - 3~\text{pF}) = \qty{14}{pF}
-\]
+\end{equation}
 
 where $C_s = 3~\text{pF}$ accounts for MCU pin and PCB parasitic capacitance.
 

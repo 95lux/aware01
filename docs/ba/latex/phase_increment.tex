@@ -2,9 +2,9 @@
 
 Pitch-shifted sample playback is implemented using a fixed-point phase accumulator, as commonly employed in Direct Digital Synthesis (DDS) systems. The playback position is represented as an unsigned integer with fractional resolution (e.g., Q16.16 (\texttt{uint32\_t}) or Q48.16 (\texttt{uint64\_t})format). The phase is updated according to
 
-\[
+\begin{equation}
 	\phi[n+1] = \phi[n] + \Delta \phi ,
-\]
+\end{equation}
 
 where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback frequency.
 

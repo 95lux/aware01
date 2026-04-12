@@ -141,6 +141,7 @@
 \section{Background and Fundamentals}
 	This section covers the Eurorack format, its signal conventions, and the digital signal processing foundations that underlie the system developed in this thesis.
 	\subsection{Modular Synthesizers and Eurorack}
+	The Eurorack ecosystem is held together by a shared set of mechanical and electrical conventions, these standards are what allow modules from different manufacturers to be freely patched together in the same system.
     \label{sec:eurorack-fundamentals}
 	\input{eurorack_fundamentals.tex}
 	\input{audio_cv_fundamentals.tex}
@@ -152,15 +153,20 @@
 
 \newpage
 \section{System Design}
+Translating the motivation into a concrete system begins with a defined set of requirements, from which the hardware and firmware architecture is derived.
     \input{requirements_specification.tex}
 	
 	\newpage
 	\subsection{System Architecture}
-		\input{highlevel_system_overview.tex}
+	Before examining individual subsystems, the module's overall structure and interface is laid out.
+	It can be seen as a user manual for the finished module.
+	
+	\input{highlevel_system_overview.tex}
 
 
 	\newpage
 	\subsection{Hardware Design}
+	The hardware brings the electrical and mechanical requirements of Eurorack into a physical circuit: an STM32H7-based digital core, an analog signal conditioning frontend, and a custom PCB housed in a 10 HP panel.
         \input{hardware_design_overview.tex}
 
 		\input{digital_hardware_design.tex}
@@ -175,6 +181,7 @@
 
 	\newpage
 	\subsection{Firmware Architecture}
+	Running on top of the hardware, the firmware defines the behaviour of the module. It is structured around FreeRTOS, which coordinates peripheral access, real-time audio processing, and user control through a set of cooperating tasks.
 	\input{firmware_architecture.tex}
 
 		\subsubsection{Numerical Architecture}
@@ -196,6 +203,8 @@
 \newpage
 \section{Pitch Interpolation}
 \label{sec:focus-1-pitch-interpolation}
+Variable-speed playback requires reading the sample buffer at non-integer positions. 
+How to reconstruct the signal on variable playback-speed, is the focus of the following section.
 \input{interpolation.tex}
 
 % -----------------------------------------------------------------------
@@ -212,6 +221,8 @@ This section documents the verification of the hardware and firmware against the
 
 \newpage
 \subsection{Firmware Testing}
+This section validates the firmware implementation through targeted measurements of the two DSP focus points: pitch interpolation quality and reverb behaviour.
+Additionally, latency, CPU utilisation, and calibration accuracy are evaluated to verify the general performance requirements of a Eurorack module.
 \input{firmware_testing.tex}
 
 \newpage
@@ -220,6 +231,7 @@ This section documents the verification of the hardware and firmware against the
 
 \newpage
 \subsection{Discussion of Limitations}
+This section documents the known limitations and defects identified during hardware bring-up and firmware development.
 \input{discussion_of_limitations.tex}
 
 \newpage

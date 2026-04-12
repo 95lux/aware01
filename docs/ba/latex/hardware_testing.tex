@@ -62,8 +62,8 @@ The audio input protection is further verified by the loopback measurements in S
 
 \paragraph{Measurement Setup}
 
-To evaluate the audio signal path including analog frontends and AD/DA conversion, a sine was applied to 
-the analog input at frequencies of \SI{100}{Hz} and \SI{1}{kHz}. All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
+To evaluate the audio signal path including analog frontends and AD/DA conversion, a sine was applied to the analog input at frequencies of \SI{100}{Hz} and \SI{1}{kHz}. 
+All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
 Input and output signals were captured simultaneously on a two-channel oscilloscope to verify signal integrity through the analog frontend and codec stages. 
 To characterise the digital headroom, the DMA RX and TX buffers were read out via SWD during signal playback and plotted alongside the oscilloscope captures.
 
@@ -121,9 +121,9 @@ The swept sine method was chosen as it provides a high signal-to-noise ratio acr
 To remove the frequency response of the measurement chain itself (including the RME output and input stages, cables, and impedance interactions), a reference measurement was taken with the RME output connected directly to the RME input via a loopback cable. 
 This reference response was then subtracted from the DUT measurement in the logarithmic domain, yielding the frequency response of the device under test alone:
 
-\[
+\begin{equation}
 H_{\text{device}}(f) = H_{\text{DUT}}(f) - H_{\text{ref}}(f) \quad \text{[dB]}
-\]
+\end{equation}
 
 The DUT measurement was taken with the sweep signal routed through the module's 
 analog frontend, AD conversion, firmware loopback, DA conversion, and analog 

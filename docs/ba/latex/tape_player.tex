@@ -1,4 +1,4 @@
-The tape player is the primary DSP component of this thesis, covering the full sampling engine: audio recording, pitch-shifted playback, slice management, and the crossfading system that keeps transitions click-free.
+The tape player is the primary DSP component of this project, covering the full sampling engine: audio recording, pitch-shifted playback, slice management, and the crossfading system that keeps transitions click-free.
 It manages recording of incoming audio into a ping-pong buffer pair and plays back the recorded content at a variable pitch determined by the V/oct CV input and the pitch slide potentiometer.
 The tape player runs entirely within \texttt{AudioTask} (Section~\ref{sec:rtos-task-structure}) and is controlled through a public API.
 
@@ -107,14 +107,14 @@ The fade accumulator (\texttt{fade\_acc\_q16}) is a Q16.16 fixed-point phase tha
 
 The step size is calculated from the desired fade length and the LUT size, so the LUT is traversed exactly once over the duration of the crossfade:
 
-\[
+\begin{equation}
 \texttt{step} = \frac{N_{\text{LUT}}}{\texttt{fade\_len}}
-\]
+\end{equation}
 
 For crossfades between two buffer regions (retrigger and cyclic), a second buffer pointer (\texttt{buf\_b\_ptr\_l}, \texttt{buf\_b\_ptr\_r}) tracks the outgoing audio segment, while the main playhead reads the incoming segment. 
 The two signals are blended using complementary fade-in and fade-out curves derived from the same LUT, ensuring a constant-power crossfade.
 
-\subsubsection{Playback Trigger Modes}
+\subsubsection{Crossfade Types}
 
 Two crossfade strategies cover three distinct trigger scenarios handled by the play FSM.
 
@@ -209,8 +209,9 @@ void tape_player_set_params(struct param_cache param_cache) {
 \end{minted}
 
 The potentiometer sets the base playback speed, and the V/oct input scales it
-further --- This enables melodic pitch control via the V/Oct modulation while the potentiometer acts as a coarse tuning offset.
+further --- This enables melodic pitch control via the V/Oct modulation while the potentiometer acts as a coarse tuning offset. \\
 
+Since no interpolation is needed when recording -- its only possible to record audio in realtime -- the record buffer uses a purely integer recordhead. No special fixed-point arithmetic is used here, just simple increment.
 
 \subsection{Decimation}
 \label{sec:tape-player-decimation}
