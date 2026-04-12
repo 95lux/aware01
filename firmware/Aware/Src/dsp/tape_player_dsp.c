@@ -162,10 +162,10 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
             return true;
 
         uint32_t samples_left = idx - lower_bound;
-        uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
-        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
+        uint64_t distance_to_end_q16 = (uint64_t) samples_left << 16;
+        uint64_t distance_during_fade_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
 
-        return physical_distance_q16 <= fade_travel_distance_q16;
+        return distance_to_end_q16 <= distance_during_fade_q16;
     } else {
         uint32_t idx = (uint32_t) (pos_q48_16 >> 16);
         if (idx >= limit)
@@ -177,9 +177,9 @@ static inline bool playhead_near_end(uint64_t pos_q48_16, uint32_t fade_len_samp
         // To avoid division, we cross-multiply:
         // (samples_left << 16) <= (fade_len_samples * active_phase_inc)
         uint64_t physical_distance_q16 = (uint64_t) samples_left << 16;
-        uint64_t fade_travel_distance_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
+        uint64_t distance_during_fade_q16 = (uint64_t) fade_len_samples * active_phase_inc_q16;
 
-        return physical_distance_q16 <= fade_travel_distance_q16;
+        return physical_distance_q16 <= distance_during_fade_q16;
     }
 }
 

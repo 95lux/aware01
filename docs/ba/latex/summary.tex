@@ -1,18 +1,21 @@
 The primary objective of this thesis was the development of a fully functional, DSP-capable Eurorack synthesizer module on the STM32H7 platform.
-The resulting system -- hardware, firmware, and two DSP focus points -- was built from scratch over the course of the project and verified against a defined set of functional and electrical requirements.
+The resulting system, including hardware, firmware, and two DSP focus points, was built from scratch over the course of the project and verified against a defined set of functional and electrical requirements. \\
 
-The hardware implementation delivers a complete Eurorack-compliant signal path: stereo audio input and output at Eurorack levels, CV and V/Oct input conditioning, gate inputs, slide potentiometers, push buttons, and a WS2812 RGB LED interface.
-The analog frontend proved more challenging than anticipated during bring-up; initial attenuator values caused ADC saturation, requiring component changes, and two pin misassignments in the first PCB revision required bodge wires and firmware workarounds.
+The hardware design implements a complete Eurorack-compliant signal path: stereo audio input and output at Eurorack levels, CV and V/Oct input conditioning, gate inputs, slide potentiometers, push buttons, and a WS2812 RGB LED interface.
+The analog frontend proved more challenging than anticipated during the design and simulation phase; initial attenuator values caused ADC saturation, requiring component changes, and two pin misassignments in the first PCB revision required bodge wires and firmware workarounds.
 These issues are documented and corrected for the next revision.
 
 On the firmware side, the FreeRTOS-based architecture met all real-time requirements with margin to spare.
-End-to-end audio latency was measured at \qty{1.896}{ms} mean -- well within the \qty{5}{ms} target -- and the full DSP chain runs at 60--66\% CPU utilisation at $f_s = \qty{48}{\kilo\hertz}$, leaving sufficient headroom.
+End-to-end audio latency was measured at \qty{1.896}{ms} mean, which is well within the 5-\qty{10}{ms} target. 
+The full DSP chain runs at 60--66\% CPU utilisation at $f_s = \qty{48}{\kilo\hertz}$, leaving sufficient headroom.
 The lock-free parameter cache and DMA-driven audio pipeline both operated correctly under load throughout testing.
 
 The two DSP focus points demonstrated that non-trivial real-time audio algorithms are feasible on this platform.
 The tape-style playback engine with Hermite interpolation produces clean output across the tested pitch range, with substantially lower aliasing than the ZOH baseline at all upsampling ratios.
-The Schroeder reverb implementation covers the full $0.1$--$5.0\,\mathrm{s}$ RT60 range and integrates cleanly into the audio processing chain. \\
+The Schroeder reverb implementation produces convincing room simulation and integrates cleanly into the audio processing chain. \\
 
-The resulting module, consisting of: hardware schematics, firmware, and DSP implementations, is published as open-source, offering a concrete, documented entry point into the Eurorack ecosystem outside the commercial supply chain.
+The resulting module, consists of: hardware schematics, firmware, and DSP implementations. 
+It is published as open-source, offering a concrete, documented entry point into the Eurorack ecosystem outside the commercial supply chain.
 
-Development will continue beyond the scope of this thesis; the published repository serves as a foundation for future contributors and a documented reference for embedded DSP in the Eurorack format.
+Development will continue beyond the scope of this thesis. 
+The published repository serves as a foundation for future contributors and a documented reference for embedded DSP in the Eurorack format.

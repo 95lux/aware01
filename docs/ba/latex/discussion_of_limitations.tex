@@ -3,41 +3,35 @@ Three hardware defects were identified in this revision:
 \begin{itemize}
 	\item \textbf{Gate 03 input (FR-03):} The assigned pin PC9 does not support
 	EXTI interrupts simultaneously with the other assigned interrupt lines.
-	A bodge wire was soldered directly between PC9 and PC6 on the MCU pins,
-	relocating the signal to a pin with full EXTI support, and the firmware was
-	updated accordingly (Figure~\ref{fig:gpio-bodge}).
+	A bodge wire was soldered directly between PC9 and PC6 on the MCU pins. 
+	This relocates the signal to a pin with full EXTI support; the firmware was updated accordingly (Figure~\ref{fig:gpio-bodge}).
 	A PCB revision with the correct pin assignment is required to eliminate the bodge.
-	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels
-	for the fader LEDs were incorrectly assigned during schematic entry, leaving
-	the slider LED indicators non-functional in this revision.
-	\item \textbf{BAT54S audio input clamp (EC-03):} A mismatch between the SPICE
-	simulation model and the actual SOT-23 package pinout of the BAT54S dual Schottky
-	diode caused the component to be placed with reversed orientation on the PCB.
-	The error was corrected by bending the component pins upward and soldering it
-	inverted, restoring the correct diode orientation (Figure~\ref{fig:diode-bodge}).
+	\item \textbf{Slide potentiometer LEDs (FR-04):} PWM-capable timer channels for the fader LEDs were incorrectly assigned during schematic entry. This leave the slider LED indicators non-functional in this revision.
+	\item \textbf{BAT54S audio input clamp (EC-03):} A mismatch between the SPICE simulation model and the actual SOT-23 package pinout of the BAT54S dual Schottky diode caused the component to be placed with reversed orientation on the PCB.
+	The error was corrected by bending the component pins upward and soldering it inverted. This restores the correct diode orientation (Figure~\ref{fig:diode-bodge}).
 	A corrected footprint assignment is required in the next PCB revision.
 \end{itemize}
 
 \subsubsection{Slice Selection in Reverse Playback}
-Slice boundary handling during reverse playback is not fully implemented; when reverse mode is active, slice selection is ignored and the full buffer is played back in reverse instead.
+Slice boundary handling during reverse playback is not fully implemented: when reverse mode is active, slice selection is ignored and the full buffer is played back in reverse instead.
 
 \subsubsection{Memory Headroom}
 DTCMRAM utilisation stands at 98.5\% and main SRAM at 93\% in the current firmware build.
-While sufficient for the implemented feature set, this leaves limited headroom for additional DSP algorithms or larger sample buffers.
-The current recording and playback buffer holds \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, which is adequate for the tape-style use case but restrictive for longer recordings.
+While this prove to be sufficient for the implemented feature set, it leaves limited headroom for additional DSP algorithms or larger sample buffers.
+The current recording and playback buffer holds \qty{2.5}{\second} of audio at $f_s = \qty{48}{\kilo\hertz}$, which is adequate for the use case but represents a limitation when using the module with longer, sustained audio material.
 
 \subsubsection{Noise Characterisation (EC-05)}
 Quantitative noise floor measurements have not been completed for this revision.
-The analogue/digital separation strategy was applied during layout, but its effectiveness has not been formally verified through measurement.
-During in-system testing in a Eurorack environment, the noise performance was subjectively sufficient and no audible noise floor was observed.
+The analogue/digital separation strategy was applied during layout, but its effectiveness has not been formally verified through measurements.
+During testing in a Eurorack system, the noise performance was subjectively sufficient and no audible noise floor was observed.
 
 \subsubsection{Fixed-Point Phase Accumulator}
 The playback engine uses a Q48.16 fixed-point phase accumulator, motivated by the concern that floating-point accumulation errors could cause phase drift over long playback durations (Section~\ref{sec:numerical-architecture}).
-In retrospect, a \texttt{float} accumulator would accumulate less than $0.012$ samples of error before the playhead wraps on a \qty{2.5}{\second} buffer, well below the resolution of the interpolator and fully sufficient for this use case.
+In retrospect, a \texttt{float} accumulator would accumulate less than $0.012$ samples of error before the playhead wraps on a \qty{2.5}{\second} buffer/ This is well below the resolution of the interpolator and would be fully sufficient for this use case.
 
 \subsubsection{Input Stage Low-Frequency Rolloff Discrepancy}
 The measured \SI{-3}{\decibel} cutoff frequency of the audio input high-pass filter is approximately \SI{37.6}{\Hz}, compared to a theoretical value of \SI{1.8}{\Hz} calculated from the AC-coupling network ($R_{in} = \SI{40}{\kilo\ohm}$, $C_3 = \SI{2.2}{\micro\farad}$).
 
-The root cause has not been identified within the scope of this project, as only an end-to-end frequency response measurement was conducted.
+The root cause has not been identified within the scope of this project, as only an end-to-end frequency response measurement was done.
 To isolate the source, individual frequency response measurements of the input and output stages should be performed separately in a future revision.
-Practically, the measured cutoff reaches into the audible low-frequency end; sub-bass content below \qty{30}{\Hz} is attenuated, though no impact was observed during in-system testing.
+Practically, the measured cutoff reaches into the audible low-frequency end; sub-bass content below \qty{30}{\Hz} is attenuated, though no artistic limitations were observed during in-system testing.

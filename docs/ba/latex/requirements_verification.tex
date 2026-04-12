@@ -1,5 +1,5 @@
 
-Table~\ref{tab:req-verification} summarises the verification status of all functional
+Table~\ref{tab:req-verification} summarises the status of all functional
 requirements and constraints defined in Section~\ref{sec:system-requirements}.
 \begin{table}[H]
 	\centering
@@ -9,7 +9,7 @@ requirements and constraints defined in Section~\ref{sec:system-requirements}.
 		\toprule
 		\textbf{ID} & \textbf{Verification} & \textbf{Status} \\
 		\midrule
-		FR-01 & Stereo audio input and output verified via oscilloscope loopback measurements with $\qty{10}{V_{pp}}$ Eurorack-level signals. Frequency response measured and good performance in audible range confirmed. & Pass \\
+		FR-01 & Stereo audio input and output were confirmed via oscilloscope loopback measurements with $\qty{10}{V_{pp}}$ Eurorack-level signals. Frequency response measured and good performance in audible range was confirmed. & Pass \\
 		FR-02 & End-to-end latency measured at \qty{1.896}{ms} mean, \qty{2.100}{ms} maximum -- well within the 5-10 ms real-time requirement. & Pass \\
 		FR-03 & Gate, CV, and V/Oct inputs mostly implemented and verified via driver tests and signal path measurements. \textit{Gate 03 input non-functional due to pin misassignment in this hardware revision.} & Partial \\
 		FR-04 & Slide potentiometers and push buttons operational; verified via firmware driver tests. \textit{Slide potentiometer LEDs non-functional due to pin misassignment in this hardware revision.} & Partial \\
@@ -18,7 +18,7 @@ requirements and constraints defined in Section~\ref{sec:system-requirements}.
 		\midrule
 		EC-01 & Input protection verified by design; transistor clamping on gate inputs and rail-guarded opamp stages on CV inputs prevent ADC damage at full Eurorack signal range. & Pass \\
 		EC-02 & See EC-01. & Pass \\
-		EC-03 & AC-coupling and diode protection verified via loopback measurements. Initial attenuator values caused ADC saturation; resistor values corrected to yield $\qty{0.77}{V_{pp}}$ at codec input, within the \qty{\pm 0.53}{V} ADC input range. BAT54S clamp diode placed with reversed orientation due to package pinout mismatch; corrected by inverting the component on the PCB. & Pass \\
+		EC-03 & AC-coupling and diode protection verified via loopback measurements. Initial attenuator values caused ADC saturation; resistor values were corrected to yield $\qty{0.77}{V_{pp}}$ at codec input, within the \qty{\pm 0.53}{V} ADC input range. BAT54S clamp diode placed with reversed orientation due to package pinout mismatch; corrected by inverting the component on the PCB. & Pass \\
 		EC-04 & Power rails verified: \qty{5}{V} buck converter and \qty{3.3}{V} LDO operational; \qty{12}{V} rail retained for opamp stages. & Pass \\
 		EC-05 & PCB layout follows analogue/digital separation guidelines. Quantitative noise measurements not yet completed. & Pending \\
 		EC-06 & Mechanical dimensions conform to Eurorack 3U standard. & Pass \\

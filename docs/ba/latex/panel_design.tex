@@ -16,9 +16,8 @@ The following section briefly describes the process from CAD modelling and proto
 	\label{fig:panel_freecad}
 \end{wrapfigure}
 
-The physical front panel was designed in FreeCAD, modelling the mechanical constraints of the Eurorack format, described in 
-
-Section~\ref{sec:eurorack-fundamentals}: \qty{10}{HP} (\qty{50.80}{mm}) wide, to fit the underlying PCB width a width of \qty{46}{mm} -- and \qty{128.5}{mm} tall, with 4 M3 mounting holes in the corners.
+The physical front panel was designed in FreeCAD, in which themechanical constraints of the Eurorack format were modelled, described in Section~\ref{sec:eurorack-fundamentals}: 
+\qty{10}{HP} (\qty{50.80}{mm}) wide, to fit the underlying PCB width a width of \qty{46}{mm} -- and \qty{128.5}{mm} tall, with 4 M3 mounting holes in the corners.
 
 The panel cutout positions were imported directly from the KiCad PCB layout using the KiCad StepUp workbench plugin for FreeCAD, which imports the KiCad board as a 3D assembly with all component positions preserved. This of course requires the component 3D models to be correctly assigned and aligned in the KiCad project.
 
@@ -27,8 +26,7 @@ Within FreeCAD, \textit{ShapeBinders} \cite{PartDesignShapeBinder2025} were used
 \paragraph{3D Print Verification}
 
 Before committing to a final aluminum panel, the design was verified by 3D printing the panel. 
-The printed panel fit the components and mounted into the Eurorack rack correctly on the first attempt, confirming that the 
-KiCad StepUp import and ShapeBinder workflow produced accurate dimensions without any manual measurements and correction. 
+The printed panel fit the components and mounted into the Eurorack rack correctly on the first attempt, confirming that the KiCad StepUp import and ShapeBinder workflow produced accurate dimensions without any manual measurements and correction. 
 The 3D printed panel also served as a functional prototype for evaluating the physical layout and ergonomics of the controls before the final panel is produced.
 
 \begin{figure}[H]
@@ -45,7 +43,7 @@ The 3D printed panel also served as a functional prototype for evaluating the ph
 
 The mechanical outline was exported from FreeCAD as a technical drawing, on form of a .dxf file, providing an exact 1:1 scale template for the panel artwork. 
 The DXF was imported into Inkscape as a locked base layer, and the panel graphics -- labels, module name, signal flow indicators -- were designed on top. 
-Exporting the finished artwork as SVG preserves full vector fidelity, making it suitable for handoff to a graphic designer or direct submission to a panel manufacturer.
+Exporting the finished artwork as SVG preserves full vector fidelity, which makes it suitable for handoff to a graphic designer or direct submission to a panel manufacturer.
 
 \begin{figure}[H]
 	\centering

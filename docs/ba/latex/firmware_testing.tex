@@ -2,7 +2,7 @@
 \paragraph{Measurement Setup}
 
 To evaluate interpolation quality (implementation details in Section \ref{sec:focus-1-pitch-interpolation}), a \qty{100}{Hz} sawtooth wave was loaded into the tape record buffer. 
-A sawtooth wave was chosen as the test signal because it contains all integer harmonics (both even and odd), providing a rich spectrum of overtones across the audio band for evaluating the FFT output. \cite[p.~665]{georgearfkenMathematicalMethodsPhysicists1985}
+A sawtooth wave was used as the test signal since it contains all integer harmonics (even and odd), giving a dense spectrum of overtones for evaluating the FFT. \cite[p.~665]{georgearfkenMathematicalMethodsPhysicists1985}
 
 The two interpolation methods under comparison were ZOH and the 4-point cubic Hermite 
 with Catmull-Rom tangents. Each method was recorded separately at the following playback 
@@ -10,11 +10,10 @@ speeds: $0.25\times$ ($-2$ octaves), $0.33\times$, $0.5\times$ ($-1$ octave),
 $0.75\times$, $1.0\times$ (unity), $1.5\times$, $2.0\times$ ($+1$ octave), and 
 $4.0\times$ ($+2$ octaves).
 
-To eliminate possible parameter jitter and value inaccuracy from the ADC, the playback speed was fixed at compile 
-time via a macro in \texttt{project\_config.h}, bypassing the control interface entirely:
+To avoid ADC-induced jitter and inaccuracies, the playback speed was fixed at compile time using a macro in \texttt{project\_config.h}, bypassing the control interface entirely:
 
 \begin{minted}[linenos]{c}
-#define CONFIG_TAPE_PITCH_OV~ERRIDE 4.0f
+#define CONFIG_TAPE_PITCH_OVERRIDE 4.0f
 \end{minted}
 
 The output was captured at $f_s = \qty{48}{kHz}$ as 24-bit \texttt{.wav} files 
@@ -29,15 +28,14 @@ At unity playback ($1.0\times$), both methods produce nearly identical spectra: 
 harmonic series of the sawtooth is clearly visible with no significant aliasing, as no 
 interpolation is required when the playhead advances at exactly one sample per output step.
 
-As the playback speed decreases below $1.0\times$, the effective upsampling ratio 
-increases and the interpolator is called more frequently, making its quality increasingly 
-audible. At $0.5\times$ and below, ZOH shows clearly visible aliasing humps between the 
+As playback speed drops below 1.0×, the effective upsampling increases and the interpolator is used more often, making its quality more audible. 
+At $0.5\times$ and below, ZOH shows clearly visible aliasing humps between the 
 signal harmonics, caused by folded spectral energy from above Nyquist. At $0.25\times$, a second 
 aliasing hump appears, consistent with the broad sidelobe structure predicted by the ZOH 
 frequency response in Section~\ref{sec:interpolation-comparision-frequency-response}.
 
-The Hermite interpolator shows substantially lower aliasing across all upsampling 
-ratios. Even at $0.25\times$, where ZOH produces prominent aliasing humps, the Hermite 
+The Hermite interpolator produces noticeably less aliasing across all upsampling ratios. 
+Even at $0.25\times$, where ZOH produces prominent aliasing humps, the Hermite 
 output retains only a small residual artefact, consistent with the suppressed sidelobe 
 structure of the Catmull-Rom kernel discussed in 
 Section~\ref{sec:interpolation-comparision-frequency-response}.
@@ -106,7 +104,7 @@ while at minimum room size the shorter delay lines produce a denser, more colore
 decay. \\
 
 
-The parameter boundaries were determined empirically during testing, chosen to represent the range that produces the most musically useful results (long, dense decay at the upper end and short, subtle ambience at the lower end) while ensuring the filters remain stable throughout.
+The parameter limits were chosen empirically to cover the most musically useful range, that produces the most musically useful results (long, dense decay at the upper end and short, subtle ambience at the lower end) while ensuring the filters remain stable throughout.
 \paragraph{RT60} The \qty{-60}{dB} decay time (RT60) can be read directly from the 
 x-axis. At maximum feedback and room size, the RT60 is approximately \qty{5}{s}, while at minimum feedback it falls below \qty{0.5}{s}. 
 Notably, at minimum room size the RT60 reaches only approximately \qty{3.25}{s} even at maximum feedback, significantly shorter than the \qty{5}{s} observed at maximum room size.
@@ -166,13 +164,14 @@ fade-out, and amplitude envelope were disabled for the duration of the measureme
 // #define CONFIG_TAPE_PLAYER_ENABLE_FADE_IN_OUT
 \end{minted}
 
-The measurement captures the full latency chain: gate detection, FreeRTOS task 
+This setup measures the entire latency chain: gate detection, FreeRTOS task 
 notification, command queue processing, tape player FSM transition, DMA buffer 
 output, and codec output stage.
 
 Multiple oscilloscope captures were taken to characterise both the average latency 
 and the worst-case jitter introduced by the block-based command processing.
 
+\newpage
 \paragraph{Expected Latency}
 
 With a sample rate of $f_s = \qty{48}{kHz}$ and a DMA half-block size of 64 
@@ -234,7 +233,7 @@ Table~\ref{tab:latency_results}:
 \end{table}
 
 The measured latency ranges from \qty{1.640}{ms} to \qty{2.100}{ms} across all $n = 19$ measurements, with a mean of \qty{1.896}{ms} and a standard deviation of \qty{0.144}{ms}. 
-The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms}, confirming that command latency is dominated by the block-based processing architecture as expected. 
+The peak-to-peak jitter of \qty{0.460}{ms} is well within the theoretical half-block bound of \qty{1.333}{ms}, confirming that command latency is dominated by the block-based processing, as expected. 
 All measurements fall comfortably within the \qty{10}{ms} perceptual upper bound for gesture-to-audio latency in live performance \cite[p.~13]{davidwesselProblemsProspectsIntimate2002}, as required by the system latency specification (Section~\ref{sec:system-requirements}), with a theoretical worst-case of \qty{4.0}{ms}.
 The standard deviation of \qty{0.144}{ms} also falls well within the \qty{1}{ms} jitter tolerance identified by Wessel and Wright~\cite[p.~13]{davidwesselProblemsProspectsIntimate2002}, indicating consistent and predictable timing behaviour across repeated triggers.
 
@@ -242,8 +241,8 @@ The standard deviation of \qty{0.144}{ms} also falls well within the \qty{1}{ms}
 
 CPU utilization is measured using the FreeRTOS runtime statistics API in combination 
 with the ARM Cortex-M7 \ac{DWT} cycle counter, which increments at the CPU core frequency 
-of 280~MHz and serves as the time base for task scheduling measurements. \cite{RunTimeStatistics}
-The DWT counter is enabled during system initialization and mapped to the FreeRTOS \texttt{portGET\_RUN\_TIME\_COUNTER\_VALUE} macro, allowing the scheduler to sample elapsed cycles on every context switch.
+of 280~MHz and serves as the time base for task scheduling measurements \cite{RunTimeStatistics}. 
+The DWT counter is enabled during system initialization and mapped to the FreeRTOS \texttt{portGET\_RUN\_TIME\_COUNTER\_VALUE} macro, which allows the scheduler to sample elapsed cycles on every context switch.
 
 A delta-based windowed measurement is used rather than lifetime cumulative averages. 
 At each measurement interval, \texttt{uxTaskGetSystemState()} is called and per-task utilization is computed as:
@@ -280,10 +279,9 @@ recording, averaged over a 5-second window during steady-state operation.
 \end{table}
 
 The full DSP chain consumes between 60 and 66\% of total CPU time during active 
-playback and recording. The remaining 34--40\% is attributed to the idle task, 
-indicating sufficient headroom for the current feature set. The control interface 
-and user interface tasks consistently measured at 0\%, as both are notification-driven 
-and spend the vast majority of their time blocked.
+playback and recording. 
+The remaining 34--40\% is down to the idle task, which indicates sufficient headroom for the current feature set. 
+The control interface and user interface tasks consistently measured at 0\%, as both are notification-driven and spend the vast majority of their time blocked.
 
 \paragraph{Per-Stage Cost Analysis}
 
@@ -307,16 +305,14 @@ each stage was isolated, as summarized in Table~\ref{tab:stage_cost}.
 	\label{tab:stage_cost}
 \end{table}
 
-The Schroeder stereo reverb is the dominant processing cost, accounting for 
-approximately half of the total audio task utilization, as it evaluates multiple 
-allpass and comb filter stages per sample across both stereo channels at the full 
-48~kHz sample rate.
+The Schroeder stereo reverb is the most expensive part of the DSP, accounting for approximately half of the total audio task utilization. 
+This is due to multiple allpass and comb filter stages per sample across both stereo channels at the full 48~kHz sample rate.
 
 \paragraph{Optimization Proposals}
 
 The per-stage analysis identifies the Schroeder reverb as the primary candidate for optimization. 
 Downsampling the reverb input to 24~kHz, processing at half the sample rate, and upsampling the output back to 48~kHz would halve the number of filter evaluations per second. 
-Given the perceptually diffuse nature of reverb tails, the resulting reduction in high-frequency content could be acceptable in practice, and reduce total audio task utilization to approximately 30--36\% under full DSP load.
+Since reverb tails are perceptually diffuse, the reduced high-frequency content would likely be acceptable in practice, and reduce total audio task utilization to approximately 30--36\% under full DSP load.
 
 The gained performance can be used to implement more DSP features, like grain-synthesis or experimental filtering.
 
@@ -393,4 +389,4 @@ f_\text{exp}(U) = 1000 \cdot 2^{U}
 
 Across \SIrange{-1}{+3}{V}, deviations remain within $\pm3\,\text{cents}$, well below the just-noticeable difference for pitch, which is approximately one-twelfth of a semitone ($\approx \qty{8}{cent}$) at the frequencies under investigation~\cite[p.~123]{wheelerScienceSound2014}.
 At \SI{4}{V} the deviation rises to $5.70\,\text{cents}$, consistent with degraded interpolation accuracy at the boundary of the calibrated range.
-Overall, the V/Oct calibration achieves accurate and deterministic pitch tracking across the primary operating range, with deviations remaining below the perceptual threshold.
+Overall, the V/Oct calibration provides accurate and consistent pitch tracking across the main operating range, with deviations remaining below the perceptual threshold.

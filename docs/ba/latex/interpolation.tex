@@ -1,7 +1,7 @@
 % Focus point 1: Q48.16 fixed-point playhead + Hermite interpolation
 \subsection{Problem Statement}
 
-An obvious problem arises when dealing with variable speed playback of buffered audio:
+A key problem in variable-speed playback of buffered audio is that:
 
 the playback speed may not be an integer multiple of the original sample rate. 
 This technique is generally known as \textbf{sample-rate conversion}. 
@@ -18,7 +18,7 @@ x_d[n] = x[nM] = x_c(nMT)
 \]
 
 However, directly subsampling without prefiltering causes aliasing if the signal contains energy above the new Nyquist limit $\pi/M$. 
-To avoid this, a discrete-time lowpass filter with cutoff $\pi/M$ must be applied before compression. \cite[p.~186]{oppenheimDiscretetimeSignalProcessing2014} 
+To avoid this, a discrete-time lowpass filter with cutoff $\pi/M$ must be applied before downsampling. \cite[p.~186]{oppenheimDiscretetimeSignalProcessing2014} 
 
 In the context of faster-than-unity playback, the playhead advances by more than one sample per output step, which is analogous to decimation, where some input samples are skipped entirely.
 
@@ -68,7 +68,8 @@ the discontinuities of ZOH, it remains only $C^0$ continuous
 
 \subsubsection{The Aliasing Problem}
 
-Despite its computational simplicity, linear interpolation has a fundamental spectral limitation: it is only $C^0$ continuous. 
+Despite its simplicity, linear interpolation has a key spectral limitation: 
+it is only $C^0$ continuous. 
 The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary. 
 Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses, which is inherently rich in high-frequency harmonic content.
 

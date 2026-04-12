@@ -15,7 +15,7 @@ resolution in Q48.16 format (\texttt{uint64\_t}), updated according to
 
 where $\phi$ denotes the discrete phase and $\Delta \phi$ the phase increment corresponding to the desired playback rate.
 
-The Q48.16 format was chosen over the more common Q16.16 because the integer part must be capable of addressing the full recording buffer.
+The Q48.16 (48-bit fixed-point, 16-bit fractional) format was chosen over the more common Q16.16 because the integer part must be capable of addressing the full recording buffer.
 At $f_s = \qty{48}{\kilo\hertz}$ and a buffer length of \qty{2.5}{\second}, the maximum playback index reaches
 \[
     48000 \times 2.5 = 120{,}000 \text{ samples,}
@@ -37,34 +37,36 @@ The $N$ fractional bits represent the sub-sample offset as an integer numerator 
 All conversions between the fixed-point domain and ordinary integer indices or floating-point values reduce to two operations:
 
 \begin{description}
-    \item[Right-shift by $N$] extracts the integer part, discarding the fractional bits:
-    \[
-        \texttt{idx} = \texttt{pos\_q48\_16} \gg 16
-        \quad \Longrightarrow \quad
-        \texttt{idx} = \lfloor \phi / 2^{16} \rfloor
-    \]
-    The lower 16 bits, which encode the sub-sample fractional offset, are implicitly passed to the Hermite interpolator as the interpolation parameter $t$.
-
-    \item[Left-shift by $N$] converts an integer sample count into the same unit as a Q.16 value, enabling direct magnitude comparison without division:
-    \[
-        \texttt{physical\_distance\_q16} = \texttt{samples\_left} \ll 16
-        \quad \equiv \quad
-        \texttt{samples\_left} \cdot 2^{16}
-    \]
+	\item[Right-shift by $N$] extracts the integer part, discarding the fractional bits:
+	\[
+	\texttt{idx} = \texttt{pos\_q48\_16} \gg 16
+	\quad \Longrightarrow \quad
+	\texttt{idx} = \lfloor \phi / 2^{16} \rfloor
+	\]
+	The lower 16 bits remain in the original variable and represent the fractional sub-sample offset.
+	
+	\item[Left-shift by $N$] converts an integer sample count into the same unit as a Q.16 value, enabling direct magnitude comparison without division:
+	\[
+	\texttt{distance\_to\_end\_q16} = \texttt{samples\_left} \ll 16
+	\quad \equiv \quad
+	\texttt{samples\_left} \cdot 2^{16}
+	\]
 \end{description}
 
+
 A representative use of both operations appears in the \texttt{playhead\_near\_end} predicate, which decides whether to arm the end-of-buffer crossfade.
-The condition to test is whether the physical samples remaining in the buffer are fewer than the distance the playhead will travel during the fade:
+The condition to test is whether the remaining samples in the buffer are fewer than the distance the playhead will traverse during the fade:
 \[
-    \texttt{samples\_left} \leq \texttt{fade\_len} \times \frac{\Delta\phi}{2^{16}}
+\texttt{samples\_left} \leq \texttt{fade\_len} \times \frac{\Delta\phi}{2^{16}}
 \]
-Dividing by $2^{16}$ in integer arithmetic would lose precision, so both sides are instead multiplied by $2^{16}$, yielding the equivalent integer comparison:
+Dividing by $2^{16}$ would require an integer division, which is both computationally expensive and introduces truncation. 
+Instead, both sides are multiplied by $2^{16}$, yielding an equivalent integer comparison:
 \[
-    \underbrace{\texttt{samples\_left} \ll 16}_{\texttt{physical\_distance\_q16}}
-    \;\leq\;
-    \underbrace{\texttt{fade\_len} \times \Delta\phi}_{\texttt{fade\_travel\_distance\_q16}}
+\underbrace{\texttt{samples\_left} \ll 16}_{\texttt{distance\_to\_end\_q16}}
+\;\leq\;
+\underbrace{\texttt{fade\_len} \times \Delta\phi}_{\texttt{distance\_during\_fade\_q16}}
 \]
-This cross-multiplication is exact in 64-bit unsigned arithmetic and avoids both division and floating-point conversion on the time-critical audio path.
+This cross-multiplication is exact in 64-bit unsigned arithmetic and avoids division on the time-critical audio path.
 
 \paragraph{Floating-Point Signal Processing}
 

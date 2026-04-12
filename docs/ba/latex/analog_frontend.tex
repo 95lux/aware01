@@ -235,6 +235,7 @@ The general CV input accepts signals in the range of \qty{\pm 5}{\volt}, while t
 Both circuits share the same topology with \(R_{in} = \qty{100}{\kilo\ohm}\), differing only in the bias and feedback resistor values to match their respective input ranges.
 A \qty{1}{\nano\farad} capacitor in parallel with the feedback resistor acts as an anti-aliasing filter, attenuating high-frequency noise above the CV signal bandwidth.
 
+\newpage
 \subparagraph{General CV Input}
 
 For the general CV input, the bias resistor \(R_5 = \qty{200}{\kilo\ohm}\) is exactly twice the input resistor \(R_6 = \qty{100}{\kilo\ohm}\).
@@ -269,6 +270,7 @@ The bias and feedback resistors are adjusted to \(R_9 = \qty{180}{\kilo\ohm}\) a
 	\label{fig:schem_voct_input}
 \end{figure}
 
+\newpage
 \subparagraph{CV Input Stage Simulation}
 
 Transient simulations were conducted for both CV input channels to verify correct level shifting and scaling into the STM32H7 ADC input range of \qtyrange{0}{3.3}{\volt}.

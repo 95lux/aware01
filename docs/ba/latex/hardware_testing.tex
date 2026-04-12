@@ -19,17 +19,18 @@ Table~\ref{tab:rail-voltages} summarises the measured values against their expec
     \label{tab:rail-voltages}
 \end{table}
 
-Both derived rails are in close deviation of their target values, confirming correct operation of the buck converter and LDO.
-The Eurorack bus rails ($+\SI{12}{\volt}$ and $-\SI{12}{\volt}$) were supplied by a linear lab power supply with current readings. The power behaviour in a host case with its own power supply were not independently measured.
+Both derived rails are close to their target values, confirming correct operation of the buck converter and LDO.
+The Eurorack bus rails ($+\SI{12}{\volt}$ and $-\SI{12}{\volt}$) were supplied by a linear lab power supply with current readings. 
+Power behaviour in a host case with its own supply was not independently measured.
 
 \paragraph{Current Consumption}
 
 The firmware executes the full DSP chain (tape player, exciter, and Schroeder reverb) unconditionally on every audio block at \qty{48}{\kilo\hertz}, regardless of whether audio is recorded in the buffer or played back.
-There is therefore no meaningful idle state; the current figures below represent steady-state operation.
+There is no meaningful idle state; the current figures below represent steady-state operation.
 
 Current draw was measured on the $+\SI{12}{\volt}$ and $-\SI{12}{\volt}$ Eurorack bus rails using the current display of an QJ3005E III bench supply, under two LED conditions.
 The $+\SI{12}{\volt}$ rail supplies the buck converter (\qty{5}{\volt} for WS2812 LEDs) and the buck converter supplies the LDO (\qty{3.3}{\volt} for MCU and analog circuitry); the $-\SI{12}{\volt}$ rail supplies the op-amp negative rails exclusively -- for the bipolar audio and CV signals.
-The firmware caps WS2812 brightness at 170 out of 255 (\qty{67}{\percent}) because maximum brightness was too harsh too look at.
+The firmware caps WS2812 brightness at 170 out of 255 (\qty{67}{\percent}) since full brightness was uncomfortably bright.
 
 \begin{table}[H]
     \centering
@@ -47,11 +48,11 @@ The firmware caps WS2812 brightness at 170 out of 255 (\qty{67}{\percent}) becau
 \end{table}
 
 The $-\SI{12}{\volt}$ draw is constant across both conditions, as expected, since the op-amp stages are unaffected by LED state.
-The LED contribution of \qty{40}{\milli\ampere} at firmware maximum brightness is consistent with four WS2812 LEDs at partial drive (\qty{10}{\milli\ampere} per LED).
+The additional \qty{40}{\milli\ampere} from the LEDs matches with four WS2812 LEDs at partial drive (\qty{10}{\milli\ampere} per LED).
 
 \paragraph{Input Protection}
 
-Input overvoltage protection is verified by design and confirmed through in-system testing at full Eurorack signal levels.
+Input overvoltage protection was confirmed both by design and in-system testing at full Eurorack signal levels.
 Gate inputs are clamped via transistor stages (EC-02); CV inputs use rail-guarded op-amp stages that limit the voltage presented to the STM32H7 ADC (EC-01, EC-02); audio inputs are attenuated by a passive resistor divider and clamped by a BAT54S dual Schottky diode to the codec AVDD reference (EC-03).
 No input damage or anomalous behaviour was observed during extended operation with Eurorack-level signals.
 The audio input protection is further verified by the loopback measurements in Section~\ref{sec:loopback-signal-level-measaurements}, which confirm correct ADC signal levels at \SI{10}{\volt_{pp}} input.
@@ -61,7 +62,7 @@ The audio input protection is further verified by the loopback measurements in S
 
 \paragraph{Measurement Setup}
 
-To evaluate the audio signal path including analog frontents and AD/DA conversion, a sine was applied to 
+To evaluate the audio signal path including analog frontends and AD/DA conversion, a sine was applied to 
 the analog input at frequencies of \SI{100}{Hz} and \SI{1}{kHz}. All test signals were applied at \SI{10}{V_{pp}}, corresponding to the standard Eurorack signal level. 
 Input and output signals were captured simultaneously on a two-channel oscilloscope to verify signal integrity through the analog frontend and codec stages. 
 To characterise the digital headroom, the DMA RX and TX buffers were read out via SWD during signal playback and plotted alongside the oscilloscope captures.
@@ -89,7 +90,7 @@ Figure~\ref{fig:loopback_scope} shows oscilloscope captures of the analog input 
 \end{figure}
 
 Figure~\ref{fig:loopback_buf} shows the corresponding digitised RX and TX (half-)buffer
-contents at \qty{1}{kHz} test signal during loopback, which were read out via a python script, using SWD on OCD. 
+contents at \qty{1}{kHz} test signal during loopback, which were read out via a python script, using \ac{SWD} through \ac{OCD}. 
 
 \begin{figure}[H]
 	\centering
@@ -142,7 +143,7 @@ before plotting.
 The analytically calculated cutoff frequencies of the input AC coupling stage ($f_c \approx \qty{1.5}{\hertz}$, Section~\ref{sec:input-ac-coupling}) and the output AC coupling stage ($f_c \approx \qty{2.84}{\hertz}$, Section~\ref{sec:output-ac-coupling}) are both well below the audible range.
 Respective SPICE simulations of the input and output stages confirm their calculated cutoff frequency.
 Neither the analytically calculated values nor the SPICE-simulated result are consistent with the measured \SI{-3}{\decibel} cutoff frequency of approximately \SI{37.6}{\Hz} visible in Figure~\ref{fig:frequency_response}.
-The cause of this discrepancy has not yet been identified.
+The cause of this discrepancy is still unclear.
 To isolate the source, individual frequency response measurements of the input and output stages should be conducted separately in a future revision.
 
 \begin{figure}[H]
