@@ -8,7 +8,7 @@
 
 #define ATTACK_MIN_SEC 0.006f // 6 ms
 #define ATTACK_MAX_SEC 10.0f  // 10 s
-#define DECAY_MIN_SEC 0.010f  // 10 ms
+#define DECAY_MIN_SEC 0.002f  // 2 ms
 #define DECAY_MAX_SEC 15.0f   // 15 s
 
 float envelope_process(envelope_t* env) {
