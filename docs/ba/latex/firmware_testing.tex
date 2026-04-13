@@ -177,12 +177,12 @@ and the worst-case jitter introduced by the block-based command processing.
 With a sample rate of $f_s = \qty{48}{kHz}$ and a DMA half-block size of 64 
 samples, the theoretical baseline latency and maximum deviation are:
 
-\begin{align*}
+\begin{align}
 	t_{\text{block}}         &= \frac{64}{48000} = \qty{1.333}{ms} \\
 	t_{\text{min}}           &= 2 \times t_{\text{block}} = \qty{2.667}{ms} \\
 	t_{\text{max}}           &= t_{\text{min}} + t_{\text{block}} = \qty{4.000}{ms} \\
 	\Delta t_{\text{jitter}} &= t_{\text{block}} = \qty{1.333}{ms}
-\end{align*}
+\end{align}
 
 The realtime latency requirement of $< \qty{5}{ms}$ (Section~\ref{sec:system-requirements}) is 
 therefore expected to be met in all cases.

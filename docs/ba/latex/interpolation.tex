@@ -20,6 +20,9 @@ x_d[n] = x[nM] = x_c(nMT)
 However, directly subsampling without prefiltering causes aliasing if the signal contains energy above the new Nyquist limit $\pi/M$. 
 To avoid this, a discrete-time lowpass filter with cutoff $\pi/M$ must be applied before downsampling. \cite[p.~186]{oppenheimDiscretetimeSignalProcessing2014} 
 
+This implementation omits this anti-aliasing filter. 
+The implemented Hermite interpolator provides some implicit smoothing, and the remaining aliasing at high pitch ratios is an accepted trade-off that contributes to the lo-fi character of the decimation mode.
+
 In the context of faster-than-unity playback, the playhead advances by more than one sample per output step, which is analogous to decimation, where some input samples are skipped entirely.
 
 \subsubsection{Upsampling}
@@ -64,13 +67,10 @@ This requires only one multiply-accumulate per output sample, which makes it an
 obvious first candidate on constrained hardware. While linear interpolation eliminates 
 the discontinuities of ZOH, it remains only $C^0$ continuous 
 \footnote{A function is $C^n$ continuous if its derivatives up to order $n$ exist and are continuous everywhere. $C^0$ therefore denotes a function that is continuous but whose first derivative may be discontinuous. $C^1$ additionally requires a continuous first derivative. \cite{weissteinSmoothFunction}} 
--- the interpolated values match at sample boundaries, but the slope changes abruptly at each one.
+-- the interpolated values match at sample boundaries, but the slope (first derivative) changes abruptly at each one.
 
 \subsubsection{The Aliasing Problem}
 
-Despite its simplicity, linear interpolation has a key spectral limitation: 
-it is only $C^0$ continuous. 
-The interpolated signal matches the original sample values at integer positions, but the slope (first derivative) changes abruptly at every sample boundary. 
 Across an entire buffer, the output is a piecewise-linear waveform whose derivative is a train of rectangular pulses, which is inherently rich in high-frequency harmonic content.
 
 The aliasing problem is most severe during \textbf{upsampling}, i.e.\ at playback speeds below $1.0\times$, where the playhead advances by less than one sample per output step and the interpolator must synthesise the majority of output samples from scratch. At $0.5\times$ the interpolator is called for every other output sample; at $0.25\times$ it is called three times for every input sample consumed. 
@@ -114,10 +114,9 @@ A good performance vs computation tradeoff is a 4-point Hermite interpolation.
 \label{sec:interpolation-comparision-time-domain}
 When comparing the naive linear approach with its more sophisticated counterpart graphically, it becomes clear that the additional computational overhead of cubic interpolation is justified. \\
 
-In Figure \ref{fig:interpolation_comparison}, zero-order hold (1), linear interpolation (2), 
-the Catmull-Rom cubic Hermite interpolation used in this project (3), and an ideal cubic 
-Hermite interpolation with exact derivatives (4) are compared.
-The test signal is a sum of three sinusoids, simulating a complex audio signal:
+In Figure \ref{fig:interpolation_comparison}, zero-order hold (1), linear interpolation (2), an ideal cubic 
+Hermite interpolation with exact derivatives (3) and the Catmull-Rom spline cubic Hermite interpolation used in this project (4), are compared.
+The continuos test signal is a sum of three sinusoids, simulating a complex audio signal:
 
 \begin{equation}
 	x(t) = 0.8\sin(2t) + 0.6\sin(t) + 0.4\sin(2.7t)
@@ -137,7 +136,8 @@ The test signal is a sum of three sinusoids, simulating a complex audio signal:
 The need for smooth interpolation becomes clear when the signal contains frequency content that approaches the sampling rate - the interpolator is forced to reconstruct steep, rapidly changing slopes from very few samples. 
 While this scenario would be prevented in practice by the Nyquist theorem, it serves as a useful stress test that exposes the characteristic artifacts of each method clearly.
 
-Smooth interpolation is still directly relevant to the pitched playback feature of this project though. On the DSP level, pitch shifting is implemented as a fractional sample rate conversion: the playback pointer advances through the sample buffer at a non-integer step size, meaning most output samples fall between two existing input samples. The interpolator is therefore called on every single output sample, and its accuracy in estimating the true waveform shape between discrete points directly determines the fidelity of the pitched output. A smooth, accurate interpolator is essential to avoid waveform distortion artifacts in the reconstructed signal.
+Smooth interpolation is still directly relevant to the pitched playback feature of this project though. On the DSP level, pitch shifting is implemented as a fractional sample rate conversion: the playback pointer advances through the sample buffer at a non-integer step size, meaning most output samples fall between two existing input samples. The interpolator is therefore called on every single output sample, and its accuracy in estimating the true waveform shape between discrete points directly determines the fidelity of the pitched output. 
+%A smooth, accurate interpolator is essential to avoid waveform distortion artifacts in the reconstructed signal.
 
 \paragraph{(1) Zero-Order Hold (ZOH)}
 \label{sec:zoh}
@@ -201,30 +201,41 @@ This combination of flat passband and suppressed aliasing lobes makes the 4-poin
 
 The algorithm is implemented as a single function (see Listing \ref{lst:hermite-interpolate}) that takes the phase accumulator 
 and the sample buffer as parameters. 
-As described in Section \ref{sec:numerical-architecture}, this function is the boundary between fixed-point  phase tracking and floating-point DSP computation: 
-the integer part of the phase selec ts the sample index, while the fractional part is converted to a \texttt{float} to serve as the interpolation parameter $t \in [0, 1)$.
 
-\begin{listing}[h]
-\begin{minted}[linenos]{c}
-float hermite_interpolate(uint32_t phase, int16_t* buffer) {
-	uint32_t idx = phase >> 16; // integer part
-	float t = (phase & 0xFFFF) * (1.0f / 65536.0f);
+As described in Section \ref{sec:numerical-architecture}, this function is the boundary between fixed-point  phase tracking and floating-point DSP computation: 
+the integer part of the phase selects the sample index, while the fractional part is converted to a \texttt{float} to serve as the interpolation parameter $t \in [0, 1)$.
+
+\begin{listing}[H]
+\begin{minted}[linenos, fontsize=\small]{c}
+static inline float hermite_interpolate(uint64_t pos, int16_t* buffer, bool reverse) {
+	uint32_t idx = (uint32_t) (pos >> 16);
+	uint32_t frac = (uint32_t) (pos & 0xFFFF);
 	
-	int n = (int) idx - 1;
+	float xm1, x0, x1, x2, t;
 	
-	// xm1 and x2 are only used for derivative estimation
-	// we interpolate between x0 and x1
-	float xm1 = buffer[n];
-	float x0 = buffer[n + 1];
-	float x1 = buffer[n + 2];
-	float x2 = buffer[n + 3];
+	if (reverse) {
+		// interpolate between idx and idx-1, t runs 1->0 as pos decreases
+		t = 1.0f - (frac * (1.0f / Q16_UNITY));
+		xm1 = buffer[idx + 2];
+		x0 = buffer[idx + 1];
+		x1 = buffer[idx];
+		x2 = buffer[idx - 1];
+	} else {
+		// interpolate between idx and idx+1, t runs 0->1 as pos increases
+		t = frac * (1.0f / Q16_UNITY);
+		int n = (int) idx - 1;
+		xm1 = buffer[n];
+		x0 = buffer[n + 1];
+		x1 = buffer[n + 2];
+		x2 = buffer[n + 3];
+	}
 	
 	// estimate derivatives by finite differences
+	// Catmull-Rom splines with Tension = 0
 	float m0 = 0.5f * (x1 - xm1); // derivative at x0
 	float m1 = 0.5f * (x2 - x0);  // derivative at x1
 	
-	// calculate coefficients
-	// Cubic Hermite interpolation (Catmull-Rom spline with Tension = 0)
+	// Rearranged cubic Hermite polynomial in Horner form
 	float c = m0;
 	float v = x0 - x1;
 	float w = c + v;
@@ -232,8 +243,6 @@ float hermite_interpolate(uint32_t phase, int16_t* buffer) {
 	float b = w + a;
 	float d = x0;
 	
-	// cubic polynomial in Horner form.
-	// actually a*t^3 + b*t^2 + c*t + d
 	return (((a * t - b) * t + c) * t + d);
 }
 \end{minted}
@@ -243,16 +252,16 @@ float hermite_interpolate(uint32_t phase, int16_t* buffer) {
 \label{lst:hermite-interpolate}
 \end{listing}
 
-\vspace{5mm}	
 
-Although the function reads four samples \(y[n-1], y[n], y[n+1], y[n+2]\), 
-the actual Hermite interpolation is performed only between the two central points, 
-\(y[n] = \texttt{x0}\) and \(y[n+1] = \texttt{x1}\) (lines 10--11). 
-The two outer points, \(y[n-1] = \texttt{xm1}\) and \(y[n+2] = \texttt{x2}\), 
-are used exclusively to estimate the derivatives at the interpolation points (lines 9, 12). 
+
+Although the function reads four samples $x_{-1},\, x_0,\, x_1,\, x_2$,
+the actual Hermite interpolation is performed only between the two central points,
+$x_0 = \texttt{x0}$ and $x_1 = \texttt{x1}$ (lines 11--12 for reverse, 19--12 for forward playback).
+The two outer points, $x_{-1} = \texttt{xm1}$ and $x_2 = \texttt{x2}$,
+are used exclusively to estimate the derivatives at the interpolation points (lines 10, 13 and 19, 20).
 
 Since the derivatives of a discrete-time audio signal are not directly available, 
-they are approximated using finite differences (lines 15--16):
+they are approximated using finite differences (lines 26--27):
 
 \begin{equation}
 m_0 = \frac{x_1 - x_{-1}}{2}, \quad
@@ -261,11 +270,11 @@ m_1 = \frac{x_2 - x_0}{2}
 
 This ensures a smooth cubic curve between \(x_0\) and \(x_1\) while only requiring the immediate neighbours of the interpolated points.
 
-So even though the actual interpolation is done between points \texttt{x0} and \texttt{x1} of the function, the preceding sample $n-1$, as well as the following neighbour $n+2$ are also required as inputs.
+The function handles both forward and reverse playback (lines 7--22),  mirroring the sample window accordingly, but applying the same interpolation kernel in both cases.
 
 This approach on the Hermite interpolation, where tangents are estimated from neighbouring samples, is commonly referred to as \textit{Catmull-Rom spline interpolation}. \cite[p.11]{olliniemitaloPolynomialInterpolatorsHighQuality2001}
 
-The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points (lines 20--25).
+The coefficients $a,b,c,d$ are calculated from the sample values and the estimated derivatives to satisfy both the interpolation points and the slope constraints at those points (lines 30--35).
 
 The algorithm returns the result by computing a cubic polynomial using the nested Horner form (line 29) \cite{burrusHornersMethodEvaluating}:
 

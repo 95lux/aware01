@@ -31,7 +31,7 @@ All gate and button inputs generate falling-edge interrupts at \ac{NVIC} priorit
 
 \paragraph{Serial and Audio Interfaces}
 I2S1, I2C1, and UART4 are used for audio data, codec configuration, and debug output respectively (see Table~\ref{tab:serial}).
-The I2S master clock (\ac{MCK}) on PC4 is driven by PLL2-P at \SI{12.288}{\mega\hertz}, exactly $256 \times f_s$ at \SI{48}{\kilo\hertz}, allowing the codec to derive all internal clocks from this single external reference without its own \ac{PLL}.
+The I2S master clock (\ac{MCK}) on PC4 is driven by PLL2-P at \SI{12.288}{\mega\hertz}, exactly $256 \times f_s$ at \SI{48}{\kilo\hertz}, which allows the codec to derive all internal clocks from this single external reference without its own \ac{PLL}.
 
 \paragraph{Clocks}
 The STM32H7A3 uses three independent PLLs to derive the required clock domains (see Table~\ref{tab:clocks}).

@@ -1,7 +1,8 @@
+\newpage
 \subsubsection{PCB Design}
 
 The complete schematic and PCB layout are provided in 
-Appendix~\ref{app:schematic} and Appendix~\ref{app:pcb-layout}.
+Appendix~\ref{app:schematic}.
 
 \paragraph{Layer Stackup}
 
@@ -52,7 +53,7 @@ This will be corrected in the next PCB revision by assigning the correct pin dur
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../images/hardware_design/bodges/gpio_wire_bodge.JPG}
+    \includegraphics[width=0.5\textwidth]{../images/hardware_design/bodges/gpio_wire_bodge.JPG}
     \caption{Bodge wire connecting the Gate 03 signal from PC9 to PC6 directly on the MCU pins.}
     \label{fig:gpio-bodge}
 \end{figure}
@@ -62,5 +63,22 @@ The KiCad component symbol for the slide potentiometers was created incorrectly 
 As a result, the LED anode is routed to a no-connect pin rather than the correct pad, leaving the LED indicators non-functional in this revision.
 The potentiometer position readout is unaffected and functions correctly.
 Both errors are documented and scheduled for correction in the next revision.
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{../images/hardware_design/pcb_design/pcb_top.jpg}
+		\subcaption{Top (mostly THT)}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth]{../images/hardware_design/pcb_design/pcb_bot.jpg}
+		\subcaption{Bottom (mostly SMD)}
+	\end{minipage}
+	\caption{Top and Bottom of soldered PCB -- all components in place}
+	\label{fig:pcb_soldered}
+\end{figure}
 
 % TODO images of assembled PCB!

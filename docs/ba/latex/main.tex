@@ -23,7 +23,7 @@
 \usepackage{booktabs}
 \usepackage{subcaption}
 \usepackage{enumitem}
-%\usepackage[nohyperlinks,footnote,withpage]{acronym}
+\usepackage{tocloft}
 \usepackage{acro}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -123,7 +123,8 @@
 \tableofcontents
 
 \newpage
-\listoffigures
+{\setlength{\cftbeforefigskip}{2pt}
+	\listoffigures}
 
 
 
