@@ -109,12 +109,17 @@ static inline void advance_playhead_q48(uint64_t* pos_q48, uint32_t phase_inc_q1
     uint32_t valid_samples = tape_player.playback_buf->valid_samples;
     uint64_t wrap_point = (uint64_t) valid_samples << 16;
 
-    // TODO: Reverse logic is buggy atm.
     if (reverse) {
-        if (*pos_q48 < phase_inc_q16) {
-            *pos_q48 = cyclic ? (wrap_point + *pos_q48 - phase_inc_q16) : 0;
-            if (!cyclic)
+        // pos must stay >= (1 << 16) so Hermite can always access buffer[idx-1].
+        // Check if the subtraction would drop below the lower bound, not just below zero.
+        uint64_t min_pos = 1ULL << 16;
+        if (*pos_q48 < (uint64_t) phase_inc_q16 + min_pos) {
+            if (cyclic)
+                *pos_q48 = wrap_point + *pos_q48 - phase_inc_q16;
+            else {
+                *pos_q48 = min_pos;
                 tape_player_stop_play();
+            }
         } else {
             *pos_q48 -= phase_inc_q16;
         }

@@ -236,7 +236,8 @@ static void play_fsm_event(tape_event_t evt) {
 
             // copy upcoming xfade.len samples starting at current phase
             // we need to start from one sample before the current phase for hermite interpolation
-            uint32_t start_idx_xfade = (uint32_t) (tape_player.pos_q48_16 >> 16) - 1;
+            uint32_t idx_at_retrig = (uint32_t) (tape_player.pos_q48_16 >> 16);
+            uint32_t start_idx_xfade = idx_at_retrig > 0 ? idx_at_retrig - 1 : 0;
             uint32_t max_needed_xfade = tape_player.xfade_retrig.len + 3; // +3 for hermite interpolation safety (idx-1..idx+2)
 
             // number of samples available for crossfade starting from start_idx

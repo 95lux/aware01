@@ -10,7 +10,7 @@
 #define ARM_MATH_CM7
 
 /* ===== Config Options ===== */
-#define CONFIG_AUDIO_LOOPBACK // for testing: bypass tape player and all dsp chain. Just pass input buffer directly to output.
+// #define CONFIG_AUDIO_LOOPBACK // for testing: bypass tape player and all dsp chain. Just pass input buffer directly to output.
 #define CONFIG_ENABLE_TAPE_PLAYER
 #define CONFIG_USE_CALIB_STORAGE
 #define CONFIG_ENABLE_ENVELOPE
@@ -95,9 +95,9 @@
 // recording buffer size per channel, aligned to block size
 #define TAPE_REC_BUF_SIZE_CHANNEL (AUDIO_BLOCK_SIZE * TAPE_REC_BUF_NUM_BLOCKS)
 
-#define FADE_XFADE_RETRIG_LEN 64
+#define FADE_XFADE_RETRIG_LEN 128
 #define FADE_XFADE_CYCLIC_LEN 4800
-#define FADE_IN_OUT_LEN 64 // fade in/out length when approaching start/end of buffer, to prevent clicks
+#define FADE_IN_OUT_LEN 128 // fade in/out length when approaching start/end of buffer, to prevent clicks
 
 #define FADE_IN_OUT_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_IN_OUT_LEN)
 #define FADE_XFADE_RETRIG_STEP_Q16 (uint32_t) (((float) FADE_LUT_LEN * 65536.0f) / (float) FADE_XFADE_RETRIG_LEN)
@@ -108,9 +108,9 @@
 #define CV_CALIB_HOLD_MS 1000
 #define POT_CALIB_HOLD_MS 5000
 
-#define MAX_GRIT_ON_MAX_DECIMATION 0.0f
-// #define MAX_GRIT_ON_MAX_DECIMATION 0.6f
+// #define MAX_GRIT_ON_MAX_DECIMATION 0.0f
+#define MAX_GRIT_ON_MAX_DECIMATION 0.6f
 #define MAX_EXCITE_ON_MAX_DECIMATION 0.0f
 // #define MAX_EXCITE_ON_MAX_DECIMATION 4.0f
 
-#define MAX_DECIMATION_POW 16
+#define MAX_DECIMATION_POW 4
