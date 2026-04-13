@@ -139,6 +139,16 @@ st-flash write firmware/build/Debug/firmware.bin 0x8000000
 
 Designed in KiCad. The hardware directory contains the full schematic, PCB layout, and SPICE simulations for the analog input and output conditioning stages.
 
+### KiCad Library
+
+Opening the KiCad project requires the custom component library. Clone it alongside this repo:
+
+```sh
+git clone https://github.com/95lux/kicad_library
+```
+
+Then add it as a global library in KiCad: **Preferences → Manage Symbol Libraries** (and **Manage Footprint Libraries**), pointing to the cloned directory.
+
 ---
 
 ## Specifications
