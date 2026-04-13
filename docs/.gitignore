@@ -17,5 +17,5 @@
 **/*.vrb
 **/*.run.xml
 **/*.bib
-# ignore compiled main.pdf
-ba/latex/main.pdf
+# ignore .pdfs in latex folder
+ba/latex/*.pdf
