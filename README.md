@@ -66,24 +66,72 @@ More DSP FX and taillred XY mapping is on the way and will turn Aarebot into an 
 │   ├── aware01_h7_rev2_0/    KiCad schematic and PCB
 │   └── simulation/           SPICE simulations for analog stages
 └── docs/
-    └── images/
+    ├── images/               PCB renders and oscilloscope captures
+    ├── ba/                   Bachelor thesis
+    │   ├── latex/            LaTeX source files
+    │   ├── images/           Figures and plots
+    │   ├── diagrams/         DrawIO block diagrams
+    │   └── scripts/          Python scripts for analysis and plots
+    └── project_management/   Project planning documents
+        ├── lastenheft.tex    Requirements specification
+        ├── pflichtenheft.tex Functional specification
+        └── projectplan.tex   Project plan
 ```
 
 ---
 
 ## Building
 
-Requires `arm-none-eabi-gcc`, `cmake`, and `ninja`.
+### Dependencies
+
+| Tool | Arch | Debian/Ubuntu |
+|------|------|---------------|
+| ARM cross-compiler | `arm-none-eabi-gcc` | `gcc-arm-none-eabi` |
+| ARM newlib | `arm-none-eabi-newlib` | `libnewlib-arm-none-eabi` |
+| CMake ≥ 3.22 | `cmake` | `cmake` |
+| Ninja | `ninja` | `ninja-build` |
+
+### Compile
 
 ```sh
-# Configure
-cmake -S . -B build/Debug \
-  -G Ninja \
-  -DCMAKE_TOOLCHAIN_FILE=./cmake/gcc-arm-none-eabi.cmake
+cd firmware
 
-# Build
-cmake --build build/Debug
+# Configure + build (Debug)
+cmake --preset Debug
+cmake --build --preset Debug
+
+# Configure + build (Release)
+cmake --preset Release
+cmake --build --preset Release
 ```
+
+The output ELF is at `firmware/build/Debug/firmware.elf`.
+
+### Flash
+
+Requires an ST-Link probe. Either `st-flash` (stlink) or `openocd` can be used.
+
+**openocd** (recommended; works directly with ELF):
+
+```sh
+openocd -f interface/stlink.cfg -f target/stm32h7x.cfg \
+  -c "program firmware/build/Debug/firmware.elf verify reset exit"
+```
+
+**st-flash** (requires converting ELF to binary first):
+
+```sh
+arm-none-eabi-objcopy -O binary \
+  firmware/build/Debug/firmware.elf \
+  firmware/build/Debug/firmware.bin
+
+st-flash write firmware/build/Debug/firmware.bin 0x8000000
+```
+
+| Tool | Arch | Debian/Ubuntu |
+|------|------|---------------|
+| openocd | `openocd` | `openocd` |
+| st-flash | `stlink` | `stlink-tools` |
 
 ---
 
