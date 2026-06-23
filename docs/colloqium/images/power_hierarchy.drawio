@@ -1,0 +1,52 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="RAEc_tMbRPGKRyt-o4dO">
+    <mxGraphModel dx="1173" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8v2witJiCdFrCv5M9M7u-25" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-29" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="+12V&lt;br&gt;Eurorack Rail" vertex="1">
+          <mxGeometry height="40" width="90" x="240" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-34" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="-12V&lt;br&gt;Eurorack Rail" vertex="1">
+          <mxGeometry height="40" width="90" x="240" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-27" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-31" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="5V&lt;div&gt;Buck Converter&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="397.5" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-35" edge="1" parent="1" source="8v2witJiCdFrCv5M9M7u-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8v2witJiCdFrCv5M9M7u-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;3.3V&lt;/div&gt;&lt;div&gt;LDO&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="560" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-28" parent="1" style="whiteSpace=wrap;html=1;" value="pos.&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Audio Opamp Rails&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="140" x="215" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-30" parent="1" style="whiteSpace=wrap;html=1;" value="WS2812&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;RGB LEDs&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="125" x="380" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-32" parent="1" style="whiteSpace=wrap;html=1;" value="MCU,&amp;nbsp;&lt;br&gt;&lt;div&gt;Audio Codec,&lt;/div&gt;&lt;div&gt;pos. CV Opamp Rails&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="157.5" x="526.25" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8v2witJiCdFrCv5M9M7u-33" parent="1" style="whiteSpace=wrap;html=1;" value="neg.&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Audio Opamp Rails&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="150" x="210" y="680" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
