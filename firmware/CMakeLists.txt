@@ -84,6 +84,6 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-    "${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CMSIS/DSP/Lib/ARM/arm_cortexM7lfsp_math.lib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/cmsis_dsp/arm_cortexM7lfsp_math.lib"
     # Add user defined libraries
 )

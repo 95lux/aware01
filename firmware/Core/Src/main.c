@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "cmsis_os.h"
 #include "dma.h"
 #include "gpio.h"
 #include "i2c.h"
@@ -62,7 +61,6 @@
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 static void MPU_Config(void);
-void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 void FREERTOS_Init(void);
 
@@ -134,25 +132,11 @@ int main(void) {
 
     // generateSineWave(440);
 
-    /* USER CODE END 2 */
+    FREERTOS_Init();
+    vTaskStartScheduler();
 
-    /* Init scheduler */
-    osKernelInitialize(); /* Call init function for freertos objects (in cmsis_os2.c) */
-    MX_FREERTOS_Init();
-
-    /* Start scheduler */
-    osKernelStart();
-
-    /* We should never get here as control is now taken by the scheduler */
-
-    /* Infinite loop */
-    /* USER CODE BEGIN WHILE */
     while (1) {
-        /* USER CODE END WHILE */
-
-        /* USER CODE BEGIN 3 */
     }
-    /* USER CODE END 3 */
 }
 
 /**
