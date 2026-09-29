@@ -1,0 +1,6 @@
+[submodule "firmware/Drivers/STM32H7xx_HAL_Driver"]
+	path = firmware/Drivers/STM32H7xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32h7xx-hal-driver.git
+[submodule "firmware/Drivers/CMSIS/Device/ST/STM32H7xx"]
+	path = firmware/Drivers/CMSIS/Device/ST/STM32H7xx
+	url = https://github.com/STMicroelectronics/cmsis-device-h7.git
