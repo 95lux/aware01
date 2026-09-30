@@ -59,23 +59,20 @@ More DSP FX and taillred XY mapping is on the way and will turn Aarebot into an 
 ## Repository Structure
 
 ```
-├── firmware/                 STM32CubeMX project and C source
+├── firmware/                 C firmware source (CMake + arm-none-eabi-gcc)
 |   ├── Aware                 Main firmware implementation
-|   └── Src                   CubeMX generated src files
+|   └── Core                  Board bring-up (clocks, peripherals, HAL glue)
 ├── hardware/
 │   ├── aware01_h7_rev2_0/    KiCad schematic and PCB
 │   └── simulation/           SPICE simulations for analog stages
 └── docs/
     ├── images/               PCB renders and oscilloscope captures
-    ├── ba/                   Bachelor thesis
-    │   ├── latex/            LaTeX source files
-    │   ├── images/           Figures and plots
-    │   ├── diagrams/         DrawIO block diagrams
-    │   └── scripts/          Python scripts for analysis and plots
-    └── project_management/   Project planning documents
-        ├── lastenheft.tex    Requirements specification
-        ├── pflichtenheft.tex Functional specification
-        └── projectplan.tex   Project plan
+    └── ba/                   Bachelor thesis
+        ├── latex/            LaTeX source files
+        ├── images/           Figures and plots
+        ├── diagrams/         DrawIO block diagrams
+        └── scripts/          Python scripts for analysis and plots
+
 ```
 
 ---
@@ -90,10 +87,16 @@ More DSP FX and taillred XY mapping is on the way and will turn Aarebot into an 
 | ARM newlib | `arm-none-eabi-newlib` | `libnewlib-arm-none-eabi` |
 | CMake ≥ 3.22 | `cmake` | `cmake` |
 | Ninja | `ninja` | `ninja-build` |
+| Git ≥ 2.13 (submodule support) | `git` | `git` |
 
 ### Compile
 
 ```sh
+# Clone with submodules (STM32 HAL driver + CMSIS device headers):
+git clone --recurse-submodules <repo-url>
+# If already cloned without --recurse-submodules:
+# git submodule update --init --recursive
+
 cd firmware
 
 # Configure + build (Debug)
@@ -172,6 +175,19 @@ Then add it as a global library in KiCad: **Preferences → Manage Symbol Librar
 | V/Oct range | −1.5 V to +5 V |
 | Power (+12V) | ~80 mA idle, ~140 mA peak |
 | Power (−12V) | ~20 mA |
+
+---
+
+## Ideas & Future Work
+
+**Reverb coherence parameter**
+Morphing the Schroeder comb filter delay lengths between prime (incoherent) and integer multiples of a common fundamental (coherent) would create a continuous parameter from diffuse room reverb to metallic, pitched resonance. Dynamically changing delay lengths causes pitch glide artifacts on the tail — slow slew rate or intentional character. Could be exposed as an XY axis or dedicated CV input.
+
+**External PSRAM** — extend recording buffer beyond 2.5 s via SPI/QSPI PSRAM
+
+**Granular synthesis** — slice buffer into grains with randomized pitch/position/envelope
+
+**Synced delay** — clock-syncable delay line as additional DSP effect
 
 ---
 
